@@ -23,7 +23,7 @@ jobs:
       - name: Clone smartsheet-platform/smartsheet-sdk-tests PUBLIC repository
         uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
-          owner: 'Smartsheet'
+          owner: 'smartsheet-platform'
           repository: 'smartsheet-sdk-tests'  
       - name: Setup Mock API
         run: |
