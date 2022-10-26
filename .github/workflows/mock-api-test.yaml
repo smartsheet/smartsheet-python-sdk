@@ -20,11 +20,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install certifi enum34 requests six python-dateutil coverage coveralls[yaml] pytest pytest-instafail requests-toolbelt
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Clone smartsheet-platform/smartsheet-sdk-tests PUBLIC repository
+      - name: Clone smartsheet/smartsheet-sdk-tests PRIVATE repository
         uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
-          owner: 'smartsheet-platform'
-          repository: 'smartsheet-sdk-tests'  
+          owner: 'smartsheet'
+          repository: 'smartsheet-sdk-tests'
+          access-token: ${{ secrets.SDK_TEST_ACCESS_TOKEN }}
       - name: Setup Mock API
         run: |
           smartsheet-sdk-tests/travis_scripts/install_wiremock.sh
