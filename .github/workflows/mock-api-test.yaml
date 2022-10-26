@@ -23,8 +23,8 @@ jobs:
       - name: Clone smartsheet-platform/smartsheet-sdk-tests PUBLIC repository
         uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
-          owner: 'GuillaumeFalourd'
-          repository: 'poc-github-actions'  
+          owner: 'Smartsheet'
+          repository: 'smartsheet-sdk-tests'  
       - name: Setup Mock API
         run: |
           smartsheet-sdk-tests/travis_scripts/install_wiremock.sh
