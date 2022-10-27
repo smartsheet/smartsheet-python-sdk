@@ -33,6 +33,7 @@ jobs:
       - name: Run Coverage
         run: |
           coverage run --source=smartsheet setup.py test -a tests/mock_api/
-      # - name: Run Coveralls
-      #   run: |
-      #     coveralls --verbose
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
