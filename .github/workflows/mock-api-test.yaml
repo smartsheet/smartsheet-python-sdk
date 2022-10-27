@@ -33,6 +33,6 @@ jobs:
       - name: Run Coverage
         run: |
           coverage run --source=smartsheet setup.py test -a tests/mock_api/
-      - name: Run Coveralls
-        run: |
-          coveralls --verbose
+      # - name: Run Coveralls
+      #   run: |
+      #     coveralls --verbose
