@@ -42,7 +42,7 @@ jobs:
       - name: Install build packages
         # if mainline - excluded for testing
         run: |
-          pip install enum34 requests six python-dateutil sphinx sphinx_rtd_theme setuptools-scm gitchangelog mako collective.checkdocs twine
+          pip install enum34 requests six python-dateutil sphinx sphinx_rtd_theme setuptools-scm gitchangelog mako collective.checkdocs wheel twine 
       - name: Build documentation
         # if mainline - excluded for testing
         run: |
