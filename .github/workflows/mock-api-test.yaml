@@ -73,4 +73,4 @@ jobs:
       - name: Test Publish distribution
       # if mainline - excluded for testing
         run: |
-          twine upload -u __token__ -p ${{ secrets.TEST_PYPI_TOKEN}} --repository testpypi ${{ secrets.TEST_PYPI_TOKEN}} dist/*
+          twine upload -u __token__ -p ${{ secrets.TEST_PYPI_TOKEN}} -r testpypi dist/*
