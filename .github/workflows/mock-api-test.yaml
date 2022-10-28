@@ -39,3 +39,34 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: "coverage.lcov"
+      - name: Install build packages
+        # if mainline - excluded for testing
+        run: |
+          pip install enum34 requests six python-dateutil sphinx sphinx_rtd_theme setuptools-scm gitchangelog mako collective.checkdocs twine
+      - name: Build documentation
+        # if mainline - excluded for testing
+        run: |
+          rm -f docs-source/smartsheet.rst docs-source/smartsheet.models.rst docs-source/modules.rst
+          sphinx-apidoc -o docs-source smartsheet
+          rm -rf docs-source/_build
+          sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
+          rm -rf docs
+          cp -a docs-source/_build/html docs/
+          cp .nojekyll docs
+      - name: Build distribution
+        # if mainline - excluded for testing
+        run: |
+          python setup.py checkdocs
+          python setup.py sdist bdist_wheel
+      - name: Archive distribution artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: distribution
+          path: /dist
+          retention-days: 5
+      - name: Archive documentation artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: documentation
+          path: /docs
+          retention-days: 5
