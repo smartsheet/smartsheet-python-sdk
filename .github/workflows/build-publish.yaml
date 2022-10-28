@@ -26,13 +26,13 @@ jobs:
           rm -rf docs
           cp -a docs-source/_build/html docs/
           cp .nojekyll docs
-      - name: Update release tag # TODO: figure out how to get the right tag
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: 'tag release'
-          push: true
-          # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
-          tag: 'v1.0.0 --force'
+      # - name: Update release tag # TODO: figure out how to get the right tag
+      #   uses: EndBug/add-and-commit@v9
+      #   with:
+      #     message: 'tag release'
+      #     push: true
+      #     # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
+      #     tag: 'v1.0.0 --force'
       - name: Build distribution
         run: |
           python setup.py checkdocs
