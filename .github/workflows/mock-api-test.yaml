@@ -62,11 +62,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: distribution
-          path: /dist
+          path: dist
           retention-days: 5
       - name: Archive documentation artifacts
         uses: actions/upload-artifact@v3
         with:
           name: documentation
-          path: /docs
+          path: docs
           retention-days: 5
