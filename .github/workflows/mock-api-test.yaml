@@ -70,3 +70,7 @@ jobs:
           name: documentation
           path: docs
           retention-days: 5
+      - name: Test Publish distribution
+      # if mainline - excluded for testing
+        run: |
+          twine upload -u __token__ -p ${{ secrets.TEST_PYPI_TOKEN}} --repository testpypi ${{ secrets.TEST_PYPI_TOKEN}} dist/*
