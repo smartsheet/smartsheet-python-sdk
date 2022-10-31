@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  test-build-publish:
+  build-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,22 +17,6 @@ jobs:
       - name: Install build packages
         run: |
           pip install enum34 requests six python-dateutil sphinx sphinx_rtd_theme setuptools-scm gitchangelog mako collective.checkdocs wheel twine 
-      - name: Build documentation
-        run: |
-          rm -f docs-source/smartsheet.rst docs-source/smartsheet.models.rst docs-source/modules.rst
-          sphinx-apidoc -o docs-source smartsheet
-          rm -rf docs-source/_build
-          sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
-          rm -rf docs
-          cp -a docs-source/_build/html docs/
-          cp .nojekyll docs
-      # - name: Update release tag # TODO: figure out how to get the right tag
-      #   uses: EndBug/add-and-commit@v9
-      #   with:
-      #     message: 'tag release'
-      #     push: true
-      #     # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
-      #     tag: 'v1.0.0 --force'
       - name: Build distribution
         run: |
           python setup.py checkdocs
@@ -42,12 +26,6 @@ jobs:
         with:
           name: distribution
           path: dist
-          retention-days: 5
-      - name: Archive documentation artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: documentation
-          path: docs
           retention-days: 5
       - name: Test Publish distribution
         run: twine upload -u __token__ -p ${{ secrets.TEST_PYPI_TOKEN}} -r testpypi dist/*
