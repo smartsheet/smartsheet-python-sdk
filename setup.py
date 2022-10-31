@@ -3,7 +3,7 @@ from setuptools.command.test import test as TestCommand
 import sys
 import six
 
-NAME = 'smartsheet-python-sdk-test-release'
+NAME = 'smartsheet-python-sdk'
 
 REQUIRES = [
     'requests',
