@@ -30,9 +30,17 @@ jobs:
         run: |
           smartsheet-sdk-tests/travis_scripts/install_wiremock.sh
           smartsheet-sdk-tests/travis_scripts/start_wiremock.sh
-      - name: Run Coverage
+      - name: Run mock API tests
         run: |
           coverage run --source=smartsheet setup.py test -a tests/mock_api/
+          coverage lcov
+      - name: Setup integration tests
+        run: |
+          export SMARTSHEET_ACCESS_TOKEN=${{ secrets.INTEGRATION_TEST_SMARTSHEET_ACCESS_TOKEN }}
+          export SMARTSHEET_FIXTURE_USERS=${{ secrets.SMARTSHEET_FIXTURE_USERS}}
+      - name: Run integration tests
+        run: |
+          coverage run --source=smartsheet setup.py test -a tests/integration/
           coverage lcov
       - name: Coveralls
         uses: coverallsapp/github-action@master
@@ -51,10 +59,4 @@ jobs:
         with:
           name: distribution
           path: dist
-          retention-days: 5
-      - name: Archive documentation artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: documentation
-          path: docs
           retention-days: 5
