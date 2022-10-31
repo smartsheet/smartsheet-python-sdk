@@ -5,6 +5,9 @@ on: [push]
 jobs:
   mock-api-test:
     runs-on: ubuntu-latest
+    env:
+      SMARTSHEET_ACCESS_TOKEN: ${{ secrets.INTEGRATION_TEST_SMARTSHEET_ACCESS_TOKEN }}
+      SMARTSHEET_FIXTURE_USERS: ${{ secrets.SMARTSHEET_FIXTURE_USERS}}
     strategy:
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10"]
@@ -34,10 +37,6 @@ jobs:
         run: |
           coverage run --source=smartsheet setup.py test -a tests/mock_api/
           coverage lcov
-      - name: Setup integration tests
-        run: |
-          export SMARTSHEET_ACCESS_TOKEN=${{ secrets.INTEGRATION_TEST_SMARTSHEET_ACCESS_TOKEN }}
-          export SMARTSHEET_FIXTURE_USERS=${{ secrets.SMARTSHEET_FIXTURE_USERS}}
       - name: Run integration tests
         run: |
           coverage run --source=smartsheet setup.py test -a tests/integration/
