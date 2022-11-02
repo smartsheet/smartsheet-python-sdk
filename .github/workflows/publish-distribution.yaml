@@ -1,0 +1,55 @@
+name: Build and Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install build packages
+        run: |
+          pip install enum34 requests six python-dateutil setuptools-scm gitchangelog mako collective.checkdocs wheel twine sphinx sphinx_rtd_theme
+      - name: Build distribution
+        run: |
+          python setup.py checkdocs
+          python setup.py sdist bdist_wheel
+      - name: Archive distribution artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: distribution
+          path: dist
+          retention-days: 5
+      - name: Test Publish distribution
+        run: twine upload -u __token__ -p ${{ secrets.TEST_PYPI_TOKEN}} -r testpypi dist/*
+      - name: Generate documentation
+        run: |
+          sphinx-apidoc -o docs-source smartsheet
+          sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
+      - name: Upload Documentation artifact
+        uses: actions/upload-pages-artifact
+        with:
+          path: docs-source/_build/html
+  
+  publish-documentation:
+    runs-on: ubuntu-latest
+    needs: build-publish
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
