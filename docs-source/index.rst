@@ -1,3 +1,9 @@
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    
+    self
+
 Smartsheet Python SDK Documentation
 ===================================
 
@@ -19,9 +25,9 @@ Getting started is easy:
       >>> import smartsheet
 #.  Refer to the `Smartsheet API Documentation`_ for dozens of Python SDK usage examples.
 
-##. _direct API access: https://smartsheet-platform.github.io/api-docs/index.html#direct-api-access
-##. _smartsheet page on the Python Package Index: http://pypi.python.org/pypi/smartsheet-python-sdk
-##. _Smartsheet API Documentation: https://smartsheet-platform.github.io/api-docs/index.html?python
+.. _direct API access: https://smartsheet-platform.github.io/api-docs/index.html#direct-api-access
+.. _smartsheet page on the Python Package Index: http://pypi.python.org/pypi/smartsheet-python-sdk
+.. _Smartsheet API Documentation: https://smartsheet-platform.github.io/api-docs/index.html?python
 
 API Documentation
 -----------------
@@ -29,13 +35,13 @@ API Documentation
 If you are looking for information on a specific function, class or method,
 this part of the documentation is for you.
 
-##. toctree::
-   :maxdepth: 1
+.. toctree::
+    :maxdepth: 2
 
-   smartsheet
+    smartsheet
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`

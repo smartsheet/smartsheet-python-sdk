@@ -30,6 +30,9 @@ html_static_path = ['_static']
 pygments_style = 'sphinx'
 
 html_theme = 'sphinx_rtd_theme'
+html_theme_options = {
+    'collapse_navigation': False
+}
 
 html_show_sourcelink = False
 html_show_sphinx = False

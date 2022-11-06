@@ -436,6 +436,7 @@ class Sheets(object):
             level (int): Indicates compatibility level of data to return.
                 Valid options: 0, 1, 2
                 Option Descriptors:
+                
                     0 - Backwards compatible text format
                     1 - multi-contact complex object
                     2 - multi-picklist complex object
@@ -1699,6 +1700,7 @@ class Sheets(object):
 
         If an error occurs, the Error object returned will contain a detail attribute set to an object with the
         following attributes:
+
             - index: the array index of the summary field that caused the error
                 (0 if a single summary field was passed in)
 
@@ -1712,8 +1714,8 @@ class Sheets(object):
                 that already exists. (summary field names must be unique within a sheet.) If this parameter is set to
                 true, then new summary field names will be adjusted to ensure uniqueness.
 
-         Returns:
-             Result
+        Returns:
+            Result
         """
         if isinstance(list_of_fields, (dict, SummaryField)):
             arg_value = list_of_fields
@@ -1739,7 +1741,7 @@ class Sheets(object):
         When partial success is enabled, and one or more of the objects in the request fail to be added/updated/deleted,
         a standard Result object is returned, but with a message of 'PARTIAL_SUCCESS' (instead of 'SUCCESS'), and a
         resultCode of 3. The object will contain a failedItems attribute - an array of BulkItemFailure objects that
-        contains an item for each object in the request that failed to be added/updated/deleted
+        contains an item for each object in the request that failed to be added/updated/deleted.
 
         Args:
             sheet_id (int): Sheet ID
@@ -1748,8 +1750,8 @@ class Sheets(object):
                 that already exists. (summary field names must be unique within a sheet.) If this parameter is set to
                 true, then new summary field names will be adjusted to ensure uniqueness.
 
-         Returns:
-             Result
+        Returns:
+            Result
         """
         if isinstance(list_of_fields, (dict, SummaryField)):
             arg_value = list_of_fields
