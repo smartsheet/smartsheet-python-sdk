@@ -1,7 +1,8 @@
 .. toctree::
     :hidden:
-
-    index
+    :maxdepth: 2
+    
+    self
 
 Smartsheet Python SDK Documentation
 ===================================
@@ -34,11 +35,9 @@ API Documentation
 If you are looking for information on a specific function, class or method,
 this part of the documentation is for you.
 
-
 .. toctree::
-    :maxdepth: 1
-    :titlesonly:
-    
+    :maxdepth: 2
+
     smartsheet
 
 Indices and tables
