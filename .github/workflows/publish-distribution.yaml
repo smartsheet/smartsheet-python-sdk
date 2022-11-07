@@ -34,7 +34,7 @@ jobs:
           sphinx-apidoc -o docs-source smartsheet
           sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
       - name: Upload Documentation artifact
-        uses: actions/upload-pages-artifact
+        uses: actions/upload-pages-artifact@main
         with:
           path: docs-source/_build/html
   
