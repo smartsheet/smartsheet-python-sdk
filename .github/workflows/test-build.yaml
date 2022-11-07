@@ -76,7 +76,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install build packages
         run: |
-          pip install enum34 requests six python-dateutil sphinx sphinx_rtd_theme setuptools-scm gitchangelog mako collective.checkdocs wheel twine 
+          pip install enum34 requests six python-dateutil setuptools-scm gitchangelog mako collective.checkdocs wheel twine 
       - name: Build distribution
         run: |
           python setup.py checkdocs
@@ -93,6 +93,9 @@ jobs:
     needs: [build-packages-test]
     steps:
       - uses: actions/checkout@v3
+      - name: Install documentation tools
+        run: |
+          pip install sphinx sphinx_rtd_theme
       - name: Generate API documentation 
         run: sphinx-apidoc -o docs-source smartsheet 
       - name: Generate HTML
