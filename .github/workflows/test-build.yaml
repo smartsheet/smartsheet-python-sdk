@@ -95,7 +95,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install documentation tools
         run: |
-          pip install sphinx sphinx_rtd_theme
+          pip install sphinx sphinx_rtd_theme setuptools-scm
       - name: Generate API documentation 
         run: sphinx-apidoc -o docs-source smartsheet 
       - name: Generate HTML
