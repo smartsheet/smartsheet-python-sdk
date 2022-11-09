@@ -51,17 +51,17 @@ To get started with the Smartsheet Python SDK:
 2.  Install the Smartsheet Python SDK (see [installation instructions](###installation) above)
 
 3.  The following snippet shows how to create a Smartsheet client and perform some basic actions using the SDK. Ensure your Smartsheet user has access to at least one sheet.
-    ```python
-    import smartsheet
+```python
+import smartsheet
 
-    smart = smartsheet.Smartsheet()             # Create a Smartsheet client 
+smart = smartsheet.Smartsheet()             # Create a Smartsheet client 
 
-    response = smart.Sheets.list_sheets()       # Call the list_sheets() function and store the response object
-    sheetId = response.data[0].id               # Get the ID of the first sheet in the response
-    sheet = smart.Sheets.get_sheet(sheetId)     # Load the sheet by using it's ID
+response = smart.Sheets.list_sheets()       # Call the list_sheets() function and store the response object
+sheetId = response.data[0].id               # Get the ID of the first sheet in the response
+sheet = smart.Sheets.get_sheet(sheetId)     # Load the sheet by using it's ID
 
-    print(f"The sheet {sheet.name} has {sheet.total_row_count} rows")   # Print some information about the sheet
-    ```
+print(f"The sheet {sheet.name} has {sheet.total_row_count} rows")   # Print some information about the sheet
+```
 ## Documentation
 Use the following resources to learn more about the SDK capabilities:
 1. [Smartsheet Python SDK sample project](https://github.com/smartsheet-samples/python-read-write-sheet)
