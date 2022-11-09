@@ -1,9 +1,5 @@
 # Smartsheet Python SDK
-![Build Status](https://github.com/smartsheet/smartsheet-python-sdk/actions/workflows/publish-distribution.yaml/badge.svg)
-
-[![Coverage Status](https://coveralls.io/repos/smartsheet-platform/smartsheet-python-sdk/badge.svg?branch=master&service=github)](https://coveralls.io/github/smartsheet-platform/smartsheet-python-sdk?branch=master)
-
-[![PyPI version](https://badge.fury.io/py/smartsheet-python-sdk.svg)](https://badge.fury.io/py/smartsheet-python-sdk)
+![Build Status](https://github.com/smartsheet/smartsheet-python-sdk/actions/workflows/publish-distribution.yaml/badge.svg) [![Coverage Status](https://coveralls.io/repos/smartsheet-platform/smartsheet-python-sdk/badge.svg?branch=master&service=github)](https://coveralls.io/github/smartsheet-platform/smartsheet-python-sdk?branch=master) [![PyPI version](https://badge.fury.io/py/smartsheet-python-sdk.svg)](https://badge.fury.io/py/smartsheet-python-sdk)
 
 This library is intended to simplify connecting to the [Smartsheet API](https://smartsheet.redoc.ly) from Python applications.
 
