@@ -13,7 +13,9 @@ The following packages are required.
 
 To upgrade a current installation using pip:
 
-`pip install smartsheet-python-sdk --upgrade`
+```bash
+pip install smartsheet-python-sdk --upgrade
+```
 
 If this is your first time installing the Python SDK, follow the installation steps in the following section.
 
@@ -24,14 +26,22 @@ The SDK can be installed by using a package manager (pip) or manually by downloa
 
 This SDK's Python package is called **smartsheet-python-sdk**. To install using [pip](http://www.pip-installer.org/):
 
-`pip install smartsheet-python-sdk`
+```bash
+pip install smartsheet-python-sdk
+```
 
 ### Install manually
 To install this SDK manually:
 1. Clone the source code from this repo [GitHub](https://github.com/smartsheet-python-sdk)
-2. Install the required packages: `pip install setuptools six requests`
+2. Install the required packages: 
+   ```bash
+   pip install setuptools six requests
+   ```
 3. Ensure you are in the `smartsheet-python-sdk` directory
-4. run `python setup.py install`
+4. Install it using setup.py:
+   ```bash 
+   python setup.py install
+   ```
 
 ## Getting Started
 To get started with the Smartsheet Python SDK:
@@ -40,10 +50,22 @@ To get started with the Smartsheet Python SDK:
 
 2.  Install the Smartsheet Python SDK (see [installation instructions](###installation) above)
 
-3.  Import the smartsheet module: `import smartsheet`
-4.  Initialize a client. `smart = smartsheet.Smartsheet()`
-5.  Use the available SDK commands to begin interacting with the API. For example, to list all sheets that your user has access to: `result = smart.Sheet.list_sheets()`
-6.  Print the API response with `print(result)`
+3.  Import the smartsheet module:
+    ```python
+    import smartsheet
+    ```
+4.  Initialize a client. 
+    ```python
+    smart = smartsheet.Smartsheet()
+    ```
+5.  Use the available SDK commands to begin interacting with the API. For example, to list all sheets that your user has access to:
+    ```python
+    response = smart.Sheet.list_sheets()
+    ```
+6.  Print the API response with 
+    ```python
+    print(response)
+    ```
 7.  Use the following resources to learn more about the SDK capabilities:
     1. [Smartsheet Python SDK sample project](https://github.com/smartsheet-samples/python-read-write-sheet)
     2. [Python SDK documentation](https://smartsheet.github.io/smartsheet-python-sdk/)
