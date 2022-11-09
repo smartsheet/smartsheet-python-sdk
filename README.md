@@ -50,26 +50,23 @@ To get started with the Smartsheet Python SDK:
 
 2.  Install the Smartsheet Python SDK (see [installation instructions](###installation) above)
 
-3.  Import the smartsheet module:
+3.  The following snippet shows how to create a Smartsheet client and perform some basic actions using the SDK. Ensure your Smartsheet user has access to at least one sheet.
     ```python
     import smartsheet
+
+    smart = smartsheet.Smartsheet()             # Create a Smartsheet client 
+
+    response = smart.Sheets.list_sheets()       # Call the list_sheets() function and store the response object
+    sheetId = response.data[0].id               # Get the ID of the first sheet in the response
+    sheet = smart.Sheets.get_sheet(sheetId)     # Load the sheet by using it's ID
+
+    print(f"The sheet {sheet.name} has {sheet.total_row_count} rows")   # Print some information about the sheet
     ```
-4.  Initialize a client. 
-    ```python
-    smart = smartsheet.Smartsheet()
-    ```
-5.  Use the available SDK commands to begin interacting with the API. For example, to list all sheets that your user has access to:
-    ```python
-    response = smart.Sheet.list_sheets()
-    ```
-6.  Print the API response with 
-    ```python
-    print(response)
-    ```
-7.  Use the following resources to learn more about the SDK capabilities:
-    1. [Smartsheet Python SDK sample project](https://github.com/smartsheet-samples/python-read-write-sheet)
-    2. [Python SDK documentation](https://smartsheet.github.io/smartsheet-python-sdk/)
-    3. [Smartsheet API Documentation](https://smartsheet.redoc.ly)
+## Documentation
+Use the following resources to learn more about the SDK capabilities:
+1. [Smartsheet Python SDK sample project](https://github.com/smartsheet-samples/python-read-write-sheet)
+2. [Python SDK documentation](https://smartsheet.github.io/smartsheet-python-sdk/)
+3. [Smartsheet API Documentation](https://smartsheet.redoc.ly)
 
 ## Advanced Topics
 For details about logging, testing, how to use a passthrough option, and how to override HTTP client behavior, 
