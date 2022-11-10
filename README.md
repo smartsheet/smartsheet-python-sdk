@@ -1,52 +1,22 @@
 # Smartsheet Python SDK
 ![Build Status](https://github.com/smartsheet/smartsheet-python-sdk/actions/workflows/publish-distribution.yaml/badge.svg) [![Coverage Status](https://coveralls.io/repos/smartsheet-platform/smartsheet-python-sdk/badge.svg?branch=master&service=github)](https://coveralls.io/github/smartsheet-platform/smartsheet-python-sdk?branch=master) [![PyPI version](https://badge.fury.io/py/smartsheet-python-sdk.svg)](https://badge.fury.io/py/smartsheet-python-sdk)
 
-This library is intended to simplify connecting to the [Smartsheet API](https://smartsheet.redoc.ly) from Python applications.
+A library for connecting to the [Smartsheet API](https://smartsheet.redoc.ly) from Python applications.
 
 ## Requirements
-The SDK currently supports Python `3.10`, `3.9`, `3.8`, `3.7`. Integrations built on previous versions may still function, but Smartsheet recommends staying current with the Python end-of-life guidelines.  
-
-The following packages are required.
-* [setuptools](https://pypi.org/project/setuptools/)
-* [six](https://pypi.python.org/pypi/six)
-* [requests](https://pypi.python.org/pypi/requests)
-
-To upgrade a current installation using pip:
-
-```bash
-pip install smartsheet-python-sdk --upgrade
-```
-
-If this is your first time installing the Python SDK, follow the installation steps in the following section.
+The SDK currently supports Python `3.10`, `3.9`, `3.8`, `3.7`. Integrations built on previous versions may still function, but Smartsheet recommends staying current with in-support versions of Python.  
 
 ## Installation
-The SDK can be installed by using a package manager (pip) or manually by downloading the SDK directly from Git. These two steps are outlined below.
-
-### Install with pip
 
 This SDK's Python package is called **smartsheet-python-sdk**. To install using [pip](http://www.pip-installer.org/):
 
 ```bash
 pip install smartsheet-python-sdk
 ```
-
-### Install manually
-To install this SDK manually:
-1. Clone the source code from this repo [GitHub](https://github.com/smartsheet-python-sdk)
-2. Install the required packages: 
-   ```bash
-   pip install setuptools six requests
-   ```
-3. Ensure you are in the `smartsheet-python-sdk` directory
-4. Install it using setup.py:
-   ```bash 
-   python setup.py install
-   ```
-
 ## Getting Started
 To get started with the Smartsheet Python SDK:
 
-1.  Set **SMARTSHEET_ACCESS_TOKEN** in your environment, using your Smartsheet API key. Find out more about [Authentication and Access Tokens](https://smartsheet.redoc.ly/tag/tokenDescription) in the Smartsheet API Documentation.
+1.  Set **SMARTSHEET_ACCESS_TOKEN** in your environment, using your Smartsheet API key. Find out more about [Authentication and Access Tokens](https://smartsheet.redoc.ly/#section/API-Basics/Raw-Token-Requests) in the Smartsheet API Documentation. You can generate an access token in Smartsheet UI under Account > Personal Settings > API Access.
 
 2.  Install the Smartsheet Python SDK (see [installation instructions](###installation) above)
 
