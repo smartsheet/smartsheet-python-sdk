@@ -390,7 +390,7 @@ class Workspaces(object):
             val is not None for val in ["workspace_id", "share_id", "share_obj"]
         ):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("update_share")
@@ -449,7 +449,7 @@ class Workspaces(object):
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         return self._import_sheet(
@@ -483,7 +483,7 @@ class Workspaces(object):
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         return self._import_sheet(

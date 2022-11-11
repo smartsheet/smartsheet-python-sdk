@@ -303,7 +303,7 @@ class Reports(object):
         """
         if not all(val is not None for val in ["report_id", "share_id", "share_obj"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("update_share")

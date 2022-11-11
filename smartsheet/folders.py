@@ -293,7 +293,7 @@ class Folders(object):
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         return self._import_sheet(
@@ -327,7 +327,7 @@ class Folders(object):
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         return self._import_sheet(

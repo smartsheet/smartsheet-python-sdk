@@ -48,7 +48,7 @@ class Attachments(object):
         """
         if not all(val is not None for val in ["sheet_id", "comment_id", "_file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("attach_file_to_comment")
@@ -79,7 +79,7 @@ class Attachments(object):
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "_file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("attach_file_to_row")
@@ -133,7 +133,7 @@ class Attachments(object):
         """
         if not all(val is not None for val in ["sheet_id", "attachment_id", "_file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("attach_new_version")
@@ -191,7 +191,7 @@ class Attachments(object):
             val is not None for val in ["sheet_id", "comment_id", "attachment_obj"]
         ):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("attach_url_to_comment")
@@ -242,7 +242,7 @@ class Attachments(object):
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "attachment_obj"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("attach_url_to_row")

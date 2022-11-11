@@ -370,7 +370,7 @@ class Users(object):
         """
         if not all(val is not None for val in ["user_id", "file", "file_type"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         return self._attach_profile_image(user_id, file, file_type)

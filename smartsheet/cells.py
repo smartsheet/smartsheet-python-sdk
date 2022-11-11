@@ -60,7 +60,7 @@ class Cells(object):
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "column_id"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("get_cell_history")
@@ -116,7 +116,7 @@ class Cells(object):
             for val in ["sheet_id", "row_id", "column_id", "file", "file_type"]
         ):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         return self._attach_file_to_cell(

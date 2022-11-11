@@ -49,7 +49,7 @@ class Token(object):
         """
         if not all(val is not None for val in ["client_id", "code", "_hash"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("get_access_token")
@@ -88,7 +88,7 @@ class Token(object):
         """
         if not all(val is not None for val in ["client_id", "refresh_token", "_hash"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("refresh_access_token")

@@ -1030,7 +1030,7 @@ class Sheets(object):
         """
         if not all(val is not None for val in ["sheet_id", "column_id", "column_obj"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         if isinstance(column_obj, dict):
@@ -1130,7 +1130,7 @@ class Sheets(object):
         """
         if not all(val is not None for val in ["sheet_id", "share_id", "share_obj"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("update_share")
@@ -1651,7 +1651,7 @@ class Sheets(object):
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         return self._import_sheet(
@@ -1674,7 +1674,7 @@ class Sheets(object):
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         return self._import_sheet(

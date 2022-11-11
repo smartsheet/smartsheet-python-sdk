@@ -77,7 +77,7 @@ class Discussions(object):
         """
         if not all(val is not None for val in ["sheet_id", "discussion_id", "comment"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("add_comment_to_discussion_with_attachment")
@@ -147,7 +147,7 @@ class Discussions(object):
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "discussion"]):
             raise ValueError(
-                ("One or more required values " "are missing from call to " + __name__)
+                ("One or more required values are missing from call to " + __name__)
             )
 
         _op = fresh_operation("create_discussion_on_row_with_attachment")
