@@ -42,18 +42,19 @@ class Reports(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_share')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/reports/' + str(report_id) + '/shares/' + str(
-            share_id)
+        _op = fresh_operation("delete_share")
+        _op["method"] = "DELETE"
+        _op["path"] = "/reports/" + str(report_id) + "/shares/" + str(share_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_report(self, report_id, page_size=None, page=None, include=None, level=None):
+    def get_report(
+        self, report_id, page_size=None, page=None, include=None, level=None
+    ):
         """Get the specified Report, including one page of Rows.
 
         Get the specified Report, including one page of Rows, and
@@ -71,23 +72,21 @@ class Reports(object):
         Returns:
             Report
         """
-        _op = fresh_operation('get_report')
-        _op['method'] = 'GET'
-        _op['path'] = '/reports/' + str(report_id)
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['include'] = include
-        _op['query_params']['level'] = level
+        _op = fresh_operation("get_report")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id)
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["include"] = include
+        _op["query_params"]["level"] = level
 
-
-        expected = 'Report'
+        expected = "Report"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_report_as_csv(self, report_id, download_path,
-                          alternate_file_name=None):
+    def get_report_as_csv(self, report_id, download_path, alternate_file_name=None):
         """Get the specified Report as a CSV file.
 
         Args:
@@ -101,15 +100,15 @@ class Reports(object):
             DownloadedFile
         """
         if not os.path.isdir(download_path):
-            raise ValueError('download_path must be a directory.')
+            raise ValueError("download_path must be a directory.")
 
-        _op = fresh_operation('get_report_as_csv')
-        _op['method'] = 'GET'
-        _op['path'] = '/reports/' + str(report_id)
-        _op['header_params']['Accept'] = 'text/csv'
-        _op['dl_path'] = download_path
+        _op = fresh_operation("get_report_as_csv")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id)
+        _op["header_params"]["Accept"] = "text/csv"
+        _op["dl_path"] = download_path
 
-        expected = 'DownloadedFile'
+        expected = "DownloadedFile"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
         if alternate_file_name is not None:
@@ -118,8 +117,7 @@ class Reports(object):
         response.save_to_file()
         return response
 
-    def get_report_as_excel(self, report_id, download_path,
-                            alternate_file_name=None):
+    def get_report_as_excel(self, report_id, download_path, alternate_file_name=None):
         """Get the specified Report as an Excel .xls document.
 
         Args:
@@ -133,15 +131,15 @@ class Reports(object):
             DownloadedFile
         """
         if not os.path.isdir(download_path):
-            raise ValueError('download_path must be a directory.')
+            raise ValueError("download_path must be a directory.")
 
-        _op = fresh_operation('get_report_as_excel')
-        _op['method'] = 'GET'
-        _op['path'] = '/reports/' + str(report_id)
-        _op['header_params']['Accept'] = 'application/vnd.ms-excel'
-        _op['dl_path'] = download_path
+        _op = fresh_operation("get_report_as_excel")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id)
+        _op["header_params"]["Accept"] = "application/vnd.ms-excel"
+        _op["dl_path"] = download_path
 
-        expected = 'DownloadedFile'
+        expected = "DownloadedFile"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
         if alternate_file_name is not None:
@@ -160,18 +158,19 @@ class Reports(object):
         Returns:
             Share
         """
-        _op = fresh_operation('get_share')
-        _op['method'] = 'GET'
-        _op['path'] = '/reports/' + str(report_id) + '/shares/' + str(
-            share_id)
+        _op = fresh_operation("get_share")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/shares/" + str(share_id)
 
-        expected = 'Share'
+        expected = "Share"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_reports(self, page_size=None, page=None, include_all=None, modified_since=None):
+    def list_reports(
+        self, page_size=None, page=None, include_all=None, modified_since=None
+    ):
         """Get the list of all Reports accessible by the User.
 
         Get the list of all Reports that the User has access to, in
@@ -188,24 +187,30 @@ class Reports(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_reports')
-        _op['method'] = 'GET'
-        _op['path'] = '/reports'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_reports")
+        _op["method"] = "GET"
+        _op["path"] = "/reports"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
         if isinstance(modified_since, datetime):
-            _op['query_params']['modifiedSince'] = modified_since.isoformat()
+            _op["query_params"]["modifiedSince"] = modified_since.isoformat()
 
-        expected = ['IndexResult', 'Report']
+        expected = ["IndexResult", "Report"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_shares(self, report_id, page_size=None, page=None,
-                    include_all=None, include_workspace_shares=False):
+    def list_shares(
+        self,
+        report_id,
+        page_size=None,
+        page=None,
+        include_all=None,
+        include_workspace_shares=False,
+    ):
         """Get a list of all Users and Groups to whom the specified Report is
         shared, and their access level.
 
@@ -221,16 +226,16 @@ class Reports(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_shares')
-        _op['method'] = 'GET'
-        _op['path'] = '/reports/' + str(report_id) + '/shares'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_shares")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/shares"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
         if include_workspace_shares:
-            _op['query_params']['include'] = 'workspaceShares'
+            _op["query_params"]["include"] = "workspaceShares"
 
-        expected = ['IndexResult', 'Share']
+        expected = ["IndexResult", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -248,12 +253,12 @@ class Reports(object):
         Returns:
             Result
         """
-        _op = fresh_operation('send_report')
-        _op['method'] = 'POST'
-        _op['path'] = '/reports/' + str(report_id) + '/emails'
-        _op['json'] = sheet_email_obj
+        _op = fresh_operation("send_report")
+        _op["method"] = "POST"
+        _op["path"] = "/reports/" + str(report_id) + "/emails"
+        _op["json"] = sheet_email_obj
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -272,13 +277,13 @@ class Reports(object):
         Returns:
             Result
         """
-        _op = fresh_operation('share_report')
-        _op['method'] = 'POST'
-        _op['path'] = '/reports/' + str(report_id) + '/shares'
-        _op['query_params']['sendEmail'] = send_email
-        _op['json'] = share_obj
+        _op = fresh_operation("share_report")
+        _op["method"] = "POST"
+        _op["path"] = "/reports/" + str(report_id) + "/shares"
+        _op["query_params"]["sendEmail"] = send_email
+        _op["json"] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -296,19 +301,17 @@ class Reports(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['report_id', 'share_id',
-                                               'share_obj']):
+        if not all(val is not None for val in ["report_id", "share_id", "share_obj"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('update_share')
-        _op['method'] = 'PUT'
-        _op['path'] = '/reports/' + str(report_id) + '/shares/' + str(
-            share_id)
-        _op['json'] = share_obj
+        _op = fresh_operation("update_share")
+        _op["method"] = "PUT"
+        _op["path"] = "/reports/" + str(report_id) + "/shares/" + str(share_id)
+        _op["json"] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -327,11 +330,11 @@ class Reports(object):
         Returns:
             ReportPublish
         """
-        _op = fresh_operation('get_publish_status')
-        _op['method'] = 'GET'
-        _op['path'] = '/reports/' + str(report_id) + '/publish'
+        _op = fresh_operation("get_publish_status")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/publish"
 
-        expected = 'ReportPublish'
+        expected = "ReportPublish"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -349,7 +352,7 @@ class Reports(object):
         Returns:
             Result
         """
-        attributes = ['read_only_full_enabled', 'read_only_full_accessible_by']
+        attributes = ["read_only_full_enabled", "read_only_full_accessible_by"]
 
         fetch_first = False
         # check for incompleteness, fill in from current status if necessary
@@ -364,12 +367,12 @@ class Reports(object):
             current_status.update(report_publish_obj.to_dict())
             report_publish_obj = self._base.models.ReportPublish(current_status)
 
-        _op = fresh_operation('set_publish_status')
-        _op['method'] = 'PUT'
-        _op['path'] = '/reports/' + str(report_id) + '/publish'
-        _op['json'] = report_publish_obj
+        _op = fresh_operation("set_publish_status")
+        _op["method"] = "PUT"
+        _op["path"] = "/reports/" + str(report_id) + "/publish"
+        _op["json"] = report_publish_obj
 
-        expected = ['Result', 'ReportPublish']
+        expected = ["Result", "ReportPublish"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

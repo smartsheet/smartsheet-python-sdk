@@ -27,6 +27,6 @@ class WidgetType(Enum):
     TITLE = 7
     WEBCONTENT = 8
     # NOTE: These are level=0 widget types that should be supported for now
-    SHORTCUTLIST = 9   # SHORTCUTLIST --> SHORTCUT
+    SHORTCUTLIST = 9  # SHORTCUTLIST --> SHORTCUT
     SHORTCUTICON = 10  # SHORTCUTICON --> SHORTCUT
     SHEETSUMMARY = 11  # SHEETSUMMARY --> METRIC

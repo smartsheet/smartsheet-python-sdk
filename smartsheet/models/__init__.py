@@ -119,4 +119,3 @@ from .webhook_subscope import WebhookSubscope
 from .widget import Widget
 from .widget_content import WidgetContent
 from .workspace import Workspace
-

@@ -44,6 +44,7 @@ class ShortcutWidgetContent(WidgetContent):
         self.__initialized = True
 
     """Represents the ShortcutWidgetContent object."""
+
     @property
     def shortcut_data(self):
         return self._shortcut_data

@@ -47,30 +47,29 @@ class Token(object):
         Returns:
             AccessToken
         """
-        if not all(val is not None for val in ['client_id', 'code', '_hash']):
+        if not all(val is not None for val in ["client_id", "code", "_hash"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('get_access_token')
-        _op['method'] = 'POST'
-        _op['path'] = '/token'
-        _op['form_data'] = {}
-        _op['form_data']['grant_type'] = 'authorization_code'
-        _op['form_data']['client_id'] = client_id
-        _op['form_data']['code'] = code
-        _op['form_data']['redirect_uri'] = redirect_uri
-        _op['form_data']['hash'] = _hash
-        _op['auth_settings'] = None
+        _op = fresh_operation("get_access_token")
+        _op["method"] = "POST"
+        _op["path"] = "/token"
+        _op["form_data"] = {}
+        _op["form_data"]["grant_type"] = "authorization_code"
+        _op["form_data"]["client_id"] = client_id
+        _op["form_data"]["code"] = code
+        _op["form_data"]["redirect_uri"] = redirect_uri
+        _op["form_data"]["hash"] = _hash
+        _op["auth_settings"] = None
 
-        expected = 'AccessToken'
+        expected = "AccessToken"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def refresh_access_token(self, client_id, refresh_token, _hash,
-                             redirect_uri=None):
+    def refresh_access_token(self, client_id, refresh_token, _hash, redirect_uri=None):
         """Refresh an access token, as part of the OAuth process. For more
         information, see [OAuth
         Flow](http://smartsheet-platform.github.io/api-docs/index.html#oauth-flow)
@@ -87,23 +86,22 @@ class Token(object):
         Returns:
             AccessToken
         """
-        if not all(val is not None for val in ['client_id', 'refresh_token',
-                                               '_hash']):
+        if not all(val is not None for val in ["client_id", "refresh_token", "_hash"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('refresh_access_token')
-        _op['method'] = 'POST'
-        _op['path'] = '/token'
-        _op['form_data'] = {}
-        _op['form_data']['grant_type'] = 'refresh_token'
-        _op['form_data']['client_id'] = client_id
-        _op['form_data']['refresh_token'] = refresh_token
-        _op['form_data']['redirect_uri'] = redirect_uri
-        _op['form_data']['hash'] = _hash
+        _op = fresh_operation("refresh_access_token")
+        _op["method"] = "POST"
+        _op["path"] = "/token"
+        _op["form_data"] = {}
+        _op["form_data"]["grant_type"] = "refresh_token"
+        _op["form_data"]["client_id"] = client_id
+        _op["form_data"]["refresh_token"] = refresh_token
+        _op["form_data"]["redirect_uri"] = redirect_uri
+        _op["form_data"]["hash"] = _hash
 
-        expected = 'AccessToken'
+        expected = "AccessToken"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -118,11 +116,11 @@ class Token(object):
         Returns:
             Result
         """
-        _op = fresh_operation('revoke_access_token')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/token'
+        _op = fresh_operation("revoke_access_token")
+        _op["method"] = "DELETE"
+        _op["path"] = "/token"
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

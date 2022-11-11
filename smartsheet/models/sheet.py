@@ -91,13 +91,13 @@ class Sheet(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'id':
+        if key == "id":
             return self.id_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'id':
+        if key == "id":
             self.id_ = value
         else:
             super(Sheet, self).__setattr__(key, value)
@@ -374,7 +374,9 @@ class Sheet(object):
         return self._base.Sheets.get_column(self.id, column_id, include)
 
     def get_columns(self, include=None, page_size=100, page=1, include_all=False):
-        return self._base.Sheets.get_columns(self.id, include, page_size, page, include_all)
+        return self._base.Sheets.get_columns(
+            self.id, include, page_size, page, include_all
+        )
 
     def get_row(self, row_id, include=None, exclude=None):
         return self._base.Sheets.get_row(self.id, row_id, include, exclude)
@@ -382,14 +384,30 @@ class Sheet(object):
     def get_version(self):
         return self._base.Sheets.get_sheet_version(self.id)
 
-    def list_shares(self, page_size=100, page=1, include_all=False, include_workspace_shares=False, access_api_level=0):
-        return self._base.Sheets.list_shares(self.id, page_size, page, include_all, include_workspace_shares, access_api_level)
+    def list_shares(
+        self,
+        page_size=100,
+        page=1,
+        include_all=False,
+        include_workspace_shares=False,
+        access_api_level=0,
+    ):
+        return self._base.Sheets.list_shares(
+            self.id,
+            page_size,
+            page,
+            include_all,
+            include_workspace_shares,
+            access_api_level,
+        )
 
     def share(self, share_obj, send_email=False):
         return self._base.Sheets.share_sheet(self.id, share_obj, send_email)
 
     def shares(self, page_size=100, page=1, include_all=False):
-        return self._base.Sheets.list_shares(self.id, page_size=100, page=1, include_all=False)
+        return self._base.Sheets.list_shares(
+            self.id, page_size=100, page=1, include_all=False
+        )
 
     def update_share(self, share_id, share_obj):
         return self._base.Sheets.update_share(self.id, share_id, share_obj)
@@ -401,7 +419,7 @@ class Sheet(object):
         return self._base.Sheets.delete_share(self.id, share_id)
 
     def update_name(self, new_name):
-        return self._base.Sheets.update_sheet(self.id, Sheet({'name': new_name}))
+        return self._base.Sheets.update_sheet(self.id, Sheet({"name": new_name}))
 
     def get_publish_status(self):
         return self._base.Sheets.get_publish_status(self.id)
@@ -410,17 +428,20 @@ class Sheet(object):
         return self._base.Sheets.set_publish_status(self.id, sheet_publish_obj)
 
     def create_discussion(self, title, comment, _file=None):
-        dis = Discussion({
-            'title': title,
-            'comment': Comment({'text': comment})
-        })
+        dis = Discussion({"title": title, "comment": Comment({"text": comment})})
         if _file is not None:
-            return self._base.Discussions.create_discussion_on_sheet_with_attachment(self.id, dis, _file)
+            return self._base.Discussions.create_discussion_on_sheet_with_attachment(
+                self.id, dis, _file
+            )
         else:
             return self._base.Discussions.create_discussion_on_sheet(self.id, dis)
 
-    def get_all_discussions(self, include=None, page_size=100, page=1, include_all=False):
-        return self._base.Discussions.get_all_discussions(self.id, include, page_size, page, include_all)
+    def get_all_discussions(
+        self, include=None, page_size=100, page=1, include_all=False
+    ):
+        return self._base.Discussions.get_all_discussions(
+            self.id, include, page_size, page, include_all
+        )
 
     def attach_url(self, attachment_obj):
         return self._base.Attachments.attach_url_to_sheet(self.id, attachment_obj)

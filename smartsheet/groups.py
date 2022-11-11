@@ -41,12 +41,12 @@ class Groups(object):
         Returns:
             Result
         """
-        _op = fresh_operation('add_members')
-        _op['method'] = 'POST'
-        _op['path'] = '/groups/' + str(group_id) + '/members'
-        _op['json'] = group_member_obj
+        _op = fresh_operation("add_members")
+        _op["method"] = "POST"
+        _op["path"] = "/groups/" + str(group_id) + "/members"
+        _op["json"] = group_member_obj
 
-        expected = ['Result', 'GroupMember']
+        expected = ["Result", "GroupMember"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -62,12 +62,12 @@ class Groups(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_group')
-        _op['method'] = 'POST'
-        _op['path'] = '/groups'
-        _op['json'] = group_obj
+        _op = fresh_operation("create_group")
+        _op["method"] = "POST"
+        _op["path"] = "/groups"
+        _op["json"] = group_obj
 
-        expected = ['Result', 'Group']
+        expected = ["Result", "Group"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -83,11 +83,11 @@ class Groups(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_group')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/groups/' + str(group_id)
+        _op = fresh_operation("delete_group")
+        _op["method"] = "DELETE"
+        _op["path"] = "/groups/" + str(group_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -102,11 +102,11 @@ class Groups(object):
         Returns:
             Group
         """
-        _op = fresh_operation('get_group')
-        _op['method'] = 'GET'
-        _op['path'] = '/groups/' + str(group_id)
+        _op = fresh_operation("get_group")
+        _op["method"] = "GET"
+        _op["path"] = "/groups/" + str(group_id)
 
-        expected = 'Group'
+        expected = "Group"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -128,14 +128,14 @@ class Groups(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_groups')
-        _op['method'] = 'GET'
-        _op['path'] = '/groups'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_groups")
+        _op["method"] = "GET"
+        _op["path"] = "/groups"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Group']
+        expected = ["IndexResult", "Group"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -152,11 +152,11 @@ class Groups(object):
         Returns:
             Result
         """
-        _op = fresh_operation('remove_member')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/groups/' + str(group_id) + '/members/' + str(user_id)
+        _op = fresh_operation("remove_member")
+        _op["method"] = "DELETE"
+        _op["path"] = "/groups/" + str(group_id) + "/members/" + str(user_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -172,12 +172,12 @@ class Groups(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_group')
-        _op['method'] = 'PUT'
-        _op['path'] = '/groups/' + str(group_id)
-        _op['json'] = group_obj
+        _op = fresh_operation("update_group")
+        _op["method"] = "PUT"
+        _op["path"] = "/groups/" + str(group_id)
+        _op["json"] = group_obj
 
-        expected = ['Result', 'Group']
+        expected = ["Result", "Group"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

@@ -23,13 +23,14 @@ from . import fresh_operation
 
 
 class Events(object):
-
     def __init__(self, smartsheet_obj):
         """Init Events with base Smartsheet object."""
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def list_events(self, since=None, stream_position=None, max_count=None, numeric_dates=None):
+    def list_events(
+        self, since=None, stream_position=None, max_count=None, numeric_dates=None
+    ):
         """Get the list of all Events.
 
         Args:
@@ -47,18 +48,18 @@ class Events(object):
         Returns:
             EventResult containing Event array as data[]
         """
-        _op = fresh_operation('list_events')
-        _op['method'] = 'GET'
-        _op['path'] = '/events'
+        _op = fresh_operation("list_events")
+        _op["method"] = "GET"
+        _op["path"] = "/events"
         if isinstance(since, datetime):
-            _op['query_params']['since'] = since  # .isoformat()
+            _op["query_params"]["since"] = since  # .isoformat()
         else:
-            _op['query_params']['since'] = since
-        _op['query_params']['streamPosition'] = stream_position
-        _op['query_params']['maxCount'] = max_count
-        _op['query_params']['numericDates'] = numeric_dates
+            _op["query_params"]["since"] = since
+        _op["query_params"]["streamPosition"] = stream_position
+        _op["query_params"]["maxCount"] = max_count
+        _op["query_params"]["numericDates"] = numeric_dates
 
-        expected = ['EventResult', 'Event']
+        expected = ["EventResult", "Event"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

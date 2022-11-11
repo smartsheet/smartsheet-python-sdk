@@ -31,7 +31,9 @@ class Search(object):
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def search(self, query, include=None, location=None, modified_since=None, scopes=None):
+    def search(
+        self, query, include=None, location=None, modified_since=None, scopes=None
+    ):
         """Search all Sheets the User can access for the specified text.
 
         Args:
@@ -58,17 +60,17 @@ class Search(object):
         Returns:
             SearchResult
         """
-        _op = fresh_operation('search')
-        _op['method'] = 'GET'
-        _op['path'] = '/search'
-        _op['query_params']['query'] = query
-        _op['query_params']['include'] = include
-        _op['query_params']['location'] = location
-        _op['query_params']['scopes'] = scopes
+        _op = fresh_operation("search")
+        _op["method"] = "GET"
+        _op["path"] = "/search"
+        _op["query_params"]["query"] = query
+        _op["query_params"]["include"] = include
+        _op["query_params"]["location"] = location
+        _op["query_params"]["scopes"] = scopes
         if isinstance(modified_since, datetime):
-            _op['query_params']['modifiedSince'] = modified_since.isoformat()
+            _op["query_params"]["modifiedSince"] = modified_since.isoformat()
 
-        expected = 'SearchResult'
+        expected = "SearchResult"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -85,12 +87,12 @@ class Search(object):
         Returns:
             SearchResult
         """
-        _op = fresh_operation('search_sheet')
-        _op['method'] = 'GET'
-        _op['path'] = '/search/sheets/' + str(sheet_id)
-        _op['query_params']['query'] = query
+        _op = fresh_operation("search_sheet")
+        _op["method"] = "GET"
+        _op["path"] = "/search/sheets/" + str(sheet_id)
+        _op["query_params"]["query"] = query
 
-        expected = 'SearchResult'
+        expected = "SearchResult"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

@@ -58,13 +58,13 @@ class Cell(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'format':
+        if key == "format":
             return self.format_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'format':
+        if key == "format":
             self.format_ = value
         else:
             super(Cell, self).__setattr__(key, value)
@@ -179,7 +179,9 @@ class Cell(object):
 
     @value.setter
     def value(self, value):
-        if isinstance(value, (six.string_types, six.integer_types, float, bool, ExplicitNull)):
+        if isinstance(
+            value, (six.string_types, six.integer_types, float, bool, ExplicitNull)
+        ):
             self._value = value
 
     def to_dict(self):

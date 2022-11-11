@@ -35,12 +35,12 @@ class Server(object):
         Returns:
             ServerInfo
         """
-        _op = fresh_operation('server_info')
-        _op['method'] = 'GET'
-        _op['path'] = '/serverinfo'
-        _op['auth_settings'] = None
+        _op = fresh_operation("server_info")
+        _op["method"] = "GET"
+        _op["path"] = "/serverinfo"
+        _op["auth_settings"] = None
 
-        expected = 'ServerInfo'
+        expected = "ServerInfo"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

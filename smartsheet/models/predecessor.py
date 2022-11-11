@@ -59,7 +59,7 @@ class Predecessor(object):
 
     @invalid.setter
     def invalid(self, value):
-            self._invalid.value = value
+        self._invalid.value = value
 
     @property
     def lag(self):

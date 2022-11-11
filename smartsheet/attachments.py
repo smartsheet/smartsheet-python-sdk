@@ -17,11 +17,12 @@
 
 from __future__ import absolute_import
 
+import os.path
+import logging
+import requests
+
 from .models import DownloadedFile
 from .models import Error, ErrorResult
-import requests
-import logging
-import os.path
 from . import fresh_operation
 
 
@@ -45,20 +46,20 @@ class Attachments(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'comment_id',
-                                               '_file']):
+        if not all(val is not None for val in ["sheet_id", "comment_id", "_file"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('attach_file_to_comment')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/comments/' + str(
-            comment_id) + '/attachments'
-        _op['files'] = {}
-        _op['files']['file'] = _file
+        _op = fresh_operation("attach_file_to_comment")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/comments/" + str(comment_id) + "/attachments"
+        )
+        _op["files"] = {}
+        _op["files"]["file"] = _file
 
-        expected = ['Result', 'Attachment']
+        expected = ["Result", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -76,19 +77,20 @@ class Attachments(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'row_id', '_file']):
+        if not all(val is not None for val in ["sheet_id", "row_id", "_file"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('attach_file_to_row')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(
-            row_id) + '/attachments'
-        _op['files'] = {}
-        _op['files']['file'] = _file
+        _op = fresh_operation("attach_file_to_row")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/rows/" + str(row_id) + "/attachments"
+        )
+        _op["files"] = {}
+        _op["files"]["file"] = _file
 
-        expected = ['Result', 'Attachment']
+        expected = ["Result", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -105,13 +107,13 @@ class Attachments(object):
         Returns:
             Result
         """
-        _op = fresh_operation('attach_file_to_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/attachments'
-        _op['files'] = {}
-        _op['files']['file'] = _file
+        _op = fresh_operation("attach_file_to_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/attachments"
+        _op["files"] = {}
+        _op["files"]["file"] = _file
 
-        expected = ['Result', 'Attachment']
+        expected = ["Result", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -129,20 +131,24 @@ class Attachments(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'attachment_id',
-                                               '_file']):
+        if not all(val is not None for val in ["sheet_id", "attachment_id", "_file"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('attach_new_version')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/attachments/' + str(
-            attachment_id) + '/versions'
-        _op['files'] = {}
-        _op['files']['file'] = _file
+        _op = fresh_operation("attach_new_version")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/attachments/"
+            + str(attachment_id)
+            + "/versions"
+        )
+        _op["files"] = {}
+        _op["files"]["file"] = _file
 
-        expected = ['Result', 'Attachment']
+        expected = ["Result", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -181,19 +187,21 @@ class Attachments(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'comment_id',
-                                               'attachment_obj']):
+        if not all(
+            val is not None for val in ["sheet_id", "comment_id", "attachment_obj"]
+        ):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('attach_url_to_comment')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/comments/' + str(
-            comment_id) + '/attachments'
-        _op['json'] = attachment_obj
+        _op = fresh_operation("attach_url_to_comment")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/comments/" + str(comment_id) + "/attachments"
+        )
+        _op["json"] = attachment_obj
 
-        expected = ['Result', 'Attachment']
+        expected = ["Result", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -232,19 +240,19 @@ class Attachments(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'row_id',
-                                               'attachment_obj']):
+        if not all(val is not None for val in ["sheet_id", "row_id", "attachment_obj"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('attach_url_to_row')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(
-            row_id) + '/attachments'
-        _op['json'] = attachment_obj
+        _op = fresh_operation("attach_url_to_row")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/rows/" + str(row_id) + "/attachments"
+        )
+        _op["json"] = attachment_obj
 
-        expected = ['Result', 'Attachment']
+        expected = ["Result", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -282,12 +290,12 @@ class Attachments(object):
         Returns:
             Result
         """
-        _op = fresh_operation('attach_url_to_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/attachments'
-        _op['json'] = attachment_obj
+        _op = fresh_operation("attach_url_to_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/attachments"
+        _op["json"] = attachment_obj
 
-        expected = ['Result', 'Attachment']
+        expected = ["Result", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -304,12 +312,11 @@ class Attachments(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_attachment')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/attachments/' + str(
-            attachment_id)
+        _op = fresh_operation("delete_attachment")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/attachments/" + str(attachment_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -328,12 +335,17 @@ class Attachments(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_attachment_versions')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/attachments/' + str(
-            attachment_id) + '/versions'
+        _op = fresh_operation("delete_attachment_versions")
+        _op["method"] = "DELETE"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/attachments/"
+            + str(attachment_id)
+            + "/versions"
+        )
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -349,19 +361,19 @@ class Attachments(object):
         Returns:
             Attachment
         """
-        _op = fresh_operation('get_attachment')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/attachments/' + str(
-            attachment_id)
+        _op = fresh_operation("get_attachment")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/attachments/" + str(attachment_id)
 
-        expected = 'Attachment'
+        expected = "Attachment"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_all_attachments(self, sheet_id, page_size=None, page=None,
-                             include_all=None):
+    def list_all_attachments(
+        self, sheet_id, page_size=None, page=None, include_all=None
+    ):
         """Get a list of Attachments for a Sheet.
 
         Get a list of all Attachments for the specified Sheet,
@@ -378,22 +390,23 @@ class Attachments(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_all_attachments')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/attachments'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_all_attachments")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/attachments"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Attachment']
+        expected = ["IndexResult", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_attachment_versions(self, sheet_id, attachment_id,
-                                 page_size=None, page=None, include_all=None):
+    def list_attachment_versions(
+        self, sheet_id, attachment_id, page_size=None, page=None, include_all=None
+    ):
         """Get a list of versions for an Attachment.
 
         Get a list of all versions of the given Attachment ID, in
@@ -411,23 +424,29 @@ class Attachments(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_attachment_versions')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/attachments/' + str(
-            attachment_id) + '/versions'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_attachment_versions")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/attachments/"
+            + str(attachment_id)
+            + "/versions"
+        )
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Attachment']
+        expected = ["IndexResult", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_discussion_attachments(self, sheet_id, discussion_id,
-                                    page_size=None, page=None, include_all=None):
+    def list_discussion_attachments(
+        self, sheet_id, discussion_id, page_size=None, page=None, include_all=None
+    ):
         """Get a list of Attachments for the Sheet Discussion.
 
         Get a list of all Attachments for the specified Sheet
@@ -445,23 +464,29 @@ class Attachments(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_discussion_attachments')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/discussions/' + str(
-            discussion_id) + '/attachments'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_discussion_attachments")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/discussions/"
+            + str(discussion_id)
+            + "/attachments"
+        )
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Attachment']
+        expected = ["IndexResult", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_row_attachments(self, sheet_id, row_id, page_size=None, page=None,
-                             include_all=None):
+    def list_row_attachments(
+        self, sheet_id, row_id, page_size=None, page=None, include_all=None
+    ):
         """Get a list of all Attachments for the specified Sheet Row.
 
         Args:
@@ -476,23 +501,25 @@ class Attachments(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_row_attachments')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(
-            row_id) + '/attachments'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_row_attachments")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/rows/" + str(row_id) + "/attachments"
+        )
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Attachment']
+        expected = ["IndexResult", "Attachment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def download_attachment(self, attachment_obj, download_path,
-                            alternate_file_name=None):
+    def download_attachment(
+        self, attachment_obj, download_path, alternate_file_name=None
+    ):
         """Download the specified attachment as a file.
 
         This method wraps the Requests module and performs
@@ -509,21 +536,20 @@ class Attachments(object):
             DownloadedFile
         """
         if not os.path.isdir(download_path):
-            raise ValueError('download_path must be a directory.')
+            raise ValueError("download_path must be a directory.")
 
-        resp = requests.get(
-            attachment_obj.url,
-            stream=True
-        )
+        resp = requests.get(attachment_obj.url, stream=True)
 
         if 200 <= resp.status_code <= 299:
-            response = DownloadedFile({
-                'result_code': 0,
-                'message': 'SUCCESS',
-                'resp': resp,
-                'filename': attachment_obj.name,
-                'download_directory': download_path
-            })
+            response = DownloadedFile(
+                {
+                    "result_code": 0,
+                    "message": "SUCCESS",
+                    "resp": resp,
+                    "filename": attachment_obj.name,
+                    "download_directory": download_path,
+                }
+            )
 
             if alternate_file_name is not None:
                 response.filename = alternate_file_name
@@ -531,9 +557,9 @@ class Attachments(object):
             response.save_to_file()
             return response
         else:
-            return Error({
-                'result': ErrorResult({
-                    'status_code': resp.status_code
-                }),
-                'request_response': resp
-            })
+            return Error(
+                {
+                    "result": ErrorResult({"status_code": resp.status_code}),
+                    "request_response": resp,
+                }
+            )

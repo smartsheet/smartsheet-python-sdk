@@ -34,9 +34,7 @@ class Webhook(object):
         if base_obj is not None:
             self._base = base_obj
 
-        self.allowed_values = {
-            'scope': [
-                'sheet']}
+        self.allowed_values = {"scope": ["sheet"]}
 
         self._api_client_id = String()
         self._api_client_name = String()
@@ -48,9 +46,7 @@ class Webhook(object):
         self._id_ = Number()
         self._modified_at = Timestamp()
         self._name = String()
-        self._scope = String(
-            accept=self.allowed_values['scope']
-        )
+        self._scope = String(accept=self.allowed_values["scope"])
         self._scope_object_id = Number()
         self._shared_secret = String()
         self._stats = TypedObject(WebhookStats)
@@ -66,13 +62,13 @@ class Webhook(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'id':
+        if key == "id":
             return self.id_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'id':
+        if key == "id":
             self.id_ = value
         else:
             super(Webhook, self).__setattr__(key, value)

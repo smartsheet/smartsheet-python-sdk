@@ -37,37 +37,38 @@ BOOLEAN = 10
 STRING = 11
 
 OBJECT_VALUE = {
-    'object_type': [
-        'DATE',
-        'DATETIME',
-        'ABSTRACT_DATETIME',
-        'CONTACT',
-        'DURATION',
-        'PREDECESSOR_LIST',
-        'MULTI_CONTACT',
-        'MULTI_PICKLIST'
-    ]}
+    "object_type": [
+        "DATE",
+        "DATETIME",
+        "ABSTRACT_DATETIME",
+        "CONTACT",
+        "DURATION",
+        "PREDECESSOR_LIST",
+        "MULTI_CONTACT",
+        "MULTI_PICKLIST",
+    ]
+}
 
 _typeToName = {
-    DATE: 'DATE',
-    DATETIME: 'DATETIME',
-    ABSTRACT_DATETIME: 'ABSTRACT_DATETIME',
-    CONTACT: 'CONTACT',
-    DURATION: 'DURATION',
-    PREDECESSOR_LIST: 'PREDECESSOR_LIST',
-    MULTI_CONTACT: 'MULTI_CONTACT',
-    MULTI_PICKLIST: 'MULTI_PICKLIST'
+    DATE: "DATE",
+    DATETIME: "DATETIME",
+    ABSTRACT_DATETIME: "ABSTRACT_DATETIME",
+    CONTACT: "CONTACT",
+    DURATION: "DURATION",
+    PREDECESSOR_LIST: "PREDECESSOR_LIST",
+    MULTI_CONTACT: "MULTI_CONTACT",
+    MULTI_PICKLIST: "MULTI_PICKLIST",
 }
 
 _nameToType = {
-    'DATE': DATE,
-    'DATETIME': DATETIME,
-    'ABSTRACT_DATETIME': ABSTRACT_DATETIME,
-    'CONTACT': CONTACT,
-    'DURATION': DURATION,
-    'PREDECESSOR_LIST': PREDECESSOR_LIST,
-    'MULTI_CONTACT': MULTI_CONTACT,
-    'MULTI_PICKLIST': MULTI_PICKLIST
+    "DATE": DATE,
+    "DATETIME": DATETIME,
+    "ABSTRACT_DATETIME": ABSTRACT_DATETIME,
+    "CONTACT": CONTACT,
+    "DURATION": DURATION,
+    "PREDECESSOR_LIST": PREDECESSOR_LIST,
+    "MULTI_CONTACT": MULTI_CONTACT,
+    "MULTI_PICKLIST": MULTI_PICKLIST,
 }
 
 
@@ -109,12 +110,14 @@ class ObjectValue(object):
             prop_value = getattr(self, prop_name)
             if prop_value is not None:
                 serialized = serialize(prop_value)
-                if isinstance(serialized, ExplicitNull):  # object forcing serialization of a null
+                if isinstance(
+                    serialized, ExplicitNull
+                ):  # object forcing serialization of a null
                     retval[camel_case] = None
                 elif serialized is not None:
                     retval[camel_case] = serialized
 
-        retval['objectType'] = _typeToName.get(self._object_type)
+        retval["objectType"] = _typeToName.get(self._object_type)
         return retval
 
     def to_dict(self):

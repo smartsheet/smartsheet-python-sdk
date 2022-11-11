@@ -32,16 +32,10 @@ class ContainerDestination(object):
         if base_obj is not None:
             self._base = base_obj
 
-        self.allowed_values = {
-            'destination_type': [
-                'home',
-                'workspace',
-                'folder']}
+        self.allowed_values = {"destination_type": ["home", "workspace", "folder"]}
 
         self._destination_id = Number()
-        self._destination_type = String(
-            accept=self.allowed_values['destination_type']
-        )
+        self._destination_type = String(accept=self.allowed_values["destination_type"])
         self._new_name = String()
 
         if props:

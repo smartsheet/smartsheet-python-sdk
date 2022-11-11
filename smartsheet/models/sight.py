@@ -31,6 +31,7 @@ class Sight(object):
 
     def __init__(self, props=None, base_obj=None):
         from .workspace import Workspace
+
         """Initialize the Sight model."""
         self._base = None
         if base_obj is not None:
@@ -57,13 +58,13 @@ class Sight(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'id':
+        if key == "id":
             return self.id_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'id':
+        if key == "id":
             self.id_ = value
         else:
             super(Sight, self).__setattr__(key, value)

@@ -32,8 +32,9 @@ class Workspaces(object):
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def copy_workspace(self, workspace_id, container_destination_obj,
-                       include=None, skip_remap=None):
+    def copy_workspace(
+        self, workspace_id, container_destination_obj, include=None, skip_remap=None
+    ):
         """Create a copy of the specified Workspace.
 
         Args:
@@ -48,14 +49,14 @@ class Workspaces(object):
         Returns:
             Result
         """
-        _op = fresh_operation('copy_workspace')
-        _op['method'] = 'POST'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/copy'
-        _op['query_params']['include'] = include
-        _op['query_params']['skipRemap'] = skip_remap
-        _op['json'] = container_destination_obj
+        _op = fresh_operation("copy_workspace")
+        _op["method"] = "POST"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/copy"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["skipRemap"] = skip_remap
+        _op["json"] = container_destination_obj
 
-        expected = ['Result', 'Workspace']
+        expected = ["Result", "Workspace"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -73,16 +74,14 @@ class Workspaces(object):
             Result
         """
         if isinstance(folder_obj, str):
-            folder_obj = Folder({
-                'name': folder_obj
-            })
+            folder_obj = Folder({"name": folder_obj})
 
-        _op = fresh_operation('create_folder_in_workspace')
-        _op['method'] = 'POST'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/folders'
-        _op['json'] = folder_obj
+        _op = fresh_operation("create_folder_in_workspace")
+        _op["method"] = "POST"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/folders"
+        _op["json"] = folder_obj
 
-        expected = ['Result', 'Folder']
+        expected = ["Result", "Folder"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -100,12 +99,12 @@ class Workspaces(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_sheet_in_workspace')
-        _op['method'] = 'POST'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/sheets'
-        _op['json'] = sheet_obj
+        _op = fresh_operation("create_sheet_in_workspace")
+        _op["method"] = "POST"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/sheets"
+        _op["json"] = sheet_obj
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -113,8 +112,9 @@ class Workspaces(object):
         return response
 
     # pylint: disable=invalid-name
-    def create_sheet_in_workspace_from_template(self, workspace_id,
-                                                sheet_obj, include=None):
+    def create_sheet_in_workspace_from_template(
+        self, workspace_id, sheet_obj, include=None
+    ):
         """Create a Sheet in the specified Workspace from the specified Template.
 
         The Sheet object should be limited to the following
@@ -138,13 +138,13 @@ class Workspaces(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_sheet_in_workspace_from_template')
-        _op['method'] = 'POST'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/sheets'
-        _op['query_params']['include'] = include
-        _op['json'] = sheet_obj
+        _op = fresh_operation("create_sheet_in_workspace_from_template")
+        _op["method"] = "POST"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/sheets"
+        _op["query_params"]["include"] = include
+        _op["json"] = sheet_obj
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -162,12 +162,12 @@ class Workspaces(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_workspace')
-        _op['method'] = 'POST'
-        _op['path'] = '/workspaces'
-        _op['json'] = workspace_obj
+        _op = fresh_operation("create_workspace")
+        _op["method"] = "POST"
+        _op["path"] = "/workspaces"
+        _op["json"] = workspace_obj
 
-        expected = ['Result', 'Workspace']
+        expected = ["Result", "Workspace"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -184,12 +184,11 @@ class Workspaces(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_share')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/shares/' + str(
-            share_id)
+        _op = fresh_operation("delete_share")
+        _op["method"] = "DELETE"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -204,11 +203,11 @@ class Workspaces(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_workspace')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/workspaces/' + str(workspace_id)
+        _op = fresh_operation("delete_workspace")
+        _op["method"] = "DELETE"
+        _op["path"] = "/workspaces/" + str(workspace_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -224,12 +223,11 @@ class Workspaces(object):
         Returns:
             Share
         """
-        _op = fresh_operation('get_share')
-        _op['method'] = 'GET'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/shares/' + str(
-            share_id)
+        _op = fresh_operation("get_share")
+        _op["method"] = "GET"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
 
-        expected = 'Share'
+        expected = "Share"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -254,20 +252,19 @@ class Workspaces(object):
         Returns:
             Workspace
         """
-        _op = fresh_operation('get_workspace')
-        _op['method'] = 'GET'
-        _op['path'] = '/workspaces/' + str(workspace_id)
-        _op['query_params']['loadAll'] = load_all
-        _op['query_params']['include'] = include
+        _op = fresh_operation("get_workspace")
+        _op["method"] = "GET"
+        _op["path"] = "/workspaces/" + str(workspace_id)
+        _op["query_params"]["loadAll"] = load_all
+        _op["query_params"]["include"] = include
 
-        expected = 'Workspace'
+        expected = "Workspace"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_folders(self, workspace_id, page_size=None, page=None,
-                     include_all=None):
+    def list_folders(self, workspace_id, page_size=None, page=None, include_all=None):
         """Get a list of top-level child Folders within the specified
         Workspace.
 
@@ -282,22 +279,21 @@ class Workspaces(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_folders')
-        _op['method'] = 'GET'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/folders'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_folders")
+        _op["method"] = "GET"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/folders"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Folder']
+        expected = ["IndexResult", "Folder"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_shares(self, workspace_id, page_size=None, page=None,
-                    include_all=None):
+    def list_shares(self, workspace_id, page_size=None, page=None, include_all=None):
         """Get a list of all Users and Groups to whom the specified Workspace
         is shared, and their access level.
 
@@ -312,13 +308,13 @@ class Workspaces(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_shares')
-        _op['method'] = 'GET'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/shares'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
-        expected = ['IndexResult', 'Share']
+        _op = fresh_operation("list_shares")
+        _op["method"] = "GET"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
+        expected = ["IndexResult", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -338,14 +334,14 @@ class Workspaces(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_workspaces')
-        _op['method'] = 'GET'
-        _op['path'] = '/workspaces'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_workspaces")
+        _op["method"] = "GET"
+        _op["path"] = "/workspaces"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Workspace']
+        expected = ["IndexResult", "Workspace"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -365,13 +361,13 @@ class Workspaces(object):
         Returns:
             Result
         """
-        _op = fresh_operation('share_workspace')
-        _op['method'] = 'POST'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/shares'
-        _op['query_params']['sendEmail'] = send_email
-        _op['json'] = share_obj
+        _op = fresh_operation("share_workspace")
+        _op["method"] = "POST"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares"
+        _op["query_params"]["sendEmail"] = send_email
+        _op["json"] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -390,19 +386,19 @@ class Workspaces(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['workspace_id', 'share_id',
-                                               'share_obj']):
+        if not all(
+            val is not None for val in ["workspace_id", "share_id", "share_obj"]
+        ):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('update_share')
-        _op['method'] = 'PUT'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/shares/' + str(
-            share_id)
-        _op['json'] = share_obj
+        _op = fresh_operation("update_share")
+        _op["method"] = "PUT"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
+        _op["json"] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -419,19 +415,26 @@ class Workspaces(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_workspace')
-        _op['method'] = 'PUT'
-        _op['path'] = '/workspaces/' + str(workspace_id)
-        _op['json'] = workspace_obj
+        _op = fresh_operation("update_workspace")
+        _op["method"] = "PUT"
+        _op["path"] = "/workspaces/" + str(workspace_id)
+        _op["json"] = workspace_obj
 
-        expected = ['Result', 'Workspace']
+        expected = ["Result", "Workspace"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def import_csv_sheet(self, workspace_id, file, sheet_name=None, header_row_index=None, primary_column_index=None ):
+    def import_csv_sheet(
+        self,
+        workspace_id,
+        file,
+        sheet_name=None,
+        header_row_index=None,
+        primary_column_index=None,
+    ):
         """Imports a sheet in the specified workspace.
 
         Args:
@@ -443,16 +446,29 @@ class Workspaces(object):
 
         Returns:
             Result
-            """
-        if not all(val is not None for val in ['folder_id', 'file']):
+        """
+        if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        return self._import_sheet(workspace_id, file, "text/csv",
-                                  sheet_name, header_row_index, primary_column_index)
+        return self._import_sheet(
+            workspace_id,
+            file,
+            "text/csv",
+            sheet_name,
+            header_row_index,
+            primary_column_index,
+        )
 
-    def import_xlsx_sheet(self, workspace_id, file, sheet_name=None, header_row_index=None, primary_column_index=None ):
+    def import_xlsx_sheet(
+        self,
+        workspace_id,
+        file,
+        sheet_name=None,
+        header_row_index=None,
+        primary_column_index=None,
+    ):
         """Imports a sheet in the specified workspace.
 
         Args:
@@ -464,36 +480,51 @@ class Workspaces(object):
 
         Returns:
             Result
-            """
-        if not all(val is not None for val in ['folder_id', 'file']):
+        """
+        if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        return self._import_sheet(workspace_id, file,
-                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                  sheet_name, header_row_index, primary_column_index)
+        return self._import_sheet(
+            workspace_id,
+            file,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            sheet_name,
+            header_row_index,
+            primary_column_index,
+        )
 
-    def _import_sheet(self, workspace_id, file, file_type, sheet_name, header_row_index, primary_column_index):
+    def _import_sheet(
+        self,
+        workspace_id,
+        file,
+        file_type,
+        sheet_name,
+        header_row_index,
+        primary_column_index,
+    ):
         """Internal function used to import sheet"""
 
         if sheet_name is None:
             head, tail = os.path.split(file)
             sheet_name = tail or os.path.basename(head)
 
-        _data = open(file, 'rb').read()
+        _data = open(file, "rb").read()
 
-        _op = fresh_operation('import_sheet_into_folder')
-        _op['method'] = 'POST'
-        _op['path'] = '/workspaces/' + str(workspace_id) + '/sheets/import'
-        _op['headers'] = {'content-type': file_type,
-                          'content-disposition': 'attachment'}
-        _op['form_data'] = _data
-        _op['query_params']['sheetName'] = sheet_name
-        _op['query_params']['headerRowIndex'] = header_row_index
-        _op['query_params']['primaryColumnIndex'] = primary_column_index
+        _op = fresh_operation("import_sheet_into_folder")
+        _op["method"] = "POST"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/sheets/import"
+        _op["headers"] = {
+            "content-type": file_type,
+            "content-disposition": "attachment",
+        }
+        _op["form_data"] = _data
+        _op["query_params"]["sheetName"] = sheet_name
+        _op["query_params"]["headerRowIndex"] = header_row_index
+        _op["query_params"]["primaryColumnIndex"] = primary_column_index
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

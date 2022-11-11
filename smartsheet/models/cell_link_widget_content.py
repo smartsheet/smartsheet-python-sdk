@@ -49,18 +49,19 @@ class CellLinkWidgetContent(WidgetContent):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'format':
+        if key == "format":
             return self.format_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'format':
+        if key == "format":
             self.format_ = value
         else:
             super(WidgetContent, self).__setattr__(key, value)
 
     """Represents the CellLinkWidgetContent object."""
+
     @property
     def sheet_id(self):
         return self._sheet_id.value

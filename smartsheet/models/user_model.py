@@ -62,13 +62,13 @@ class UserModel(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'id':
+        if key == "id":
             return self.id_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'id':
+        if key == "id":
             self.id_ = value
         else:
             super(UserModel, self).__setattr__(key, value)

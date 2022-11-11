@@ -39,11 +39,11 @@ class Contacts(object):
         Returns:
             Contact
         """
-        _op = fresh_operation('get_contact')
-        _op['method'] = 'GET'
-        _op['path'] = '/contacts/' + str(contact_id)
+        _op = fresh_operation("get_contact")
+        _op["method"] = "GET"
+        _op["path"] = "/contacts/" + str(contact_id)
 
-        expected = 'Contact'
+        expected = "Contact"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -62,14 +62,14 @@ class Contacts(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_contacts')
-        _op['method'] = 'GET'
-        _op['path'] = '/contacts'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_contacts")
+        _op["method"] = "GET"
+        _op["path"] = "/contacts"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Contact']
+        expected = ["IndexResult", "Contact"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

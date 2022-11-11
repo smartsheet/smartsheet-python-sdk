@@ -31,8 +31,7 @@ class Discussions(object):
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_comment_to_discussion(self, sheet_id, discussion_id,
-                                  comment_obj=None):
+    def add_comment_to_discussion(self, sheet_id, discussion_id, comment_obj=None):
         """Add a Comment to the specified Discussion
 
         Args:
@@ -43,13 +42,18 @@ class Discussions(object):
         Returns:
             Result
         """
-        _op = fresh_operation('add_comment_to_discussion')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/discussions/' + str(
-            discussion_id) + '/comments'
-        _op['json'] = comment_obj
+        _op = fresh_operation("add_comment_to_discussion")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/discussions/"
+            + str(discussion_id)
+            + "/comments"
+        )
+        _op["json"] = comment_obj
 
-        expected = ['Result', 'Comment']
+        expected = ["Result", "Comment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -57,8 +61,9 @@ class Discussions(object):
         return response
 
     # pylint: disable=invalid-name
-    def add_comment_to_discussion_with_attachment(self, sheet_id,
-                                                  discussion_id, comment, _file=None):
+    def add_comment_to_discussion_with_attachment(
+        self, sheet_id, discussion_id, comment, _file=None
+    ):
         """Add a Comment with an Attachment to the specified Discussion
 
         Args:
@@ -70,22 +75,26 @@ class Discussions(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'discussion_id',
-                                               'comment']):
+        if not all(val is not None for val in ["sheet_id", "discussion_id", "comment"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('add_comment_to_discussion_with_attachment')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/discussions/' + str(
-            discussion_id) + '/comments'
-        _op['files'] = {}
+        _op = fresh_operation("add_comment_to_discussion_with_attachment")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/discussions/"
+            + str(discussion_id)
+            + "/comments"
+        )
+        _op["files"] = {}
         field_str = comment.to_json()
-        _op['files']['comment'] = (None, six.StringIO(field_str), 'application/json')
-        _op['files']['file'] = _file
+        _op["files"]["comment"] = (None, six.StringIO(field_str), "application/json")
+        _op["files"]["file"] = _file
 
-        expected = ['Result', 'Comment']
+        expected = ["Result", "Comment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -94,8 +103,7 @@ class Discussions(object):
 
     # pylint: enable=invalid-name
 
-    def create_discussion_on_row(self, sheet_id, row_id,
-                                 discussion_obj=None):
+    def create_discussion_on_row(self, sheet_id, row_id, discussion_obj=None):
         """Create a new Discussion on a Row.
 
 
@@ -108,13 +116,14 @@ class Discussions(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_discussion_on_row')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(
-            row_id) + '/discussions'
-        _op['json'] = discussion_obj
+        _op = fresh_operation("create_discussion_on_row")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/rows/" + str(row_id) + "/discussions"
+        )
+        _op["json"] = discussion_obj
 
-        expected = ['Result', 'Discussion']
+        expected = ["Result", "Discussion"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -122,8 +131,9 @@ class Discussions(object):
         return response
 
     # pylint: disable=invalid-name
-    def create_discussion_on_row_with_attachment(self, sheet_id, row_id,
-                                                 discussion, _file=None):
+    def create_discussion_on_row_with_attachment(
+        self, sheet_id, row_id, discussion, _file=None
+    ):
         """Create a new Discussion on a Row with an attachment.
 
         Args:
@@ -135,22 +145,22 @@ class Discussions(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'row_id',
-                                               'discussion']):
+        if not all(val is not None for val in ["sheet_id", "row_id", "discussion"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('create_discussion_on_row_with_attachment')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(
-            row_id) + '/discussions'
-        _op['files'] = {}
+        _op = fresh_operation("create_discussion_on_row_with_attachment")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/rows/" + str(row_id) + "/discussions"
+        )
+        _op["files"] = {}
         field_str = discussion.to_json()
-        _op['files']['discussion'] = (None, six.StringIO(field_str), 'application/json')
-        _op['files']['file'] = _file
+        _op["files"]["discussion"] = (None, six.StringIO(field_str), "application/json")
+        _op["files"]["file"] = _file
 
-        expected = ['Result', 'Discussion']
+        expected = ["Result", "Discussion"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -169,12 +179,12 @@ class Discussions(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_discussion_on_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/discussions'
-        _op['json'] = discussion_obj
+        _op = fresh_operation("create_discussion_on_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/discussions"
+        _op["json"] = discussion_obj
 
-        expected = ['Result', 'Discussion']
+        expected = ["Result", "Discussion"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -182,8 +192,9 @@ class Discussions(object):
         return response
 
     # pylint: disable=invalid-name
-    def create_discussion_on_sheet_with_attachment(self, sheet_id,
-                                                   discussion, _file=None):
+    def create_discussion_on_sheet_with_attachment(
+        self, sheet_id, discussion, _file=None
+    ):
         """Create a new Discussion on a Sheet with an attachment.
 
         Args:
@@ -194,15 +205,15 @@ class Discussions(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_discussion_on_sheet_with_attachment')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/discussions'
-        _op['files'] = {}
+        _op = fresh_operation("create_discussion_on_sheet_with_attachment")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/discussions"
+        _op["files"] = {}
         field_str = discussion.to_json()
-        _op['files']['discussion'] = (None, six.StringIO(field_str), 'application/json')
-        _op['files']['file'] = _file
+        _op["files"]["discussion"] = (None, six.StringIO(field_str), "application/json")
+        _op["files"]["file"] = _file
 
-        expected = ['Result', 'Discussion']
+        expected = ["Result", "Discussion"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -221,12 +232,11 @@ class Discussions(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_discussion')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/discussions/' + str(
-            discussion_id)
+        _op = fresh_operation("delete_discussion")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/discussions/" + str(discussion_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -244,19 +254,19 @@ class Discussions(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_discussion_comment')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/comments/' + str(
-            comment_id)
+        _op = fresh_operation("delete_discussion_comment")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/comments/" + str(comment_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_all_discussions(self, sheet_id, include=None, page_size=None,
-                            page=None, include_all=None):
+    def get_all_discussions(
+        self, sheet_id, include=None, page_size=None, page=None, include_all=None
+    ):
         """Get a list of all Discussions on the specified Sheet.
 
         Get a list of all Discussions associated with the specified
@@ -276,15 +286,15 @@ class Discussions(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('get_all_discussions')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/discussions'
-        _op['query_params']['include'] = include
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("get_all_discussions")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/discussions"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Discussion']
+        expected = ["IndexResult", "Discussion"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -301,12 +311,11 @@ class Discussions(object):
         Returns:
             Discussion
         """
-        _op = fresh_operation('get_discussion')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/discussions/' + str(
-            discussion_id)
+        _op = fresh_operation("get_discussion")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/discussions/" + str(discussion_id)
 
-        expected = 'Discussion'
+        expected = "Discussion"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -322,19 +331,25 @@ class Discussions(object):
         Returns:
             Comment
         """
-        _op = fresh_operation('get_discussion_comment')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/comments/' + str(
-            comment_id)
+        _op = fresh_operation("get_discussion_comment")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/comments/" + str(comment_id)
 
-        expected = 'Comment'
+        expected = "Comment"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_row_discussions(self, sheet_id, row_id, include=None,
-                            page_size=None, page=None, include_all=None):
+    def get_row_discussions(
+        self,
+        sheet_id,
+        row_id,
+        include=None,
+        page_size=None,
+        page=None,
+        include_all=None,
+    ):
         """Get a list of all Discussions associated with the specified Row.
 
         Args:
@@ -353,16 +368,17 @@ class Discussions(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('get_row_discussions')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(
-            row_id) + '/discussions'
-        _op['query_params']['include'] = include
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("get_row_discussions")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/rows/" + str(row_id) + "/discussions"
+        )
+        _op["query_params"]["include"] = include
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Discussion']
+        expected = ["IndexResult", "Discussion"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -380,12 +396,12 @@ class Discussions(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_comment')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/comments/' + str(comment_id)
-        _op['json'] = comment_obj
+        _op = fresh_operation("update_comment")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/comments/" + str(comment_id)
+        _op["json"] = comment_obj
 
-        expected = ['Result', 'Comment']
+        expected = ["Result", "Comment"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

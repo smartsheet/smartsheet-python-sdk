@@ -42,12 +42,12 @@ class Users(object):
         Returns:
             Result
         """
-        _op = fresh_operation('add_alternate_email')
-        _op['method'] = 'POST'
-        _op['path'] = '/users/' + str(user_id) + '/alternateemails'
-        _op['json'] = list_of_alternate_emails
+        _op = fresh_operation("add_alternate_email")
+        _op["method"] = "POST"
+        _op["path"] = "/users/" + str(user_id) + "/alternateemails"
+        _op["json"] = list_of_alternate_emails
 
-        expected = ['Result', 'AlternateEmail']
+        expected = ["Result", "AlternateEmail"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -64,11 +64,17 @@ class Users(object):
         Returns:
             Result
         """
-        _op = fresh_operation('promote_alternate_email')
-        _op['method'] = 'POST'
-        _op['path'] = '/users/' + str(user_id) + '/alternateemails/' + str(alt_id) + '/makeprimary'
+        _op = fresh_operation("promote_alternate_email")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/users/"
+            + str(user_id)
+            + "/alternateemails/"
+            + str(alt_id)
+            + "/makeprimary"
+        )
 
-        expected = ['Result', 'AlternateEmail']
+        expected = ["Result", "AlternateEmail"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -99,13 +105,13 @@ class Users(object):
         Returns:
             Result
         """
-        _op = fresh_operation('add_user')
-        _op['method'] = 'POST'
-        _op['path'] = '/users'
-        _op['json'] = user_obj
-        _op['query_params']['sendEmail'] = send_email
+        _op = fresh_operation("add_user")
+        _op["method"] = "POST"
+        _op["path"] = "/users"
+        _op["json"] = user_obj
+        _op["query_params"]["sendEmail"] = send_email
 
-        expected = ['Result', 'User']
+        expected = ["Result", "User"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -122,12 +128,13 @@ class Users(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_alternate_email')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/users/' + str(user_id) + '/alternateemails/' + str(
-            alternate_email_id)
+        _op = fresh_operation("delete_alternate_email")
+        _op["method"] = "DELETE"
+        _op["path"] = (
+            "/users/" + str(user_id) + "/alternateemails/" + str(alternate_email_id)
+        )
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -143,12 +150,13 @@ class Users(object):
         Returns:
             AlternateEmail
         """
-        _op = fresh_operation('get_alternate_email')
-        _op['method'] = 'GET'
-        _op['path'] = '/users/' + str(user_id) + '/alternateemails/' + str(
-            alternate_email_id)
+        _op = fresh_operation("get_alternate_email")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/users/" + str(user_id) + "/alternateemails/" + str(alternate_email_id)
+        )
 
-        expected = 'AlternateEmail'
+        expected = "AlternateEmail"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -159,12 +167,12 @@ class Users(object):
         Returns:
             UserProfile
         """
-        _op = fresh_operation('get_current_user')
-        _op['method'] = 'GET'
-        _op['path'] = '/users/me'
-        _op['query_params']['include'] = include
+        _op = fresh_operation("get_current_user")
+        _op["method"] = "GET"
+        _op["path"] = "/users/me"
+        _op["query_params"]["include"] = include
 
-        expected = 'UserProfile'
+        expected = "UserProfile"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -179,11 +187,11 @@ class Users(object):
         Returns:
             UserProfile
         """
-        _op = fresh_operation('get_user')
-        _op['method'] = 'GET'
-        _op['path'] = '/users/' + str(user_id)
+        _op = fresh_operation("get_user")
+        _op["method"] = "GET"
+        _op["path"] = "/users/" + str(user_id)
 
-        expected = 'UserProfile'
+        expected = "UserProfile"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -198,19 +206,20 @@ class Users(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_alternate_emails')
-        _op['method'] = 'GET'
-        _op['path'] = '/users/' + str(user_id) + '/alternateemails'
+        _op = fresh_operation("list_alternate_emails")
+        _op["method"] = "GET"
+        _op["path"] = "/users/" + str(user_id) + "/alternateemails"
 
-        expected = ['IndexResult', 'AlternateEmail']
+        expected = ["IndexResult", "AlternateEmail"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_org_sheets(self, page_size=None, page=None,
-                        include_all=None, modified_since=None):
+    def list_org_sheets(
+        self, page_size=None, page=None, include_all=None, modified_since=None
+    ):
         """Get a list of all Sheets owned by an organization.
 
         Get the list of all Sheets owned by the members of the
@@ -227,24 +236,25 @@ class Users(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_org_sheets')
-        _op['method'] = 'GET'
-        _op['path'] = '/users/sheets'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_org_sheets")
+        _op["method"] = "GET"
+        _op["path"] = "/users/sheets"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
         if isinstance(modified_since, datetime):
-            _op['query_params']['modifiedSince'] = modified_since.isoformat()
+            _op["query_params"]["modifiedSince"] = modified_since.isoformat()
 
-        expected = ['IndexResult', 'Sheet']
+        expected = ["IndexResult", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_users(self, email=None, page_size=None, page=None,
-                   include_all=None, include=None):
+    def list_users(
+        self, email=None, page_size=None, page=None, include_all=None, include=None
+    ):
         """Get the list of Users in the organization.
 
         Args:
@@ -261,24 +271,29 @@ class Users(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_users')
-        _op['method'] = 'GET'
-        _op['path'] = '/users'
-        _op['query_params']['email'] = email
-        _op['query_params']['include'] = include
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_users")
+        _op["method"] = "GET"
+        _op["path"] = "/users"
+        _op["query_params"]["email"] = email
+        _op["query_params"]["include"] = include
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'User']
+        expected = ["IndexResult", "User"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def remove_user(self, user_id, transfer_to=None, transfer_sheets=False,
-                    remove_from_sharing=False):
+    def remove_user(
+        self,
+        user_id,
+        transfer_to=None,
+        transfer_sheets=False,
+        remove_from_sharing=False,
+    ):
         """Remove a user from an organization.
 
         Remove a User from an organization. User is transitioned to
@@ -306,14 +321,14 @@ class Users(object):
         Returns:
             Result
         """
-        _op = fresh_operation('remove_user')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/users/' + str(user_id)
-        _op['query_params']['transferTo'] = transfer_to
-        _op['query_params']['transferSheets'] = transfer_sheets
-        _op['query_params']['removeFromSharing'] = remove_from_sharing
+        _op = fresh_operation("remove_user")
+        _op["method"] = "DELETE"
+        _op["path"] = "/users/" + str(user_id)
+        _op["query_params"]["transferTo"] = transfer_to
+        _op["query_params"]["transferSheets"] = transfer_sheets
+        _op["query_params"]["removeFromSharing"] = remove_from_sharing
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -330,12 +345,12 @@ class Users(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_user')
-        _op['method'] = 'PUT'
-        _op['path'] = '/users/' + str(user_id)
-        _op['json'] = user_obj
+        _op = fresh_operation("update_user")
+        _op["method"] = "PUT"
+        _op["path"] = "/users/" + str(user_id)
+        _op["json"] = user_obj
 
-        expected = ['Result', 'User']
+        expected = ["Result", "User"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -353,26 +368,28 @@ class Users(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['user_id', 'file', 'file_type']):
+        if not all(val is not None for val in ["user_id", "file", "file_type"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
         return self._attach_profile_image(user_id, file, file_type)
 
     def _attach_profile_image(self, user_id, file, file_type):
         """Internal function used to load image"""
 
-        _data = open(file, 'rb').read()
+        _data = open(file, "rb").read()
 
-        _op = fresh_operation('attach_profile_image')
-        _op['method'] = 'POST'
-        _op['path'] = '/users/' + str(user_id) + '/profileimage'
-        _op['headers'] = {'content-type': file_type,
-                          'content-disposition': 'attachment; filename="' + file + '"'}
-        _op['form_data'] = _data
+        _op = fresh_operation("attach_profile_image")
+        _op["method"] = "POST"
+        _op["path"] = "/users/" + str(user_id) + "/profileimage"
+        _op["headers"] = {
+            "content-type": file_type,
+            "content-disposition": 'attachment; filename="' + file + '"',
+        }
+        _op["form_data"] = _data
 
-        expected = ['Result', 'User']
+        expected = ["Result", "User"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

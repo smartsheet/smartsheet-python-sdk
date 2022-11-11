@@ -46,6 +46,7 @@ class ReportWidgetContent(WidgetContent):
         self.__initialized = True
 
     """Represents the ReportWidgetContent object."""
+
     @property
     def html_content(self):
         return self._html_content.value

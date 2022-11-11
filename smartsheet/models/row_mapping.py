@@ -41,13 +41,13 @@ class RowMapping(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'from':
+        if key == "from":
             return self.from_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'from':
+        if key == "from":
             self.from_ = value
         else:
             super(RowMapping, self).__setattr__(key, value)

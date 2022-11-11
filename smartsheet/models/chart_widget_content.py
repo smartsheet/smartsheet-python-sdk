@@ -52,6 +52,7 @@ class ChartWidgetContent(WidgetContent):
         self.__initialized = True
 
     """Represents the ChartWidgetContent object"""
+
     @property
     def report_id(self):
         return self._report_id.value

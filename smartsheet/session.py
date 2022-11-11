@@ -38,28 +38,33 @@ class _SSLAdapter(HTTPAdapter):
         return ctx
 
     def init_poolmanager(self, connections, maxsize, block=False):
-        self.poolmanager = PoolManager(num_pools=connections,
-                                       maxsize=maxsize,
-                                       block=block,
-                                       cert_reqs=ssl.CERT_REQUIRED,
-                                       ca_certs=_TRUSTED_CERT_FILE,
-                                       ssl_context=self.create_ssl_context())
+        self.poolmanager = PoolManager(
+            num_pools=connections,
+            maxsize=maxsize,
+            block=block,
+            cert_reqs=ssl.CERT_REQUIRED,
+            ca_certs=_TRUSTED_CERT_FILE,
+            ssl_context=self.create_ssl_context(),
+        )
 
 
 def pinned_session(pool_maxsize=8):
-    http_adapter = _SSLAdapter(pool_connections=4,
-                               pool_maxsize=pool_maxsize,
-                               max_retries=Retry(total=1,
-                                                 method_whitelist=Retry.DEFAULT_METHOD_WHITELIST.union(['POST'])))
+    http_adapter = _SSLAdapter(
+        pool_connections=4,
+        pool_maxsize=pool_maxsize,
+        max_retries=Retry(
+            total=1, method_whitelist=Retry.DEFAULT_METHOD_WHITELIST.union(["POST"])
+        ),
+    )
 
     _session = requests.session()
-    _session.hooks = {'response': redact_token}
-    _session.mount('https://', http_adapter)
+    _session.hooks = {"response": redact_token}
+    _session.mount("https://", http_adapter)
 
     return _session
 
 
 def redact_token(res, *args, **kwargs):
-    if 'Authorization' in res.request.headers:
-        res.request.headers.update({'Authorization': '[redacted]'})
+    if "Authorization" in res.request.headers:
+        res.request.headers.update({"Authorization": "[redacted]"})
     return res

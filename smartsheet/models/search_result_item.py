@@ -33,35 +33,36 @@ class SearchResultItem(object):
             self._base = base_obj
 
         self.allowed_values = {
-            'object_type': [
-                'row',
-                'sheet',
-                'report',
-                'folder',
-                'workspace',
-                'sight',
-                'summaryField',
-                'template',
-                'discussion',
-                'attachment'],
-            'parent_object_type': [
-                'workspace',
-                'folder',
-                'sheet',
-                'report',
-                'template']}
+            "object_type": [
+                "row",
+                "sheet",
+                "report",
+                "folder",
+                "workspace",
+                "sight",
+                "summaryField",
+                "template",
+                "discussion",
+                "attachment",
+            ],
+            "parent_object_type": [
+                "workspace",
+                "folder",
+                "sheet",
+                "report",
+                "template",
+            ],
+        }
 
         self._context_data = TypedList(str)
         self._favorite = Boolean()
         self._object_id = Number()
-        self._object_type = String(
-            accept=self.allowed_values['object_type']
-        )
+        self._object_type = String(accept=self.allowed_values["object_type"])
         self._parent_object_favorite = Boolean()
         self._parent_object_id = Number()
         self._parent_object_name = String()
         self._parent_object_type = String(
-            accept=self.allowed_values['parent_object_type']
+            accept=self.allowed_values["parent_object_type"]
         )
         self._text = String()
 

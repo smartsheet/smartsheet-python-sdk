@@ -55,12 +55,12 @@ class Sheets(object):
             list_of_columns = TypedList(Column)
             list_of_columns.append(arg_value)
 
-        _op = fresh_operation('add_columns')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/columns'
-        _op['json'] = list_of_columns
+        _op = fresh_operation("add_columns")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/columns"
+        _op["json"] = list_of_columns
 
-        expected = ['Result', 'Column']
+        expected = ["Result", "Column"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -114,12 +114,12 @@ class Sheets(object):
             list_of_rows = TypedList(Row)
             list_of_rows.append(arg_value)
 
-        _op = fresh_operation('add_rows')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows'
-        _op['json'] = list_of_rows
+        _op = fresh_operation("add_rows")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows"
+        _op["json"] = list_of_rows
 
-        expected = ['Result', 'Row']
+        expected = ["Result", "Row"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -173,21 +173,26 @@ class Sheets(object):
             list_of_rows = TypedList(Row)
             list_of_rows.append(arg_value)
 
-        _op = fresh_operation('add_rows')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows'
-        _op['json'] = list_of_rows
-        _op['query_params']['allowPartialSuccess'] = 'true'
+        _op = fresh_operation("add_rows")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows"
+        _op["json"] = list_of_rows
+        _op["query_params"]["allowPartialSuccess"] = "true"
 
-        expected = ['BulkItemResult', 'Row']
+        expected = ["BulkItemResult", "Row"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def copy_rows(self, sheet_id, copy_or_move_row_directive_obj,
-                  include=None, ignore_rows_not_found=None):
+    def copy_rows(
+        self,
+        sheet_id,
+        copy_or_move_row_directive_obj,
+        include=None,
+        ignore_rows_not_found=None,
+    ):
         """Copies Row(s) from the specified Sheet to the bottom of another
         Sheet.
 
@@ -208,21 +213,22 @@ class Sheets(object):
         Returns:
             CopyOrMoveRowResult
         """
-        _op = fresh_operation('copy_rows')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/copy'
-        _op['query_params']['include'] = include
-        _op['query_params']['ignoreRowsNotFound'] = ignore_rows_not_found
-        _op['json'] = copy_or_move_row_directive_obj
+        _op = fresh_operation("copy_rows")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows/copy"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["ignoreRowsNotFound"] = ignore_rows_not_found
+        _op["json"] = copy_or_move_row_directive_obj
 
-        expected = 'CopyOrMoveRowResult'
+        expected = "CopyOrMoveRowResult"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def copy_sheet(self, sheet_id, container_destination_obj,
-                   include=None, exclude=None):
+    def copy_sheet(
+        self, sheet_id, container_destination_obj, include=None, exclude=None
+    ):
         """Creates a copy of the specified Sheet
 
         Args:
@@ -239,14 +245,14 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('copy_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/copy'
-        _op['query_params']['include'] = include
-        _op['query_params']['exclude'] = exclude
-        _op['json'] = container_destination_obj
+        _op = fresh_operation("copy_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/copy"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["exclude"] = exclude
+        _op["json"] = container_destination_obj
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -263,12 +269,11 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_column')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/columns/' + str(
-            column_id)
+        _op = fresh_operation("delete_column")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/columns/" + str(column_id)
 
-        expected = 'Result'
+        expected = "Result"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -291,13 +296,13 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_rows')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows'
-        _op['query_params']['ids'] = ids
-        _op['query_params']['ignoreRowsNotFound'] = ignore_rows_not_found
+        _op = fresh_operation("delete_rows")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows"
+        _op["query_params"]["ids"] = ids
+        _op["query_params"]["ignoreRowsNotFound"] = ignore_rows_not_found
 
-        expected = ['Result', 'NumberObjectValue']
+        expected = ["Result", "NumberObjectValue"]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -313,11 +318,11 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_share')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/shares/' + str(share_id)
+        _op = fresh_operation("delete_share")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/shares/" + str(share_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -332,11 +337,11 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_sheet')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id)
+        _op = fresh_operation("delete_sheet")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -353,20 +358,26 @@ class Sheets(object):
         Returns:
             Column
         """
-        _op = fresh_operation('get_column')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/columns/' + str(
-            column_id)
-        _op['query_params']['include'] = include
+        _op = fresh_operation("get_column")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/columns/" + str(column_id)
+        _op["query_params"]["include"] = include
 
-        expected = 'Column'
+        expected = "Column"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_columns(self, sheet_id, include=None, page_size=None, page=None,
-                    include_all=None, level=None):
+    def get_columns(
+        self,
+        sheet_id,
+        include=None,
+        page_size=None,
+        page=None,
+        include_all=None,
+        level=None,
+    ):
         """Get all columns belonging to the specified Sheet.
 
         Args:
@@ -382,16 +393,16 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('get_columns')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/columns'
-        _op['query_params']['include'] = include
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
-        _op['query_params']['level'] = level
+        _op = fresh_operation("get_columns")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/columns"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
+        _op["query_params"]["level"] = level
 
-        expected = ['IndexResult', 'Column']
+        expected = ["IndexResult", "Column"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -410,11 +421,11 @@ class Sheets(object):
         Returns:
             SheetPublish
         """
-        _op = fresh_operation('get_publish_status')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/publish'
+        _op = fresh_operation("get_publish_status")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/publish"
 
-        expected = 'SheetPublish'
+        expected = "SheetPublish"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -436,7 +447,7 @@ class Sheets(object):
             level (int): Indicates compatibility level of data to return.
                 Valid options: 0, 1, 2
                 Option Descriptors:
-                
+
                     0 - Backwards compatible text format
                     1 - multi-contact complex object
                     2 - multi-picklist complex object
@@ -444,14 +455,14 @@ class Sheets(object):
         Returns:
             Row
         """
-        _op = fresh_operation('get_row')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(row_id)
-        _op['query_params']['include'] = include
-        _op['query_params']['exclude'] = exclude
-        _op['query_params']['level'] = level
+        _op = fresh_operation("get_row")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows/" + str(row_id)
+        _op["query_params"]["include"] = include
+        _op["query_params"]["exclude"] = exclude
+        _op["query_params"]["level"] = level
 
-        expected = 'Row'
+        expected = "Row"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -467,20 +478,31 @@ class Sheets(object):
         Returns:
             Share
         """
-        _op = fresh_operation('get_share')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/shares/' + str(share_id)
+        _op = fresh_operation("get_share")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/shares/" + str(share_id)
 
-        expected = 'Share'
+        expected = "Share"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_sheet(self, sheet_id, include=None, exclude=None, row_ids=None,
-                  row_numbers=None, column_ids=None, page_size=None, page=None,
-                  if_version_after=None, level=None, rows_modified_since=None,
-                  filter_id=None):
+    def get_sheet(
+        self,
+        sheet_id,
+        include=None,
+        exclude=None,
+        row_ids=None,
+        row_numbers=None,
+        column_ids=None,
+        page_size=None,
+        page=None,
+        if_version_after=None,
+        level=None,
+        rows_modified_since=None,
+        filter_id=None,
+    ):
         """Get the specified Sheet.
 
         Get the specified Sheet. Returns the Sheet, including Rows,
@@ -517,29 +539,28 @@ class Sheets(object):
         Returns:
             Sheet
         """
-        _op = fresh_operation('get_sheet')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id)
-        _op['query_params']['include'] = include
-        _op['query_params']['exclude'] = exclude
-        _op['query_params']['rowIds'] = row_ids
-        _op['query_params']['rowNumbers'] = row_numbers
-        _op['query_params']['columnIds'] = column_ids
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['ifVersionAfter'] = if_version_after
-        _op['query_params']['level'] = level
-        _op['query_params']['rowsModifiedSince'] = rows_modified_since
-        _op['query_params']['filterId'] = filter_id
+        _op = fresh_operation("get_sheet")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id)
+        _op["query_params"]["include"] = include
+        _op["query_params"]["exclude"] = exclude
+        _op["query_params"]["rowIds"] = row_ids
+        _op["query_params"]["rowNumbers"] = row_numbers
+        _op["query_params"]["columnIds"] = column_ids
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["ifVersionAfter"] = if_version_after
+        _op["query_params"]["level"] = level
+        _op["query_params"]["rowsModifiedSince"] = rows_modified_since
+        _op["query_params"]["filterId"] = filter_id
 
-        expected = 'Sheet'
+        expected = "Sheet"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_sheet_as_csv(self, sheet_id, download_path,
-                         alternate_file_name=None):
+    def get_sheet_as_csv(self, sheet_id, download_path, alternate_file_name=None):
         """Get the specified Sheet as a CSV file.
 
         Args:
@@ -553,15 +574,15 @@ class Sheets(object):
             DownloadedFile
         """
         if not os.path.isdir(download_path):
-            raise ValueError('download_path must be a directory.')
+            raise ValueError("download_path must be a directory.")
 
-        _op = fresh_operation('get_sheet_as_csv')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id)
-        _op['header_params']['Accept'] = 'text/csv'
-        _op['dl_path'] = download_path
+        _op = fresh_operation("get_sheet_as_csv")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id)
+        _op["header_params"]["Accept"] = "text/csv"
+        _op["dl_path"] = download_path
 
-        expected = 'DownloadedFile'
+        expected = "DownloadedFile"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
         if alternate_file_name is not None:
@@ -570,8 +591,7 @@ class Sheets(object):
         response.save_to_file()
         return response
 
-    def get_sheet_as_excel(self, sheet_id, download_path,
-                           alternate_file_name=None):
+    def get_sheet_as_excel(self, sheet_id, download_path, alternate_file_name=None):
         """Get the specified Sheet as an Excel .xls file.
 
         Args:
@@ -585,15 +605,15 @@ class Sheets(object):
             DownloadedFile
         """
         if not os.path.isdir(download_path):
-            raise ValueError('download_path must be a directory.')
+            raise ValueError("download_path must be a directory.")
 
-        _op = fresh_operation('get_sheet_as_excel')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id)
-        _op['header_params']['Accept'] = 'application/vnd.ms-excel'
-        _op['dl_path'] = download_path
+        _op = fresh_operation("get_sheet_as_excel")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id)
+        _op["header_params"]["Accept"] = "application/vnd.ms-excel"
+        _op["dl_path"] = download_path
 
-        expected = 'DownloadedFile'
+        expected = "DownloadedFile"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
         if alternate_file_name is not None:
@@ -602,8 +622,9 @@ class Sheets(object):
         response.save_to_file()
         return response
 
-    def get_sheet_as_pdf(self, sheet_id, download_path, paper_size=None,
-                         alternate_file_name=None):
+    def get_sheet_as_pdf(
+        self, sheet_id, download_path, paper_size=None, alternate_file_name=None
+    ):
         """Get the specified Sheet as a PDF file.
 
         Args:
@@ -619,16 +640,16 @@ class Sheets(object):
             DownloadedFile
         """
         if not os.path.isdir(download_path):
-            raise ValueError('download_path must be a directory.')
+            raise ValueError("download_path must be a directory.")
 
-        _op = fresh_operation('get_sheet_as_pdf')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id)
-        _op['header_params']['Accept'] = 'application/pdf'
-        _op['query_params']['paperSize'] = paper_size
-        _op['dl_path'] = download_path
+        _op = fresh_operation("get_sheet_as_pdf")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id)
+        _op["header_params"]["Accept"] = "application/pdf"
+        _op["query_params"]["paperSize"] = paper_size
+        _op["dl_path"] = download_path
 
-        expected = 'DownloadedFile'
+        expected = "DownloadedFile"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
         if alternate_file_name is not None:
@@ -646,11 +667,11 @@ class Sheets(object):
         Returns:
             Version
         """
-        _op = fresh_operation('get_sheet_version')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/version'
+        _op = fresh_operation("get_sheet_version")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/version"
 
-        expected = 'Version'
+        expected = "Version"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -665,20 +686,26 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_org_sheets')
-        _op['method'] = 'GET'
-        _op['path'] = '/users/sheets'
+        _op = fresh_operation("list_org_sheets")
+        _op["method"] = "GET"
+        _op["path"] = "/users/sheets"
 
-        expected = ['IndexResult', 'Sheet']
+        expected = ["IndexResult", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_shares(self, sheet_id, page_size=None, page=None,
-                    include_all=None, include_workspace_shares=False,
-                    access_api_level=0):
+    def list_shares(
+        self,
+        sheet_id,
+        page_size=None,
+        page=None,
+        include_all=None,
+        include_workspace_shares=False,
+        access_api_level=0,
+    ):
         """Get the list of all Users and Groups to whom the specified Sheet is
         shared, and their access level.
 
@@ -694,25 +721,31 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_shares')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/shares'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
-        _op['query_params']['accessApiLevel'] = access_api_level
+        _op = fresh_operation("list_shares")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/shares"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
+        _op["query_params"]["accessApiLevel"] = access_api_level
         if include_workspace_shares:
-            _op['query_params']['include'] = 'workspaceShares'
+            _op["query_params"]["include"] = "workspaceShares"
 
-        expected = ['IndexResult', 'Share']
+        expected = ["IndexResult", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_sheets(self, include=None, page_size=None, page=None,
-                    include_all=None, modified_since=None):
+    def list_sheets(
+        self,
+        include=None,
+        page_size=None,
+        page=None,
+        include_all=None,
+        modified_since=None,
+    ):
         """Get the list of all Sheets the User has access to, in alphabetical
         order, by name.
 
@@ -730,25 +763,30 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_sheets')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets'
-        _op['query_params']['include'] = include
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_sheets")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
         if isinstance(modified_since, datetime):
-            _op['query_params']['modifiedSince'] = modified_since.isoformat()
+            _op["query_params"]["modifiedSince"] = modified_since.isoformat()
 
-        expected = ['IndexResult', 'Sheet']
+        expected = ["IndexResult", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def move_rows(self, sheet_id, copy_or_move_row_directive_obj,
-                  include=None, ignore_rows_not_found=None):
+    def move_rows(
+        self,
+        sheet_id,
+        copy_or_move_row_directive_obj,
+        include=None,
+        ignore_rows_not_found=None,
+    ):
         """Moves Row(s) to the bottom of another Sheet.
 
         Up to 5,000 row IDs can be specified in the request, but if
@@ -777,14 +815,14 @@ class Sheets(object):
         Returns:
             CopyOrMoveRowResult
         """
-        _op = fresh_operation('move_rows')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/move'
-        _op['query_params']['include'] = include
-        _op['query_params']['ignoreRowsNotFound'] = ignore_rows_not_found
-        _op['json'] = copy_or_move_row_directive_obj
+        _op = fresh_operation("move_rows")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows/move"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["ignoreRowsNotFound"] = ignore_rows_not_found
+        _op["json"] = copy_or_move_row_directive_obj
 
-        expected = 'CopyOrMoveRowResult'
+        expected = "CopyOrMoveRowResult"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -801,12 +839,12 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('move_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/move'
-        _op['json'] = container_destination_obj
+        _op = fresh_operation("move_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/move"
+        _op["json"] = container_destination_obj
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -824,12 +862,12 @@ class Sheets(object):
         Returns:
             SearchResult
         """
-        _op = fresh_operation('search_sheet')
-        _op['method'] = 'GET'
-        _op['path'] = '/search/sheets/' + str(sheet_id)
-        _op['query_params']['query'] = query
+        _op = fresh_operation("search_sheet")
+        _op["method"] = "GET"
+        _op["path"] = "/search/sheets/" + str(sheet_id)
+        _op["query_params"]["query"] = query
 
-        expected = 'SearchResult'
+        expected = "SearchResult"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -846,12 +884,12 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('send_rows')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/emails'
-        _op['json'] = multi_row_email_obj
+        _op = fresh_operation("send_rows")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows/emails"
+        _op["json"] = multi_row_email_obj
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -868,12 +906,12 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('send_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/emails'
-        _op['json'] = sheet_email_obj
+        _op = fresh_operation("send_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/emails"
+        _op["json"] = sheet_email_obj
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -894,12 +932,12 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('send_update_request')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/updaterequests'
-        _op['json'] = multi_row_email_obj
+        _op = fresh_operation("send_update_request")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/updaterequests"
+        _op["json"] = multi_row_email_obj
 
-        expected = ['Result', 'UpdateRequest']
+        expected = ["Result", "UpdateRequest"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -918,8 +956,12 @@ class Sheets(object):
         Returns:
             Result
         """
-        attributes = ['read_only_lite_enabled', 'read_only_full_enabled',
-                      'read_write_enabled', 'ical_enabled']
+        attributes = [
+            "read_only_lite_enabled",
+            "read_only_full_enabled",
+            "read_write_enabled",
+            "ical_enabled",
+        ]
 
         fetch_first = False
         # check for incompleteness, fill in from current status if necessary
@@ -934,12 +976,12 @@ class Sheets(object):
             current_status.update(sheet_publish_obj.to_dict())
             sheet_publish_obj = self._base.models.SheetPublish(current_status)
 
-        _op = fresh_operation('set_publish_status')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/publish'
-        _op['json'] = sheet_publish_obj
+        _op = fresh_operation("set_publish_status")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/publish"
+        _op["json"] = sheet_publish_obj
 
-        expected = ['Result', 'SheetPublish']
+        expected = ["Result", "SheetPublish"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -962,13 +1004,13 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('share_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/shares'
-        _op['json'] = share_obj
-        _op['query_params']['sendEmail'] = send_email
+        _op = fresh_operation("share_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/shares"
+        _op["json"] = share_obj
+        _op["query_params"]["sendEmail"] = send_email
 
-        expected = ['Result', 'Share']
+        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -986,22 +1028,20 @@ class Sheets(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'column_id',
-                                               'column_obj']):
+        if not all(val is not None for val in ["sheet_id", "column_id", "column_obj"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
         if isinstance(column_obj, dict):
             column_obj = Column(column_obj)
 
-        _op = fresh_operation('update_column')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/columns/' + str(
-            column_id)
-        _op['json'] = column_obj
+        _op = fresh_operation("update_column")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/columns/" + str(column_id)
+        _op["json"] = column_obj
 
-        expected = ['Result', 'Column']
+        expected = ["Result", "Column"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1030,12 +1070,12 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_rows')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows'
-        _op['json'] = list_of_rows
+        _op = fresh_operation("update_rows")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows"
+        _op["json"] = list_of_rows
 
-        expected = ['Result', 'Row']
+        expected = ["Result", "Row"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1064,13 +1104,13 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_rows')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows'
-        _op['json'] = list_of_rows
-        _op['query_params']['allowPartialSuccess'] = 'true'
+        _op = fresh_operation("update_rows")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/rows"
+        _op["json"] = list_of_rows
+        _op["query_params"]["allowPartialSuccess"] = "true"
 
-        expected = ['BulkItemResult', 'Row']
+        expected = ["BulkItemResult", "Row"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1088,18 +1128,17 @@ class Sheets(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'share_id',
-                                               'share_obj']):
+        if not all(val is not None for val in ["sheet_id", "share_id", "share_obj"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('update_share')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/shares/' + str(share_id)
-        _op['json'] = share_obj
+        _op = fresh_operation("update_share")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/shares/" + str(share_id)
+        _op["json"] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1116,20 +1155,21 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_sheet')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id)
-        _op['json'] = sheet_obj
+        _op = fresh_operation("update_sheet")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id)
+        _op["json"] = sheet_obj
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_update_requests(self, sheet_id, page_size=None, page=None,
-                             include_all=None):
+    def list_update_requests(
+        self, sheet_id, page_size=None, page=None, include_all=None
+    ):
         """Get the list of all Sheet UpdateRequests.
 
         Args:
@@ -1143,14 +1183,14 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_update_requests')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/updaterequests'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_update_requests")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/updaterequests"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'UpdateRequest']
+        expected = ["IndexResult", "UpdateRequest"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1167,11 +1207,13 @@ class Sheets(object):
         Returns:
             UpdateRequest
         """
-        _op = fresh_operation('get_update_request')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/updaterequests/' + str(update_request_id)
+        _op = fresh_operation("get_update_request")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/updaterequests/" + str(update_request_id)
+        )
 
-        expected = 'UpdateRequest'
+        expected = "UpdateRequest"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -1187,12 +1229,12 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_update_request')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/updaterequests'
-        _op['json'] = update_request_obj
+        _op = fresh_operation("create_update_request")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/updaterequests"
+        _op["json"] = update_request_obj
 
-        expected = ['Result', 'UpdateRequest']
+        expected = ["Result", "UpdateRequest"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1209,11 +1251,13 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_update_request')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/updaterequests/' + str(update_request_id)
+        _op = fresh_operation("delete_update_request")
+        _op["method"] = "DELETE"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/updaterequests/" + str(update_request_id)
+        )
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -1230,20 +1274,23 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_update_request')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/updaterequests/' + str(update_request_id)
-        _op['json'] = update_request_obj
+        _op = fresh_operation("update_update_request")
+        _op["method"] = "PUT"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/updaterequests/" + str(update_request_id)
+        )
+        _op["json"] = update_request_obj
 
-        expected = ['Result', 'UpdateRequest']
+        expected = ["Result", "UpdateRequest"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_sent_update_requests(self, sheet_id, page_size=None, page=None,
-                                  include_all=None):
+    def list_sent_update_requests(
+        self, sheet_id, page_size=None, page=None, include_all=None
+    ):
         """Get the list of all Sent UpdateRequests.
 
         Args:
@@ -1257,14 +1304,14 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_update_requests')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/sentupdaterequests'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_update_requests")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/sentupdaterequests"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'SentUpdateRequest']
+        expected = ["IndexResult", "SentUpdateRequest"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1281,11 +1328,16 @@ class Sheets(object):
         Returns:
             UpdateRequest
         """
-        _op = fresh_operation('get_sent_update_request')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/sentupdaterequests/' + str(sent_update_request_id)
+        _op = fresh_operation("get_sent_update_request")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/sentupdaterequests/"
+            + str(sent_update_request_id)
+        )
 
-        expected = 'SentUpdateRequest'
+        expected = "SentUpdateRequest"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -1301,18 +1353,22 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_update_request')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/sentupdaterequests/' + str(sent_update_request_id)
+        _op = fresh_operation("delete_update_request")
+        _op["method"] = "DELETE"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/sentupdaterequests/"
+            + str(sent_update_request_id)
+        )
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_filters(self, sheet_id, page_size=None, page=None,
-                     include_all=None):
+    def list_filters(self, sheet_id, page_size=None, page=None, include_all=None):
         """Returns a list of all saved sheet filters
 
         Args:
@@ -1326,14 +1382,14 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_sheet_filters')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/filters'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_sheet_filters")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/filters"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'SheetFilter']
+        expected = ["IndexResult", "SheetFilter"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1350,11 +1406,11 @@ class Sheets(object):
         Returns:
             Filter
         """
-        _op = fresh_operation('get_sheet_filter')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/filters/' + str(filter_id)
+        _op = fresh_operation("get_sheet_filter")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/filters/" + str(filter_id)
 
-        expected = 'SheetFilter'
+        expected = "SheetFilter"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -1370,18 +1426,19 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_sheet_filter')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/filters/' + str(filter_id)
+        _op = fresh_operation("delete_sheet_filter")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/filters/" + str(filter_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_cross_sheet_references(self, sheet_id, page_size=None, page=None,
-                                  include_all=None):
+    def list_cross_sheet_references(
+        self, sheet_id, page_size=None, page=None, include_all=None
+    ):
         """Get the list of all CrossSheetReferences for this Sheet.
 
         Args:
@@ -1395,14 +1452,14 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_cross_sheet_references')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/crosssheetreferences'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_cross_sheet_references")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/crosssheetreferences"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'CrossSheetReference']
+        expected = ["IndexResult", "CrossSheetReference"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1419,11 +1476,16 @@ class Sheets(object):
         Returns:
             CrossSheetReference
         """
-        _op = fresh_operation('get_cross_sheet_reference')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/crosssheetreferences/' + str(cross_sheet_reference_id)
+        _op = fresh_operation("get_cross_sheet_reference")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/crosssheetreferences/"
+            + str(cross_sheet_reference_id)
+        )
 
-        expected = 'CrossSheetReference'
+        expected = "CrossSheetReference"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -1439,20 +1501,21 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_cross_sheet_reference')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/crosssheetreferences'
-        _op['json'] = cross_sheet_reference_obj
+        _op = fresh_operation("create_cross_sheet_reference")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/crosssheetreferences"
+        _op["json"] = cross_sheet_reference_obj
 
-        expected = ['Result', 'CrossSheetReference']
+        expected = ["Result", "CrossSheetReference"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_automation_rules(self, sheet_id, page_size=None, page=None,
-                                  include_all=None):
+    def list_automation_rules(
+        self, sheet_id, page_size=None, page=None, include_all=None
+    ):
         """Get the list of all AutomationRules for this Sheet.
 
         Args:
@@ -1466,14 +1529,14 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_automation_rules')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/automationrules'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_automation_rules")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/automationrules"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'AutomationRule']
+        expected = ["IndexResult", "AutomationRule"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1490,11 +1553,13 @@ class Sheets(object):
         Returns:
             AutomationRule
         """
-        _op = fresh_operation('get_automation_rule')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/automationrules/' + str(automation_rule_id)
+        _op = fresh_operation("get_automation_rule")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/automationrules/" + str(automation_rule_id)
+        )
 
-        expected = 'AutomationRule'
+        expected = "AutomationRule"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -1511,12 +1576,14 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_automation_rule')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/automationrules/' + str(automation_rule_id)
-        _op['json'] = automation_rule_obj
+        _op = fresh_operation("update_automation_rule")
+        _op["method"] = "PUT"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/automationrules/" + str(automation_rule_id)
+        )
+        _op["json"] = automation_rule_obj
 
-        expected = ['Result', 'AutomationRule']
+        expected = ["Result", "AutomationRule"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1533,11 +1600,13 @@ class Sheets(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_automation_rule')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/automationrules/' + str(automation_rule_id)
+        _op = fresh_operation("delete_automation_rule")
+        _op["method"] = "DELETE"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/automationrules/" + str(automation_rule_id)
+        )
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -1553,20 +1622,22 @@ class Sheets(object):
         Returns:
             Sheet
         """
-        _op = fresh_operation('sort_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/sort'
-        _op['json'] = sort_specifier_obj
-        _op['query_params']['level'] = level
+        _op = fresh_operation("sort_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/sort"
+        _op["json"] = sort_specifier_obj
+        _op["query_params"]["level"] = level
 
-        expected = 'Sheet'
+        expected = "Sheet"
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def import_csv_sheet(self, file, sheet_name=None, header_row_index=None, primary_column_index=None ):
+    def import_csv_sheet(
+        self, file, sheet_name=None, header_row_index=None, primary_column_index=None
+    ):
         """Imports a sheet.
 
         Args:
@@ -1577,15 +1648,19 @@ class Sheets(object):
 
         Returns:
             Result
-            """
-        if not all(val is not None for val in ['folder_id', 'file']):
+        """
+        if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        return self._import_sheet(file, "text/csv", sheet_name, header_row_index, primary_column_index)
+        return self._import_sheet(
+            file, "text/csv", sheet_name, header_row_index, primary_column_index
+        )
 
-    def import_xlsx_sheet(self, file, sheet_name=None, header_row_index=None, primary_column_index=None ):
+    def import_xlsx_sheet(
+        self, file, sheet_name=None, header_row_index=None, primary_column_index=None
+    ):
         """Imports a sheet.
 
         Args:
@@ -1596,42 +1671,56 @@ class Sheets(object):
 
         Returns:
             Result
-            """
-        if not all(val is not None for val in ['folder_id', 'file']):
+        """
+        if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values " "are missing from call to " + __name__)
+            )
 
-        return self._import_sheet(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                  sheet_name, header_row_index, primary_column_index)
+        return self._import_sheet(
+            file,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            sheet_name,
+            header_row_index,
+            primary_column_index,
+        )
 
-    def _import_sheet(self, file, file_type, sheet_name, header_row_index, primary_column_index):
+    def _import_sheet(
+        self, file, file_type, sheet_name, header_row_index, primary_column_index
+    ):
         """Internal function used to import sheet"""
 
         if sheet_name is None:
             head, tail = os.path.split(file)
             sheet_name = tail or os.path.basename(head)
 
-        _data = open(file, 'rb').read()
+        _data = open(file, "rb").read()
 
-        _op = fresh_operation('import_sheet_into_folder')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/import'
-        _op['headers'] = {'content-type': file_type,
-                          'content-disposition': 'attachment'}
-        _op['form_data'] = _data
-        _op['query_params']['sheetName'] = sheet_name
-        _op['query_params']['headerRowIndex'] = header_row_index
-        _op['query_params']['primaryColumnIndex'] = primary_column_index
+        _op = fresh_operation("import_sheet_into_folder")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/import"
+        _op["headers"] = {
+            "content-type": file_type,
+            "content-disposition": "attachment",
+        }
+        _op["form_data"] = _data
+        _op["query_params"]["sheetName"] = sheet_name
+        _op["query_params"]["headerRowIndex"] = header_row_index
+        _op["query_params"]["primaryColumnIndex"] = primary_column_index
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_sheet_summary(self, sheet_id, include=None, exclude=None, ):
+    def get_sheet_summary(
+        self,
+        sheet_id,
+        include=None,
+        exclude=None,
+    ):
         """Get the SheetSummary.
 
         Args:
@@ -1646,20 +1735,27 @@ class Sheets(object):
         Returns:
             SheetSummary
         """
-        _op = fresh_operation('get_sheet_summary')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/summary'
-        _op['query_params']['include'] = include
-        _op['query_params']['exclude'] = exclude
+        _op = fresh_operation("get_sheet_summary")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/summary"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["exclude"] = exclude
 
-        expected = 'SheetSummary'
+        expected = "SheetSummary"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def get_sheet_summary_fields(self, sheet_id,  include=None, exclude=None,
-                                 page_size=None, page=None, include_all=None):
+    def get_sheet_summary_fields(
+        self,
+        sheet_id,
+        include=None,
+        exclude=None,
+        page_size=None,
+        page=None,
+        include_all=None,
+    ):
         """Get the list of summary fields for this Sheet.
 
         Args:
@@ -1679,23 +1775,25 @@ class Sheets(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_summary_fields')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/summary/fields'
-        _op['query_params']['include'] = include
-        _op['query_params']['exclude'] = exclude
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_summary_fields")
+        _op["method"] = "GET"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/summary/fields"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["exclude"] = exclude
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'SummaryField']
+        expected = ["IndexResult", "SummaryField"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def add_sheet_summary_fields(self, sheet_id, list_of_fields, rename_if_conflict=None):
+    def add_sheet_summary_fields(
+        self, sheet_id, list_of_fields, rename_if_conflict=None
+    ):
         """Insert one or more SummaryFields into the specified Sheet
 
         If an error occurs, the Error object returned will contain a detail attribute set to an object with the
@@ -1722,20 +1820,22 @@ class Sheets(object):
             list_of_fields = TypedList(SummaryField)
             list_of_fields.append(arg_value)
 
-        _op = fresh_operation('add_sheet_summary_fields')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/summary/fields'
-        _op['json'] = list_of_fields
-        _op['query_params']['renameIfConflict'] = rename_if_conflict
+        _op = fresh_operation("add_sheet_summary_fields")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/summary/fields"
+        _op["json"] = list_of_fields
+        _op["query_params"]["renameIfConflict"] = rename_if_conflict
 
-        expected = ['Result', 'SummaryField']
+        expected = ["Result", "SummaryField"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def add_sheet_summary_fields_with_partial_success(self, sheet_id, list_of_fields, rename_if_conflict=None):
+    def add_sheet_summary_fields_with_partial_success(
+        self, sheet_id, list_of_fields, rename_if_conflict=None
+    ):
         """Insert one or more SummaryFields into the specified Sheet
 
         When partial success is enabled, and one or more of the objects in the request fail to be added/updated/deleted,
@@ -1758,21 +1858,23 @@ class Sheets(object):
             list_of_fields = TypedList(SummaryField)
             list_of_fields.append(arg_value)
 
-        _op = fresh_operation('add_sheet_summary_fields')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/summary/fields'
-        _op['json'] = list_of_fields
-        _op['query_params']['renameIfConflict'] = rename_if_conflict
-        _op['query_params']['allowPartialSuccess'] = 'true'
+        _op = fresh_operation("add_sheet_summary_fields")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/summary/fields"
+        _op["json"] = list_of_fields
+        _op["query_params"]["renameIfConflict"] = rename_if_conflict
+        _op["query_params"]["allowPartialSuccess"] = "true"
 
-        expected = ['BulkItemResult', 'SummaryField']
+        expected = ["BulkItemResult", "SummaryField"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def delete_sheet_summary_fields(self, sheet_id, list_of_ids, ignore_summary_fields_not_found=None):
+    def delete_sheet_summary_fields(
+        self, sheet_id, list_of_ids, ignore_summary_fields_not_found=None
+    ):
         """Deletes a list of SummaryFields for the specified Sheet.
 
         Args:
@@ -1791,19 +1893,23 @@ class Sheets(object):
             list_of_ids = TypedList(six.integer_types)
             list_of_ids.append(arg_value)
 
-        _op = fresh_operation('delete_sheet_summary_fields')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/summary/fields'
-        _op['query_params']['ids'] = list_of_ids
-        _op['query_params']['ignoreSummaryFieldsNotFound'] = ignore_summary_fields_not_found
+        _op = fresh_operation("delete_sheet_summary_fields")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/summary/fields"
+        _op["query_params"]["ids"] = list_of_ids
+        _op["query_params"][
+            "ignoreSummaryFieldsNotFound"
+        ] = ignore_summary_fields_not_found
 
-        expected = ['Result', 'NumberObjectValue']
+        expected = ["Result", "NumberObjectValue"]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def update_sheet_summary_fields(self, sheet_id, list_of_summary_fields, rename_if_conflict=None):
+    def update_sheet_summary_fields(
+        self, sheet_id, list_of_summary_fields, rename_if_conflict=None
+    ):
         """Updates a list of SummaryFields for the specified Sheet.
 
         Args:
@@ -1819,21 +1925,22 @@ class Sheets(object):
             list_of_summary_fields = TypedList(SummaryField)
             list_of_summary_fields.append(arg_value)
 
-        _op = fresh_operation('update_sheet_summary_fields')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/summary/fields'
-        _op['json'] = list_of_summary_fields
-        _op['query_params']['renameIfConflict'] = rename_if_conflict
+        _op = fresh_operation("update_sheet_summary_fields")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/summary/fields"
+        _op["json"] = list_of_summary_fields
+        _op["query_params"]["renameIfConflict"] = rename_if_conflict
 
-        expected = ['Result', 'SummaryField']
+        expected = ["Result", "SummaryField"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def update_sheet_summary_fields_with_partial_success(self, sheet_id, list_of_summary_fields,
-                                                         rename_if_conflict=None):
+    def update_sheet_summary_fields_with_partial_success(
+        self, sheet_id, list_of_summary_fields, rename_if_conflict=None
+    ):
         """Updates a list of SummaryFields for the specified Sheet.
 
         Args:
@@ -1849,33 +1956,39 @@ class Sheets(object):
             list_of_summary_fields = TypedList(SummaryField)
             list_of_summary_fields.append(arg_value)
 
-        _op = fresh_operation('update_sheet_summary_fields')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/summary/fields'
-        _op['json'] = list_of_summary_fields
-        _op['query_params']['renameIfConflict'] = rename_if_conflict
-        _op['query_params']['allowPartialSuccess'] = 'true'
+        _op = fresh_operation("update_sheet_summary_fields")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/summary/fields"
+        _op["json"] = list_of_summary_fields
+        _op["query_params"]["renameIfConflict"] = rename_if_conflict
+        _op["query_params"]["allowPartialSuccess"] = "true"
 
-        expected = ['BulkItemResult', 'SummaryField']
+        expected = ["BulkItemResult", "SummaryField"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def add_sheet_summary_field_image(self, sheet_id, field_id, file, file_type, alt_text=None):
+    def add_sheet_summary_field_image(
+        self, sheet_id, field_id, file, file_type, alt_text=None
+    ):
 
-        _data = open(file, 'rb').read()
+        _data = open(file, "rb").read()
 
-        _op = fresh_operation('add_sheet_summary_field_image')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/summary/fields/' + str(field_id) + '/images'
-        _op['headers'] = {'content-type': file_type,
-                          'content-disposition': 'attachment; filename="' + file + '"'}
-        _op['query_params']['altText'] = alt_text
-        _op['form_data'] = _data
+        _op = fresh_operation("add_sheet_summary_field_image")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/summary/fields/" + str(field_id) + "/images"
+        )
+        _op["headers"] = {
+            "content-type": file_type,
+            "content-disposition": 'attachment; filename="' + file + '"',
+        }
+        _op["query_params"]["altText"] = alt_text
+        _op["form_data"] = _data
 
-        expected = ['Result', 'SummaryField']
+        expected = ["Result", "SummaryField"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1898,9 +2011,17 @@ class Sheets(object):
                 return self.get_column(sheet_id, _c.id, include=include)
         return False
 
-    def get_sheet_by_name(self, name, include=None, exclude=None,
-                          row_ids=None, row_numbers=None, column_ids=None,
-                          page_size=None, page=None):
+    def get_sheet_by_name(
+        self,
+        name,
+        include=None,
+        exclude=None,
+        row_ids=None,
+        row_numbers=None,
+        column_ids=None,
+        page_size=None,
+        page=None,
+    ):
         """For those times when you don't know the Sheet Id.
 
         Note: returns the first matching name found.
@@ -1911,9 +2032,14 @@ class Sheets(object):
         all_sheets = self.list_sheets(include_all=True)
         for _s in all_sheets.data:
             if _s.name == name:
-                return self.get_sheet(_s.id, include=include,
-                                      exclude=exclude, row_ids=row_ids,
-                                      row_numbers=row_numbers,
-                                      column_ids=column_ids,
-                                      page_size=page_size, page=page)
+                return self.get_sheet(
+                    _s.id,
+                    include=include,
+                    exclude=exclude,
+                    row_ids=row_ids,
+                    row_numbers=row_numbers,
+                    column_ids=column_ids,
+                    page_size=page_size,
+                    page=page,
+                )
         return False

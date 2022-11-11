@@ -33,18 +33,11 @@ class Favorite(object):
             self._base = base_obj
 
         self.allowed_values = {
-            '_type': [
-                'workspace',
-                'folder',
-                'sheet',
-                'report',
-                'template',
-                'sight']}
+            "_type": ["workspace", "folder", "sheet", "report", "template", "sight"]
+        }
 
         self._object_id = Number()
-        self._type_ = String(
-            accept=self.allowed_values['_type']
-        )
+        self._type_ = String(accept=self.allowed_values["_type"])
 
         if props:
             deserialize(self, props)
@@ -52,13 +45,13 @@ class Favorite(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'type':
+        if key == "type":
             return self.type_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'type':
+        if key == "type":
             self.type_ = value
         else:
             super(Favorite, self).__setattr__(key, value)

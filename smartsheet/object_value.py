@@ -32,8 +32,8 @@ def assign_to_object_value(value):
     if isinstance(value, ObjectValue):
         return value
     elif isinstance(value, dict):
-        object_type = value['objectType']
-        if object_type in OBJECT_VALUE['object_type']:
+        object_type = value["objectType"]
+        if object_type in OBJECT_VALUE["object_type"]:
             enum_object_type = enum_object_value_type(object_type)
             if enum_object_type == DURATION:
                 return Duration(value)
@@ -43,8 +43,7 @@ def assign_to_object_value(value):
                 return ContactObjectValue(value)
             elif enum_object_type == DATE:
                 return DateObjectValue(value)
-            elif enum_object_type == DATETIME or \
-                    enum_object_type == ABSTRACT_DATETIME:
+            elif enum_object_type == DATETIME or enum_object_type == ABSTRACT_DATETIME:
                 return DatetimeObjectValue(value, enum_object_value_type)
             elif enum_object_type == MULTI_CONTACT:
                 return MultiContactObjectValue(value)
@@ -54,9 +53,11 @@ def assign_to_object_value(value):
                 return None
         else:
             raise ValueError(
-                ("`{0}` is an invalid value for ObjectValue`object_type`,"
-                 " must be one of {1}").format(
-                    object_type, OBJECT_VALUE['object_type']))
+                (
+                    "`{0}` is an invalid value for ObjectValue`object_type`,"
+                    " must be one of {1}"
+                ).format(object_type, OBJECT_VALUE["object_type"])
+            )
     elif isinstance(value, six.string_types):
         return StringObjectValue(value)
     elif isinstance(value, bool):

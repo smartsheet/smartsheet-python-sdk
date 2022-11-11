@@ -42,16 +42,14 @@ class Home(object):
             Result
         """
         if isinstance(folder_obj, str):
-            folder_obj = Folder({
-                'name': folder_obj
-            })
+            folder_obj = Folder({"name": folder_obj})
 
-        _op = fresh_operation('create_folder')
-        _op['method'] = 'POST'
-        _op['path'] = '/home/folders'
-        _op['json'] = folder_obj
+        _op = fresh_operation("create_folder")
+        _op["method"] = "POST"
+        _op["path"] = "/home/folders"
+        _op["json"] = folder_obj
 
-        expected = ['Result', 'Folder']
+        expected = ["Result", "Folder"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -71,12 +69,12 @@ class Home(object):
         if isinstance(sheet_obj, dict):
             sheet_obj = Sheet(sheet_obj)
 
-        _op = fresh_operation('create_sheet')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets'
-        _op['json'] = sheet_obj
+        _op = fresh_operation("create_sheet")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets"
+        _op["json"] = sheet_obj
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -106,13 +104,13 @@ class Home(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_sheet_from_template')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets'
-        _op['query_params']['include'] = include
-        _op['json'] = sheet_obj
+        _op = fresh_operation("create_sheet_from_template")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets"
+        _op["query_params"]["include"] = include
+        _op["json"] = sheet_obj
 
-        expected = ['Result', 'Sheet']
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -134,13 +132,13 @@ class Home(object):
         Returns:
             Home
         """
-        _op = fresh_operation('list_all_contents')
-        _op['method'] = 'GET'
-        _op['path'] = '/home'
-        _op['query_params']['include'] = include
-        _op['query_params']['exclude'] = exclude
+        _op = fresh_operation("list_all_contents")
+        _op["method"] = "GET"
+        _op["path"] = "/home"
+        _op["query_params"]["include"] = include
+        _op["query_params"]["exclude"] = exclude
 
-        expected = 'Home'
+        expected = "Home"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -160,14 +158,14 @@ class Home(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_folders')
-        _op['method'] = 'GET'
-        _op['path'] = '/home/folders'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_folders")
+        _op["method"] = "GET"
+        _op["path"] = "/home/folders"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Folder']
+        expected = ["IndexResult", "Folder"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
