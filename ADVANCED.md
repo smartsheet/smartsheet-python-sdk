@@ -1,5 +1,24 @@
 # Advanced Topics for the Smartsheet SDK for Python
 
+## Manual install
+
+The following packages are required.
+* [setuptools](https://pypi.org/project/setuptools/)
+* [six](https://pypi.python.org/pypi/six)
+* [requests](https://pypi.python.org/pypi/requests)
+
+To install this SDK manually:
+1. Clone the source code from this repo [GitHub](https://github.com/smartsheet-python-sdk)
+2. Install the required packages: 
+   ```bash
+   pip install setuptools six requests
+   ```
+3. Ensure you are in the `smartsheet-python-sdk` directory
+4. Install it using setup.py:
+   ```bash 
+   python setup.py install
+   ```
+
 ## Logging
 There are three log levels currently supported by the Smartsheet Python SDK (in increasing order of verbosity):
 
