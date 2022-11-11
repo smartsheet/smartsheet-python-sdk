@@ -42,7 +42,6 @@ jobs:
   
   integration-tests:
     runs-on: ubuntu-latest
-    continue-on-error: true
     strategy:
       max-parallel: 2
       matrix:
