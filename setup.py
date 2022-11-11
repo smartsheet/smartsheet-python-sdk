@@ -77,8 +77,7 @@ setup(
         'test': [
             'coverage',
             'coveralls',
-            'pytest',
-            'pytest-retry'
+            'pytest'
         ],
         'develop': [
             'coverage',
@@ -87,7 +86,7 @@ setup(
             'pytest-instafail'
         ]
     },
-    tests_require=['pytest'],
+    tests_require=['pytest', 'pytest-retry'],
     cmdclass={
         'test': PyTest
     }
