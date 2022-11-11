@@ -77,7 +77,8 @@ setup(
         'test': [
             'coverage',
             'coveralls',
-            'pytest'
+            'pytest',
+            'pytest-retry'
         ],
         'develop': [
             'coverage',
