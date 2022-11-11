@@ -16,7 +16,7 @@ pip install smartsheet-python-sdk
 ## Getting Started
 To get started with the Smartsheet Python SDK:
 
-1.  Set **SMARTSHEET_ACCESS_TOKEN** in your environment, using your Smartsheet API key. Find out more about [Authentication and Access Tokens](https://smartsheet.redoc.ly/#section/API-Basics/Raw-Token-Requests) in the Smartsheet API Documentation. You can generate an access token in Smartsheet UI under Account > Personal Settings > API Access.
+1.  Set **SMARTSHEET_ACCESS_TOKEN** in your environment, using your Smartsheet API key. Find out more about [Authentication and Access Tokens](https://smartsheet.redoc.ly/#section/API-Basics/Authentication-and-Access-Tokens) in the Smartsheet API Documentation. You can generate an access token in Smartsheet UI under Account > Personal Settings > API Access.
 
 2.  Install the Smartsheet Python SDK (see [installation instructions](###installation) above)
 
