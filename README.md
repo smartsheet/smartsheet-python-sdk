@@ -4,7 +4,7 @@
 A library for connecting to the [Smartsheet API](https://smartsheet.redoc.ly) from Python applications.
 
 ## Requirements
-The SDK currently supports Python `3.10`, `3.9`, `3.8`, `3.7`. Previous versions may still function, but Smartsheet recommends staying current with in-support versions of Python.  
+The SDK is compatible with [actively supported](https://devguide.python.org/versions/#versions) Python versions `3.10`, `3.9`, `3.8`, `3.7`.
 
 ## Installation
 
