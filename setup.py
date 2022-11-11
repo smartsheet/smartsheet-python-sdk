@@ -86,7 +86,7 @@ setup(
             'pytest-instafail'
         ]
     },
-    tests_require=['pytest', 'pytest-retry'],
+    tests_require=['pytest', 'pytest-rerunfailures'],
     cmdclass={
         'test': PyTest
     }
