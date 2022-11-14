@@ -21,6 +21,7 @@ from ..types import *
 from ..util import serialize
 from ..util import deserialize
 
+
 class GroupMember(object):
 
     """Smartsheet GroupMember data model."""
@@ -43,13 +44,13 @@ class GroupMember(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'id':
+        if key == "id":
             return self.id_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'id':
+        if key == "id":
             self.id_ = value
         else:
             super(GroupMember, self).__setattr__(key, value)

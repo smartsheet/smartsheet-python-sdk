@@ -45,13 +45,13 @@ class SheetEmail(Email):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'format':
+        if key == "format":
             return self.format_
         else:
             raise AttributeError(key)
-        
+
     def __setattr__(self, key, value):
-        if key == 'format':
+        if key == "format":
             self.format_ = value
         else:
             super(SheetEmail, self).__setattr__(key, value)

@@ -28,8 +28,7 @@ class Webhooks(object):
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def list_webhooks(self, page_size=None, page=None,
-                      include_all=None):
+    def list_webhooks(self, page_size=None, page=None, include_all=None):
         """Get the list of all Webhooks the User has access to, in alphabetical
         order, by name.
 
@@ -43,14 +42,14 @@ class Webhooks(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_webhooks')
-        _op['method'] = 'GET'
-        _op['path'] = '/webhooks'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_webhooks")
+        _op["method"] = "GET"
+        _op["path"] = "/webhooks"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Webhook']
+        expected = ["IndexResult", "Webhook"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -66,11 +65,11 @@ class Webhooks(object):
         Returns:
             Webhook
         """
-        _op = fresh_operation('get_webhook')
-        _op['method'] = 'GET'
-        _op['path'] = '/webhooks/' + str(webhook_id)
+        _op = fresh_operation("get_webhook")
+        _op["method"] = "GET"
+        _op["path"] = "/webhooks/" + str(webhook_id)
 
-        expected = 'Webhook'
+        expected = "Webhook"
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -86,12 +85,12 @@ class Webhooks(object):
         Returns:
             Result
         """
-        _op = fresh_operation('create_webhook')
-        _op['method'] = 'POST'
-        _op['path'] = '/webhooks'
-        _op['json'] = webhook_obj
+        _op = fresh_operation("create_webhook")
+        _op["method"] = "POST"
+        _op["path"] = "/webhooks"
+        _op["json"] = webhook_obj
 
-        expected = ['Result', 'Webhook']
+        expected = ["Result", "Webhook"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -108,12 +107,12 @@ class Webhooks(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_webhook')
-        _op['method'] = 'PUT'
-        _op['path'] = '/webhooks/' + str(webhook_id)
-        _op['json'] = webhook_obj
+        _op = fresh_operation("update_webhook")
+        _op["method"] = "PUT"
+        _op["path"] = "/webhooks/" + str(webhook_id)
+        _op["json"] = webhook_obj
 
-        expected = ['Result', 'Webhook']
+        expected = ["Result", "Webhook"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -129,11 +128,11 @@ class Webhooks(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_webhook')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/webhooks/' + str(webhook_id)
+        _op = fresh_operation("delete_webhook")
+        _op["method"] = "DELETE"
+        _op["path"] = "/webhooks/" + str(webhook_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -149,11 +148,11 @@ class Webhooks(object):
         Returns:
             Webhook
         """
-        _op = fresh_operation('reset_webhook')
-        _op['method'] = 'POST'
-        _op['path'] = '/webhooks/' + str(webhook_id) + '/resetsharedsecret'
+        _op = fresh_operation("reset_webhook")
+        _op["method"] = "POST"
+        _op["path"] = "/webhooks/" + str(webhook_id) + "/resetsharedsecret"
 
-        expected = ['Result', 'WebhookSecret']
+        expected = ["Result", "WebhookSecret"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

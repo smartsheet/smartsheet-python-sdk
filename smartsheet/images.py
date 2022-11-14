@@ -47,12 +47,12 @@ class Images(object):
             list_of_images = TypedList(ImageUrl)
             list_of_images.append(arg_value)
 
-        _op = fresh_operation('get_image_urls')
-        _op['method'] = 'POST'
-        _op['path'] = '/imageurls'
-        _op['json'] = list_of_images
+        _op = fresh_operation("get_image_urls")
+        _op["method"] = "POST"
+        _op["path"] = "/imageurls"
+        _op["json"] = list_of_images
 
-        expected = 'ImageUrlMap'
+        expected = "ImageUrlMap"
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

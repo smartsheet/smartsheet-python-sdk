@@ -56,13 +56,13 @@ class Attachment(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'id':
+        if key == "id":
             return self.id_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'id':
+        if key == "id":
             self.id_ = value
         else:
             super(Attachment, self).__setattr__(key, value)
@@ -98,11 +98,11 @@ class Attachment(object):
     @created_by.setter
     def created_by(self, value):
         self._created_by.value = value
-    
+
     @property
     def description(self):
         return self._description.value
-    
+
     @description.setter
     def description(self, value):
         self._description.value = value

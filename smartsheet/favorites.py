@@ -48,12 +48,12 @@ class Favorites(object):
         Returns:
             Result
         """
-        _op = fresh_operation('add_favorites')
-        _op['method'] = 'POST'
-        _op['path'] = '/favorites'
-        _op['json'] = favorite_obj
+        _op = fresh_operation("add_favorites")
+        _op["method"] = "POST"
+        _op["path"] = "/favorites"
+        _op["json"] = favorite_obj
 
-        expected = ['Result', 'Favorite']
+        expected = ["Result", "Favorite"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -73,14 +73,14 @@ class Favorites(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_favorites')
-        _op['method'] = 'GET'
-        _op['path'] = '/favorites'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_favorites")
+        _op["method"] = "GET"
+        _op["path"] = "/favorites"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Favorite']
+        expected = ["IndexResult", "Favorite"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -103,12 +103,12 @@ class Favorites(object):
         Returns:
             Result
         """
-        _op = fresh_operation('remove_favorites')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/favorites/' + str(favorite_type)
-        _op['query_params']['objectIds'] = object_ids
+        _op = fresh_operation("remove_favorites")
+        _op["method"] = "DELETE"
+        _op["path"] = "/favorites/" + str(favorite_type)
+        _op["query_params"]["objectIds"] = object_ids
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

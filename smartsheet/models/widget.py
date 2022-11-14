@@ -61,13 +61,13 @@ class Widget(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'id':
+        if key == "id":
             return self.id_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'id':
+        if key == "id":
             self.id_ = value
         else:
             super(Widget, self).__setattr__(key, value)
@@ -81,7 +81,7 @@ class Widget(object):
         if isinstance(value, WidgetContent):
             self._contents = value
         elif isinstance(value, dict):
-            widget_type = value['type']
+            widget_type = value["type"]
             try:
                 widget_type = WidgetType[widget_type]
             except KeyError:

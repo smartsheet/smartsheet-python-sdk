@@ -32,17 +32,13 @@ class AccessToken(object):
         if base_obj is not None:
             self._base = base_obj
 
-        self.allowed_values = {
-            'token_type': [
-                'bearer']}
+        self.allowed_values = {"token_type": ["bearer"]}
 
         self._access_token = String()
         self._expires_at = Timestamp()
         self._expires_in = Number()
         self._refresh_token = String()
-        self._token_type = String(
-            accept=self.allowed_values['token_type']
-        )
+        self._token_type = String(accept=self.allowed_values["token_type"])
 
         if props:
             deserialize(self, props)

@@ -30,8 +30,7 @@ class Templates(object):
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def list_public_templates(self, page_size=None, page=None,
-                              include_all=None):
+    def list_public_templates(self, page_size=None, page=None, include_all=None):
         """Get the list of public Templates to which the User has access.
 
         Args:
@@ -44,22 +43,21 @@ class Templates(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_public_templates')
-        _op['method'] = 'GET'
-        _op['path'] = '/templates/public'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_public_templates")
+        _op["method"] = "GET"
+        _op["path"] = "/templates/public"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Template']
+        expected = ["IndexResult", "Template"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_user_created_templates(self, page_size=None, page=None,
-                                    include_all=None):
+    def list_user_created_templates(self, page_size=None, page=None, include_all=None):
         """Get the list of user-created Templates to which the user has
         access.
 
@@ -73,14 +71,14 @@ class Templates(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_user_created_templates')
-        _op['method'] = 'GET'
-        _op['path'] = '/templates'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_user_created_templates")
+        _op["method"] = "GET"
+        _op["path"] = "/templates"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
 
-        expected = ['IndexResult', 'Template']
+        expected = ["IndexResult", "Template"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

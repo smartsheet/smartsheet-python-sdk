@@ -63,10 +63,13 @@ class Result(object):
     @result.setter
     def result(self, value):
         if self._dynamic_result_type is None:
-            self._log.debug('result provided but _dynamic_result_type is None. (%s)', value)
+            self._log.debug(
+                "result provided but _dynamic_result_type is None. (%s)", value
+            )
         else:
-            class_ = getattr(importlib.import_module(
-                'smartsheet.models'), self._dynamic_result_type)
+            class_ = getattr(
+                importlib.import_module("smartsheet.models"), self._dynamic_result_type
+            )
             if isinstance(value, list):
                 self._result = [class_(x, self._base) for x in value]
             else:

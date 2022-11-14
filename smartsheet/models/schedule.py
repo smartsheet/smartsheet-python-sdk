@@ -48,13 +48,13 @@ class Schedule(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'type':
+        if key == "type":
             return self.type_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'type':
+        if key == "type":
             self.type_ = value
         else:
             super(Schedule, self).__setattr__(key, value)

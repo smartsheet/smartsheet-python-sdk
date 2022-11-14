@@ -53,8 +53,9 @@ class EventResult(object):
 
     @data.setter
     def data(self, value):
-        class_ = getattr(importlib.import_module(
-            'smartsheet.models'), self._dynamic_data_type)
+        class_ = getattr(
+            importlib.import_module("smartsheet.models"), self._dynamic_data_type
+        )
         if isinstance(value, list):
             self._data = [class_(x, self._base) for x in value]
         else:

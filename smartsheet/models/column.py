@@ -58,31 +58,31 @@ class Column(object):
 
         if props:
             deserialize(self, props)
-        
+
         # requests package Response object
         self.request_response = None
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'format':
+        if key == "format":
             return self.format_
-        elif key == 'id':
+        elif key == "id":
             return self.id_
-        elif key == 'type':
+        elif key == "type":
             return self.type_
         else:
             raise AttributeError(key)
-        
+
     def __setattr__(self, key, value):
-        if key == 'format':
-            self.format_ = value 
-        elif key == 'id':
+        if key == "format":
+            self.format_ = value
+        elif key == "id":
             self.id_ = value
-        elif key == 'type':
+        elif key == "type":
             self.type_ = value
         else:
             super(Column, self).__setattr__(key, value)
-    
+
     @property
     def auto_number_format(self):
         return self._auto_number_format.value
@@ -241,7 +241,7 @@ class Column(object):
 
     @version.setter
     def version(self, value):
-        self._version.value = value;
+        self._version.value = value
 
     def to_dict(self):
         return serialize(self)

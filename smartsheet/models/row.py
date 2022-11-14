@@ -76,17 +76,17 @@ class Row(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'format':
+        if key == "format":
             return self.format_
-        elif key == 'id':
+        elif key == "id":
             return self.id_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'format':
+        if key == "format":
             self.format_ = value
-        elif key == 'id':
+        elif key == "id":
             self.id_ = value
         else:
             super(Row, self).__setattr__(key, value)

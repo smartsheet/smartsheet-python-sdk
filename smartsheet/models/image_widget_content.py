@@ -49,18 +49,19 @@ class ImageWidgetContent(WidgetContent):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'format':
+        if key == "format":
             return self.format_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'format':
+        if key == "format":
             self.format_ = value
         else:
             super(WidgetContent, self).__setattr__(key, value)
 
     """Represents the ImageWidgetContent object."""
+
     @property
     def file_name(self):
         return self._file_name.value

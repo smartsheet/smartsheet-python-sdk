@@ -44,6 +44,7 @@ class WebContentWidgetContent(WidgetContent):
         self.__initialized = True
 
     """Represents the WebContentWidgetContent object."""
+
     @property
     def url(self):
         return self._url.value

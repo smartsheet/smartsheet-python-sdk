@@ -40,12 +40,12 @@ class Passthrough(object):
         Returns:
             JSONObject
         """
-        _op = fresh_operation('get_passthrough')
-        _op['method'] = 'GET'
-        _op['path'] = endpoint
-        _op['query_params'] = query_params
+        _op = fresh_operation("get_passthrough")
+        _op["method"] = "GET"
+        _op["path"] = endpoint
+        _op["query_params"] = query_params
 
-        expected = 'JSONObject'
+        expected = "JSONObject"
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -63,22 +63,22 @@ class Passthrough(object):
         Returns:
             JSONObject
         """
-        _op = fresh_operation('post_passthrough')
-        _op['method'] = 'POST'
-        _op['path'] = endpoint
+        _op = fresh_operation("post_passthrough")
+        _op["method"] = "POST"
+        _op["path"] = endpoint
         if not isinstance(payload, JSONObject):
             payload = JSONObject(payload)
-        _op['json'] = payload
-        _op['query_params'] = query_params
+        _op["json"] = payload
+        _op["query_params"] = query_params
 
-        expected = 'JSONObject'
+        expected = "JSONObject"
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def put(self, endpoint, payload, query_params=None ):
+    def put(self, endpoint, payload, query_params=None):
         """Issue a PUT request on the specified URL.
 
         Args:
@@ -89,15 +89,15 @@ class Passthrough(object):
         Returns:
             JSONObject
         """
-        _op = fresh_operation('put_passthrough')
-        _op['method'] = 'PUT'
-        _op['path'] = endpoint
+        _op = fresh_operation("put_passthrough")
+        _op["method"] = "PUT"
+        _op["path"] = endpoint
         if not isinstance(payload, JSONObject):
             payload = JSONObject(payload)
-        _op['json'] = payload
-        _op['query_params'] = query_params
+        _op["json"] = payload
+        _op["query_params"] = query_params
 
-        expected = 'JSONObject'
+        expected = "JSONObject"
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -113,11 +113,11 @@ class Passthrough(object):
         Returns:
             JSONObject
         """
-        _op = fresh_operation('get_passthrough')
-        _op['method'] = 'DELETE'
-        _op['path'] = endpoint
+        _op = fresh_operation("get_passthrough")
+        _op["method"] = "DELETE"
+        _op["path"] = endpoint
 
-        expected = 'JSONObject'
+        expected = "JSONObject"
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

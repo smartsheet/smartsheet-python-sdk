@@ -41,7 +41,7 @@ class Error(object):
         if props:
             deserialize(self, props)
 
-        self.message = 'ERROR'
+        self.message = "ERROR"
 
         # requests package Response object
         self.request_response = None

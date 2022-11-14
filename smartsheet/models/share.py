@@ -55,17 +55,17 @@ class Share(object):
         self.__initialized = True
 
     def __getattr__(self, key):
-        if key == 'id':
+        if key == "id":
             return self.id_
-        elif key == 'type':
+        elif key == "type":
             return self.type_
         else:
             raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        if key == 'id':
+        if key == "id":
             self.id_ = value
-        elif key == 'type':
+        elif key == "type":
             self.type_ = value
         else:
             super(Share, self).__setattr__(key, value)

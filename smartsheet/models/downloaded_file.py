@@ -92,7 +92,7 @@ class DownloadedFile(object):
 
     def save_to_file(self, chunksize=2**16):
         download_path = os.path.join(self.download_directory, self.filename)
-        with open(download_path, 'wb') as dlfile:
+        with open(download_path, "wb") as dlfile:
             with contextlib.closing(self.resp):
                 for chunk in self.resp.iter_content(chunksize):
                     dlfile.write(chunk)

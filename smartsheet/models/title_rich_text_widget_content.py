@@ -44,6 +44,7 @@ class TitleRichTextWidgetContent(WidgetContent):
         self.__initialized = True
 
     """Represents the TitleWidgetContent object."""
+
     @property
     def background_color(self):
         return self._background_color.value

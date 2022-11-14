@@ -33,7 +33,6 @@ from enum import Enum
 
 
 class TypedList(MutableSequence):
-
     def __init__(self, item_type):
         self.item_type = item_type
         self.__store = []
@@ -41,8 +40,10 @@ class TypedList(MutableSequence):
         if isinstance(self.item_type, six.string_types):
             self.item_type = getattr(
                 importlib.import_module(
-                    __package__ + '.models.' + self.item_type.lower()
-                ), self.item_type)
+                    __package__ + ".models." + self.item_type.lower()
+                ),
+                self.item_type,
+            )
 
     def __len__(self):
         return len(self.__store)
@@ -51,7 +52,7 @@ class TypedList(MutableSequence):
         return self.__store[idx]
 
     def __setitem__(self, idx, value):
-        self._log.debug('__setitem__, %s, %s', idx, value)
+        self._log.debug("__setitem__, %s, %s", idx, value)
         self.__store[idx] = self.convert(value)
 
     def __delitem__(self, idx):
@@ -66,19 +67,21 @@ class TypedList(MutableSequence):
             if isinstance(item, self.item_type):
                 return item
             # allow explicit null to be passed through to the list
-            elif hasattr(item, 'is_explicit_null'):
+            elif hasattr(item, "is_explicit_null"):
                 return item
         except TypeError:
             raise
 
         try:
             retval = self.item_type(item)
-            self._log.debug('item converted to %s: %s -> %s',
-                            self.item_type, item, retval)
+            self._log.debug(
+                "item converted to %s: %s -> %s", self.item_type, item, retval
+            )
             return retval
         except (ValueError, TypeError):
             raise ValueError(
-                "Can't convert %s to %s in TypedList", item, self.item_type)
+                "Can't convert %s to %s in TypedList", item, self.item_type
+            )
 
     def purge(self):
         """Zero out the underlying list object."""
@@ -90,20 +93,25 @@ class TypedList(MutableSequence):
     def load(self, value):
         if isinstance(value, list):
             self.purge()
-            self.extend([
-                (item if isinstance(item, self.item_type) else self.item_type(item)) for item in value
-            ])
+            self.extend(
+                [
+                    (item if isinstance(item, self.item_type) else self.item_type(item))
+                    for item in value
+                ]
+            )
         elif isinstance(value, TypedList):
             self.purge()
             self.extend(value.to_list())
         elif isinstance(value, self.item_type):
             self.purge()
             self.append(value)
-        elif hasattr(value, 'is_explicit_null'):
+        elif hasattr(value, "is_explicit_null"):
             self.purge()
             self.append(value)
         else:
-            raise ValueError("Can't load to TypedList(%s) from '%s'", self.item_type, value)
+            raise ValueError(
+                "Can't load to TypedList(%s) from '%s'", self.item_type, value
+            )
 
     def __repr__(self):
         tmp = json.dumps(self.__store)
@@ -114,7 +122,6 @@ class TypedList(MutableSequence):
 
 
 class TypedObject(object):
-
     def __init__(self, object_type):
         self.object_type = object_type
         self._value = None
@@ -122,8 +129,10 @@ class TypedObject(object):
         if isinstance(self.object_type, six.string_types):
             self.object_type = getattr(
                 importlib.import_module(
-                    __package__ + '.models.' + self.object_type.lower()
-                ), self.object_type)
+                    __package__ + ".models." + self.object_type.lower()
+                ),
+                self.object_type,
+            )
 
     @property
     def value(self):
@@ -135,17 +144,18 @@ class TypedObject(object):
             self._value = value
         elif isinstance(value, dict):
             self._value = self.object_type(value)
-        elif hasattr(value, 'is_explicit_null'):
+        elif hasattr(value, "is_explicit_null"):
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for {1} value".format(value, self.object_type))
+            raise ValueError(
+                "`{0}` invalid type for {1} value".format(value, self.object_type)
+            )
 
     def __str(self):
         return json.dumps(self._value)
 
 
 class Number(object):
-
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -169,7 +179,6 @@ class Number(object):
 
 
 class String(object):
-
     def __init__(self, initial_value=None, accept=None):
         self._value = None
         if initial_value:
@@ -190,7 +199,9 @@ class String(object):
             if self.accept and value not in self._accept:
                 raise ValueError(
                     "`{0}` is not in accept list, must be one of {1}".format(
-                        value, self.accept))
+                        value, self.accept
+                    )
+                )
             self._value = value
         else:
             raise ValueError("`{0}` invalid type for String value".format(value))
@@ -213,7 +224,6 @@ class String(object):
 
 
 class Boolean(object):
-
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -237,7 +247,6 @@ class Boolean(object):
 
 
 class Timestamp(object):
-
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -264,7 +273,6 @@ class Timestamp(object):
 
 
 class EnumeratedValue(object):
-
     def __init__(self, enum, value=None):
         self.__enum = enum
         self._value = None
@@ -282,7 +290,7 @@ class EnumeratedValue(object):
             except KeyError:
                 self._value = None
         elif isinstance(value, Enum):
-            self._value = value;
+            self._value = value
         else:
             self._value = None
 
@@ -301,7 +309,6 @@ class EnumeratedValue(object):
 
 
 class EnumeratedList(TypedList):
-
     def __init__(self, enum):
         super(EnumeratedList, self).__init__(EnumeratedValue)
         self.__enum = enum
@@ -312,9 +319,7 @@ class EnumeratedList(TypedList):
 
         if isinstance(value, list):
             self.purge()
-            self.extend([
-                (EnumeratedValue(self.__enum, item)) for item in value
-            ])
+            self.extend([(EnumeratedValue(self.__enum, item)) for item in value])
         else:
             self.purge()
             self.append(EnumeratedValue(self.__enum, value))

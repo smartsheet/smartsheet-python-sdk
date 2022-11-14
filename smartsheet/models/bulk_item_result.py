@@ -73,8 +73,9 @@ class BulkItemResult(object):
 
     @result.setter
     def result(self, value):
-        class_ = getattr(importlib.import_module(
-            'smartsheet.models'), self._dynamic_result_type)
+        class_ = getattr(
+            importlib.import_module("smartsheet.models"), self._dynamic_result_type
+        )
         if isinstance(value, list):
             self._result = [class_(x, self._base) for x in value]
         else:

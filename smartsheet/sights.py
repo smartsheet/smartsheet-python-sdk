@@ -29,8 +29,9 @@ class Sights(object):
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def list_sights(self, page_size=None, page=None,
-                    include_all=None, modified_since=None):
+    def list_sights(
+        self, page_size=None, page=None, include_all=None, modified_since=None
+    ):
         """Get the list of all Sights the User has access to, in alphabetical
         order, by name.
 
@@ -45,16 +46,16 @@ class Sights(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_sights')
-        _op['method'] = 'GET'
-        _op['path'] = '/sights'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_sights")
+        _op["method"] = "GET"
+        _op["path"] = "/sights"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
         if isinstance(modified_since, datetime):
-            _op['query_params']['modifiedSince'] = modified_since.isoformat()
+            _op["query_params"]["modifiedSince"] = modified_since.isoformat()
 
-        expected = ['IndexResult', 'Sight']
+        expected = ["IndexResult", "Sight"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -72,13 +73,13 @@ class Sights(object):
         Returns:
             Sight
         """
-        _op = fresh_operation('get_sight')
-        _op['method'] = 'GET'
-        _op['path'] = '/sights/' + str(sight_id)
-        _op['query_params']['include'] = include
-        _op['query_params']['level'] = level
+        _op = fresh_operation("get_sight")
+        _op["method"] = "GET"
+        _op["path"] = "/sights/" + str(sight_id)
+        _op["query_params"]["include"] = include
+        _op["query_params"]["level"] = level
 
-        expected = 'Sight'
+        expected = "Sight"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -94,12 +95,12 @@ class Sights(object):
         Returns:
             Result
         """
-        _op = fresh_operation('update_sight')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sights/' + str(sight_id)
-        _op['json'] = sight_obj
+        _op = fresh_operation("update_sight")
+        _op["method"] = "PUT"
+        _op["path"] = "/sights/" + str(sight_id)
+        _op["json"] = sight_obj
 
-        expected = ['Result', 'Sight']
+        expected = ["Result", "Sight"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -115,11 +116,11 @@ class Sights(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_sight')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sights/' + str(sight_id)
+        _op = fresh_operation("delete_sight")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sights/" + str(sight_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -136,12 +137,12 @@ class Sights(object):
         Returns:
             Result
         """
-        _op = fresh_operation('copy_sight')
-        _op['method'] = 'POST'
-        _op['path'] = '/sights/' + str(sight_id) + '/copy'
-        _op['json'] = container_destination_obj
+        _op = fresh_operation("copy_sight")
+        _op["method"] = "POST"
+        _op["path"] = "/sights/" + str(sight_id) + "/copy"
+        _op["json"] = container_destination_obj
 
-        expected = ['Result', 'Sight']
+        expected = ["Result", "Sight"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -159,20 +160,26 @@ class Sights(object):
         Returns:
             Result
         """
-        _op = fresh_operation('move_sight')
-        _op['method'] = 'POST'
-        _op['path'] = '/sights/' + str(sight_id) + '/move'
-        _op['json'] = container_destination_obj
+        _op = fresh_operation("move_sight")
+        _op["method"] = "POST"
+        _op["path"] = "/sights/" + str(sight_id) + "/move"
+        _op["json"] = container_destination_obj
 
-        expected = ['Result', 'Sight']
+        expected = ["Result", "Sight"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def list_shares(self, sight_id, page_size=None, page=None,
-                    include_all=None, include_workspace_shares=False):
+    def list_shares(
+        self,
+        sight_id,
+        page_size=None,
+        page=None,
+        include_all=None,
+        include_workspace_shares=False,
+    ):
         """Get the list of all Users and Groups to whom the specified Sight is
         shared, and their access level.
 
@@ -188,16 +195,16 @@ class Sights(object):
         Returns:
             IndexResult
         """
-        _op = fresh_operation('list_shares')
-        _op['method'] = 'GET'
-        _op['path'] = '/sights/' + str(sight_id) + '/shares'
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
+        _op = fresh_operation("list_shares")
+        _op["method"] = "GET"
+        _op["path"] = "/sights/" + str(sight_id) + "/shares"
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
         if include_workspace_shares:
-            _op['query_params']['include'] = 'workspaceShares'
+            _op["query_params"]["include"] = "workspaceShares"
 
-        expected = ['IndexResult', 'Share']
+        expected = ["IndexResult", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -214,11 +221,11 @@ class Sights(object):
         Returns:
             Share
         """
-        _op = fresh_operation('get_share')
-        _op['method'] = 'GET'
-        _op['path'] = '/sights/' + str(sight_id) + '/shares/' + str(share_id)
+        _op = fresh_operation("get_share")
+        _op["method"] = "GET"
+        _op["path"] = "/sights/" + str(sight_id) + "/shares/" + str(share_id)
 
-        expected = 'Share'
+        expected = "Share"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -240,13 +247,13 @@ class Sights(object):
         Returns:
             Result
         """
-        _op = fresh_operation('share_sight')
-        _op['method'] = 'POST'
-        _op['path'] = '/sights/' + str(sight_id) + '/shares'
-        _op['query_params']['sendEmail'] = send_email
-        _op['json'] = share_obj
+        _op = fresh_operation("share_sight")
+        _op["method"] = "POST"
+        _op["path"] = "/sights/" + str(sight_id) + "/shares"
+        _op["query_params"]["sendEmail"] = send_email
+        _op["json"] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -264,18 +271,17 @@ class Sights(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sight_id', 'share_id',
-                                               'share_obj']):
+        if not all(val is not None for val in ["sight_id", "share_id", "share_obj"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('update_share')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sights/' + str(sight_id) + '/shares/' + str(share_id)
-        _op['json'] = share_obj
+        _op = fresh_operation("update_share")
+        _op["method"] = "PUT"
+        _op["path"] = "/sights/" + str(sight_id) + "/shares/" + str(share_id)
+        _op["json"] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -292,11 +298,11 @@ class Sights(object):
         Returns:
             Result
         """
-        _op = fresh_operation('delete_share')
-        _op['method'] = 'DELETE'
-        _op['path'] = '/sights/' + str(sight_id) + '/shares/' + str(share_id)
+        _op = fresh_operation("delete_share")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sights/" + str(sight_id) + "/shares/" + str(share_id)
 
-        expected = ['Result', None]
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -314,11 +320,11 @@ class Sights(object):
         Returns:
             SightPublish
         """
-        _op = fresh_operation('get_publish_status')
-        _op['method'] = 'GET'
-        _op['path'] = '/sights/' + str(sight_id) + '/publish'
+        _op = fresh_operation("get_publish_status")
+        _op["method"] = "GET"
+        _op["path"] = "/sights/" + str(sight_id) + "/publish"
 
-        expected = 'SightPublish'
+        expected = "SightPublish"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -335,7 +341,7 @@ class Sights(object):
         Returns:
             Result
         """
-        attributes = ['read_only_full_enabled', 'read_only_full_accessible_by']
+        attributes = ["read_only_full_enabled", "read_only_full_accessible_by"]
 
         fetch_first = False
         # check for incompleteness, fill in from current status if necessary
@@ -350,12 +356,12 @@ class Sights(object):
             current_status.update(sight_publish_obj.to_dict())
             sight_publish_obj = self._base.models.SightPublish(current_status)
 
-        _op = fresh_operation('set_publish_status')
-        _op['method'] = 'PUT'
-        _op['path'] = '/sights/' + str(sight_id) + '/publish'
-        _op['json'] = sight_publish_obj
+        _op = fresh_operation("set_publish_status")
+        _op["method"] = "PUT"
+        _op["path"] = "/sights/" + str(sight_id) + "/publish"
+        _op["json"] = sight_publish_obj
 
-        expected = ['Result', 'SightPublish']
+        expected = ["Result", "SightPublish"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

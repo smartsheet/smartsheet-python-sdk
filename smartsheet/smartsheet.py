@@ -35,54 +35,59 @@ from .models import Error, ErrorResult
 from .session import pinned_session
 from .util import is_multipart
 from .util import serialize
-from . import (
-    __version__,
-    __api_base__,
-    models
-)
+from . import __version__, __api_base__, models
 
-__all__ = (
-    'Smartsheet', 'fresh_operation', 'AbstractUserCalcBackoff'
-)
+__all__ = ("Smartsheet", "fresh_operation", "AbstractUserCalcBackoff")
 
 
 def fresh_operation(op_id):
     """Create a default operation object."""
-    operation = {'path': '', 'headers': {}, 'header_params': {},
-                 'path_params': {}, 'query_params': {}, 'params': {},
-                 'files': None, 'form_data': None, 'json': None, 'id': op_id,
-                 'dl_path': None, 'auth_settings': 'access_token'}
+    operation = {
+        "path": "",
+        "headers": {},
+        "header_params": {},
+        "path_params": {},
+        "query_params": {},
+        "params": {},
+        "files": None,
+        "form_data": None,
+        "json": None,
+        "id": op_id,
+        "dl_path": None,
+        "auth_settings": "access_token",
+    }
 
     return operation
 
 
 def setup_logging():
     """Allow for easy insight into SDK behavior."""
-    log_env = os.environ.get('LOG_CFG', None)
+    log_env = os.environ.get("LOG_CFG", None)
     if log_env is not None:
         if os.path.exists(log_env):
             import json
-            with open(log_env, 'rt') as config_file:
+
+            with open(log_env, "rt") as config_file:
                 config = json.load(config_file)
             logging.config.dictConfig(config)
         else:
-            if log_env.upper() == 'DEBUG':
+            if log_env.upper() == "DEBUG":
                 logging.basicConfig(level=logging.DEBUG)
-            elif log_env.upper() == 'INFO':
+            elif log_env.upper() == "INFO":
                 logging.basicConfig(level=logging.INFO)
     # we will do most of the logging here so turn down the requests library
-    logging.getLogger('requests').setLevel(logging.WARNING)
-    logging.getLogger('urllib3').setLevel(logging.WARNING)
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 class AbstractUserCalcBackoff(object):
-
     def calc_backoff(self, previous_attempts, total_elapsed_time, error_result):
-        raise NotImplementedError("Class %s doesn't implement calc_backoff()" % self.__class__.__name__)
+        raise NotImplementedError(
+            "Class %s doesn't implement calc_backoff()" % self.__class__.__name__
+        )
 
 
 class DefaultCalcBackoff(AbstractUserCalcBackoff):
-
     def __init__(self, max_retry_time):
         self._max_retry_time = max_retry_time
 
@@ -100,7 +105,7 @@ class DefaultCalcBackoff(AbstractUserCalcBackoff):
         """
 
         # Use exponential backoff
-        backoff = (2 ** previous_attempts) + random.random()
+        backoff = (2**previous_attempts) + random.random()
 
         if (total_elapsed_time + backoff) > self._max_retry_time:
             return -1
@@ -113,8 +118,15 @@ class Smartsheet(object):
 
     models = models
 
-    def __init__(self, access_token=None, max_connections=8,
-                 user_agent=None, max_retry_time=30, proxies=None, api_base=__api_base__):
+    def __init__(
+        self,
+        access_token=None,
+        max_connections=8,
+        user_agent=None,
+        max_retry_time=30,
+        proxies=None,
+        api_base=__api_base__,
+    ):
         """
         Set up base client object.
 
@@ -138,13 +150,14 @@ class Smartsheet(object):
         if access_token:
             self._access_token = access_token
         else:
-            self._access_token = os.environ.get(
-                'SMARTSHEET_ACCESS_TOKEN', None)
+            self._access_token = os.environ.get("SMARTSHEET_ACCESS_TOKEN", None)
 
         if self._access_token is None:
-            raise ValueError('Access Token must be set in the environment '
-                             'or passed to smartsheet.Smartsheet() '
-                             'as a parameter.')
+            raise ValueError(
+                "Access Token must be set in the environment "
+                "or passed to smartsheet.Smartsheet() "
+                "as a parameter."
+            )
 
         if isinstance(max_retry_time, AbstractUserCalcBackoff):
             self._user_calc_backoff = max_retry_time
@@ -155,20 +168,20 @@ class Smartsheet(object):
         if proxies:
             self._session.proxies = proxies
 
-        base_user_agent = 'SmartsheetPythonSDK/' + __version__
+        base_user_agent = "SmartsheetPythonSDK/" + __version__
         if user_agent:
-            self._user_agent = '{}/{}'.format(base_user_agent, user_agent)
+            self._user_agent = "{}/{}".format(base_user_agent, user_agent)
         else:
-            caller = '__unknown__'
+            caller = "__unknown__"
             stack = inspect.stack()
             module = inspect.getmodule(stack[-1][0])
             if module is not None:
                 caller = inspect.getmodule(stack[-1][0]).__name__
-            self._user_agent = '{}/{}'.format(base_user_agent, caller)
+            self._user_agent = "{}/{}".format(base_user_agent, caller)
 
         self._log = logging.getLogger(__name__)
         setup_logging()
-        self._url = ''
+        self._url = ""
         self._api_base = api_base
         self._assume_user = None
         self._test_scenario_name = None
@@ -247,7 +260,7 @@ class Smartsheet(object):
 
         if isinstance(native, self.models.Error):
             the_ex = getattr(sys.modules[__name__], native.result.name)
-            raise the_ex(native, str(native.result.code) + ': ' + native.result.message)
+            raise the_ex(native, str(native.result.code) + ": " + native.result.message)
         else:
             return native
 
@@ -260,30 +273,49 @@ class Smartsheet(object):
             response (Response):
         """
         # request
-        self._log.info('{"request": {"command": "%s %s"}}', response.request.method, response.request.url)
+        self._log.info(
+            '{"request": {"command": "%s %s"}}',
+            response.request.method,
+            response.request.url,
+        )
         if response.request.body is not None:
-            body_dumps = '"<< {} content type suppressed >>"'.format(response.request.headers['Content-Type'])
+            body_dumps = '"<< {} content type suppressed >>"'.format(
+                response.request.headers["Content-Type"]
+            )
             if is_multipart(response.request):
                 body_dumps = '"<< multipart body suppressed >>"'
-            elif 'application/json' in response.request.headers['Content-Type']:
-                body = response.request.body.decode('utf8')
+            elif "application/json" in response.request.headers["Content-Type"]:
+                body = response.request.body.decode("utf8")
                 body_dumps = json.dumps(json.loads(body), sort_keys=True)
             self._log.debug('{"requestBody": %s}', body_dumps)
         # response
-        content_dumps = '"<< {} content type suppressed >>"'.format(response.headers['Content-Type'])
-        if 'application/json' in response.headers['Content-Type']:
-            content = response.content.decode('utf8')
+        content_dumps = '"<< {} content type suppressed >>"'.format(
+            response.headers["Content-Type"]
+        )
+        if "application/json" in response.headers["Content-Type"]:
+            content = response.content.decode("utf8")
             content_dumps = json.dumps(json.loads(content), sort_keys=True)
         if 200 <= response.status_code <= 299:
-            if operation['dl_path'] is None:
-                self._log.debug('{"response": {"statusCode": %d, "reason": "%s", "content": %s}}',
-                                response.status_code, response.reason, content_dumps)
+            if operation["dl_path"] is None:
+                self._log.debug(
+                    '{"response": {"statusCode": %d, "reason": "%s", "content": %s}}',
+                    response.status_code,
+                    response.reason,
+                    content_dumps,
+                )
             else:
-                self._log.debug('{"response": {"statusCode": %d, "reason": "%s"}}',
-                                response.status_code, response.reason)
+                self._log.debug(
+                    '{"response": {"statusCode": %d, "reason": "%s"}}',
+                    response.status_code,
+                    response.reason,
+                )
         else:
-            self._log.error('{"response": {"statusCode": %d, "reason": "%s", "content": %s}}',
-                            response.status_code, response.reason, content_dumps)
+            self._log.error(
+                '{"response": {"statusCode": %d, "reason": "%s", "content": %s}}',
+                response.status_code,
+                response.reason,
+                content_dumps,
+            )
 
     def _request(self, prepped_request, operation):
         """
@@ -298,13 +330,13 @@ class Smartsheet(object):
             Operation Result object.
         """
         stream = False
-        if operation['dl_path']:
+        if operation["dl_path"]:
             stream = True
         try:
             res = self._session.send(prepped_request, stream=stream)
             self._log_request(operation, res)
         except requests.exceptions.SSLError as rex:
-            raise HttpError(rex, 'SSL handshake error, old CA bundle or old OpenSSL?')
+            raise HttpError(rex, "SSL handshake error, old CA bundle or old OpenSSL?")
         except requests.exceptions.RequestException as rex:
             raise UnexpectedRequestError(rex.request, rex.response)
 
@@ -332,15 +364,20 @@ class Smartsheet(object):
         while True:
             result = self._request(prepped_request, operation)
             if isinstance(result, OperationErrorResult):
-                native = result.native('Error')
+                native = result.native("Error")
                 if native.result.should_retry:
                     attempt += 1
-                    elapsed_time = time.time()-start_time
-                    backoff = self._user_calc_backoff.calc_backoff(attempt, elapsed_time, native.result)
+                    elapsed_time = time.time() - start_time
+                    backoff = self._user_calc_backoff.calc_backoff(
+                        attempt, elapsed_time, native.result
+                    )
                     if backoff < 0:
                         break
-                    self._log.info('HttpError status_code=%s: Retrying in %.1f seconds',
-                                   native.result.status_code, backoff)
+                    self._log.info(
+                        "HttpError status_code=%s: Retrying in %.1f seconds",
+                        native.result.status_code,
+                        backoff,
+                    )
                     time.sleep(backoff)
                     # restore un-redacted request prior to retry
                     prepped_request = pre_redact_request.copy()
@@ -352,30 +389,31 @@ class Smartsheet(object):
 
     def prepare_request(self, _op):
         """Generate a Requests prepared request object."""
-        if _op['header_params']:
-            _op['headers'].update(_op['header_params'])
+        if _op["header_params"]:
+            _op["headers"].update(_op["header_params"])
 
-        if _op['path_params']:
-            for key, val in six.iteritems(_op['path_params']):
-                _op['path'] = _op['path'].replace('{' + key + '}', str(val))
+        if _op["path_params"]:
+            for key, val in six.iteritems(_op["path_params"]):
+                _op["path"] = _op["path"].replace("{" + key + "}", str(val))
 
-        if _op['json']:
-            _op['json'] = serialize(_op['json'])
+        if _op["json"]:
+            _op["json"] = serialize(_op["json"])
 
-        if _op['query_params']:
-            for key, val in six.iteritems(_op['query_params']):
+        if _op["query_params"]:
+            for key, val in six.iteritems(_op["query_params"]):
                 if isinstance(val, list):
-                    val = ','.join([str(num) for num in val])
-                _op['query_params'][key] = val
+                    val = ",".join([str(num) for num in val])
+                _op["query_params"][key] = val
 
         req = requests.Request(
-            _op['method'],
-            self._api_base + _op['path'],
-            headers=_op['headers'],
-            params=_op['query_params'],
-            files=_op['files'],
-            data=_op['form_data'],
-            json=_op['json'])
+            _op["method"],
+            self._api_base + _op["path"],
+            headers=_op["headers"],
+            params=_op["query_params"],
+            files=_op["files"],
+            data=_op["form_data"],
+            json=_op["json"],
+        )
 
         try:
             prepped_request = self._session.prepare_request(req)
@@ -383,36 +421,34 @@ class Smartsheet(object):
             # JSON not serializable for some reason
             self._log.error(ex)
 
-        prepped_request.headers.update({'User-Agent': self._user_agent})
-        if _op['auth_settings'] is not None:
-            auth_header_val = 'Bearer ' + self._access_token
-            prepped_request.headers.update(
-                {'Authorization': auth_header_val})
+        prepped_request.headers.update({"User-Agent": self._user_agent})
+        if _op["auth_settings"] is not None:
+            auth_header_val = "Bearer " + self._access_token
+            prepped_request.headers.update({"Authorization": auth_header_val})
 
         if self._assume_user is not None:
-            prepped_request.headers.update(
-                {'Assume-User': self._assume_user})
+            prepped_request.headers.update({"Assume-User": self._assume_user})
         else:
             try:
-                del prepped_request.headers['Assume-User']
+                del prepped_request.headers["Assume-User"]
             except KeyError:
                 pass
-        
+
         if self._test_scenario_name is not None:
-            prepped_request.headers.update(
-                {'Api-Scenario': self._test_scenario_name})
+            prepped_request.headers.update({"Api-Scenario": self._test_scenario_name})
         else:
             try:
-                del prepped_request.headers['Api-Scenario']
+                del prepped_request.headers["Api-Scenario"]
             except KeyError:
                 pass
 
         if self._change_agent is not None:
             prepped_request.headers.update(
-                {'Smartsheet-Change-Agent': self._change_agent})
+                {"Smartsheet-Change-Agent": self._change_agent}
+            )
         else:
             try:
-                del prepped_request.headers['Smartsheet-Change-Agent']
+                del prepped_request.headers["Smartsheet-Change-Agent"]
             except KeyError:
                 pass
 
@@ -430,18 +466,19 @@ class Smartsheet(object):
         """
         try:
             # api class first
-            class_ = getattr(importlib.import_module(
-                __package__ + '.' + name.lower()), name)
+            class_ = getattr(
+                importlib.import_module(__package__ + "." + name.lower()), name
+            )
             return class_(self)
         except ImportError:
             # model class next:
             try:
-                class_ = getattr(importlib.import_module(
-                    name.lower()), name)
+                class_ = getattr(importlib.import_module(name.lower()), name)
                 return class_()
             except ImportError:
                 self._log.error(
-                    'ImportError! Could not load api or model class %s', name)
+                    "ImportError! Could not load api or model class %s", name
+                )
                 return name
 
 
@@ -461,12 +498,13 @@ class OperationResult(object):
             base_obj (smartsheet.Smartsheet): Configured core object
                 for subsequent convenience method requests.
         """
-        assert isinstance(op_result, six.string_types), \
-            'op_result: expected string, got %r' % type(op_result)
+        assert isinstance(
+            op_result, six.string_types
+        ), "op_result: expected string, got %r" % type(op_result)
         if resp is not None:
-            assert isinstance(resp, requests.models.Response), \
-                'resp: expected requests.models.Response, got %r' % \
-                type(resp)
+            assert isinstance(
+                resp, requests.models.Response
+            ), "resp: expected requests.models.Response, got %r" % type(resp)
         self._base = base_obj
         self.op_result = op_result
         self.resp = resp
@@ -483,19 +521,19 @@ class OperationResult(object):
             Operation Result object or Operation Error Result object.
         """
         try:
-            if expected != 'DownloadedFile':
+            if expected != "DownloadedFile":
                 data = self.resp.json()
             else:
                 filename = re.findall(
-                        'filename="(.+)";',
-                        self.resp.headers['Content-Disposition'])
+                    'filename="(.+)";', self.resp.headers["Content-Disposition"]
+                )
 
                 data = {
-                    'resultCode': 0,
-                    'message': 'SUCCESS',
-                    'resp': self.resp,
-                    'filename': filename[0],
-                    'downloadDirectory': self.operation['dl_path']
+                    "resultCode": 0,
+                    "message": "SUCCESS",
+                    "resp": self.resp,
+                    "filename": filename[0],
+                    "downloadDirectory": self.operation["dl_path"],
                 }
         except ValueError:
             return OperationErrorResult(self.op_result, self.resp)
@@ -503,19 +541,17 @@ class OperationResult(object):
         if isinstance(expected, list):
             klass = expected[0]
             dynamic_type = expected[1]
-            class_ = getattr(importlib.import_module(
-                'smartsheet.models'), klass)
+            class_ = getattr(importlib.import_module("smartsheet.models"), klass)
             obj = class_(data, dynamic_type, self._base)
-            if hasattr(obj, 'request_response'):
+            if hasattr(obj, "request_response"):
                 obj.request_response = self.resp
 
             return obj
 
-        class_ = getattr(importlib.import_module(
-            'smartsheet.models'), expected)
+        class_ = getattr(importlib.import_module("smartsheet.models"), expected)
 
         obj = class_(data, self._base)
-        if hasattr(obj, 'request_response'):
+        if hasattr(obj, "request_response"):
             obj.request_response = self.resp
 
         return obj
@@ -526,29 +562,38 @@ class OperationErrorResult(object):
 
     error_lookup = {
         0: {
-            'name': 'ApiError',
-            'recommendation': 'Do not retry without fixing the problem. ',
-            'should_retry': False},
+            "name": "ApiError",
+            "recommendation": "Do not retry without fixing the problem. ",
+            "should_retry": False,
+        },
         4001: {
-            'name': 'SystemMaintenanceError',
-            'recommendation': ('Retry using exponential backoff. Hint: '
-                               'Wait time between retries should measure '
-                               'in minutes (not seconds).'),
-            'should_retry': True},
+            "name": "SystemMaintenanceError",
+            "recommendation": (
+                "Retry using exponential backoff. Hint: "
+                "Wait time between retries should measure "
+                "in minutes (not seconds)."
+            ),
+            "should_retry": True,
+        },
         4002: {
-            'name': 'ServerTimeoutExceededError',
-            'recommendation': 'Retry using exponential backoff.',
-            'should_retry': True},
+            "name": "ServerTimeoutExceededError",
+            "recommendation": "Retry using exponential backoff.",
+            "should_retry": True,
+        },
         4003: {
-            'name': 'RateLimitExceededError',
-            'recommendation': ('Retry using exponential backoff. Hint: '
-                               'Reduce the rate at which you are sending '
-                               'requests.'),
-            'should_retry': True},
+            "name": "RateLimitExceededError",
+            "recommendation": (
+                "Retry using exponential backoff. Hint: "
+                "Reduce the rate at which you are sending "
+                "requests."
+            ),
+            "should_retry": True,
+        },
         4004: {
-            'name': 'UnexpectedErrorShouldRetryError',
-            'recommendation': 'Retry using exponential backoff.',
-            'should_retry': True},
+            "name": "UnexpectedErrorShouldRetryError",
+            "recommendation": "Retry using exponential backoff.",
+            "should_retry": True,
+        },
     }
 
     def __init__(self, op_result, resp):
@@ -573,26 +618,32 @@ class OperationErrorResult(object):
         """
         # look up name of the error
         error_payload = self.resp.json()
-        error_code = error_payload['errorCode']
+        error_code = error_payload["errorCode"]
         try:
-            error_name = OperationErrorResult.error_lookup[error_code]['name']
-            recommendation = OperationErrorResult.error_lookup[error_code]['recommendation']
-            should_retry = OperationErrorResult.error_lookup[error_code]['should_retry']
+            error_name = OperationErrorResult.error_lookup[error_code]["name"]
+            recommendation = OperationErrorResult.error_lookup[error_code][
+                "recommendation"
+            ]
+            should_retry = OperationErrorResult.error_lookup[error_code]["should_retry"]
         except:
-            error_name = OperationErrorResult.error_lookup[0]['name']
-            recommendation = OperationErrorResult.error_lookup[0]['recommendation']
-            should_retry = OperationErrorResult.error_lookup[0]['should_retry']
+            error_name = OperationErrorResult.error_lookup[0]["name"]
+            recommendation = OperationErrorResult.error_lookup[0]["recommendation"]
+            should_retry = OperationErrorResult.error_lookup[0]["should_retry"]
 
-        obj = Error({
-            'result': ErrorResult({
-                'name': error_name,
-                'status_code': self.resp.status_code,
-                'code': error_code,
-                'message': error_payload['message'],
-                'ref_id': error_payload['refId'],
-                'recommendation': recommendation,
-                'should_retry': should_retry
-            }),
-            'request_response': self.resp
-        })
+        obj = Error(
+            {
+                "result": ErrorResult(
+                    {
+                        "name": error_name,
+                        "status_code": self.resp.status_code,
+                        "code": error_code,
+                        "message": error_payload["message"],
+                        "ref_id": error_payload["refId"],
+                        "recommendation": recommendation,
+                        "should_retry": should_retry,
+                    }
+                ),
+                "request_response": self.resp,
+            }
+        )
         return obj

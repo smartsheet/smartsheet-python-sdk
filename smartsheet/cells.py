@@ -30,8 +30,17 @@ class Cells(object):
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def get_cell_history(self, sheet_id, row_id, column_id, include=None,
-                         page_size=None, page=None, include_all=None, level=None):
+    def get_cell_history(
+        self,
+        sheet_id,
+        row_id,
+        column_id,
+        include=None,
+        page_size=None,
+        page=None,
+        include_all=None,
+        level=None,
+    ):
         """Get the Cell modification history.
 
         Args:
@@ -49,30 +58,45 @@ class Cells(object):
         Returns:
             IndexResult
         """
-        if not all(val is not None for val in ['sheet_id', 'row_id',
-                                               'column_id']):
+        if not all(val is not None for val in ["sheet_id", "row_id", "column_id"]):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values are missing from call to " + __name__)
+            )
 
-        _op = fresh_operation('get_cell_history')
-        _op['method'] = 'GET'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(
-            row_id) + '/columns/' + str(column_id) + '/history'
-        _op['query_params']['include'] = include
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
-        _op['query_params']['level'] = level
+        _op = fresh_operation("get_cell_history")
+        _op["method"] = "GET"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/rows/"
+            + str(row_id)
+            + "/columns/"
+            + str(column_id)
+            + "/history"
+        )
+        _op["query_params"]["include"] = include
+        _op["query_params"]["pageSize"] = page_size
+        _op["query_params"]["page"] = page
+        _op["query_params"]["includeAll"] = include_all
+        _op["query_params"]["level"] = level
 
-        expected = ['IndexResult', 'CellHistory']
+        expected = ["IndexResult", "CellHistory"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def add_image_to_cell(self, sheet_id, row_id, column_id, file, file_type, override_validation=False, alt_text=None):
+    def add_image_to_cell(
+        self,
+        sheet_id,
+        row_id,
+        column_id,
+        file,
+        file_type,
+        override_validation=False,
+        alt_text=None,
+    ):
         """Uploads an image to the specified cell.
 
         Args:
@@ -87,29 +111,51 @@ class Cells(object):
         Returns:
             Result
         """
-        if not all(val is not None for val in ['sheet_id', 'row_id',
-                                               'column_id', 'file', 'file_type']):
+        if not all(
+            val is not None
+            for val in ["sheet_id", "row_id", "column_id", "file", "file_type"]
+        ):
             raise ValueError(
-                ('One or more required values '
-                 'are missing from call to ' + __name__))
+                ("One or more required values are missing from call to " + __name__)
+            )
 
-        return self._attach_file_to_cell(sheet_id, row_id, column_id, file, file_type, override_validation, alt_text)
+        return self._attach_file_to_cell(
+            sheet_id, row_id, column_id, file, file_type, override_validation, alt_text
+        )
 
-    def _attach_file_to_cell(self, sheet_id, row_id, column_id, file, file_type, override_validation, alt_text):
+    def _attach_file_to_cell(
+        self,
+        sheet_id,
+        row_id,
+        column_id,
+        file,
+        file_type,
+        override_validation,
+        alt_text,
+    ):
 
-        _data = open(file, 'rb').read()
+        _data = open(file, "rb").read()
 
-        _op = fresh_operation('attach_file_to_cell')
-        _op['method'] = 'POST'
-        _op['path'] = '/sheets/' + str(sheet_id) + '/rows/' + str(row_id) + \
-                      '/columns/' + str(column_id) + '/cellimages'
-        _op['headers'] = {'content-type': file_type,
-                          'content-disposition': 'attachment; filename="' + file + '"'}
-        _op['query_params']['altText'] = alt_text
-        _op['query_params']['overrideValidation'] = override_validation
-        _op['form_data'] = _data
+        _op = fresh_operation("attach_file_to_cell")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/"
+            + str(sheet_id)
+            + "/rows/"
+            + str(row_id)
+            + "/columns/"
+            + str(column_id)
+            + "/cellimages"
+        )
+        _op["headers"] = {
+            "content-type": file_type,
+            "content-disposition": 'attachment; filename="' + file + '"',
+        }
+        _op["query_params"]["altText"] = alt_text
+        _op["query_params"]["overrideValidation"] = override_validation
+        _op["form_data"] = _data
 
-        expected = ['Result', 'Row']
+        expected = ["Result", "Row"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
