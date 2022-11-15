@@ -67,3 +67,5 @@ def assign_to_object_value(value):
         return BooleanObjectValue(value)
     elif isinstance(value, (six.integer_types, float)):
         return NumberObjectValue(value)
+    else:
+        return None

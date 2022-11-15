@@ -297,7 +297,7 @@ class EnumeratedValue:
             return self._value == other
         elif isinstance(other, six.string_types):
             return self._value == self.__enum[other]
-        NotImplemented
+        return NotImplemented
 
     def __str__(self):
         if self._value is not None:
