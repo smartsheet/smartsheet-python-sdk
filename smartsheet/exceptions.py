@@ -1,4 +1,4 @@
-# pylint: disable=E1121
+# pylint: disable=C0302,C0111, E1121
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -15,7 +15,6 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-# pylint: disable=C0302,C0111
 
 
 class SmartsheetException(Exception):
