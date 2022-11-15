@@ -310,7 +310,7 @@ class EnumeratedValue:
 
 class EnumeratedList(TypedList):
     def __init__(self, enum):
-        super(EnumeratedList, self).__init__(EnumeratedValue)
+        super().__init__(EnumeratedValue)
         self.__enum = enum
 
     def load(self, value):

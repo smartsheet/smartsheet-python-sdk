@@ -29,7 +29,7 @@ class ReportColumn(Column):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the ReportColumn model."""
-        super(ReportColumn, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

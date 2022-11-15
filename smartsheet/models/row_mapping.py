@@ -50,7 +50,7 @@ class RowMapping:
         if key == "from":
             self.from_ = value
         else:
-            super(RowMapping, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def from_(self):

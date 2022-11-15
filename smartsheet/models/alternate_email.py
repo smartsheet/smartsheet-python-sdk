@@ -53,7 +53,7 @@ class AlternateEmail:
         if key == "id":
             self.id_ = value
         else:
-            super(AlternateEmail, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def confirmed(self):

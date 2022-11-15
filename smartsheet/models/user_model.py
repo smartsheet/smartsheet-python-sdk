@@ -72,7 +72,7 @@ class UserModel:
         if key == "id":
             self.id_ = value
         else:
-            super(UserModel, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def admin(self):

@@ -67,7 +67,7 @@ class Cell:
         if key == "format":
             self.format_ = value
         else:
-            super(Cell, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def column_id(self):

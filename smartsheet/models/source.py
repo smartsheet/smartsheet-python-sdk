@@ -56,7 +56,7 @@ class Source:
         elif key == "type":
             self.type_ = value
         else:
-            super(Source, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def id_(self):

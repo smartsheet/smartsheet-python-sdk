@@ -57,7 +57,7 @@ class Schedule:
         if key == "type":
             self.type_ = value
         else:
-            super(Schedule, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def day_descriptors(self):

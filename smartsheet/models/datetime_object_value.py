@@ -28,7 +28,7 @@ class DatetimeObjectValue(ObjectValue):
 
     def __init__(self, props=None, object_type=None, base_obj=None):
         """Initialize the DateObjectValue model."""
-        super(DatetimeObjectValue, self).__init__(object_type, base_obj)
+        super().__init__(object_type, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

@@ -81,7 +81,7 @@ class Column:
         elif key == "type":
             self.type_ = value
         else:
-            super(Column, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def auto_number_format(self):

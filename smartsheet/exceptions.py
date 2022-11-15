@@ -35,7 +35,7 @@ class ApiError(SmartsheetException):
             message (str): A human-readable message that can be
                 displayed to the end user. Is None, if unavailable.
         """
-        super(ApiError, self).__init__(error)
+        super().__init__(error)
         self.error = error
         self.message = message
         self.should_retry = should_retry
@@ -48,7 +48,7 @@ class HttpError(SmartsheetException):
     """Errors produced at the HTTP layer."""
 
     def __init__(self, status_code, body):
-        super(HttpError, self).__init__(status_code, body)
+        super().__init__(status_code, body)
         self.status_code = status_code
         self.body = body
 
@@ -60,7 +60,7 @@ class InternalServerError(HttpError):
     """Errors due to a problem on Smartsheet."""
 
     def __init__(self, status_code, message):
-        super(InternalServerError, self).__init__(status_code, status_code, message)
+        super().__init__(status_code, status_code, message)
         self.status_code = status_code
         self.message = message
 
@@ -72,7 +72,7 @@ class UnexpectedRequestError(SmartsheetException):
     """Error originating from Requests API."""
 
     def __init__(self, request, response):
-        super(UnexpectedRequestError, self).__init__(request, response)
+        super().__init__(request, response)
         self.request = request
         self.response = response
 
@@ -84,7 +84,7 @@ class SystemMaintenanceError(ApiError):
     """Smartsheet.com is currently offline for system maintenance. ..."""
 
     def __init__(self, error, message):
-        super(SystemMaintenanceError, self).__init__(error, message, True)
+        super().__init__(error, message, True)
         self.error = error
         self.message = message
         self.should_retry = True
@@ -97,7 +97,7 @@ class ServerTimeoutExceededError(ApiError):
     """Server timeout exceeded. Request has failed."""
 
     def __init__(self, error, message):
-        super(ServerTimeoutExceededError, self).__init__(error, message, True)
+        super().__init__(error, message, True)
         self.error = error
         self.message = message
         self.should_retry = True
@@ -110,7 +110,7 @@ class RateLimitExceededError(ApiError):
     """Rate limit exceeded."""
 
     def __init__(self, error, message):
-        super(RateLimitExceededError, self).__init__(error, message, True)
+        super().__init__(error, message, True)
         self.error = error
         self.message = message
         self.should_retry = True
@@ -123,7 +123,7 @@ class UnexpectedErrorShouldRetryError(ApiError):
     """An unexpected error has occurred. Please retry your request. If ..."""
 
     def __init__(self, error, message):
-        super(UnexpectedErrorShouldRetryError, self).__init__(error, message, True)
+        super().__init__(error, message, True)
         self.error = error
         self.message = message
         self.should_retry = True

@@ -68,7 +68,7 @@ class Sight:
         if key == "id":
             self.id_ = value
         else:
-            super(Sight, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

@@ -90,7 +90,7 @@ class Row:
         elif key == "id":
             self.id_ = value
         else:
-            super(Row, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def above(self):

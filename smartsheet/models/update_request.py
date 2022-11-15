@@ -31,7 +31,7 @@ class UpdateRequest(MultiRowEmail):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the UpdateRequest model."""
-        super(UpdateRequest, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
@@ -59,7 +59,7 @@ class UpdateRequest(MultiRowEmail):
         if key == "id":
             self.id_ = value
         else:
-            super(UpdateRequest, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def created_at(self):

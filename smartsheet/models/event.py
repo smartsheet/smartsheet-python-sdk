@@ -55,7 +55,7 @@ class Event:
         raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        super(Event, self).__setattr__(key, value)
+        super().__setattr__(key, value)
 
     @property
     def access_token_name(self):

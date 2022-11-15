@@ -70,7 +70,7 @@ class Widget:
         if key == "id":
             self.id_ = value
         else:
-            super(Widget, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def contents(self):

@@ -68,7 +68,7 @@ class Discussion:
         if key == "id":
             self.id_ = value
         else:
-            super(Discussion, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

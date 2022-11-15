@@ -59,7 +59,7 @@ class CrossSheetReference:
         if key == "id":
             self.id_ = value
         else:
-            super(CrossSheetReference, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def end_column_id(self):

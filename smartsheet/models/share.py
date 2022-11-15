@@ -68,7 +68,7 @@ class Share:
         elif key == "type":
             self.type_ = value
         else:
-            super(Share, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

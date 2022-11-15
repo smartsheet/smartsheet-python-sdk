@@ -26,7 +26,7 @@ class BooleanObjectValue(PrimitiveObjectValue):
 
     def __init__(self, value=None, base_obj=None):
         """Initialize the BooleanObjectValue model."""
-        super(BooleanObjectValue, self).__init__(value, base_obj)
+        super().__init__(value, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

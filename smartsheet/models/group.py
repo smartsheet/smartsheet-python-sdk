@@ -59,7 +59,7 @@ class Group:
         if key == "id":
             self.id_ = value
         else:
-            super(Group, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def created_at(self):

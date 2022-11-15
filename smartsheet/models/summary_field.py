@@ -85,7 +85,7 @@ class SummaryField:
         elif key == "type":
             self.type_ = value
         else:
-            super(SummaryField, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def contact_options(self):

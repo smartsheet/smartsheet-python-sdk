@@ -64,7 +64,7 @@ class AutomationRule:
         if key == "id":
             self.id_ = value
         else:
-            super(AutomationRule, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def action(self):

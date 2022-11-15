@@ -55,7 +55,7 @@ class SheetFilter:
         if key == "id":
             self.id_ = value
         else:
-            super(SheetFilter, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def filter_type(self):

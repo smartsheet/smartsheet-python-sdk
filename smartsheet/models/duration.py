@@ -28,7 +28,7 @@ class Duration(ObjectValue):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the Duration model."""
-        super(Duration, self).__init__(DURATION, base_obj)
+        super().__init__(DURATION, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

@@ -32,7 +32,7 @@ class CellLinkWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the CellLinkWidgetContent model."""
-        super(CellLinkWidgetContent, self).__init__(WidgetType.METRIC, base_obj)
+        super().__init__(WidgetType.METRIC, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
@@ -58,7 +58,7 @@ class CellLinkWidgetContent(WidgetContent):
         if key == "format":
             self.format_ = value
         else:
-            super(WidgetContent, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     """Represents the CellLinkWidgetContent object."""
 

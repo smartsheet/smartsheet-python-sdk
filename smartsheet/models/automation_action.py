@@ -63,7 +63,7 @@ class AutomationAction:
         if key == "type":
             self.type_ = value
         else:
-            super(AutomationAction, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def frequency(self):

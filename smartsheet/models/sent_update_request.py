@@ -65,7 +65,7 @@ class SentUpdateRequest:
         if key == "id":
             self.id_ = value
         else:
-            super(SentUpdateRequest, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def column_ids(self):

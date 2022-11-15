@@ -30,7 +30,7 @@ class CellHistory(Cell):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the CellHistory model."""
-        super(CellHistory, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

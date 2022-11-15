@@ -53,7 +53,7 @@ class Contact:
         if key == "id":
             self.id_ = value
         else:
-            super(Contact, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def email(self):

@@ -53,7 +53,7 @@ class GroupMember:
         if key == "id":
             self.id_ = value
         else:
-            super(GroupMember, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def email(self):

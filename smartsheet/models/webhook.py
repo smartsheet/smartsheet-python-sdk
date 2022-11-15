@@ -71,7 +71,7 @@ class Webhook:
         if key == "id":
             self.id_ = value
         else:
-            super(Webhook, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def api_client_id(self):

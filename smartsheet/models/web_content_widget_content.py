@@ -29,7 +29,7 @@ class WebContentWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the WebContentWidgetContent model."""
-        super(WebContentWidgetContent, self).__init__(WidgetType.WEBCONTENT, base_obj)
+        super().__init__(WidgetType.WEBCONTENT, base_obj)
 
         self._base = None
         if base_obj is not None:

@@ -30,7 +30,7 @@ class ImageWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the ImageWidgetContent model."""
-        super(ImageWidgetContent, self).__init__(WidgetType.IMAGE, base_obj)
+        super().__init__(WidgetType.IMAGE, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
@@ -58,7 +58,7 @@ class ImageWidgetContent(WidgetContent):
         if key == "format":
             self.format_ = value
         else:
-            super(WidgetContent, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     """Represents the ImageWidgetContent object."""
 

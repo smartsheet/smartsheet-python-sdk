@@ -50,7 +50,7 @@ class Account:
         if key == "id":
             self.id_ = value
         else:
-            super(Account, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def id_(self):

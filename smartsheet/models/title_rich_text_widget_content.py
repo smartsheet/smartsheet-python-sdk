@@ -29,7 +29,7 @@ class TitleRichTextWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the TitleRichTextWidgetContent model."""
-        super(TitleRichTextWidgetContent, self).__init__(WidgetType.TITLE, base_obj)
+        super().__init__(WidgetType.TITLE, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

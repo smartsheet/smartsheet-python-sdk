@@ -31,7 +31,7 @@ class SheetEmail(Email):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the SheetEmail model."""
-        super(SheetEmail, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
@@ -54,7 +54,7 @@ class SheetEmail(Email):
         if key == "format":
             self.format_ = value
         else:
-            super(SheetEmail, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def format_(self):

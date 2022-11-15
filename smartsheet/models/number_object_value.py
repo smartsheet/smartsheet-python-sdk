@@ -26,7 +26,7 @@ class NumberObjectValue(PrimitiveObjectValue):
 
     def __init__(self, value=None, base_obj=None):
         """Initialize the NumberObjectValue model."""
-        super(NumberObjectValue, self).__init__(value, base_obj)
+        super().__init__(value, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
