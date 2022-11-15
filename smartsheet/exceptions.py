@@ -20,8 +20,6 @@
 class SmartsheetException(Exception):
     """Root for SmartsheetErrors, never raised directly."""
 
-    pass
-
 
 class ApiError(SmartsheetException):
     """Errors produced by the Smartsheet API."""
