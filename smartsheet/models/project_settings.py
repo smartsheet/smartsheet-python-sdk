@@ -59,11 +59,11 @@ class ProjectSettings:
     def non_working_days(self, value):
         if isinstance(value, list):
             self._non_working_days.purge()
-            for x in value:
-                if isinstance(x, six.string_types):
-                    x = parse(x).date()
-                if isinstance(x, date):
-                    self._non_working_days.extend([x])
+            for item in value:
+                if isinstance(item, six.string_types):
+                    item = parse(item).date()
+                if isinstance(item, date):
+                    self._non_working_days.extend([item])
         elif isinstance(value, six.string_types):
             value = parse(value).date()
             self._non_working_days.purge()

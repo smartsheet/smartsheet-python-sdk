@@ -108,8 +108,8 @@ def serialize(obj):
     elif isinstance(obj, _list_types):
         if len(obj):
             retval = []
-            for x in obj:
-                serialized = serialize(x)
+            for item in obj:
+                serialized = serialize(item)
                 if not hasattr(serialized, "is_explicit_null"):
                     retval.append(serialized)
     else:
