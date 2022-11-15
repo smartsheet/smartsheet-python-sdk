@@ -3,7 +3,23 @@ name: Test Build
 on: [push]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install pylint requests six python-dateutil
+      - name: Run Pylint
+        run: |
+          pylint smartsheet --rcfile pylintrc
+
   mock-api-test:
+    needs: lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -41,6 +57,7 @@ jobs:
           path-to-lcov: "coverage.lcov"
   
   integration-tests:
+    needs: lint
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 2
