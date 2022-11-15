@@ -1,3 +1,4 @@
+# pylint: disable=E0401,W0221,W0613
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
