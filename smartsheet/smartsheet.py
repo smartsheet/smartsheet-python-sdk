@@ -279,9 +279,7 @@ class Smartsheet:
             response.request.url,
         )
         if response.request.body is not None:
-            body_dumps = '"<< {} content type suppressed >>"'.format(
-                response.request.headers["Content-Type"]
-            )
+            body_dumps = f'"<< {response.request.headers["Content-Type"]} content type suppressed >>"'
             if is_multipart(response.request):
                 body_dumps = '"<< multipart body suppressed >>"'
             elif "application/json" in response.request.headers["Content-Type"]:
@@ -289,9 +287,7 @@ class Smartsheet:
                 body_dumps = json.dumps(json.loads(body), sort_keys=True)
             self._log.debug('{"requestBody": %s}', body_dumps)
         # response
-        content_dumps = '"<< {} content type suppressed >>"'.format(
-            response.headers["Content-Type"]
-        )
+        content_dumps = f'"<< {response.headers["Content-Type"]} content type suppressed >>"'
         if "application/json" in response.headers["Content-Type"]:
             content = response.content.decode("utf8")
             content_dumps = json.dumps(json.loads(content), sort_keys=True)

@@ -57,9 +57,9 @@ def assign_to_object_value(value):
         else:
             raise ValueError(
                 (
-                    "`{0}` is an invalid value for ObjectValue`object_type`,"
-                    " must be one of {1}"
-                ).format(object_type, OBJECT_VALUE["object_type"])
+                    f"`{object_type}` is an invalid value for ObjectValue`object_type`,"
+                    f" must be one of {OBJECT_VALUE['object_type']}"
+                )
             )
     elif isinstance(value, six.string_types):
         return StringObjectValue(value)
