@@ -1696,20 +1696,20 @@ class Sheets:
             head, tail = os.path.split(file)
             sheet_name = tail or os.path.basename(head)
 
-        with open(file, "rb") as _data:
-            _op = fresh_operation("import_sheet_into_folder")
-            _op["method"] = "POST"
-            _op["path"] = "/sheets/import"
-            _op["headers"] = {
-                "content-type": file_type,
-                "content-disposition": "attachment",
-            }
-            _op["form_data"] = _data
-            _op["query_params"]["sheetName"] = sheet_name
-            _op["query_params"]["headerRowIndex"] = header_row_index
-            _op["query_params"]["primaryColumnIndex"] = primary_column_index
+        _data = open(file, "rb").read()
+        _op = fresh_operation("import_sheet_into_folder")
+        _op["method"] = "POST"
+        _op["path"] = "/sheets/import"
+        _op["headers"] = {
+            "content-type": file_type,
+            "content-disposition": "attachment",
+        }
+        _op["form_data"] = _data
+        _op["query_params"]["sheetName"] = sheet_name
+        _op["query_params"]["headerRowIndex"] = header_row_index
+        _op["query_params"]["primaryColumnIndex"] = primary_column_index
 
-            expected = ["Result", "Sheet"]
+        expected = ["Result", "Sheet"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -1975,20 +1975,20 @@ class Sheets:
         self, sheet_id, field_id, file, file_type, alt_text=None
     ):
 
-        with open(file, "rb") as _data:
-            _op = fresh_operation("add_sheet_summary_field_image")
-            _op["method"] = "POST"
-            _op["path"] = (
-                "/sheets/" + str(sheet_id) + "/summary/fields/" + str(field_id) + "/images"
-            )
-            _op["headers"] = {
-                "content-type": file_type,
-                "content-disposition": 'attachment; filename="' + file + '"',
-            }
-            _op["query_params"]["altText"] = alt_text
-            _op["form_data"] = _data
+        _data = open(file, "rb").read()
+        _op = fresh_operation("add_sheet_summary_field_image")
+        _op["method"] = "POST"
+        _op["path"] = (
+            "/sheets/" + str(sheet_id) + "/summary/fields/" + str(field_id) + "/images"
+        )
+        _op["headers"] = {
+            "content-type": file_type,
+            "content-disposition": 'attachment; filename="' + file + '"',
+        }
+        _op["query_params"]["altText"] = alt_text
+        _op["form_data"] = _data
 
-            expected = ["Result", "SummaryField"]
+        expected = ["Result", "SummaryField"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
