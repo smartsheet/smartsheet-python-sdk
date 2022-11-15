@@ -18,11 +18,11 @@
 from __future__ import absolute_import
 
 import json
+
 import six
 
+from ..util import get_child_properties, serialize
 from .explicit_null import ExplicitNull
-from ..util import get_child_properties
-from ..util import serialize
 
 DATE = 1
 DATETIME = 2

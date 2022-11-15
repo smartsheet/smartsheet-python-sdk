@@ -18,12 +18,12 @@
 from __future__ import absolute_import
 
 import json
+
 import six
 
-from .row_email import RowEmail
 from ..types import TypedList
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .row_email import RowEmail
 
 
 class MultiRowEmail(RowEmail):

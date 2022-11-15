@@ -17,10 +17,10 @@
 
 from __future__ import absolute_import
 
-from .contact import Contact
-from .object_value import CONTACT, ObjectValue
 from ..types import Number, String
 from ..util import deserialize
+from .contact import Contact
+from .object_value import CONTACT, ObjectValue
 
 
 class ContactObjectValue(ObjectValue, Contact):

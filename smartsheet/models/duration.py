@@ -17,9 +17,9 @@
 
 from __future__ import absolute_import
 
-from .object_value import DURATION, ObjectValue
 from ..types import Boolean, Number
 from ..util import deserialize
+from .object_value import DURATION, ObjectValue
 
 
 class Duration(ObjectValue):

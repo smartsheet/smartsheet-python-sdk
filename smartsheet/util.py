@@ -16,17 +16,16 @@
 
 from __future__ import absolute_import
 
-import logging
-import warnings
 import functools
-import re
-import six
 import inspect
+import logging
+import re
+import warnings
+from datetime import date, datetime
 
-from datetime import date
-from datetime import datetime
-from .types import TypedList
-from .types import EnumeratedValue
+import six
+
+from .types import EnumeratedValue, TypedList
 
 _log = logging.getLogger(__name__)
 _primitive_types = (six.string_types, six.integer_types, float, bool)

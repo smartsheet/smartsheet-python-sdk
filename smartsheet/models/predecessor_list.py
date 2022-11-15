@@ -17,10 +17,10 @@
 
 from __future__ import absolute_import
 
-from .predecessor import Predecessor
-from .object_value import ObjectValue, PREDECESSOR_LIST
-from ..util import deserialize
 from ..types import TypedList
+from ..util import deserialize
+from .object_value import PREDECESSOR_LIST, ObjectValue
+from .predecessor import Predecessor
 
 
 class PredecessorList(ObjectValue):

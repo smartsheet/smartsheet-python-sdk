@@ -17,9 +17,11 @@
 
 from __future__ import absolute_import
 
-from .enums.widget_type import WidgetType
+from ..types import Boolean, EnumeratedValue, Number, String, TypedObject, json
+from ..util import deserialize, serialize
 from .cell_link_widget_content import CellLinkWidgetContent
 from .chart_widget_content import ChartWidgetContent
+from .enums.widget_type import WidgetType
 from .error_result import ErrorResult
 from .image_widget_content import ImageWidgetContent
 from .report_widget_content import ReportWidgetContent
@@ -27,9 +29,6 @@ from .shortcut_widget_content import ShortcutWidgetContent
 from .title_rich_text_widget_content import TitleRichTextWidgetContent
 from .web_content_widget_content import WebContentWidgetContent
 from .widget_content import WidgetContent
-from ..types import Boolean, EnumeratedValue, Number, String, TypedObject, json
-from ..util import serialize
-from ..util import deserialize
 
 
 class Widget:

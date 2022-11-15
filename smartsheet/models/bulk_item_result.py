@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .bulk_item_failure import BulkItemFailure
 from ..types import Number, String, TypedList, importlib, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .bulk_item_failure import BulkItemFailure
 
 
 class BulkItemResult:

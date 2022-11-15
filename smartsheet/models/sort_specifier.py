@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .sort_criterion import SortCriterion
 from ..types import TypedList, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .sort_criterion import SortCriterion
 
 
 class SortSpecifier:

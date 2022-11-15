@@ -17,13 +17,13 @@
 
 from __future__ import absolute_import
 
-import os.path
 import logging
+import os.path
+
 import requests
 
-from .models import DownloadedFile
-from .models import Error, ErrorResult
 from . import fresh_operation
+from .models import DownloadedFile, Error, ErrorResult
 
 
 class Attachments:

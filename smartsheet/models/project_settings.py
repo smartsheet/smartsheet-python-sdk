@@ -17,11 +17,12 @@
 
 from __future__ import absolute_import
 
-from ..types import Number, TypedList, json, six
-from ..util import serialize
-from ..util import deserialize
 from datetime import date
+
 from dateutil.parser import parse
+
+from ..types import Number, TypedList, json, six
+from ..util import deserialize, serialize
 
 
 class ProjectSettings:

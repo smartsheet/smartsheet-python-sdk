@@ -18,8 +18,7 @@
 from __future__ import absolute_import
 
 from ..types import Number, String, TypedList, importlib, json, logging
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
 
 
 class Result:

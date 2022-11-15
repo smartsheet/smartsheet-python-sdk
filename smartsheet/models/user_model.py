@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .alternate_email import AlternateEmail
 from .enums import UserStatus
 from .profile_image import ProfileImage
-from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject,
-                     json)
-from ..util import serialize
-from ..util import deserialize
 
 
 class UserModel:

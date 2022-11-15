@@ -18,24 +18,24 @@
 from __future__ import absolute_import
 
 import importlib
+import inspect
+import json
 import logging
 import logging.config
 import os
-import re
 import random
-import time
+import re
 import sys
+import time
+
 import requests
 import six
-import inspect
-import json
 
-from .exceptions import HttpError, UnexpectedRequestError, ApiError
+from . import __api_base__, __version__, models
+from .exceptions import ApiError, HttpError, UnexpectedRequestError
 from .models import Error, ErrorResult
 from .session import pinned_session
-from .util import is_multipart
-from .util import serialize
-from . import __version__, __api_base__, models
+from .util import is_multipart, serialize
 
 __all__ = ("Smartsheet", "fresh_operation", "AbstractUserCalcBackoff")
 

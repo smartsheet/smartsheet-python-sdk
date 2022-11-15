@@ -17,12 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedObject, json)
+from ..util import deserialize, serialize
 from .automation_action import AutomationAction
 from .enums import AutomationRuleDisabledReason
 from .user import User
-from ..types import Boolean, EnumeratedValue, Number, String, Timestamp, TypedObject, json
-from ..util import serialize
-from ..util import deserialize
 
 
 class AutomationRule:

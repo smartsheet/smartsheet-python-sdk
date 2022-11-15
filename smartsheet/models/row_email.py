@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .email import Email
 from ..types import Boolean, String, TypedList, json, six
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .email import Email
 
 
 class RowEmail(Email):

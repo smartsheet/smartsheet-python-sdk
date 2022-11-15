@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import Boolean, Number, String, TypedList, json
+from ..util import deserialize, serialize
 from .report import Report
 from .sheet import Sheet
 from .sight import Sight
 from .template import Template
-from ..types import Boolean, Number, String, TypedList, json
-from ..util import serialize
-from ..util import deserialize
 
 
 class Folder:

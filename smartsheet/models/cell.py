@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..object_value import assign_to_object_value
+from ..types import Boolean, Number, String, TypedList, TypedObject, json, six
+from ..util import deserialize, serialize
 from .cell_link import CellLink
 from .explicit_null import ExplicitNull
 from .hyperlink import Hyperlink
 from .image import Image
-from ..object_value import assign_to_object_value
-from ..types import Boolean, Number, String, TypedList, TypedObject, json, six
-from ..util import serialize
-from ..util import deserialize
 
 
 class Cell:

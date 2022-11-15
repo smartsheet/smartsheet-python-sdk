@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from .multi_row_email import MultiRowEmail
-from .user import User
-from .schedule import Schedule
 from ..types import Number, Timestamp, TypedObject, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .multi_row_email import MultiRowEmail
+from .schedule import Schedule
+from .user import User
 
 
 class UpdateRequest(MultiRowEmail):

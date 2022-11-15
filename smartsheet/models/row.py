@@ -17,17 +17,17 @@
 
 from __future__ import absolute_import
 
+from datetime import datetime
+
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .attachment import Attachment
 from .cell import Cell
 from .column import Column
 from .discussion import Discussion
 from .enums import AccessLevel
-from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject,
-                     json)
 from .user import User
-from ..util import serialize
-from ..util import deserialize
-from datetime import datetime
 
 
 class Row:

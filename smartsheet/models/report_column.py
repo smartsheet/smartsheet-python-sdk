@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .column import Column
 from ..types import Boolean, Number, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .column import Column
 
 
 class ReportColumn(Column):

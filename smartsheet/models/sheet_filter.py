@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .enums import SheetFilterType
 from ..types import EnumeratedValue, Number, String, TypedObject, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .enums import SheetFilterType
 from .sheet_filter_details import SheetFilterDetails
 
 

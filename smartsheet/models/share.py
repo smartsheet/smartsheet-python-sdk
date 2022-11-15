@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .enums import AccessLevel, ShareScope, ShareType
 from ..types import Boolean, EnumeratedValue, Number, String, Timestamp, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .enums import AccessLevel, ShareScope, ShareType
 
 
 class Share:

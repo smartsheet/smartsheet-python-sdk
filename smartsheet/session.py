@@ -18,13 +18,12 @@
 # known issue regarding ssl module and pylint.
 
 import ssl
-import certifi
 
+import certifi
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 from requests.packages.urllib3.util import Retry
-
 
 _TRUSTED_CERT_FILE = certifi.where()
 

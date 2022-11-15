@@ -17,11 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, Number, String, Timestamp, TypedList,
+                     TypedObject, json, six)
+from ..util import deserialize, serialize
 from .webhook_stats import WebhookStats
 from .webhook_subscope import WebhookSubscope
-from ..types import Boolean, Number, String, Timestamp, TypedList, TypedObject, json, six
-from ..util import serialize
-from ..util import deserialize
 
 
 class Webhook:

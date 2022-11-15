@@ -17,12 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, TypedList,
+                     TypedObject, json)
+from ..util import deserialize, serialize
 from .auto_number_format import AutoNumberFormat
 from .contact import Contact
 from .enums import ColumnType, Symbol, SystemColumnType
-from ..types import Boolean, EnumeratedValue, Number, String, TypedList, TypedObject, json
-from ..util import serialize
-from ..util import deserialize
 
 
 class Column:

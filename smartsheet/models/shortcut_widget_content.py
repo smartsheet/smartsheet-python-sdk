@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import TypedList, json
+from ..util import deserialize, serialize
 from .enums import WidgetType
 from .shortcut_data_item import ShortcutDataItem
 from .widget_content import WidgetContent
-from ..types import TypedList, json
-from ..util import serialize
-from ..util import deserialize
 
 
 class ShortcutWidgetContent(WidgetContent):

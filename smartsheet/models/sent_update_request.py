@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json, six)
+from ..util import deserialize, serialize
 from .enums import UpdateRequestStatus
-from .user import User
 from .recipient import Recipient
-from ..util import serialize
-from ..util import deserialize
-from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject,
-                     json, six)
+from .user import User
 
 
 class SentUpdateRequest:

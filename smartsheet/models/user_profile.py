@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import String, TypedList, TypedObject, json
+from ..util import deserialize, serialize
 from .account import Account
 from .group import Group
 from .user_model import UserModel
-from ..types import String, TypedList, TypedObject, json
-from ..util import serialize
-from ..util import deserialize
 
 
 class UserProfile(UserModel):

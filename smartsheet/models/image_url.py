@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .error_result import ErrorResult
 from ..types import Number, String, TypedObject, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .error_result import ErrorResult
 
 
 class ImageUrl:

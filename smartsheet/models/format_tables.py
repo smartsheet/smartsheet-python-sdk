@@ -17,11 +17,10 @@
 
 from __future__ import absolute_import
 
+from ..types import String, TypedList, json
+from ..util import deserialize, serialize
 from .currency import Currency
 from .font_family import FontFamily
-from ..types import String, TypedList, json
-from ..util import serialize
-from ..util import deserialize
 
 
 class FormatTables:

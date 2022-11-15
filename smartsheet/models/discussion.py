@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .attachment import Attachment
 from .comment import Comment
 from .enums import AccessLevel
 from .user import User
-from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject,
-                     json)
-from ..util import serialize
-from ..util import deserialize
 
 
 class Discussion:

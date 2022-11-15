@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
-from .column import Column
-from .cell_data_item import CellDataItem
-from .shortcut_data_item import ShortcutDataItem
-from .hyperlink import Hyperlink
 from ..types import json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .cell_data_item import CellDataItem
+from .column import Column
+from .hyperlink import Hyperlink
+from .shortcut_data_item import ShortcutDataItem
 
 
 class WidgetContent:

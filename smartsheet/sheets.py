@@ -19,14 +19,16 @@ from __future__ import absolute_import
 
 import logging
 import os.path
-import six
 from datetime import datetime
+
+import six
+
+from . import fresh_operation
 from .models.column import Column
 from .models.row import Row
 from .models.summary_field import SummaryField
 from .types import TypedList
 from .util import deprecated
-from . import fresh_operation
 
 
 class Sheets:

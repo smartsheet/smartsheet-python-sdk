@@ -21,8 +21,7 @@ import contextlib
 import os.path
 
 from ..types import Number, String, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
 
 
 class DownloadedFile:

@@ -25,11 +25,11 @@ except ImportError:
 import importlib
 import json
 import logging
-import six
-
 from datetime import datetime
-from dateutil.parser import parse
 from enum import Enum
+
+import six
+from dateutil.parser import parse
 
 
 class TypedList(MutableSequence):

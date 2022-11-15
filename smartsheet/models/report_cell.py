@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .cell import Cell
 from ..types import Number, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .cell import Cell
 
 
 class ReportCell(Cell):

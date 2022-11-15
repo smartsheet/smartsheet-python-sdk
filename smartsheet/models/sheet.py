@@ -17,9 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedList, EnumeratedValue, Number, String,
+                     Timestamp, TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .attachment import Attachment
 from .column import Column
-from .sheet_filter import SheetFilter
 from .comment import Comment
 from .contact_object_value import ContactObjectValue
 from .cross_sheet_reference import CrossSheetReference
@@ -27,14 +29,11 @@ from .discussion import Discussion
 from .enums import AccessLevel, AttachmentType
 from .project_settings import ProjectSettings
 from .row import Row
+from .sheet_filter import SheetFilter
 from .sheet_summary import SheetSummary
 from .sheet_user_permissions import SheetUserPermissions
 from .sheet_user_settings import SheetUserSettings
 from .source import Source
-from ..types import (Boolean, EnumeratedList, EnumeratedValue, Number, String, Timestamp, TypedList,
-                     TypedObject, json)
-from ..util import serialize
-from ..util import deserialize
 
 
 class Sheet:

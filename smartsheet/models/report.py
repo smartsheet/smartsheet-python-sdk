@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import TypedList, TypedObject, json
+from ..util import deserialize, serialize
 from .report_column import ReportColumn
 from .report_row import ReportRow
-from .sheet import Sheet
 from .scope import Scope
-from ..types import TypedList, TypedObject, json
-from ..util import deserialize
-from ..util import serialize
+from .sheet import Sheet
 
 
 class Report(Sheet):

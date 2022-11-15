@@ -22,9 +22,10 @@ from .models.duration import Duration
 from .models.multi_contact_object_value import MultiContactObjectValue
 from .models.multi_picklist_object_value import MultiPicklistObjectValue
 from .models.number_object_value import NumberObjectValue
-from .models.object_value import (ABSTRACT_DATETIME, CONTACT, DATE, DATETIME, DURATION,
-                                  MULTI_CONTACT, MULTI_PICKLIST, OBJECT_VALUE, ObjectValue,
-                                  PREDECESSOR_LIST, enum_object_value_type, six)
+from .models.object_value import (ABSTRACT_DATETIME, CONTACT, DATE, DATETIME,
+                                  DURATION, MULTI_CONTACT, MULTI_PICKLIST,
+                                  OBJECT_VALUE, PREDECESSOR_LIST, ObjectValue,
+                                  enum_object_value_type, six)
 from .models.predecessor_list import PredecessorList
 from .models.string_object_value import StringObjectValue
 

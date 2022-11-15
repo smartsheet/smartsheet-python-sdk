@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .enums import PublishAccessibleBy
 from ..types import Boolean, EnumeratedValue, String, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .enums import PublishAccessibleBy
 
 
 class SheetPublish:

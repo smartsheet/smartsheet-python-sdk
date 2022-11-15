@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
-from .format_tables import FormatTables
 from ..types import TypedList, TypedObject, json
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .format_tables import FormatTables
 
 
 class ServerInfo:

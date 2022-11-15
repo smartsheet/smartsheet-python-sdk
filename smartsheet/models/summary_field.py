@@ -17,16 +17,15 @@
 
 from __future__ import absolute_import
 
+from ..object_value import assign_to_object_value
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .contact import Contact
 from .enums.column_type import ColumnType
 from .hyperlink import Hyperlink
 from .image import Image
 from .user import User
-from ..object_value import assign_to_object_value
-from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject,
-                     json)
-from ..util import serialize
-from ..util import deserialize
 
 
 class SummaryField:

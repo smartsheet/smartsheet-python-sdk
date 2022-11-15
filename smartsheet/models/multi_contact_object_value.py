@@ -17,10 +17,10 @@
 
 from __future__ import absolute_import
 
-from .contact_object_value import ContactObjectValue
-from .object_value import MULTI_CONTACT, ObjectValue
 from ..types import TypedList
 from ..util import deserialize
+from .contact_object_value import ContactObjectValue
+from .object_value import MULTI_CONTACT, ObjectValue
 
 
 class MultiContactObjectValue(ObjectValue):

@@ -17,8 +17,8 @@
 
 from __future__ import absolute_import
 
-from .primitive_object_value import PrimitiveObjectValue
 from .object_value import NUMBER
+from .primitive_object_value import PrimitiveObjectValue
 
 
 class NumberObjectValue(PrimitiveObjectValue):
