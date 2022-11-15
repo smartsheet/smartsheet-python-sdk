@@ -46,7 +46,8 @@ class Workspaces:
                 ruleRecipients, rules, shares, all (deprecated). Cell history will not be copied,
                 regardless of which **include** parameter values are specified.
             skip_remap (list[str]): A comma separated list of references to NOT re-map for
-                the newly created resource. Valid list items: cellLinks, reports, sheetHyperlinks, sights
+                the newly created resource.
+                Valid list items: cellLinks, reports, sheetHyperlinks, sights
         Returns:
             Result
         """

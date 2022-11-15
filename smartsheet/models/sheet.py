@@ -46,7 +46,8 @@ class Sheet:
         if base_obj is not None:
             self._base = base_obj
 
-        # Workspace creates a circular import dependency, so, as much as I'm not a fan of moving the import
+        # Workspace creates a circular import dependency
+        # as much as I'm not a fan of moving the import
         # into the __init__, its the most pragmatic approach for this simple problem.
         from .workspace import Workspace
 
