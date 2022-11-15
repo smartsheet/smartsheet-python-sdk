@@ -194,7 +194,7 @@ class SummaryField:
     def modified_by(self):
         return self._modified_by.value
 
-    @created_by.setter
+    @modified_by.setter
     def modified_by(self, value):
         self._modified_by.value = value
 
