@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .recipient import Recipient
-from ..types import *
+from ..types import Boolean, String, TypedList, json
 from ..util import serialize
 from ..util import deserialize
 

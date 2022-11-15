@@ -20,7 +20,8 @@ from __future__ import absolute_import
 from .enums import AccessLevel
 from .source import Source
 from .widget import Widget
-from ..types import *
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject,
+                     json)
 from ..util import serialize
 from ..util import deserialize
 

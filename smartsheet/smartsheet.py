@@ -30,7 +30,7 @@ import six
 import inspect
 import json
 
-from .exceptions import *
+from .exceptions import HttpError, UnexpectedRequestError, ApiError
 from .models import Error, ErrorResult
 from .session import pinned_session
 from .util import is_multipart

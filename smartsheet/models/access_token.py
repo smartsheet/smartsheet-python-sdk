@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from ..types import *
+from ..types import Number, String, Timestamp, json
 from ..util import serialize
 from ..util import deserialize
 

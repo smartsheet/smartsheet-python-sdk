@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from .enums import WidgetType
 from .widget_content import WidgetContent
-from ..types import *
+from ..types import String, json
 from ..util import serialize
 from ..util import deserialize
 

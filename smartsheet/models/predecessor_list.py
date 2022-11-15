@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .predecessor import Predecessor
-from .object_value import *
+from .object_value import ObjectValue, PREDECESSOR_LIST
 from ..util import deserialize
 from ..types import TypedList
 

@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .enums import AccessLevel, GlobalTemplate
-from ..types import *
+from ..types import Boolean, EnumeratedValue, Number, String, TypedList, json, six
 from ..util import serialize
 from ..util import deserialize
 

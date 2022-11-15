@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .cell import Cell
-from ..types import *
+from ..types import Number, json
 from ..util import serialize
 from ..util import deserialize
 

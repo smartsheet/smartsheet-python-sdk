@@ -27,7 +27,7 @@ from .shortcut_widget_content import ShortcutWidgetContent
 from .title_rich_text_widget_content import TitleRichTextWidgetContent
 from .web_content_widget_content import WebContentWidgetContent
 from .widget_content import WidgetContent
-from ..types import *
+from ..types import Boolean, EnumeratedValue, Number, String, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

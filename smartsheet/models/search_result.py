@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .search_result_item import SearchResultItem
-from ..types import *
+from ..types import Number, TypedList, json
 from ..util import serialize
 from ..util import deserialize
 

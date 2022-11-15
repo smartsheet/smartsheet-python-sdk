@@ -20,7 +20,7 @@ from __future__ import absolute_import
 from .email import Email
 from .enums import SheetEmailFormat
 from .format_details import FormatDetails
-from ..types import *
+from ..types import EnumeratedValue, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

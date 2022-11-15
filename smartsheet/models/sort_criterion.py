@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .enums import SortDirection
-from ..types import *
+from ..types import EnumeratedValue, Number, json
 from ..util import serialize
 from ..util import deserialize
 

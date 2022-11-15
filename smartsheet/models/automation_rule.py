@@ -20,7 +20,7 @@ from __future__ import absolute_import
 from .automation_action import AutomationAction
 from .enums import AutomationRuleDisabledReason
 from .user import User
-from ..types import *
+from ..types import Boolean, EnumeratedValue, Number, String, Timestamp, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

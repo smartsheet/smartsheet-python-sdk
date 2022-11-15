@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .copy_or_move_row_destination import CopyOrMoveRowDestination
-from ..types import *
+from ..types import TypedList, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

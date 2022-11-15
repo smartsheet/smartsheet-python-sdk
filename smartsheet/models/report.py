@@ -21,7 +21,7 @@ from .report_column import ReportColumn
 from .report_row import ReportRow
 from .sheet import Sheet
 from .scope import Scope
-from ..types import *
+from ..types import TypedList, TypedObject, json
 from ..util import deserialize
 from ..util import serialize
 

@@ -20,7 +20,7 @@ from __future__ import absolute_import
 import contextlib
 import os.path
 
-from ..types import *
+from ..types import Number, String, json
 from ..util import serialize
 from ..util import deserialize
 

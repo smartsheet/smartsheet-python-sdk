@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .sheet import Sheet
-from ..types import *
+from ..types import TypedList, json
 from ..util import serialize
 from ..util import deserialize
 

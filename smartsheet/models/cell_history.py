@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from .cell import Cell
 from .user import User
-from ..types import *
+from ..types import Timestamp, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

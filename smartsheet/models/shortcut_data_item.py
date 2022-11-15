@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from .enums import AttachmentType
 from .hyperlink import Hyperlink
-from ..types import *
+from ..types import EnumeratedValue, Number, String, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

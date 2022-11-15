@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .enums import EventObjectType, EventAction, EventSource
-from ..types import *
+from ..types import EnumeratedValue, Number, String, Timestamp, json, six
 from ..util import serialize
 from ..util import deserialize
 

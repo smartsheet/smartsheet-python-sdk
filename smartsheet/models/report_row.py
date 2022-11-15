@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from .row import Row
 from .report_cell import ReportCell
-from ..types import *
+from ..types import Number, TypedList, json
 from ..util import serialize
 from ..util import deserialize
 

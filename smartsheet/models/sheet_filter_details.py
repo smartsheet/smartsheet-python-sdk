@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from .criteria import Criteria
 from .enums import SheetFilterOperator
-from ..types import *
+from ..types import Boolean, EnumeratedValue, TypedList, json
 from ..util import serialize
 from ..util import deserialize
 

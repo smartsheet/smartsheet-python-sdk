@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from .enums import AttachmentParentType, AttachmentSubType, AttachmentType
 from .user import User
-from ..types import *
+from ..types import EnumeratedValue, Number, String, Timestamp, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

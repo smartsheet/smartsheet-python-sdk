@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .enums import DayOrdinal, DayDescriptors, ScheduleType
-from ..types import *
+from ..types import EnumeratedList, EnumeratedValue, Number, Timestamp, json
 from ..util import serialize
 from ..util import deserialize
 

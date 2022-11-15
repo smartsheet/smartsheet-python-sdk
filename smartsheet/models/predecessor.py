@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from .duration import Duration
 from .enums import PredecessorType
-from ..types import *
+from ..types import Boolean, EnumeratedValue, Number, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

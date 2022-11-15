@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from .object_value import *
+from .object_value import ObjectValue, six
 from ..util import deserialize
 from datetime import datetime
 from dateutil.parser import parse

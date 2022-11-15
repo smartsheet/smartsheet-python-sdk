@@ -22,7 +22,7 @@ from .cell_data_item import CellDataItem
 from .enums import WidgetType
 from .widget_content import WidgetContent
 from .widget_hyperlink import WidgetHyperlink
-from ..types import *
+from ..types import Number, TypedList, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 

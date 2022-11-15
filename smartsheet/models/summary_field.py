@@ -23,7 +23,8 @@ from .hyperlink import Hyperlink
 from .image import Image
 from .user import User
 from ..object_value import assign_to_object_value
-from ..types import *
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject,
+                     json)
 from ..util import serialize
 from ..util import deserialize
 

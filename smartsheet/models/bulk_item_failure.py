@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from .error_result import ErrorResult
-from ..types import *
+from ..types import Number, TypedObject, json
 from ..util import serialize
 from ..util import deserialize
 
