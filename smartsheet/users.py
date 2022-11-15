@@ -379,7 +379,6 @@ class Users:
     def _attach_profile_image(self, user_id, file, file_type):
         """Internal function used to load image"""
 
-        # _data = open(file, "rb").read()
         with open(file, "rb") as _data:
             _op = fresh_operation("attach_profile_image")
             _op["method"] = "POST"

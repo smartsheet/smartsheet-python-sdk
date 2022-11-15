@@ -34,7 +34,7 @@ class ShortcutWidgetContent(WidgetContent):
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the ShortcutWidgetContent object."""
+        # Represents the ShortcutWidgetContent object.
         self._shortcut_data = TypedList(ShortcutDataItem)
 
         if props:
@@ -42,7 +42,6 @@ class ShortcutWidgetContent(WidgetContent):
 
         self.__initialized = True
 
-    """Represents the ShortcutWidgetContent object."""
 
     @property
     def shortcut_data(self):

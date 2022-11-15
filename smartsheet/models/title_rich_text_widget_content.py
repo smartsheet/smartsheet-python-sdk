@@ -33,7 +33,7 @@ class TitleRichTextWidgetContent(WidgetContent):
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the TitleWidgetContent object."""
+        # Represents the TitleWidgetContent object
         self._background_color = String()
         self._html_content = String()
 
@@ -41,8 +41,6 @@ class TitleRichTextWidgetContent(WidgetContent):
             deserialize(self, props)
 
         self.__initialized = True
-
-    """Represents the TitleWidgetContent object."""
 
     @property
     def background_color(self):

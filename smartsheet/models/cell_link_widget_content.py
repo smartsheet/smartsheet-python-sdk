@@ -36,7 +36,7 @@ class CellLinkWidgetContent(WidgetContent):
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the CellLinkWidgetContent object."""
+        # Represents the CellLinkWidgetContent object.
         self._sheet_id = Number()
         self._cell_data = TypedList(CellDataItem)
         self._columns = TypedList(Column)
@@ -58,8 +58,6 @@ class CellLinkWidgetContent(WidgetContent):
             self.format_ = value
         else:
             super().__setattr__(key, value)
-
-    """Represents the CellLinkWidgetContent object."""
 
     @property
     def sheet_id(self):

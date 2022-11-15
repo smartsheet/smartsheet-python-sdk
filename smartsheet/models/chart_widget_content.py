@@ -35,7 +35,7 @@ class ChartWidgetContent(WidgetContent):
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the ChartWidgetContent object"""
+        # Represents the ChartWidgetContent object
         self._report_id = Number()
         self._sheet_id = Number()
         self._axes = TypedObject(object)
@@ -49,8 +49,6 @@ class ChartWidgetContent(WidgetContent):
             deserialize(self, props)
 
         self.__initialized = True
-
-    """Represents the ChartWidgetContent object"""
 
     @property
     def report_id(self):

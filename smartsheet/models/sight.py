@@ -32,7 +32,7 @@ class Sight:
     def __init__(self, props=None, base_obj=None):
         from .workspace import Workspace
 
-        """Initialize the Sight model."""
+        # Initialize the Sight model.
         self._base = None
         if base_obj is not None:
             self._base = base_obj

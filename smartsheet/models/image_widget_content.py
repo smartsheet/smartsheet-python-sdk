@@ -34,7 +34,7 @@ class ImageWidgetContent(WidgetContent):
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the ImageWidgetContent object."""
+        # Represents the ImageWidgetContent object.
         self._file_name = String()
         self._format_ = String()
         self._height = Number()
@@ -58,8 +58,6 @@ class ImageWidgetContent(WidgetContent):
             self.format_ = value
         else:
             super().__setattr__(key, value)
-
-    """Represents the ImageWidgetContent object."""
 
     @property
     def file_name(self):

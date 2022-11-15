@@ -34,7 +34,7 @@ class ReportWidgetContent(WidgetContent):
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the ReportWidgetContent object."""
+        # Represents the ReportWidgetContent object
         self._html_content = String()
         self._hyperlink = TypedObject(WidgetHyperlink)
         self._report_id = Number()
@@ -43,8 +43,6 @@ class ReportWidgetContent(WidgetContent):
             deserialize(self, props)
 
         self.__initialized = True
-
-    """Represents the ReportWidgetContent object."""
 
     @property
     def html_content(self):

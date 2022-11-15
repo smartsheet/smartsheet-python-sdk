@@ -34,15 +34,13 @@ class WebContentWidgetContent(WidgetContent):
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the WebContentWidgetContent object"""
+        # Represents the WebContentWidgetContent object
         self._url = String()
 
         if props:
             deserialize(self, props)
 
         self.__initialized = True
-
-    """Represents the WebContentWidgetContent object."""
 
     @property
     def url(self):
