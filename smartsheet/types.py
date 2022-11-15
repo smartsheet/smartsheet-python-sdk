@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913
+# pylint: disable=C0111,R0902,R0913,W4904,W0706
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -78,10 +78,10 @@ class TypedList(MutableSequence):
                 "item converted to %s: %s -> %s", self.item_type, item, retval
             )
             return retval
-        except (ValueError, TypeError):
+        except (ValueError, TypeError) as exc:
             raise ValueError(
-                "Can't convert %s to %s in TypedList", item, self.item_type
-            )
+                f"Can't convert {item} to {self.item_type} in TypedList"
+            ) from exc
 
     def purge(self):
         """Zero out the underlying list object."""
@@ -110,7 +110,7 @@ class TypedList(MutableSequence):
             self.append(value)
         else:
             raise ValueError(
-                "Can't load to TypedList(%s) from '%s'", self.item_type, value
+                f"Can't load to TypedList({self.item_type}) from '{value}'"
             )
 
     def __repr__(self):

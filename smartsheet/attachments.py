@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913,E1137
+# pylint: disable=C0111,R0902,R0913,E1137,W3101
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
