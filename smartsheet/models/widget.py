@@ -96,7 +96,7 @@ class Widget:
                 self._contents = CellLinkWidgetContent(value, self._base)
             elif widget_type == WidgetType.GRIDGANTT:
                 self._contents = ReportWidgetContent(value, self._base)
-            elif widget_type == WidgetType.RICHTEXT or widget_type == WidgetType.TITLE:
+            elif widget_type in (WidgetType.RICHTEXT, WidgetType.TITLE):
                 self._contents = TitleRichTextWidgetContent(value, self._base)
             elif widget_type == WidgetType.SHORTCUT:
                 self._contents = ShortcutWidgetContent(value, self._base)

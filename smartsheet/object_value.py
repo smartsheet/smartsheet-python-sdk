@@ -46,7 +46,7 @@ def assign_to_object_value(value):
                 return ContactObjectValue(value)
             elif enum_object_type == DATE:
                 return DateObjectValue(value)
-            elif enum_object_type == DATETIME or enum_object_type == ABSTRACT_DATETIME:
+            elif enum_object_type in (DATETIME, ABSTRACT_DATETIME):
                 return DatetimeObjectValue(value, enum_object_value_type)
             elif enum_object_type == MULTI_CONTACT:
                 return MultiContactObjectValue(value)
