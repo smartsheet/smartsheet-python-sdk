@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913,W0614,C0302,W0401,R0912,W0611,C0301
+# pylint: disable=C0111,R0902,R0913,W0614,C0302,W0401,R0912,W0611,C0301,W0621,W0404,R1720,W0702,W0613
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -67,7 +67,7 @@ def setup_logging():
         if os.path.exists(log_env):
             import json
 
-            with open(log_env, "rt") as config_file:
+            with open(log_env, "rt", encoding="utf8") as config_file:
                 config = json.load(config_file)
             logging.config.dictConfig(config)
         else:
@@ -332,9 +332,9 @@ class Smartsheet:
             res = self._session.send(prepped_request, stream=stream)
             self._log_request(operation, res)
         except requests.exceptions.SSLError as rex:
-            raise HttpError(rex, "SSL handshake error, old CA bundle or old OpenSSL?")
+            raise HttpError(rex, "SSL handshake error, old CA bundle or old OpenSSL?") from rex
         except requests.exceptions.RequestException as rex:
-            raise UnexpectedRequestError(rex.request, rex.response)
+            raise UnexpectedRequestError(rex.request, rex.response) from rex
 
         if 200 <= res.status_code <= 299:
             return OperationResult(res.text, res, self, operation)
