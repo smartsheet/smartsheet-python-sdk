@@ -115,7 +115,7 @@ class TypedList(MutableSequence):
 
     def __repr__(self):
         tmp = json.dumps(self.__store)
-        return "TypedList(item_type=%s, contents=%s)" % (self.item_type, tmp)
+        return f"TypedList(item_type={self.item_type}, contents={tmp})"
 
     def __str__(self):
         return json.dumps(self.__store)
@@ -148,7 +148,7 @@ class TypedObject:
             self._value = value
         else:
             raise ValueError(
-                "`{0}` invalid type for {1} value".format(value, self.object_type)
+                f"`{value}` invalid type for {self.object_type} value"
             )
 
     def __str(self):
@@ -172,7 +172,7 @@ class Number:
         elif isinstance(value, (six.integer_types, float)):
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for Number value".format(value))
+            raise ValueError(f"`{value}` invalid type for Number value")
 
     def __str__(self):
         return str(self.value)
@@ -198,13 +198,11 @@ class String:
         elif isinstance(value, six.string_types):
             if self.accept and value not in self._accept:
                 raise ValueError(
-                    "`{0}` is not in accept list, must be one of {1}".format(
-                        value, self.accept
-                    )
+                    f"`{value}` is not in accept list, must be one of {self.accept}"
                 )
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for String value".format(value))
+            raise ValueError(f"`{value}` invalid type for String value")
 
     @property
     def accept(self):
@@ -217,7 +215,7 @@ class String:
         elif isinstance(value, six.string_types):
             self._accept = [value]
         else:
-            raise ValueError("`{0}` invalid type for accept".format(value))
+            raise ValueError(f"`{value}` invalid type for accept")
 
     def __str__(self):
         return self._value
@@ -240,7 +238,7 @@ class Boolean:
         elif isinstance(value, bool):
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for Boolean value".format(value))
+            raise ValueError(f"`{value}` invalid type for Boolean value")
 
     def __str__(self):
         return str(self._value)
@@ -266,7 +264,7 @@ class Timestamp:
             value = parse(value)
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for Timestamp value".format(value))
+            raise ValueError(f"`{value}` invalid type for Timestamp value")
 
     def __str__(self):
         return str(self._value)

@@ -83,7 +83,7 @@ def setup_logging():
 class AbstractUserCalcBackoff:
     def calc_backoff(self, previous_attempts, total_elapsed_time, error_result):
         raise NotImplementedError(
-            "Class %s doesn't implement calc_backoff()" % self.__class__.__name__
+            f"Class {self.__class__.__name__} doesn't implement calc_backoff()"
         )
 
 
@@ -170,14 +170,14 @@ class Smartsheet:
 
         base_user_agent = "SmartsheetPythonSDK/" + __version__
         if user_agent:
-            self._user_agent = "{}/{}".format(base_user_agent, user_agent)
+            self._user_agent = f"{base_user_agent}/{user_agent}"
         else:
             caller = "__unknown__"
             stack = inspect.stack()
             module = inspect.getmodule(stack[-1][0])
             if module is not None:
                 caller = inspect.getmodule(stack[-1][0]).__name__
-            self._user_agent = "{}/{}".format(base_user_agent, caller)
+            self._user_agent = f"{base_user_agent}/{caller}"
 
         self._log = logging.getLogger(__name__)
         setup_logging()
@@ -500,11 +500,11 @@ class OperationResult:
         """
         assert isinstance(
             op_result, six.string_types
-        ), "op_result: expected string, got %r" % type(op_result)
+        ), f"op_result: expected string, got {type(op_result)!r}"
         if resp is not None:
             assert isinstance(
                 resp, requests.models.Response
-            ), "resp: expected requests.models.Response, got %r" % type(resp)
+            ), f"resp: expected requests.models.Response, got {type(resp)!r}"
         self._base = base_obj
         self.op_result = op_result
         self.resp = resp

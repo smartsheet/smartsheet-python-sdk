@@ -41,7 +41,7 @@ class ApiError(SmartsheetException):
         self.should_retry = should_retry
 
     def __repr__(self):
-        return "ApiError({})".format(self.error)
+        return f"ApiError({self.error})"
 
 
 class HttpError(SmartsheetException):
@@ -53,7 +53,7 @@ class HttpError(SmartsheetException):
         self.body = body
 
     def __repr__(self):
-        return "HttpError({}, {!r})".format(self.status_code, self.body)
+        return f"HttpError({self.status_code}, {self.body!r})"
 
 
 class InternalServerError(HttpError):
@@ -65,7 +65,7 @@ class InternalServerError(HttpError):
         self.message = message
 
     def __repr__(self):
-        return "InternalServerError({}, {!r})".format(self.status_code, self.message)
+        return f"InternalServerError({self.status_code}, {self.message!r})"
 
 
 class UnexpectedRequestError(SmartsheetException):
@@ -77,7 +77,7 @@ class UnexpectedRequestError(SmartsheetException):
         self.response = response
 
     def __repr__(self):
-        return "UnexpectedRequestError({!r}, {!r})".format(self.request, self.response)
+        return f"UnexpectedRequestError({self.request!r}, {self.response!r})"
 
 
 class SystemMaintenanceError(ApiError):
@@ -90,7 +90,7 @@ class SystemMaintenanceError(ApiError):
         self.should_retry = True
 
     def __repr__(self):
-        return "SystemMaintenanceError({!r})".format(self.message)
+        return f"SystemMaintenanceError({self.message!r})"
 
 
 class ServerTimeoutExceededError(ApiError):
@@ -103,7 +103,7 @@ class ServerTimeoutExceededError(ApiError):
         self.should_retry = True
 
     def __repr__(self):
-        return "ServerTimeoutExceededError({!r})".format(self.message)
+        return f"ServerTimeoutExceededError({self.message!r})"
 
 
 class RateLimitExceededError(ApiError):
@@ -116,7 +116,7 @@ class RateLimitExceededError(ApiError):
         self.should_retry = True
 
     def __repr__(self):
-        return "RateLimitExceededError({!r})".format(self.message)
+        return f"RateLimitExceededError({self.message!r})"
 
 
 class UnexpectedErrorShouldRetryError(ApiError):
@@ -129,4 +129,4 @@ class UnexpectedErrorShouldRetryError(ApiError):
         self.should_retry = True
 
     def __repr__(self):
-        return "UnexpectedErrorShouldRetryError({!r})".format(self.message)
+        return f"UnexpectedErrorShouldRetryError({self.message!r})"
