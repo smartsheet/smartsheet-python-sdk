@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class ServerInfo(object):
+class ServerInfo:
 
     """Smartsheet ServerInfo data model."""
 

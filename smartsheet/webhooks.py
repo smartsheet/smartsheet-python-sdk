@@ -19,7 +19,7 @@ import logging
 from . import fresh_operation
 
 
-class Webhooks(object):
+class Webhooks:
 
     """Class for handling Webhooks operations."""
 

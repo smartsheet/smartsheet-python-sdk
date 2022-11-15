@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Criteria(object):
+class Criteria:
 
     """Smartsheet Criteria data model."""
 

@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class ImageUrlMap(object):
+class ImageUrlMap:
 
     """Smartsheet ImageUrlMap data model."""
 

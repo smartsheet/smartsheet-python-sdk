@@ -21,7 +21,7 @@ import logging
 from . import fresh_operation
 
 
-class Contacts(object):
+class Contacts:
 
     """Class for handling Contacts operations."""
 

@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class ContainerDestination(object):
+class ContainerDestination:
 
     """Smartsheet ContainerDestination data model."""
 

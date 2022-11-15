@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class AutoNumberFormat(object):
+class AutoNumberFormat:
 
     """Smartsheet AutoNumberFormat data model."""
 

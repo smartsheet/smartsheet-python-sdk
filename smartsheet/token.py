@@ -21,7 +21,7 @@ import logging
 from . import fresh_operation
 
 
-class Token(object):
+class Token:
 
     """Class for handling Token operations."""
 

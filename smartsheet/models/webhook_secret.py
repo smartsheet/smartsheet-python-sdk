@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class WebhookSecret(object):
+class WebhookSecret:
 
     """Smartsheet WebhookSecret data model."""
 

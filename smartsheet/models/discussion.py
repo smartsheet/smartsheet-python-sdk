@@ -27,7 +27,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Discussion(object):
+class Discussion:
 
     """Smartsheet Discussion data model."""
 

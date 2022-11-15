@@ -27,7 +27,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Cell(object):
+class Cell:
 
     """Smartsheet Cell data model."""
 

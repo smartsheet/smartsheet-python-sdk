@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class ErrorResult(object):
+class ErrorResult:
 
     """Smartsheet ErrorResult data model."""
 

@@ -24,7 +24,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Comment(object):
+class Comment:
 
     """Smartsheet Comment data model."""
 

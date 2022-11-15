@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class SortCriterion(object):
+class SortCriterion:
 
     """Smartsheet SortCriterion data model."""
 

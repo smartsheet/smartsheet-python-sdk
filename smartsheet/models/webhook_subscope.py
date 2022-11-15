@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class WebhookSubscope(object):
+class WebhookSubscope:
 
     """Represents the webhook subscope object."""
 

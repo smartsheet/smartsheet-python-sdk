@@ -24,7 +24,7 @@ from ..util import deserialize
 from .sheet_filter_details import SheetFilterDetails
 
 
-class SheetFilter(object):
+class SheetFilter:
 
     """Smartsheet SheetFilter data model."""
 

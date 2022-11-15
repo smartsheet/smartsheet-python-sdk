@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Source(object):
+class Source:
 
     """Smartsheet Source data model."""
 

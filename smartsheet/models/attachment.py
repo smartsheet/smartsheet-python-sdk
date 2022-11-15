@@ -24,7 +24,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Attachment(object):
+class Attachment:
 
     """Smartsheet Attachment data model."""
 

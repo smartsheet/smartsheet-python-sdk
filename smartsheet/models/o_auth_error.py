@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class OAuthError(object):
+class OAuthError:
 
     """Smartsheet OAuthError data model."""
 

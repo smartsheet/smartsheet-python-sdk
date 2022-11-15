@@ -24,7 +24,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class FormatTables(object):
+class FormatTables:
 
     """Smartsheet FormatTables data model."""
 

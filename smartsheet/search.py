@@ -22,7 +22,7 @@ from datetime import datetime
 from . import fresh_operation
 
 
-class Search(object):
+class Search:
 
     """Class for handling Search operations."""
 

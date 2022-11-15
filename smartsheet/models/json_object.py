@@ -21,7 +21,7 @@ import six
 import json
 
 
-class JSONObject(object):
+class JSONObject:
 
     """Smartsheet JSONObject data model."""
 

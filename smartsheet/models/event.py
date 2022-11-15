@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Event(object):
+class Event:
 
     """Smartsheet Event data model."""
 

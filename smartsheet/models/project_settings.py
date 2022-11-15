@@ -24,7 +24,7 @@ from datetime import date
 from dateutil.parser import parse
 
 
-class ProjectSettings(object):
+class ProjectSettings:
     """Smartsheet ProjectSettings data model."""
 
     def __init__(self, props=None, base_obj=None):

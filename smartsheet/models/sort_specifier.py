@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class SortSpecifier(object):
+class SortSpecifier:
 
     """Smartsheet SortSpecifier data model."""
 

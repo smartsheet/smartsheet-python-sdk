@@ -25,7 +25,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class DownloadedFile(object):
+class DownloadedFile:
 
     """Smartsheet DownloadedFile data model."""
 

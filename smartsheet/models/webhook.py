@@ -24,7 +24,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Webhook(object):
+class Webhook:
 
     """Smartsheet Webhook data model."""
 

@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class ReportPublish(object):
+class ReportPublish:
 
     """Smartsheet ReportPublish data model."""
 

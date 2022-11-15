@@ -24,7 +24,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Predecessor(object):
+class Predecessor:
     """Smartsheet Predecessor data model."""
 
     def __init__(self, props=None, base_obj=None):

@@ -26,7 +26,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Sight(object):
+class Sight:
 
     """Smartsheet Sight data model."""
 

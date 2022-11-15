@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class IndexResult(object):
+class IndexResult:
 
     """Smartsheet IndexResult data model."""
 

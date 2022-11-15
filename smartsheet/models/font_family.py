@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class FontFamily(object):
+class FontFamily:
 
     """Smartsheet FontFamily data model."""
 

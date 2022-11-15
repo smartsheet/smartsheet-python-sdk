@@ -23,7 +23,7 @@ from ..util import deserialize
 from .group_member import GroupMember
 
 
-class Group(object):
+class Group:
 
     """Smartsheet Group data model."""
 

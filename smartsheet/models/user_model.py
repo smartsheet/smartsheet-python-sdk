@@ -26,7 +26,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class UserModel(object):
+class UserModel:
 
     """Smartsheet UserModel data model."""
 

@@ -21,7 +21,7 @@ import logging
 from . import fresh_operation
 
 
-class Favorites(object):
+class Favorites:
 
     """Class for handling Favorites operations."""
 

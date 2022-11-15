@@ -23,7 +23,7 @@ import logging
 from . import fresh_operation
 
 
-class Home(object):
+class Home:
 
     """Class for handling Home operations."""
 

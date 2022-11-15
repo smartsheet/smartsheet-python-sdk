@@ -30,7 +30,7 @@ from ..util import deserialize
 from datetime import datetime
 
 
-class Row(object):
+class Row:
 
     """Smartsheet Row data model."""
 

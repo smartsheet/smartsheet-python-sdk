@@ -23,7 +23,7 @@ from .models.folder import Folder
 from . import fresh_operation
 
 
-class Folders(object):
+class Folders:
 
     """Class for handling Folders operations."""
 

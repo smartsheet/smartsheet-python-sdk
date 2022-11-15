@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Version(object):
+class Version:
 
     """Smartsheet Version data model."""
 

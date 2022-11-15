@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Share(object):
+class Share:
 
     """Smartsheet Share data model."""
 

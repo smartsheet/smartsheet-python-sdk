@@ -26,7 +26,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class WidgetContent(object):
+class WidgetContent:
     """Smartsheet WidgetContent data model."""
 
     def __init__(self, widget_type=None, base_obj=None):

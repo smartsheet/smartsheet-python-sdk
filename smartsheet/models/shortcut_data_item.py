@@ -24,7 +24,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class ShortcutDataItem(object):
+class ShortcutDataItem:
     """Smartsheet ShortcutDataItem data model."""
 
     def __init__(self, props=None, base_obj=None):

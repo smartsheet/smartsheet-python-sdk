@@ -23,7 +23,7 @@ from ..util import deserialize
 from .summary_field import SummaryField
 
 
-class SheetSummary(object):
+class SheetSummary:
 
     """Smartsheet SheetSummary data model."""
 

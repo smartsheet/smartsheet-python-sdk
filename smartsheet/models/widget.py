@@ -32,7 +32,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Widget(object):
+class Widget:
     """Smartsheet Widget data model."""
 
     def __init__(self, props=None, base_obj=None):

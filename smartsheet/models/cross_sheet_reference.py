@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class CrossSheetReference(object):
+class CrossSheetReference:
 
     """Smartsheet CrossSheetReference data model."""
 

@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class SheetUserPermissions(object):
+class SheetUserPermissions:
 
     """Smartsheet SheetUserPermissions data model."""
 

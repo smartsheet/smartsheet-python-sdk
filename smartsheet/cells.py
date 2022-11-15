@@ -21,7 +21,7 @@ import logging
 from . import fresh_operation
 
 
-class Cells(object):
+class Cells:
 
     """Class for handling Cells operations."""
 

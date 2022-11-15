@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Contact(object):
+class Contact:
 
     """Smartsheet Contact data model."""
 

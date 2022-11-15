@@ -23,7 +23,7 @@ from .models.folder import Folder
 from . import fresh_operation
 
 
-class Workspaces(object):
+class Workspaces:
 
     """Class for handling Workspaces operations."""
 

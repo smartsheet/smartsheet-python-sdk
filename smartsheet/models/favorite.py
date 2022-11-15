@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Favorite(object):
+class Favorite:
 
     """Smartsheet Favorite data model."""
 

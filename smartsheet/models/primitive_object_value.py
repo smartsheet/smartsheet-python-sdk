@@ -23,7 +23,7 @@ import json
 from ..util import serialize
 
 
-class PrimitiveObjectValue(object):
+class PrimitiveObjectValue:
     """Smartsheet PrimitiveObjectValue data model."""
 
     def __init__(self, value=None, base_obj=None):

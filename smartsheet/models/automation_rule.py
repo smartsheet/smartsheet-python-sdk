@@ -25,7 +25,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class AutomationRule(object):
+class AutomationRule:
 
     """Smartsheet AutomationRule data model."""
 

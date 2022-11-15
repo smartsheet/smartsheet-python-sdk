@@ -22,7 +22,7 @@ import six
 from . import fresh_operation
 
 
-class Discussions(object):
+class Discussions:
 
     """Class for handling Discussions operations."""
 

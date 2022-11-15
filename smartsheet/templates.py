@@ -21,7 +21,7 @@ import logging
 from . import fresh_operation
 
 
-class Templates(object):
+class Templates:
 
     """Class for handling Templates operations."""
 

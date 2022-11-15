@@ -30,7 +30,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Home(object):
+class Home:
 
     """Smartsheet Home data model."""
 

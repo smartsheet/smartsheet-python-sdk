@@ -25,7 +25,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Column(object):
+class Column:
 
     """Smartsheet Column data model."""
 

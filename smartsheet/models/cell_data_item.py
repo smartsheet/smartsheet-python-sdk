@@ -29,7 +29,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class CellDataItem(object):
+class CellDataItem:
     """Smartsheet CellDataItem data model."""
 
     def __init__(self, props=None, base_obj=None):

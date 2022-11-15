@@ -80,7 +80,7 @@ def setup_logging():
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
-class AbstractUserCalcBackoff(object):
+class AbstractUserCalcBackoff:
     def calc_backoff(self, previous_attempts, total_elapsed_time, error_result):
         raise NotImplementedError(
             "Class %s doesn't implement calc_backoff()" % self.__class__.__name__
@@ -113,7 +113,7 @@ class DefaultCalcBackoff(AbstractUserCalcBackoff):
         return backoff
 
 
-class Smartsheet(object):
+class Smartsheet:
     """Use this to make requests to the Smartsheet API."""
 
     models = models
@@ -482,7 +482,7 @@ class Smartsheet(object):
                 return name
 
 
-class OperationResult(object):
+class OperationResult:
     """The successful result of a call to an operation."""
 
     def __init__(self, op_result, resp=None, base_obj=None, operation=None):
@@ -557,7 +557,7 @@ class OperationResult(object):
         return obj
 
 
-class OperationErrorResult(object):
+class OperationErrorResult:
     """The error result of a call to an operation."""
 
     error_lookup = {

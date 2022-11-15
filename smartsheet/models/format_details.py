@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class FormatDetails(object):
+class FormatDetails:
 
     """Smartsheet FormatDetails data model."""
 

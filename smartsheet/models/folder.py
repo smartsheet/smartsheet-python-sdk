@@ -26,7 +26,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Folder(object):
+class Folder:
 
     """Smartsheet Folder data model."""
 

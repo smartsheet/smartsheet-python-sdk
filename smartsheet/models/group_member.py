@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class GroupMember(object):
+class GroupMember:
 
     """Smartsheet GroupMember data model."""
 

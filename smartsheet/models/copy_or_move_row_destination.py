@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class CopyOrMoveRowDestination(object):
+class CopyOrMoveRowDestination:
 
     """Smartsheet CopyOrMoveRowDestination data model."""
 

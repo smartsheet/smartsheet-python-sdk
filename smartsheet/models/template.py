@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Template(object):
+class Template:
 
     """Smartsheet Template data model."""
 

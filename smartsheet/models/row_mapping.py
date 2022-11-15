@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class RowMapping(object):
+class RowMapping:
 
     """Smartsheet RowMapping data model."""
 

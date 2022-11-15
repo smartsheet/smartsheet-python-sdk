@@ -37,7 +37,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Sheet(object):
+class Sheet:
 
     """Smartsheet Sheet data model."""
 

@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class ProfileImage(object):
+class ProfileImage:
 
     """Smartsheet Profile Image data model."""
 

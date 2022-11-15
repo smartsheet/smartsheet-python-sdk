@@ -23,7 +23,7 @@ from .models.image_url import ImageUrl
 from .types import TypedList
 
 
-class Images(object):
+class Images:
 
     """Class for handling Images operations."""
 

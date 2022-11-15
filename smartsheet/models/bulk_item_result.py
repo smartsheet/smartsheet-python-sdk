@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class BulkItemResult(object):
+class BulkItemResult:
 
     """Smartsheet BulkItemResult data model."""
 

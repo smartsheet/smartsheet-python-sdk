@@ -23,7 +23,7 @@ from datetime import datetime
 from . import fresh_operation
 
 
-class Reports(object):
+class Reports:
 
     """Class for handling Reports operations."""
 

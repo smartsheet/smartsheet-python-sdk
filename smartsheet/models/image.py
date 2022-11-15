@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Image(object):
+class Image:
 
     """Smartsheet Image data model."""
 

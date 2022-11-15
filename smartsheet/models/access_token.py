@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class AccessToken(object):
+class AccessToken:
 
     """Smartsheet AccessToken data model."""
 

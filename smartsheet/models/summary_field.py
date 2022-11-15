@@ -29,7 +29,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class SummaryField(object):
+class SummaryField:
 
     """Smartsheet SummaryField data model."""
 

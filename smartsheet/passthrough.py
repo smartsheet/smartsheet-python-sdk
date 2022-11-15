@@ -21,7 +21,7 @@ from .models import JSONObject
 from . import fresh_operation
 
 
-class Passthrough(object):
+class Passthrough:
 
     """Class for handling Sheets operations."""
 

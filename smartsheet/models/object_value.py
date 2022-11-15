@@ -76,7 +76,7 @@ def enum_object_value_type(object_type=None):
     return _nameToType.get(object_type)
 
 
-class ObjectValue(object):
+class ObjectValue:
     """Smartsheet ObjectValue data model."""
 
     def __init__(self, object_type=None, base_obj=None):

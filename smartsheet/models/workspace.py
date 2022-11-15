@@ -28,7 +28,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Workspace(object):
+class Workspace:
 
     """Smartsheet Workspace data model."""
 

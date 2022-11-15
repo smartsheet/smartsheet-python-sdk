@@ -22,7 +22,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Hyperlink(object):
+class Hyperlink:
 
     """Smartsheet Hyperlink data model."""
 

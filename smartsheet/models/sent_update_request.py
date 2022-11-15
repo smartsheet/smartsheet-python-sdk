@@ -26,7 +26,7 @@ from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp, TypedL
                      json, six)
 
 
-class SentUpdateRequest(object):
+class SentUpdateRequest:
     """Smartsheet SentUpdateRequest data model."""
 
     def __init__(self, props=None, base_obj=None):

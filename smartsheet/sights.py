@@ -20,7 +20,7 @@ from . import fresh_operation
 from datetime import datetime
 
 
-class Sights(object):
+class Sights:
 
     """Class for handling Sights operations."""
 

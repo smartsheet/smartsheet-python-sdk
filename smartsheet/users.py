@@ -22,7 +22,7 @@ from . import fresh_operation
 from datetime import datetime
 
 
-class Users(object):
+class Users:
 
     """Class for handling Users operations."""
 

@@ -29,7 +29,7 @@ from .util import deprecated
 from . import fresh_operation
 
 
-class Sheets(object):
+class Sheets:
 
     """Class for handling Sheets operations."""
 

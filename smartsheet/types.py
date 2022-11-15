@@ -121,7 +121,7 @@ class TypedList(MutableSequence):
         return json.dumps(self.__store)
 
 
-class TypedObject(object):
+class TypedObject:
     def __init__(self, object_type):
         self.object_type = object_type
         self._value = None
@@ -155,7 +155,7 @@ class TypedObject(object):
         return json.dumps(self._value)
 
 
-class Number(object):
+class Number:
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -178,7 +178,7 @@ class Number(object):
         return str(self.value)
 
 
-class String(object):
+class String:
     def __init__(self, initial_value=None, accept=None):
         self._value = None
         if initial_value:
@@ -223,7 +223,7 @@ class String(object):
         return self._value
 
 
-class Boolean(object):
+class Boolean:
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -246,7 +246,7 @@ class Boolean(object):
         return str(self._value)
 
 
-class Timestamp(object):
+class Timestamp:
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -272,7 +272,7 @@ class Timestamp(object):
         return str(self._value)
 
 
-class EnumeratedValue(object):
+class EnumeratedValue:
     def __init__(self, enum, value=None):
         self.__enum = enum
         self._value = None

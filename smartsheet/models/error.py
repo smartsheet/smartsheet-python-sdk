@@ -25,7 +25,7 @@ from ..util import deserialize
 from ..types import TypedObject
 
 
-class Error(object):
+class Error:
 
     """Smartsheet Error data model."""
 

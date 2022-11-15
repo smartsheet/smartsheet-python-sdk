@@ -24,7 +24,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class SheetFilterDetails(object):
+class SheetFilterDetails:
 
     """Smartsheet SheetFilterDetails data model."""
 

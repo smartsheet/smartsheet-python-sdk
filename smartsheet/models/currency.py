@@ -23,7 +23,7 @@ from ..util import serialize
 from ..util import deserialize
 
 
-class Currency(object):
+class Currency:
 
     """Smartsheet Currency data model."""
 

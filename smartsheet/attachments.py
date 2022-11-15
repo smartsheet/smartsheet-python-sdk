@@ -26,7 +26,7 @@ from .models import Error, ErrorResult
 from . import fresh_operation
 
 
-class Attachments(object):
+class Attachments:
 
     """Class for handling Attachments operations."""
 
