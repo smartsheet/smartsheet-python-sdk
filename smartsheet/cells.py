@@ -135,28 +135,27 @@ class Cells:
         alt_text,
     ):
 
-        _data = open(file, "rb").read()
+        with open(file, "rb") as _data:
+            _op = fresh_operation("attach_file_to_cell")
+            _op["method"] = "POST"
+            _op["path"] = (
+                "/sheets/"
+                + str(sheet_id)
+                + "/rows/"
+                + str(row_id)
+                + "/columns/"
+                + str(column_id)
+                + "/cellimages"
+            )
+            _op["headers"] = {
+                "content-type": file_type,
+                "content-disposition": 'attachment; filename="' + file + '"',
+            }
+            _op["query_params"]["altText"] = alt_text
+            _op["query_params"]["overrideValidation"] = override_validation
+            _op["form_data"] = _data
 
-        _op = fresh_operation("attach_file_to_cell")
-        _op["method"] = "POST"
-        _op["path"] = (
-            "/sheets/"
-            + str(sheet_id)
-            + "/rows/"
-            + str(row_id)
-            + "/columns/"
-            + str(column_id)
-            + "/cellimages"
-        )
-        _op["headers"] = {
-            "content-type": file_type,
-            "content-disposition": 'attachment; filename="' + file + '"',
-        }
-        _op["query_params"]["altText"] = alt_text
-        _op["query_params"]["overrideValidation"] = override_validation
-        _op["form_data"] = _data
-
-        expected = ["Result", "Row"]
+            expected = ["Result", "Row"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

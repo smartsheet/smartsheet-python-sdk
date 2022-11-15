@@ -1976,21 +1976,20 @@ class Sheets:
         self, sheet_id, field_id, file, file_type, alt_text=None
     ):
 
-        _data = open(file, "rb").read()
+        with open(file, "rb") as _data:
+            _op = fresh_operation("add_sheet_summary_field_image")
+            _op["method"] = "POST"
+            _op["path"] = (
+                "/sheets/" + str(sheet_id) + "/summary/fields/" + str(field_id) + "/images"
+            )
+            _op["headers"] = {
+                "content-type": file_type,
+                "content-disposition": 'attachment; filename="' + file + '"',
+            }
+            _op["query_params"]["altText"] = alt_text
+            _op["form_data"] = _data
 
-        _op = fresh_operation("add_sheet_summary_field_image")
-        _op["method"] = "POST"
-        _op["path"] = (
-            "/sheets/" + str(sheet_id) + "/summary/fields/" + str(field_id) + "/images"
-        )
-        _op["headers"] = {
-            "content-type": file_type,
-            "content-disposition": 'attachment; filename="' + file + '"',
-        }
-        _op["query_params"]["altText"] = alt_text
-        _op["form_data"] = _data
-
-        expected = ["Result", "SummaryField"]
+            expected = ["Result", "SummaryField"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

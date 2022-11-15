@@ -100,7 +100,7 @@ class Users:
 
                 resourceViewer (optional)
 
-            send_email (bool): Either true or false to indicate 
+            send_email (bool): Either true or false to indicate
             whether or not to notify the user by email. Default is false.
 
         Returns:
@@ -379,18 +379,18 @@ class Users:
     def _attach_profile_image(self, user_id, file, file_type):
         """Internal function used to load image"""
 
-        _data = open(file, "rb").read()
+        # _data = open(file, "rb").read()
+        with open(file, "rb") as _data:
+            _op = fresh_operation("attach_profile_image")
+            _op["method"] = "POST"
+            _op["path"] = "/users/" + str(user_id) + "/profileimage"
+            _op["headers"] = {
+                "content-type": file_type,
+                "content-disposition": 'attachment; filename="' + file + '"',
+            }
+            _op["form_data"] = _data
 
-        _op = fresh_operation("attach_profile_image")
-        _op["method"] = "POST"
-        _op["path"] = "/users/" + str(user_id) + "/profileimage"
-        _op["headers"] = {
-            "content-type": file_type,
-            "content-disposition": 'attachment; filename="' + file + '"',
-        }
-        _op["form_data"] = _data
-
-        expected = ["Result", "User"]
+            expected = ["Result", "User"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
