@@ -17,13 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, TypedList, json,
+                     six)
+from ..util import deserialize, serialize
 from .enums import AccessLevel, GlobalTemplate
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Template(object):
+class Template:
 
     """Smartsheet Template data model."""
 
@@ -63,7 +63,7 @@ class Template(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Template, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

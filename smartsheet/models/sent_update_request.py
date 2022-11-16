@@ -17,15 +17,15 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json, six)
+from ..util import deserialize, serialize
 from .enums import UpdateRequestStatus
-from .user import User
 from .recipient import Recipient
-from ..util import serialize
-from ..util import deserialize
-from ..types import *
+from .user import User
 
 
-class SentUpdateRequest(object):
+class SentUpdateRequest:
     """Smartsheet SentUpdateRequest data model."""
 
     def __init__(self, props=None, base_obj=None):
@@ -64,7 +64,7 @@ class SentUpdateRequest(object):
         if key == "id":
             self.id_ = value
         else:
-            super(SentUpdateRequest, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def column_ids(self):

@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import TypedList, json
+from ..util import deserialize, serialize
 from .sort_criterion import SortCriterion
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class SortSpecifier(object):
+class SortSpecifier:
 
     """Smartsheet SortSpecifier data model."""
 

@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import Number, String, TypedObject, json
+from ..util import deserialize, serialize
 from .enums import WidgetType
 from .widget_content import WidgetContent
 from .widget_hyperlink import WidgetHyperlink
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class ReportWidgetContent(WidgetContent):
@@ -30,12 +29,12 @@ class ReportWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the ReportWidgetContent model."""
-        super(ReportWidgetContent, self).__init__(WidgetType.GRIDGANTT, base_obj)
+        super().__init__(WidgetType.GRIDGANTT, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the ReportWidgetContent object."""
+        # Represents the ReportWidgetContent object
         self._html_content = String()
         self._hyperlink = TypedObject(WidgetHyperlink)
         self._report_id = Number()
@@ -44,8 +43,6 @@ class ReportWidgetContent(WidgetContent):
             deserialize(self, props)
 
         self.__initialized = True
-
-    """Represents the ReportWidgetContent object."""
 
     @property
     def html_content(self):

@@ -17,18 +17,18 @@
 
 from __future__ import absolute_import
 
+from ..object_value import assign_to_object_value
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .contact import Contact
 from .enums.column_type import ColumnType
 from .hyperlink import Hyperlink
 from .image import Image
 from .user import User
-from ..object_value import assign_to_object_value
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class SummaryField(object):
+class SummaryField:
 
     """Smartsheet SummaryField data model."""
 
@@ -84,7 +84,7 @@ class SummaryField(object):
         elif key == "type":
             self.type_ = value
         else:
-            super(SummaryField, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def contact_options(self):
@@ -194,7 +194,7 @@ class SummaryField(object):
     def modified_by(self):
         return self._modified_by.value
 
-    @created_by.setter
+    @modified_by.setter
     def modified_by(self, value):
         self._modified_by.value = value
 

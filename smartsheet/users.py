@@ -18,11 +18,12 @@
 from __future__ import absolute_import
 
 import logging
-from . import fresh_operation
 from datetime import datetime
 
+from . import fresh_operation
 
-class Users(object):
+
+class Users:
 
     """Class for handling Users operations."""
 
@@ -99,8 +100,8 @@ class Users(object):
 
                 resourceViewer (optional)
 
-            send_email (bool): Either true or false to indicate whether or not to notify the user by email. Default
-            is false.
+            send_email (bool): Either true or false to indicate
+            whether or not to notify the user by email. Default is false.
 
         Returns:
             Result
@@ -379,7 +380,6 @@ class Users(object):
         """Internal function used to load image"""
 
         _data = open(file, "rb").read()
-
         _op = fresh_operation("attach_profile_image")
         _op["method"] = "POST"
         _op["path"] = "/users/" + str(user_id) + "/profileimage"

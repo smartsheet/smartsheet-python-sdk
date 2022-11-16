@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..types import Boolean, EnumeratedValue, Number, TypedObject, json
+from ..util import deserialize, serialize
 from .duration import Duration
 from .enums import PredecessorType
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Predecessor(object):
+class Predecessor:
     """Smartsheet Predecessor data model."""
 
     def __init__(self, props=None, base_obj=None):

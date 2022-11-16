@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101
+# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101,W0201
 # Smartsheet Python SDK.
 #
 # Copyright 2019 Smartsheet.com, Inc.
@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
-from .column import Column
+from ..types import Number, TypedList, TypedObject, json
+from ..util import deserialize, serialize
 from .cell_data_item import CellDataItem
+from .column import Column
 from .enums import WidgetType
 from .widget_content import WidgetContent
 from .widget_hyperlink import WidgetHyperlink
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class CellLinkWidgetContent(WidgetContent):
@@ -32,12 +31,12 @@ class CellLinkWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the CellLinkWidgetContent model."""
-        super(CellLinkWidgetContent, self).__init__(WidgetType.METRIC, base_obj)
+        super().__init__(WidgetType.METRIC, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the CellLinkWidgetContent object."""
+        # Represents the CellLinkWidgetContent object.
         self._sheet_id = Number()
         self._cell_data = TypedList(CellDataItem)
         self._columns = TypedList(Column)
@@ -58,9 +57,7 @@ class CellLinkWidgetContent(WidgetContent):
         if key == "format":
             self.format_ = value
         else:
-            super(WidgetContent, self).__setattr__(key, value)
-
-    """Represents the CellLinkWidgetContent object."""
+            super().__setattr__(key, value)
 
     @property
     def sheet_id(self):

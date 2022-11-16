@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import EnumeratedValue, Number, TypedList, json
+from ..util import deserialize, serialize
 from .enums import CriteriaTarget, Operator
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Criteria(object):
+class Criteria:
 
     """Smartsheet Criteria data model."""
 

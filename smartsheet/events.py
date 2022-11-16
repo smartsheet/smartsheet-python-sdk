@@ -19,10 +19,11 @@ from __future__ import absolute_import
 
 import logging
 from datetime import datetime
+
 from . import fresh_operation
 
 
-class Events(object):
+class Events:
     def __init__(self, smartsheet_obj):
         """Init Events with base Smartsheet object."""
         self._base = smartsheet_obj

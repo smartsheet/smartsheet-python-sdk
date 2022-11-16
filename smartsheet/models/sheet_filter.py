@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..types import EnumeratedValue, Number, String, TypedObject, json
+from ..util import deserialize, serialize
 from .enums import SheetFilterType
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 from .sheet_filter_details import SheetFilterDetails
 
 
-class SheetFilter(object):
+class SheetFilter:
 
     """Smartsheet SheetFilter data model."""
 
@@ -55,7 +54,7 @@ class SheetFilter(object):
         if key == "id":
             self.id_ = value
         else:
-            super(SheetFilter, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def filter_type(self):

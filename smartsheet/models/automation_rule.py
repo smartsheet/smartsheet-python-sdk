@@ -17,15 +17,15 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedObject, json)
+from ..util import deserialize, serialize
 from .automation_action import AutomationAction
 from .enums import AutomationRuleDisabledReason
 from .user import User
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class AutomationRule(object):
+class AutomationRule:
 
     """Smartsheet AutomationRule data model."""
 
@@ -64,7 +64,7 @@ class AutomationRule(object):
         if key == "id":
             self.id_ = value
         else:
-            super(AutomationRule, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def action(self):

@@ -16,11 +16,12 @@
 # under the License.
 
 import logging
-from . import fresh_operation
 from datetime import datetime
 
+from . import fresh_operation
 
-class Sights(object):
+
+class Sights:
 
     """Class for handling Sights operations."""
 

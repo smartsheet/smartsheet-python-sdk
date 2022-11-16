@@ -1,3 +1,4 @@
+# pylint: disable=E0401,W0221,W0613
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -18,13 +19,12 @@
 # known issue regarding ssl module and pylint.
 
 import ssl
-import certifi
 
+import certifi
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 from requests.packages.urllib3.util import Retry
-
 
 _TRUSTED_CERT_FILE = certifi.where()
 

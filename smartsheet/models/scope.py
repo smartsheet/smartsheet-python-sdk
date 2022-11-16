@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101
+# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101,C0415
 # Smartsheet Python SDK.
 #
 # Copyright 2019 Smartsheet.com, Inc.
@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import TypedList, json
+from ..util import deserialize, serialize
 from .sheet import Sheet
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Scope(object):
+class Scope:
     """Smartsheet Scope data model."""
 
     def __init__(self, props=None, base_obj=None):
@@ -32,7 +31,8 @@ class Scope(object):
         if base_obj is not None:
             self._base = base_obj
 
-        # Workspace creates a circular import dependency, so, as much as I'm not a fan of moving the import
+        # Workspace creates a circular import dependency
+        # as much as I'm not a fan of moving the import
         # into the __init__, its the most pragmatic approach for this simple problem.
         from .workspace import Workspace
 

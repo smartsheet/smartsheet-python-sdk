@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import Number, String, TypedObject, json
+from ..util import deserialize, serialize
 from .enums import WidgetType
-from .widget_hyperlink import WidgetHyperlink
 from .widget_content import WidgetContent
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from .widget_hyperlink import WidgetHyperlink
 
 
 class ImageWidgetContent(WidgetContent):
@@ -30,12 +29,12 @@ class ImageWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the ImageWidgetContent model."""
-        super(ImageWidgetContent, self).__init__(WidgetType.IMAGE, base_obj)
+        super().__init__(WidgetType.IMAGE, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the ImageWidgetContent object."""
+        # Represents the ImageWidgetContent object.
         self._file_name = String()
         self._format_ = String()
         self._height = Number()
@@ -58,9 +57,7 @@ class ImageWidgetContent(WidgetContent):
         if key == "format":
             self.format_ = value
         else:
-            super(WidgetContent, self).__setattr__(key, value)
-
-    """Represents the ImageWidgetContent object."""
+            super().__setattr__(key, value)
 
     @property
     def file_name(self):

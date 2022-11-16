@@ -17,16 +17,15 @@
 
 from __future__ import absolute_import
 
-from .column import Column
+from ..types import json
+from ..util import deserialize, serialize
 from .cell_data_item import CellDataItem
-from .shortcut_data_item import ShortcutDataItem
+from .column import Column
 from .hyperlink import Hyperlink
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from .shortcut_data_item import ShortcutDataItem
 
 
-class WidgetContent(object):
+class WidgetContent:
     """Smartsheet WidgetContent data model."""
 
     def __init__(self, widget_type=None, base_obj=None):

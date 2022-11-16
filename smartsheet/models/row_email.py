@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
+from ..types import Boolean, String, TypedList, json, six
+from ..util import deserialize, serialize
 from .email import Email
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class RowEmail(Email):
@@ -29,7 +28,7 @@ class RowEmail(Email):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the RowEmail model."""
-        super(RowEmail, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

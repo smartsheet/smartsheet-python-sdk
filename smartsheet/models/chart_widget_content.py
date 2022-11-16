@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import Number, TypedList, TypedObject, json, six
+from ..util import deserialize, serialize
 from .enums import WidgetType
 from .selection_range import SelectionRange
 from .widget_content import WidgetContent
 from .widget_hyperlink import WidgetHyperlink
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class ChartWidgetContent(WidgetContent):
@@ -31,12 +30,12 @@ class ChartWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the ChartWidgetContent model."""
-        super(ChartWidgetContent, self).__init__(WidgetType.CHART, base_obj)
+        super().__init__(WidgetType.CHART, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the ChartWidgetContent object"""
+        # Represents the ChartWidgetContent object
         self._report_id = Number()
         self._sheet_id = Number()
         self._axes = TypedObject(object)
@@ -50,8 +49,6 @@ class ChartWidgetContent(WidgetContent):
             deserialize(self, props)
 
         self.__initialized = True
-
-    """Represents the ChartWidgetContent object"""
 
     @property
     def report_id(self):

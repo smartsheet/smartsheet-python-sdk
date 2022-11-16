@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Number, String, Timestamp, json
+from ..util import deserialize, serialize
 
 
-class AccessToken(object):
+class AccessToken:
 
     """Smartsheet AccessToken data model."""
 

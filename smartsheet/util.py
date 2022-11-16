@@ -1,3 +1,4 @@
+# pylint: disable=R0912
 # Smartsheet Python SDK.
 #
 # Copyright 2018 Smartsheet.com, Inc.
@@ -16,17 +17,16 @@
 
 from __future__ import absolute_import
 
-import logging
-import warnings
 import functools
-import re
-import six
 import inspect
+import logging
+import re
+import warnings
+from datetime import date, datetime
 
-from datetime import date
-from datetime import datetime
-from .types import TypedList
-from .types import EnumeratedValue
+import six
+
+from .types import EnumeratedValue, TypedList
 
 _log = logging.getLogger(__name__)
 _primitive_types = (six.string_types, six.integer_types, float, bool)
@@ -108,8 +108,8 @@ def serialize(obj):
     elif isinstance(obj, _list_types):
         if len(obj):
             retval = []
-            for x in obj:
-                serialized = serialize(x)
+            for item in obj:
+                serialized = serialize(item)
                 if not hasattr(serialized, "is_explicit_null"):
                     retval.append(serialized)
     else:
@@ -178,7 +178,7 @@ def deprecated(func):
     def new_func(*args, **kwargs):
         warnings.simplefilter("always", DeprecationWarning)  # turn off filter
         warnings.warn(
-            "Call to deprecated function {}.".format(func.__name__),
+            f"Call to deprecated function {func.__name__}.",
             category=DeprecationWarning,
             stacklevel=2,
         )

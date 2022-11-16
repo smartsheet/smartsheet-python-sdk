@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import Boolean, EnumeratedValue, String, json
+from ..util import deserialize, serialize
 from .enums import PublishAccessibleBy
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class SightPublish(object):
+class SightPublish:
 
     """Smartsheet SightPublish data model."""
 

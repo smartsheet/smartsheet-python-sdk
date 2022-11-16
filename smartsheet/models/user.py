@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
+from ..types import String, json
+from ..util import deserialize, serialize
 from .user_model import UserModel
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class User(UserModel):
@@ -29,7 +28,7 @@ class User(UserModel):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the User model."""
-        super(User, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

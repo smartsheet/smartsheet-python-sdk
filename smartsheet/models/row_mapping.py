@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101
+# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101,C0103
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Number, json
+from ..util import deserialize, serialize
 
 
-class RowMapping(object):
+class RowMapping:
 
     """Smartsheet RowMapping data model."""
 
@@ -50,7 +49,7 @@ class RowMapping(object):
         if key == "from":
             self.from_ = value
         else:
-            super(RowMapping, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def from_(self):

@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import String, TypedList, TypedObject, json
+from ..util import deserialize, serialize
 from .account import Account
 from .group import Group
 from .user_model import UserModel
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class UserProfile(UserModel):
@@ -31,7 +30,7 @@ class UserProfile(UserModel):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the UserProfile model."""
-        super(UserProfile, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

@@ -17,10 +17,10 @@
 
 from __future__ import absolute_import
 
-from .predecessor import Predecessor
-from .object_value import *
-from ..util import deserialize
 from ..types import TypedList
+from ..util import deserialize
+from .object_value import PREDECESSOR_LIST, ObjectValue
+from .predecessor import Predecessor
 
 
 class PredecessorList(ObjectValue):
@@ -28,7 +28,7 @@ class PredecessorList(ObjectValue):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the PredecessorList model."""
-        super(PredecessorList, self).__init__(PREDECESSOR_LIST, base_obj)
+        super().__init__(PREDECESSOR_LIST, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

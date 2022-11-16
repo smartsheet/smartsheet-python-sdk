@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
-from .enums import DayOrdinal, DayDescriptors, ScheduleType
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import EnumeratedList, EnumeratedValue, Number, Timestamp, json
+from ..util import deserialize, serialize
+from .enums import DayDescriptors, DayOrdinal, ScheduleType
 
 
-class Schedule(object):
+class Schedule:
     """Smartsheet Schedule data model."""
 
     def __init__(self, props=None, base_obj=None):
@@ -57,7 +56,7 @@ class Schedule(object):
         if key == "type":
             self.type_ = value
         else:
-            super(Schedule, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def day_descriptors(self):

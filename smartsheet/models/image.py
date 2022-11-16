@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Number, String, json
+from ..util import deserialize, serialize
 
 
-class Image(object):
+class Image:
 
     """Smartsheet Image data model."""
 
@@ -50,7 +49,7 @@ class Image(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Image, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def alt_text(self):

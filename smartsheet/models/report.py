@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import TypedList, TypedObject, json
+from ..util import deserialize, serialize
 from .report_column import ReportColumn
 from .report_row import ReportRow
-from .sheet import Sheet
 from .scope import Scope
-from ..types import *
-from ..util import deserialize
-from ..util import serialize
+from .sheet import Sheet
 
 
 class Report(Sheet):
@@ -32,7 +31,7 @@ class Report(Sheet):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the Report model."""
-        super(Report, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

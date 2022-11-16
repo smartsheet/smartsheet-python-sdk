@@ -19,18 +19,17 @@ from __future__ import absolute_import
 
 import json
 
+from ..types import TypedList
+from ..util import deserialize, serialize
 from .folder import Folder
 from .report import Report
 from .sheet import Sheet
-from .template import Template
 from .sight import Sight
+from .template import Template
 from .workspace import Workspace
-from ..types import TypedList
-from ..util import serialize
-from ..util import deserialize
 
 
-class Home(object):
+class Home:
 
     """Smartsheet Home data model."""
 

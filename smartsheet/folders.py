@@ -19,11 +19,12 @@ from __future__ import absolute_import
 
 import logging
 import os.path
-from .models.folder import Folder
+
 from . import fresh_operation
+from .models.folder import Folder
 
 
-class Folders(object):
+class Folders:
 
     """Class for handling Folders operations."""
 
@@ -355,7 +356,6 @@ class Folders(object):
             sheet_name = tail or os.path.basename(head)
 
         _data = open(file, "rb").read()
-
         _op = fresh_operation("import_sheet_into_folder")
         _op["method"] = "POST"
         _op["path"] = "/folders/" + str(folder_id) + "/sheets/import"

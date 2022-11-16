@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913
+# pylint: disable=C0111,R0902,R0913,W4904,W0706
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -25,11 +25,11 @@ except ImportError:
 import importlib
 import json
 import logging
-import six
-
 from datetime import datetime
-from dateutil.parser import parse
 from enum import Enum
+
+import six
+from dateutil.parser import parse
 
 
 class TypedList(MutableSequence):
@@ -78,10 +78,10 @@ class TypedList(MutableSequence):
                 "item converted to %s: %s -> %s", self.item_type, item, retval
             )
             return retval
-        except (ValueError, TypeError):
+        except (ValueError, TypeError) as exc:
             raise ValueError(
-                "Can't convert %s to %s in TypedList", item, self.item_type
-            )
+                f"Can't convert {item} to {self.item_type} in TypedList"
+            ) from exc
 
     def purge(self):
         """Zero out the underlying list object."""
@@ -110,18 +110,18 @@ class TypedList(MutableSequence):
             self.append(value)
         else:
             raise ValueError(
-                "Can't load to TypedList(%s) from '%s'", self.item_type, value
+                f"Can't load to TypedList({self.item_type}) from '{value}'"
             )
 
     def __repr__(self):
         tmp = json.dumps(self.__store)
-        return "TypedList(item_type=%s, contents=%s)" % (self.item_type, tmp)
+        return f"TypedList(item_type={self.item_type}, contents={tmp})"
 
     def __str__(self):
         return json.dumps(self.__store)
 
 
-class TypedObject(object):
+class TypedObject:
     def __init__(self, object_type):
         self.object_type = object_type
         self._value = None
@@ -148,14 +148,14 @@ class TypedObject(object):
             self._value = value
         else:
             raise ValueError(
-                "`{0}` invalid type for {1} value".format(value, self.object_type)
+                f"`{value}` invalid type for {self.object_type} value"
             )
 
     def __str(self):
         return json.dumps(self._value)
 
 
-class Number(object):
+class Number:
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -172,13 +172,13 @@ class Number(object):
         elif isinstance(value, (six.integer_types, float)):
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for Number value".format(value))
+            raise ValueError(f"`{value}` invalid type for Number value")
 
     def __str__(self):
         return str(self.value)
 
 
-class String(object):
+class String:
     def __init__(self, initial_value=None, accept=None):
         self._value = None
         if initial_value:
@@ -198,13 +198,11 @@ class String(object):
         elif isinstance(value, six.string_types):
             if self.accept and value not in self._accept:
                 raise ValueError(
-                    "`{0}` is not in accept list, must be one of {1}".format(
-                        value, self.accept
-                    )
+                    f"`{value}` is not in accept list, must be one of {self.accept}"
                 )
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for String value".format(value))
+            raise ValueError(f"`{value}` invalid type for String value")
 
     @property
     def accept(self):
@@ -217,13 +215,13 @@ class String(object):
         elif isinstance(value, six.string_types):
             self._accept = [value]
         else:
-            raise ValueError("`{0}` invalid type for accept".format(value))
+            raise ValueError(f"`{value}` invalid type for accept")
 
     def __str__(self):
         return self._value
 
 
-class Boolean(object):
+class Boolean:
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -240,13 +238,13 @@ class Boolean(object):
         elif isinstance(value, bool):
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for Boolean value".format(value))
+            raise ValueError(f"`{value}` invalid type for Boolean value")
 
     def __str__(self):
         return str(self._value)
 
 
-class Timestamp(object):
+class Timestamp:
     def __init__(self, initial_value=None):
         self._value = None
         if initial_value:
@@ -266,13 +264,13 @@ class Timestamp(object):
             value = parse(value)
             self._value = value
         else:
-            raise ValueError("`{0}` invalid type for Timestamp value".format(value))
+            raise ValueError(f"`{value}` invalid type for Timestamp value")
 
     def __str__(self):
         return str(self._value)
 
 
-class EnumeratedValue(object):
+class EnumeratedValue:
     def __init__(self, enum, value=None):
         self.__enum = enum
         self._value = None
@@ -299,7 +297,7 @@ class EnumeratedValue(object):
             return self._value == other
         elif isinstance(other, six.string_types):
             return self._value == self.__enum[other]
-        NotImplemented
+        return NotImplemented
 
     def __str__(self):
         if self._value is not None:
@@ -310,7 +308,7 @@ class EnumeratedValue(object):
 
 class EnumeratedList(TypedList):
     def __init__(self, enum):
-        super(EnumeratedList, self).__init__(EnumeratedValue)
+        super().__init__(EnumeratedValue)
         self.__enum = enum
 
     def load(self, value):

@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import Number, TypedList, json
+from ..util import deserialize, serialize
 from .image_url import ImageUrl
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class ImageUrlMap(object):
+class ImageUrlMap:
 
     """Smartsheet ImageUrlMap data model."""
 

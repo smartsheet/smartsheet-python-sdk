@@ -18,10 +18,11 @@
 from __future__ import absolute_import
 
 import logging
+
 from . import fresh_operation
 
 
-class Groups(object):
+class Groups:
 
     """Class for handling Groups operations."""
 

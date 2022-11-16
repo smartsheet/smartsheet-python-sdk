@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import Boolean, EnumeratedValue, Number, String, Timestamp, json
+from ..util import deserialize, serialize
 from .enums import AccessLevel, ShareScope, ShareType
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Share(object):
+class Share:
 
     """Smartsheet Share data model."""
 
@@ -68,7 +67,7 @@ class Share(object):
         elif key == "type":
             self.type_ = value
         else:
-            super(Share, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

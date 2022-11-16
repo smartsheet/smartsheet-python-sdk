@@ -17,11 +17,10 @@
 
 from __future__ import absolute_import
 
+from ..types import Timestamp, TypedObject, json
+from ..util import deserialize, serialize
 from .cell import Cell
 from .user import User
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class CellHistory(Cell):
@@ -30,7 +29,7 @@ class CellHistory(Cell):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the CellHistory model."""
-        super(CellHistory, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

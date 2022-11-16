@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913
+# pylint: disable=C0111,R0902,R0913,E1137
 # Smartsheet Python SDK.
 #
 # Copyright 2018 Smartsheet.com, Inc.
@@ -18,11 +18,13 @@
 from __future__ import absolute_import
 
 import logging
+
 import six
+
 from . import fresh_operation
 
 
-class Discussions(object):
+class Discussions:
 
     """Class for handling Discussions operations."""
 

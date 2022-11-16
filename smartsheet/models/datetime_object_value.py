@@ -17,10 +17,12 @@
 
 from __future__ import absolute_import
 
-from .object_value import *
-from ..util import deserialize
 from datetime import datetime
+
 from dateutil.parser import parse
+
+from ..util import deserialize
+from .object_value import ObjectValue, six
 
 
 class DatetimeObjectValue(ObjectValue):
@@ -28,7 +30,7 @@ class DatetimeObjectValue(ObjectValue):
 
     def __init__(self, props=None, object_type=None, base_obj=None):
         """Initialize the DateObjectValue model."""
-        super(DatetimeObjectValue, self).__init__(object_type, base_obj)
+        super().__init__(object_type, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

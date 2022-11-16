@@ -17,22 +17,22 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .enums import AccessLevel
 from .source import Source
 from .widget import Widget
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Sight(object):
+class Sight:
 
     """Smartsheet Sight data model."""
 
     def __init__(self, props=None, base_obj=None):
         from .workspace import Workspace
 
-        """Initialize the Sight model."""
+        # Initialize the Sight model.
         self._base = None
         if base_obj is not None:
             self._base = base_obj
@@ -67,7 +67,7 @@ class Sight(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Sight, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

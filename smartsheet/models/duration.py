@@ -17,9 +17,9 @@
 
 from __future__ import absolute_import
 
-from .object_value import *
-from ..types import *
+from ..types import Boolean, Number
 from ..util import deserialize
+from .object_value import DURATION, ObjectValue
 
 
 class Duration(ObjectValue):
@@ -28,7 +28,7 @@ class Duration(ObjectValue):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the Duration model."""
-        super(Duration, self).__init__(DURATION, base_obj)
+        super().__init__(DURATION, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

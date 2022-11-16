@@ -17,9 +17,9 @@
 
 from __future__ import absolute_import
 
-from .object_value import *
-from ..types import *
+from ..types import TypedList
 from ..util import deserialize
+from .object_value import MULTI_PICKLIST, ObjectValue
 
 
 class MultiPicklistObjectValue(ObjectValue):

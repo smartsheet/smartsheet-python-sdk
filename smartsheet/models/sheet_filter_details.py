@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..types import Boolean, EnumeratedValue, TypedList, json
+from ..util import deserialize, serialize
 from .criteria import Criteria
 from .enums import SheetFilterOperator
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class SheetFilterDetails(object):
+class SheetFilterDetails:
 
     """Smartsheet SheetFilterDetails data model."""
 

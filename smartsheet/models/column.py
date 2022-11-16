@@ -17,15 +17,15 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, TypedList,
+                     TypedObject, json)
+from ..util import deserialize, serialize
 from .auto_number_format import AutoNumberFormat
 from .contact import Contact
 from .enums import ColumnType, Symbol, SystemColumnType
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Column(object):
+class Column:
 
     """Smartsheet Column data model."""
 
@@ -81,7 +81,7 @@ class Column(object):
         elif key == "type":
             self.type_ = value
         else:
-            super(Column, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def auto_number_format(self):

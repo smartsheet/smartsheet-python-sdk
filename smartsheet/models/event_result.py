@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Boolean, String, TypedList, importlib, json
+from ..util import deserialize, serialize
 
 
-class EventResult(object):
+class EventResult:
 
     """Smartsheet EventResult data model."""
 

@@ -18,10 +18,11 @@
 from __future__ import absolute_import
 
 import logging
+
 from . import fresh_operation
 
 
-class Favorites(object):
+class Favorites:
 
     """Class for handling Favorites operations."""
 

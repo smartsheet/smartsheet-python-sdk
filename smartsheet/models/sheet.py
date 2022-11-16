@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101
+# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101,R1710,C0415,W0613
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -17,9 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedList, EnumeratedValue, Number, String,
+                     Timestamp, TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .attachment import Attachment
 from .column import Column
-from .sheet_filter import SheetFilter
 from .comment import Comment
 from .contact_object_value import ContactObjectValue
 from .cross_sheet_reference import CrossSheetReference
@@ -27,16 +29,14 @@ from .discussion import Discussion
 from .enums import AccessLevel, AttachmentType
 from .project_settings import ProjectSettings
 from .row import Row
+from .sheet_filter import SheetFilter
 from .sheet_summary import SheetSummary
 from .sheet_user_permissions import SheetUserPermissions
 from .sheet_user_settings import SheetUserSettings
 from .source import Source
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Sheet(object):
+class Sheet:
 
     """Smartsheet Sheet data model."""
 
@@ -46,7 +46,8 @@ class Sheet(object):
         if base_obj is not None:
             self._base = base_obj
 
-        # Workspace creates a circular import dependency, so, as much as I'm not a fan of moving the import
+        # Workspace creates a circular import dependency
+        # as much as I'm not a fan of moving the import
         # into the __init__, its the most pragmatic approach for this simple problem.
         from .workspace import Workspace
 
@@ -100,7 +101,7 @@ class Sheet(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Sheet, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

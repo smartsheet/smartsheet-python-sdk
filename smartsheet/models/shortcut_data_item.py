@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..types import EnumeratedValue, Number, String, TypedObject, json
+from ..util import deserialize, serialize
 from .enums import AttachmentType
 from .hyperlink import Hyperlink
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class ShortcutDataItem(object):
+class ShortcutDataItem:
     """Smartsheet ShortcutDataItem data model."""
 
     def __init__(self, props=None, base_obj=None):

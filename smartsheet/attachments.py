@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913
+# pylint: disable=C0111,R0902,R0913,E1137,W3101
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -17,16 +17,16 @@
 
 from __future__ import absolute_import
 
-import os.path
 import logging
+import os.path
+
 import requests
 
-from .models import DownloadedFile
-from .models import Error, ErrorResult
 from . import fresh_operation
+from .models import DownloadedFile, Error, ErrorResult
 
 
-class Attachments(object):
+class Attachments:
 
     """Class for handling Attachments operations."""
 

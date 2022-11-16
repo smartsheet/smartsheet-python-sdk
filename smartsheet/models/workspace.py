@@ -17,18 +17,17 @@
 
 from __future__ import absolute_import
 
+from ..types import Boolean, EnumeratedValue, Number, String, TypedList, json
+from ..util import deserialize, serialize
 from .enums import AccessLevel
 from .folder import Folder
 from .report import Report
 from .sheet import Sheet
 from .sight import Sight
 from .template import Template
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Workspace(object):
+class Workspace:
 
     """Smartsheet Workspace data model."""
 
@@ -66,7 +65,7 @@ class Workspace(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Workspace, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..types import Boolean, EnumeratedValue, String, TypedList, json, six
+from ..util import deserialize, serialize
 from .enums import AutomationActionFrequency, AutomationActionType
 from .recipient import Recipient
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class AutomationAction(object):
+class AutomationAction:
 
     """Smartsheet AutomationAction data model."""
 
@@ -63,7 +62,7 @@ class AutomationAction(object):
         if key == "type":
             self.type_ = value
         else:
-            super(AutomationAction, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def frequency(self):

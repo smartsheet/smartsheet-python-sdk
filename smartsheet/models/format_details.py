@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import EnumeratedValue, json
+from ..util import deserialize, serialize
 from .enums import PaperType
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class FormatDetails(object):
+class FormatDetails:
 
     """Smartsheet FormatDetails data model."""
 

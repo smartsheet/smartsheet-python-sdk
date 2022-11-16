@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913,W0614,C0302,W0401
+# pylint: disable=C0111,R0902,R0913,W0614,C0302,W0401,R0912,W0611,C0301,W0621,W0404,R1720,W0702,W0613
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -18,24 +18,24 @@
 from __future__ import absolute_import
 
 import importlib
+import inspect
+import json
 import logging
 import logging.config
 import os
-import re
 import random
-import time
+import re
 import sys
+import time
+
 import requests
 import six
-import inspect
-import json
 
-from .exceptions import *
+from . import __api_base__, __version__, models
+from .exceptions import ApiError, HttpError, UnexpectedRequestError
 from .models import Error, ErrorResult
 from .session import pinned_session
-from .util import is_multipart
-from .util import serialize
-from . import __version__, __api_base__, models
+from .util import is_multipart, serialize
 
 __all__ = ("Smartsheet", "fresh_operation", "AbstractUserCalcBackoff")
 
@@ -67,7 +67,7 @@ def setup_logging():
         if os.path.exists(log_env):
             import json
 
-            with open(log_env, "rt") as config_file:
+            with open(log_env, "rt", encoding="utf8") as config_file:
                 config = json.load(config_file)
             logging.config.dictConfig(config)
         else:
@@ -80,10 +80,10 @@ def setup_logging():
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
-class AbstractUserCalcBackoff(object):
+class AbstractUserCalcBackoff:
     def calc_backoff(self, previous_attempts, total_elapsed_time, error_result):
         raise NotImplementedError(
-            "Class %s doesn't implement calc_backoff()" % self.__class__.__name__
+            f"Class {self.__class__.__name__} doesn't implement calc_backoff()"
         )
 
 
@@ -113,7 +113,7 @@ class DefaultCalcBackoff(AbstractUserCalcBackoff):
         return backoff
 
 
-class Smartsheet(object):
+class Smartsheet:
     """Use this to make requests to the Smartsheet API."""
 
     models = models
@@ -170,14 +170,14 @@ class Smartsheet(object):
 
         base_user_agent = "SmartsheetPythonSDK/" + __version__
         if user_agent:
-            self._user_agent = "{}/{}".format(base_user_agent, user_agent)
+            self._user_agent = f"{base_user_agent}/{user_agent}"
         else:
             caller = "__unknown__"
             stack = inspect.stack()
             module = inspect.getmodule(stack[-1][0])
             if module is not None:
                 caller = inspect.getmodule(stack[-1][0]).__name__
-            self._user_agent = "{}/{}".format(base_user_agent, caller)
+            self._user_agent = f"{base_user_agent}/{caller}"
 
         self._log = logging.getLogger(__name__)
         setup_logging()
@@ -279,9 +279,7 @@ class Smartsheet(object):
             response.request.url,
         )
         if response.request.body is not None:
-            body_dumps = '"<< {} content type suppressed >>"'.format(
-                response.request.headers["Content-Type"]
-            )
+            body_dumps = f'"<< {response.request.headers["Content-Type"]} content type suppressed >>"'
             if is_multipart(response.request):
                 body_dumps = '"<< multipart body suppressed >>"'
             elif "application/json" in response.request.headers["Content-Type"]:
@@ -289,9 +287,7 @@ class Smartsheet(object):
                 body_dumps = json.dumps(json.loads(body), sort_keys=True)
             self._log.debug('{"requestBody": %s}', body_dumps)
         # response
-        content_dumps = '"<< {} content type suppressed >>"'.format(
-            response.headers["Content-Type"]
-        )
+        content_dumps = f'"<< {response.headers["Content-Type"]} content type suppressed >>"'
         if "application/json" in response.headers["Content-Type"]:
             content = response.content.decode("utf8")
             content_dumps = json.dumps(json.loads(content), sort_keys=True)
@@ -336,9 +332,9 @@ class Smartsheet(object):
             res = self._session.send(prepped_request, stream=stream)
             self._log_request(operation, res)
         except requests.exceptions.SSLError as rex:
-            raise HttpError(rex, "SSL handshake error, old CA bundle or old OpenSSL?")
+            raise HttpError(rex, "SSL handshake error, old CA bundle or old OpenSSL?") from rex
         except requests.exceptions.RequestException as rex:
-            raise UnexpectedRequestError(rex.request, rex.response)
+            raise UnexpectedRequestError(rex.request, rex.response) from rex
 
         if 200 <= res.status_code <= 299:
             return OperationResult(res.text, res, self, operation)
@@ -482,7 +478,7 @@ class Smartsheet(object):
                 return name
 
 
-class OperationResult(object):
+class OperationResult:
     """The successful result of a call to an operation."""
 
     def __init__(self, op_result, resp=None, base_obj=None, operation=None):
@@ -500,11 +496,11 @@ class OperationResult(object):
         """
         assert isinstance(
             op_result, six.string_types
-        ), "op_result: expected string, got %r" % type(op_result)
+        ), f"op_result: expected string, got {type(op_result)!r}"
         if resp is not None:
             assert isinstance(
                 resp, requests.models.Response
-            ), "resp: expected requests.models.Response, got %r" % type(resp)
+            ), f"resp: expected requests.models.Response, got {type(resp)!r}"
         self._base = base_obj
         self.op_result = op_result
         self.resp = resp
@@ -557,7 +553,7 @@ class OperationResult(object):
         return obj
 
 
-class OperationErrorResult(object):
+class OperationErrorResult:
     """The error result of a call to an operation."""
 
     error_lookup = {

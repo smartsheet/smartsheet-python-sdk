@@ -1,3 +1,4 @@
+# pylint: disable=C0302,C0111, E1121
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -14,13 +15,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-# pylint: disable=C0302,C0111
 
 
 class SmartsheetException(Exception):
     """Root for SmartsheetErrors, never raised directly."""
-
-    pass
 
 
 class ApiError(SmartsheetException):
@@ -35,98 +33,98 @@ class ApiError(SmartsheetException):
             message (str): A human-readable message that can be
                 displayed to the end user. Is None, if unavailable.
         """
-        super(ApiError, self).__init__(error)
+        super().__init__(error)
         self.error = error
         self.message = message
         self.should_retry = should_retry
 
     def __repr__(self):
-        return "ApiError({})".format(self.error)
+        return f"ApiError({self.error})"
 
 
 class HttpError(SmartsheetException):
     """Errors produced at the HTTP layer."""
 
     def __init__(self, status_code, body):
-        super(HttpError, self).__init__(status_code, body)
+        super().__init__(status_code, body)
         self.status_code = status_code
         self.body = body
 
     def __repr__(self):
-        return "HttpError({}, {!r})".format(self.status_code, self.body)
+        return f"HttpError({self.status_code}, {self.body!r})"
 
 
 class InternalServerError(HttpError):
     """Errors due to a problem on Smartsheet."""
 
     def __init__(self, status_code, message):
-        super(InternalServerError, self).__init__(status_code, status_code, message)
+        super().__init__(status_code, status_code, message)
         self.status_code = status_code
         self.message = message
 
     def __repr__(self):
-        return "InternalServerError({}, {!r})".format(self.status_code, self.message)
+        return f"InternalServerError({self.status_code}, {self.message!r})"
 
 
 class UnexpectedRequestError(SmartsheetException):
     """Error originating from Requests API."""
 
     def __init__(self, request, response):
-        super(UnexpectedRequestError, self).__init__(request, response)
+        super().__init__(request, response)
         self.request = request
         self.response = response
 
     def __repr__(self):
-        return "UnexpectedRequestError({!r}, {!r})".format(self.request, self.response)
+        return f"UnexpectedRequestError({self.request!r}, {self.response!r})"
 
 
 class SystemMaintenanceError(ApiError):
     """Smartsheet.com is currently offline for system maintenance. ..."""
 
     def __init__(self, error, message):
-        super(SystemMaintenanceError, self).__init__(error, message, True)
+        super().__init__(error, message, True)
         self.error = error
         self.message = message
         self.should_retry = True
 
     def __repr__(self):
-        return "SystemMaintenanceError({!r})".format(self.message)
+        return f"SystemMaintenanceError({self.message!r})"
 
 
 class ServerTimeoutExceededError(ApiError):
     """Server timeout exceeded. Request has failed."""
 
     def __init__(self, error, message):
-        super(ServerTimeoutExceededError, self).__init__(error, message, True)
+        super().__init__(error, message, True)
         self.error = error
         self.message = message
         self.should_retry = True
 
     def __repr__(self):
-        return "ServerTimeoutExceededError({!r})".format(self.message)
+        return f"ServerTimeoutExceededError({self.message!r})"
 
 
 class RateLimitExceededError(ApiError):
     """Rate limit exceeded."""
 
     def __init__(self, error, message):
-        super(RateLimitExceededError, self).__init__(error, message, True)
+        super().__init__(error, message, True)
         self.error = error
         self.message = message
         self.should_retry = True
 
     def __repr__(self):
-        return "RateLimitExceededError({!r})".format(self.message)
+        return f"RateLimitExceededError({self.message!r})"
 
 
 class UnexpectedErrorShouldRetryError(ApiError):
     """An unexpected error has occurred. Please retry your request. If ..."""
 
     def __init__(self, error, message):
-        super(UnexpectedErrorShouldRetryError, self).__init__(error, message, True)
+        super().__init__(error, message, True)
         self.error = error
         self.message = message
         self.should_retry = True
 
     def __repr__(self):
-        return "UnexpectedErrorShouldRetryError({!r})".format(self.message)
+        return f"UnexpectedErrorShouldRetryError({self.message!r})"

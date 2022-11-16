@@ -19,10 +19,11 @@ from __future__ import absolute_import
 
 import logging
 from datetime import datetime
+
 from . import fresh_operation
 
 
-class Search(object):
+class Search:
 
     """Class for handling Search operations."""
 

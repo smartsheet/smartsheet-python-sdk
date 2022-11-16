@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import EnumeratedValue, String, json
+from ..util import deserialize, serialize
 from .enums import CurrencyCode
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Currency(object):
+class Currency:
 
     """Smartsheet Currency data model."""
 

@@ -17,14 +17,13 @@
 
 from __future__ import absolute_import
 
+from ..types import Number, String, Timestamp, TypedList, TypedObject, json
+from ..util import deserialize, serialize
 from .attachment import Attachment
 from .user import User
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Comment(object):
+class Comment:
 
     """Smartsheet Comment data model."""
 
@@ -59,7 +58,7 @@ class Comment(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Comment, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def attachments(self):

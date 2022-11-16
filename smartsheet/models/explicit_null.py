@@ -16,7 +16,7 @@
 # under the License
 
 
-class ExplicitNull(object):
+class ExplicitNull:
     def __init__(self):
         pass
 

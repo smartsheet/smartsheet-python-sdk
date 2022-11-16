@@ -17,14 +17,15 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 from datetime import date
+
 from dateutil.parser import parse
 
+from ..types import Number, TypedList, json, six
+from ..util import deserialize, serialize
 
-class ProjectSettings(object):
+
+class ProjectSettings:
     """Smartsheet ProjectSettings data model."""
 
     def __init__(self, props=None, base_obj=None):
@@ -58,11 +59,11 @@ class ProjectSettings(object):
     def non_working_days(self, value):
         if isinstance(value, list):
             self._non_working_days.purge()
-            for x in value:
-                if isinstance(x, six.string_types):
-                    x = parse(x).date()
-                if isinstance(x, date):
-                    self._non_working_days.extend([x])
+            for item in value:
+                if isinstance(item, six.string_types):
+                    item = parse(item).date()
+                if isinstance(item, date):
+                    self._non_working_days.extend([item])
         elif isinstance(value, six.string_types):
             value = parse(value).date()
             self._non_working_days.purge()

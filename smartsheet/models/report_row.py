@@ -17,11 +17,10 @@
 
 from __future__ import absolute_import
 
-from .row import Row
+from ..types import Number, TypedList, json
+from ..util import deserialize, serialize
 from .report_cell import ReportCell
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from .row import Row
 
 
 class ReportRow(Row):
@@ -30,7 +29,7 @@ class ReportRow(Row):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the ReportRow model."""
-        super(ReportRow, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

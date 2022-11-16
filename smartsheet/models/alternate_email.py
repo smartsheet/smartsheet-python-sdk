@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Boolean, Number, String, json
+from ..util import deserialize, serialize
 
 
-class AlternateEmail(object):
+class AlternateEmail:
 
     """Smartsheet AlternateEmail data model."""
 
@@ -53,7 +52,7 @@ class AlternateEmail(object):
         if key == "id":
             self.id_ = value
         else:
-            super(AlternateEmail, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def confirmed(self):

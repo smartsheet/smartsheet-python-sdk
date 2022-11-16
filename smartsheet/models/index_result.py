@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Number, TypedList, importlib, json
+from ..util import deserialize, serialize
 
 
-class IndexResult(object):
+class IndexResult:
 
     """Smartsheet IndexResult data model."""
 

@@ -18,11 +18,11 @@
 from __future__ import absolute_import
 
 import json
+
 import six
 
+from ..util import get_child_properties, serialize
 from .explicit_null import ExplicitNull
-from ..util import get_child_properties
-from ..util import serialize
 
 DATE = 1
 DATETIME = 2
@@ -76,7 +76,7 @@ def enum_object_value_type(object_type=None):
     return _nameToType.get(object_type)
 
 
-class ObjectValue(object):
+class ObjectValue:
     """Smartsheet ObjectValue data model."""
 
     def __init__(self, object_type=None, base_obj=None):

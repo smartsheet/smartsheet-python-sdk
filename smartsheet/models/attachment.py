@@ -17,14 +17,14 @@
 
 from __future__ import absolute_import
 
+from ..types import (EnumeratedValue, Number, String, Timestamp, TypedObject,
+                     json)
+from ..util import deserialize, serialize
 from .enums import AttachmentParentType, AttachmentSubType, AttachmentType
 from .user import User
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Attachment(object):
+class Attachment:
 
     """Smartsheet Attachment data model."""
 
@@ -65,7 +65,7 @@ class Attachment(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Attachment, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def attachment_sub_type(self):

@@ -17,16 +17,16 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .attachment import Attachment
 from .comment import Comment
 from .enums import AccessLevel
 from .user import User
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Discussion(object):
+class Discussion:
 
     """Smartsheet Discussion data model."""
 
@@ -67,7 +67,7 @@ class Discussion(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Discussion, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def access_level(self):

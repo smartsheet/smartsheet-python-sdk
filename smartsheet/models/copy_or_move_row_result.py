@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import Number, TypedList, json
+from ..util import deserialize, serialize
 from .row_mapping import RowMapping
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class CopyOrMoveRowResult(object):
+class CopyOrMoveRowResult:
 
     """Smartsheet CopyOrMoveRowResult data model."""
 

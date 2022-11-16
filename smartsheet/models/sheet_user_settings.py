@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Boolean, Number, json
+from ..util import deserialize, serialize
 
 
-class SheetUserSettings(object):
+class SheetUserSettings:
 
     """Smartsheet SheetUserSettings data model."""
 

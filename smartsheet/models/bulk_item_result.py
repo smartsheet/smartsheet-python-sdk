@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import Number, String, TypedList, importlib, json
+from ..util import deserialize, serialize
 from .bulk_item_failure import BulkItemFailure
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class BulkItemResult(object):
+class BulkItemResult:
 
     """Smartsheet BulkItemResult data model."""
 

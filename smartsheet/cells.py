@@ -18,10 +18,11 @@
 from __future__ import absolute_import
 
 import logging
+
 from . import fresh_operation
 
 
-class Cells(object):
+class Cells:
 
     """Class for handling Cells operations."""
 
@@ -135,7 +136,6 @@ class Cells(object):
     ):
 
         _data = open(file, "rb").read()
-
         _op = fresh_operation("attach_file_to_cell")
         _op["method"] = "POST"
         _op["path"] = (

@@ -16,12 +16,14 @@
 # under the License.
 
 from __future__ import absolute_import
+
 import logging
-from .models import JSONObject
+
 from . import fresh_operation
+from .models import JSONObject
 
 
-class Passthrough(object):
+class Passthrough:
 
     """Class for handling Sheets operations."""
 

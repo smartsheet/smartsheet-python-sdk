@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
+from ..types import TypedList, json
+from ..util import deserialize, serialize
 from .enums import WidgetType
 from .shortcut_data_item import ShortcutDataItem
 from .widget_content import WidgetContent
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class ShortcutWidgetContent(WidgetContent):
@@ -30,12 +29,12 @@ class ShortcutWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the ShortcutWidgetContent model."""
-        super(ShortcutWidgetContent, self).__init__(WidgetType.SHORTCUT, base_obj)
+        super().__init__(WidgetType.SHORTCUT, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the ShortcutWidgetContent object."""
+        # Represents the ShortcutWidgetContent object.
         self._shortcut_data = TypedList(ShortcutDataItem)
 
         if props:
@@ -43,7 +42,6 @@ class ShortcutWidgetContent(WidgetContent):
 
         self.__initialized = True
 
-    """Represents the ShortcutWidgetContent object."""
 
     @property
     def shortcut_data(self):

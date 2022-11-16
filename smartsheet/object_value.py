@@ -1,3 +1,4 @@
+# pylint: disable=R0911,R0912
 # Smartsheet Python SDK.
 #
 # Copyright 2019 Smartsheet.com, Inc.
@@ -22,7 +23,10 @@ from .models.duration import Duration
 from .models.multi_contact_object_value import MultiContactObjectValue
 from .models.multi_picklist_object_value import MultiPicklistObjectValue
 from .models.number_object_value import NumberObjectValue
-from .models.object_value import *
+from .models.object_value import (ABSTRACT_DATETIME, CONTACT, DATE, DATETIME,
+                                  DURATION, MULTI_CONTACT, MULTI_PICKLIST,
+                                  OBJECT_VALUE, PREDECESSOR_LIST, ObjectValue,
+                                  enum_object_value_type, six)
 from .models.predecessor_list import PredecessorList
 from .models.string_object_value import StringObjectValue
 
@@ -43,7 +47,7 @@ def assign_to_object_value(value):
                 return ContactObjectValue(value)
             elif enum_object_type == DATE:
                 return DateObjectValue(value)
-            elif enum_object_type == DATETIME or enum_object_type == ABSTRACT_DATETIME:
+            elif enum_object_type in (DATETIME, ABSTRACT_DATETIME):
                 return DatetimeObjectValue(value, enum_object_value_type)
             elif enum_object_type == MULTI_CONTACT:
                 return MultiContactObjectValue(value)
@@ -54,9 +58,9 @@ def assign_to_object_value(value):
         else:
             raise ValueError(
                 (
-                    "`{0}` is an invalid value for ObjectValue`object_type`,"
-                    " must be one of {1}"
-                ).format(object_type, OBJECT_VALUE["object_type"])
+                    f"`{object_type}` is an invalid value for ObjectValue`object_type`,"
+                    f" must be one of {OBJECT_VALUE['object_type']}"
+                )
             )
     elif isinstance(value, six.string_types):
         return StringObjectValue(value)
@@ -64,3 +68,5 @@ def assign_to_object_value(value):
         return BooleanObjectValue(value)
     elif isinstance(value, (six.integer_types, float)):
         return NumberObjectValue(value)
+    else:
+        return None

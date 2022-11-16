@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import TypedList, json, six
+from ..util import deserialize, serialize
 
 
-class WebhookSubscope(object):
+class WebhookSubscope:
 
     """Represents the webhook subscope object."""
 

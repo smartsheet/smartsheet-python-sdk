@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import EnumeratedValue, Number, json
+from ..util import deserialize, serialize
 from .enums import SortDirection
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class SortCriterion(object):
+class SortCriterion:
 
     """Smartsheet SortCriterion data model."""
 

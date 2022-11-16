@@ -18,12 +18,12 @@
 from __future__ import absolute_import
 
 import json
+
 import six
 
-from .row_email import RowEmail
 from ..types import TypedList
-from ..util import serialize
-from ..util import deserialize
+from ..util import deserialize, serialize
+from .row_email import RowEmail
 
 
 class MultiRowEmail(RowEmail):
@@ -32,7 +32,7 @@ class MultiRowEmail(RowEmail):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the MultiRowEmail model."""
-        super(MultiRowEmail, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

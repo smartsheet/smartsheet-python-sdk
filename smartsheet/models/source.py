@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Number, String, json
+from ..util import deserialize, serialize
 
 
-class Source(object):
+class Source:
 
     """Smartsheet Source data model."""
 
@@ -56,7 +55,7 @@ class Source(object):
         elif key == "type":
             self.type_ = value
         else:
-            super(Source, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def id_(self):

@@ -20,10 +20,11 @@ from __future__ import absolute_import
 import logging
 import os.path
 from datetime import datetime
+
 from . import fresh_operation
 
 
-class Reports(object):
+class Reports:
 
     """Class for handling Reports operations."""
 

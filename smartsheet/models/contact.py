@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import String, json
+from ..util import deserialize, serialize
 
 
-class Contact(object):
+class Contact:
 
     """Smartsheet Contact data model."""
 
@@ -53,7 +52,7 @@ class Contact(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Contact, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def email(self):

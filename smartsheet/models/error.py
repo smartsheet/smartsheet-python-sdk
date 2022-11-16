@@ -19,13 +19,12 @@ from __future__ import absolute_import
 
 import json
 
-from .error_result import ErrorResult
-from ..util import serialize
-from ..util import deserialize
 from ..types import TypedObject
+from ..util import deserialize, serialize
+from .error_result import ErrorResult
 
 
-class Error(object):
+class Error:
 
     """Smartsheet Error data model."""
 

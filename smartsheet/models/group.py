@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Number, String, Timestamp, TypedList, json
+from ..util import deserialize, serialize
 from .group_member import GroupMember
 
 
-class Group(object):
+class Group:
 
     """Smartsheet Group data model."""
 
@@ -59,7 +58,7 @@ class Group(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Group, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def created_at(self):

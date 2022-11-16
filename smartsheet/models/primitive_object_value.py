@@ -17,13 +17,14 @@
 
 from __future__ import absolute_import
 
-import six
 import json
+
+import six
 
 from ..util import serialize
 
 
-class PrimitiveObjectValue(object):
+class PrimitiveObjectValue:
     """Smartsheet PrimitiveObjectValue data model."""
 
     def __init__(self, value=None, base_obj=None):

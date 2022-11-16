@@ -17,10 +17,9 @@
 
 from __future__ import absolute_import
 
+from ..types import Number, String, json
+from ..util import deserialize, serialize
 from .hyperlink import Hyperlink
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class WidgetHyperlink(Hyperlink):
@@ -29,7 +28,7 @@ class WidgetHyperlink(Hyperlink):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the WidgetHyperlink model."""
-        super(WidgetHyperlink, self).__init__(None, base_obj)
+        super().__init__(None, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj

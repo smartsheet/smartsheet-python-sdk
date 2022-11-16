@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101
+# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101,R1710
 # Smartsheet Python SDK.
 #
 # Copyright 2018 Smartsheet.com, Inc.
@@ -17,19 +17,20 @@
 
 from __future__ import absolute_import
 
+from datetime import datetime
+
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .attachment import Attachment
 from .cell import Cell
 from .column import Column
 from .discussion import Discussion
 from .enums import AccessLevel
-from ..types import *
 from .user import User
-from ..util import serialize
-from ..util import deserialize
-from datetime import datetime
 
 
-class Row(object):
+class Row:
 
     """Smartsheet Row data model."""
 
@@ -89,7 +90,7 @@ class Row(object):
         elif key == "id":
             self.id_ = value
         else:
-            super(Row, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def above(self):

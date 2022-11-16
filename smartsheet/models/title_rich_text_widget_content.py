@@ -17,11 +17,10 @@
 
 from __future__ import absolute_import
 
+from ..types import String, json
+from ..util import deserialize, serialize
 from .enums import WidgetType
 from .widget_content import WidgetContent
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
 class TitleRichTextWidgetContent(WidgetContent):
@@ -29,12 +28,12 @@ class TitleRichTextWidgetContent(WidgetContent):
 
     def __init__(self, props=None, base_obj=None):
         """Initialize the TitleRichTextWidgetContent model."""
-        super(TitleRichTextWidgetContent, self).__init__(WidgetType.TITLE, base_obj)
+        super().__init__(WidgetType.TITLE, base_obj)
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        """Represents the TitleWidgetContent object."""
+        # Represents the TitleWidgetContent object
         self._background_color = String()
         self._html_content = String()
 
@@ -42,8 +41,6 @@ class TitleRichTextWidgetContent(WidgetContent):
             deserialize(self, props)
 
         self.__initialized = True
-
-    """Represents the TitleWidgetContent object."""
 
     @property
     def background_color(self):

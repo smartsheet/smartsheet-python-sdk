@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import TypedList, json
+from ..util import deserialize, serialize
 from .summary_field import SummaryField
 
 
-class SheetSummary(object):
+class SheetSummary:
 
     """Smartsheet SheetSummary data model."""
 

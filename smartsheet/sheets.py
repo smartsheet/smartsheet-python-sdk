@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913
+# pylint: disable=C0111,R0902,R0913,C0301,R0914
 # Smartsheet Python SDK.
 #
 # Copyright 2018 Smartsheet.com, Inc.
@@ -19,17 +19,19 @@ from __future__ import absolute_import
 
 import logging
 import os.path
-import six
 from datetime import datetime
+
+import six
+
+from . import fresh_operation
 from .models.column import Column
 from .models.row import Row
 from .models.summary_field import SummaryField
 from .types import TypedList
 from .util import deprecated
-from . import fresh_operation
 
 
-class Sheets(object):
+class Sheets:
 
     """Class for handling Sheets operations."""
 
@@ -1695,7 +1697,6 @@ class Sheets(object):
             sheet_name = tail or os.path.basename(head)
 
         _data = open(file, "rb").read()
-
         _op = fresh_operation("import_sheet_into_folder")
         _op["method"] = "POST"
         _op["path"] = "/sheets/import"
@@ -1975,7 +1976,6 @@ class Sheets(object):
     ):
 
         _data = open(file, "rb").read()
-
         _op = fresh_operation("add_sheet_summary_field_image")
         _op["method"] = "POST"
         _op["path"] = (

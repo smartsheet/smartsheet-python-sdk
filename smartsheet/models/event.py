@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
-from .enums import EventObjectType, EventAction, EventSource
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import EnumeratedValue, Number, String, Timestamp, json, six
+from ..util import deserialize, serialize
+from .enums import EventAction, EventObjectType, EventSource
 
 
-class Event(object):
+class Event:
 
     """Smartsheet Event data model."""
 
@@ -55,7 +54,7 @@ class Event(object):
         raise AttributeError(key)
 
     def __setattr__(self, key, value):
-        super(Event, self).__setattr__(key, value)
+        super().__setattr__(key, value)
 
     @property
     def access_token_name(self):

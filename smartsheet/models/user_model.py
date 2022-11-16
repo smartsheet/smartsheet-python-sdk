@@ -17,15 +17,15 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
 from .alternate_email import AlternateEmail
 from .enums import UserStatus
 from .profile_image import ProfileImage
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class UserModel(object):
+class UserModel:
 
     """Smartsheet UserModel data model."""
 
@@ -71,7 +71,7 @@ class UserModel(object):
         if key == "id":
             self.id_ = value
         else:
-            super(UserModel, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def admin(self):

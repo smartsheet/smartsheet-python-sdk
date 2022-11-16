@@ -17,12 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
+from ..types import Number, String, json
+from ..util import deserialize, serialize
 
 
-class Favorite(object):
+class Favorite:
 
     """Smartsheet Favorite data model."""
 
@@ -54,7 +53,7 @@ class Favorite(object):
         if key == "type":
             self.type_ = value
         else:
-            super(Favorite, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def object_id(self):

@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101
+# pylint: disable=C0111,R0902,R0904,R0912,R0913,R0915,E1101,C0103
 # Smartsheet Python SDK.
 #
 # Copyright 2018 Smartsheet.com, Inc.
@@ -17,13 +17,12 @@
 
 from __future__ import absolute_import
 
+from ..types import TypedList, TypedObject, json
+from ..util import deserialize, serialize
 from .copy_or_move_row_destination import CopyOrMoveRowDestination
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class CopyOrMoveRowDirective(object):
+class CopyOrMoveRowDirective:
 
     """Smartsheet CopyOrMoveRowDirective data model."""
 

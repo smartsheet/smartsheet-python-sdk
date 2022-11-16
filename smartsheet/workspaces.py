@@ -19,11 +19,12 @@ from __future__ import absolute_import
 
 import logging
 import os.path
-from .models.folder import Folder
+
 from . import fresh_operation
+from .models.folder import Folder
 
 
-class Workspaces(object):
+class Workspaces:
 
     """Class for handling Workspaces operations."""
 
@@ -45,7 +46,8 @@ class Workspaces(object):
                 ruleRecipients, rules, shares, all (deprecated). Cell history will not be copied,
                 regardless of which **include** parameter values are specified.
             skip_remap (list[str]): A comma separated list of references to NOT re-map for
-                the newly created resource. Valid list items: cellLinks, reports, sheetHyperlinks, sights
+                the newly created resource.
+                Valid list items: cellLinks, reports, sheetHyperlinks, sights
         Returns:
             Result
         """
@@ -511,7 +513,6 @@ class Workspaces(object):
             sheet_name = tail or os.path.basename(head)
 
         _data = open(file, "rb").read()
-
         _op = fresh_operation("import_sheet_into_folder")
         _op["method"] = "POST"
         _op["path"] = "/workspaces/" + str(workspace_id) + "/sheets/import"

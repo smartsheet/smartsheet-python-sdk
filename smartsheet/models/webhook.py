@@ -17,14 +17,14 @@
 
 from __future__ import absolute_import
 
+from ..types import (Boolean, Number, String, Timestamp, TypedList,
+                     TypedObject, json, six)
+from ..util import deserialize, serialize
 from .webhook_stats import WebhookStats
 from .webhook_subscope import WebhookSubscope
-from ..types import *
-from ..util import serialize
-from ..util import deserialize
 
 
-class Webhook(object):
+class Webhook:
 
     """Smartsheet Webhook data model."""
 
@@ -71,7 +71,7 @@ class Webhook(object):
         if key == "id":
             self.id_ = value
         else:
-            super(Webhook, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     @property
     def api_client_id(self):
@@ -208,14 +208,6 @@ class Webhook(object):
     @version.setter
     def version(self, value):
         self._version.value = value
-
-    @property
-    def subscope(self):
-        return self._subscope.value
-
-    @subscope.setter
-    def subscope(self, value):
-        self._subscope.value = value
 
     def to_dict(self):
         return serialize(self)
