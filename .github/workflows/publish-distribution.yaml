@@ -26,8 +26,9 @@ jobs:
         with:
           name: distribution
           path: dist
-      - name: Test Publish distribution
+      - name: Publish distribution
         run: twine upload -u __token__ -p ${{ secrets.PYPI_API_TOKEN}} dist/*
+      - name: Create documentation index page
       - name: Generate documentation
         run: |
           sphinx-apidoc -o docs-source smartsheet
