@@ -28,7 +28,7 @@ smart = smartsheet.Smartsheet()             # Create a Smartsheet client
 
 response = smart.Sheets.list_sheets()       # Call the list_sheets() function and store the response object
 sheetId = response.data[0].id               # Get the ID of the first sheet in the response
-sheet = smart.Sheets.get_sheet(sheetId)     # Load the sheet by using it's ID
+sheet = smart.Sheets.get_sheet(sheetId)     # Load the sheet by using its ID
 
 print(f"The sheet {sheet.name} has {sheet.total_row_count} rows")   # Print some information about the sheet
 ```
