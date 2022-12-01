@@ -72,7 +72,7 @@ setup(
     install_requires=REQUIRES,
     packages=find_packages(),
     include_package_data=True,
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     extras_require={
         'test': [
             'coverage',
