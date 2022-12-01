@@ -28,9 +28,9 @@ smart = smartsheet.Smartsheet()             # Create a Smartsheet client
 
 response = smart.Sheets.list_sheets()       # Call the list_sheets() function and store the response object
 sheetId = response.data[0].id               # Get the ID of the first sheet in the response
-sheet = smart.Sheets.get_sheet(sheetId)     # Load the sheet by using it's ID
+sheet = smart.Sheets.get_sheet(sheetId)     # Load the sheet by using its ID
 
-print(f"The sheet {sheet.name} has {sheet.total_row_count} rows")   # Print some information about the sheet
+print(f"The sheet {sheet.name} has {sheet.total_row_count} rows")   # Print information about the sheet
 ```
 ## Documentation
 Use the following resources to learn more about the SDK capabilities:
@@ -41,8 +41,3 @@ Use the following resources to learn more about the SDK capabilities:
 ## Advanced Topics
 For details about logging, testing, how to use a passthrough option, and how to override HTTP client behavior, 
 see [Advanced Topics](ADVANCED.md).
-
-## Contributing
-If you would like to contribute a change to the SDK, please fork a branch and then submit a pull request. See the [Contributing.md](contributing.md) for more details
-
-## Acknowledgements
