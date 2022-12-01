@@ -26,9 +26,8 @@ jobs:
         with:
           name: distribution
           path: dist
-          retention-days: 5
       - name: Test Publish distribution
-        run: twine upload -u __token__ -p ${{ secrets.TEST_PYPI_TOKEN}} -r testpypi dist/*
+        run: twine upload -u __token__ -p ${{ secrets.PYPI_API_TOKEN}} dist/*
       - name: Generate documentation
         run: |
           sphinx-apidoc -o docs-source smartsheet
