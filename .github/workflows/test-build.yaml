@@ -14,6 +14,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pylint requests six python-dateutil
+      - name: Run Markdown Lint
+        uses: articulate/actions-markdownlint@v1
+        with:
+          ignore: ./LICENSE.md
       - name: Run Pylint
         run: |
           pylint smartsheet --rcfile pylintrc
@@ -93,10 +97,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install build packages
         run: |
-          pip install enum34 requests six python-dateutil setuptools-scm gitchangelog mako collective.checkdocs wheel twine 
+          pip install enum34 requests six python-dateutil setuptools-scm gitchangelog mako wheel twine 
       - name: Build distribution
         run: |
-          python setup.py checkdocs
           python setup.py sdist bdist_wheel
       - name: Archive distribution artifacts
         uses: actions/upload-artifact@v3

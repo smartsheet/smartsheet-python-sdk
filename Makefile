@@ -9,8 +9,6 @@ help:
 	@echo "test - run tests quickly with the default Python"
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
-	#@echo "release - package and upload a release"
-	#@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
 
 clean: clean-build clean-pyc clean-test
@@ -54,17 +52,6 @@ docs:
 	cp -r docs-source/_build/html docs
 	cp .nojekyll docs
 	open docs/index.html
-
-# Don't use - see release docs
-release: clean
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
-
-# Don't use - see release docs
-dist: clean
-	python setup.py sdist
-	python setup.py bdist_wheel
-	ls -l dist
 
 install: clean
 	python setup.py install
