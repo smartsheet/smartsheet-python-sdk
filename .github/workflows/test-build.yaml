@@ -14,8 +14,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pylint requests six python-dateutil
-      - name: Run MarkdownLint
-        uses: actionshub/markdownlint@main
+      - name: Run Markdown Lint
+        uses: articulate/actions-markdownlint@v1
+        with:
+          ignore: ./LICENSE.md
       - name: Run Pylint
         run: |
           pylint smartsheet --rcfile pylintrc
