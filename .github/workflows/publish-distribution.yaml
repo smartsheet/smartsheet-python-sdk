@@ -16,10 +16,9 @@ jobs:
           python-version: '3.10'
       - name: Install build packages
         run: |
-          pip install enum34 requests six python-dateutil setuptools-scm gitchangelog mako collective.checkdocs wheel twine sphinx sphinx_rtd_theme
+          pip install enum34 requests six python-dateutil setuptools-scm gitchangelog mako wheel twine sphinx sphinx_rtd_theme
       - name: Build distribution
         run: |
-          python setup.py checkdocs
           python setup.py sdist bdist_wheel
       - name: Archive distribution artifacts
         uses: actions/upload-artifact@v3
