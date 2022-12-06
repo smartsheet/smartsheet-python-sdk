@@ -8,11 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [3.0.0] - 2022-12-06
 
 ### Updated
+
 - Migrated SDK to new project
+
 ### Added
+
 - Add Github Actions pipeline
 - Added linting with Pylint
 - Added markdown linting
+
 ## [2.177.0] - 2022-08-03
 
 ### Added
