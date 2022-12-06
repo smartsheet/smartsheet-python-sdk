@@ -1,0 +1,43 @@
+name: Build Documentation
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-documentation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install build packages
+        run: |
+          pip install enum34 requests six python-dateutil setuptools-scm gitchangelog mako wheel twine sphinx sphinx_rtd_theme
+      - name: Generate documentation
+        run: |
+          sphinx-apidoc -o docs-source smartsheet
+          sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
+      - name: Upload Documentation artifact
+        uses: actions/upload-pages-artifact@main
+        with:
+          path: docs-source/_build/html
+  
+  publish-documentation:
+    runs-on: ubuntu-latest
+    needs: build-documentation
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

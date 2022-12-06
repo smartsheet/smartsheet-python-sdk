@@ -27,28 +27,3 @@ jobs:
           path: dist
       - name: Publish distribution
         run: twine upload -u __token__ -p ${{ secrets.PYPI_API_TOKEN}} dist/*
-      - name: Create documentation index page
-      - name: Generate documentation
-        run: |
-          sphinx-apidoc -o docs-source smartsheet
-          sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
-      - name: Upload Documentation artifact
-        uses: actions/upload-pages-artifact@main
-        with:
-          path: docs-source/_build/html
-  
-  publish-documentation:
-    runs-on: ubuntu-latest
-    needs: build-publish
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1

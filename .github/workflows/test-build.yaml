@@ -1,6 +1,6 @@
 name: Test Build
 
-on: [push]
+on: [pull_request, workflow_dispatch]
 
 jobs:
   lint:
@@ -54,12 +54,13 @@ jobs:
         run: |
           coverage run --source=smartsheet setup.py test -a tests/mock_api/
           coverage lcov
-      - name: Coveralls
+      - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: "coverage.lcov"
-  
+          flag-name: run-${{ matrix.python-version }}
+          parallel: true
+
   integration-tests:
     needs: lint
     runs-on: ubuntu-latest
@@ -85,7 +86,13 @@ jobs:
         run: |
           coverage run --source=smartsheet setup.py test -a tests/integration/
           coverage lcov
-  
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: run-${{ matrix.python-version }}
+          parallel: true
+
   build-packages-test:
     runs-on: ubuntu-latest
     needs: [mock-api-test, integration-tests]
@@ -126,3 +133,14 @@ jobs:
           name: html-docs
           path: docs/build/html/
           retention-days: 5
+
+  finish:
+    needs: [build-documentation-test]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        parallel-finished: true
+        path-to-lcov: "coverage.lcov"
