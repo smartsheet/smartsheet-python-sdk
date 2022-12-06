@@ -59,6 +59,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: run-${{ matrix.python-version }}
+          path-to-lcov: "coverage.lcov"
           parallel: true
 
   integration-tests:
@@ -91,6 +92,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: run-${{ matrix.python-version }}
+          path-to-lcov: "coverage.lcov"
           parallel: true
 
   build-packages-test:
