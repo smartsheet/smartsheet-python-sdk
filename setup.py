@@ -17,7 +17,6 @@ if sys.version_info < (3, 4):
     REQUIRES.append('enum34')
 
 # test packages:
-# https://github.com/coagulant/coveralls-python
 # https://github.com/pytest-dev/pytest
 
 class PyTest(TestCommand):
@@ -54,14 +53,10 @@ setup(
         'Operating System :: OS Independent',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: Implementation :: PyPy',
-        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Office/Business :: Financial :: Spreadsheet',
     ],
@@ -77,12 +72,10 @@ setup(
     extras_require={
         'test': [
             'coverage',
-            'coveralls',
             'pytest'
         ],
         'develop': [
             'coverage',
-            'coveralls[yaml]',
             'pytest',
             'pytest-instafail'
         ]
