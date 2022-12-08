@@ -72,10 +72,12 @@ setup(
     extras_require={
         'test': [
             'coverage',
+            'coveralls',
             'pytest'
         ],
         'develop': [
             'coverage',
+            'coveralls[yaml]',
             'pytest',
             'pytest-instafail'
         ]
