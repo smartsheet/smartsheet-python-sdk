@@ -42,7 +42,7 @@ setup(
     name=NAME,
     description='Library that uses Python to connect to Smartsheet services (using API 2.0).',
     author='Smartsheet',
-    author_email='api@smartsheet.com',
+    author_email='sdk@smartsheet.com',
     url='http://smartsheet-platform.github.io/api-docs/',
     license='Apache-2.0',
     keywords=['Smartsheet', 'Collaboration', 'Project Management', 'Excel', 'spreadsheet'],
