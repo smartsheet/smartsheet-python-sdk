@@ -51,3 +51,13 @@ Use the following resources to learn more about the SDK capabilities:
 
 For details about logging, testing, how to use a passthrough option, and how to override HTTP client behavior,
 see [Advanced Topics](ADVANCED.md).
+
+## Acknowledgements
+
+We would like to thank the following people for their contributions to this project:
+
+* Tim Wells - [timwellswa](https://github.com/timwellswa)
+* Scott Wimer - [happybob007](https://github.com/happybob007)
+* Steve Weil - [seweil](https://github.com/seweil)
+* Kevin Fansler - [kfansler](https://github.com/kfansler)
+* Nathan Armstrong - [armstnp](https://github.com/armstnp)
