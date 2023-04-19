@@ -4,10 +4,6 @@
 
 A library for connecting to the [Smartsheet API](https://smartsheet.redoc.ly) from Python applications.
 
-## Developer Agreement
-
-Review the [Developer Program Agreement](https://www.smartsheet.com/legal/developer-program-agreement).
-
 ## Requirements
 
 The SDK is compatible with [actively supported](https://devguide.python.org/versions/#versions) Python versions `3.10`, `3.9`, `3.8`, `3.7`.
@@ -55,6 +51,10 @@ Use the following resources to learn more about the SDK capabilities:
 
 For details about logging, testing, how to use a passthrough option, and how to override HTTP client behavior,
 see [Advanced Topics](ADVANCED.md).
+
+## Developer Agreement
+
+Review the [Developer Program Agreement](https://www.smartsheet.com/legal/developer-program-agreement).
 
 ## Acknowledgements
 
