@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913,W4904,W0706
+# pylint: disable=C0111,R0902,R0913,W4904,W0706,W0237
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -16,11 +16,11 @@
 # under the License.
 
 try:
-    # For Python versions 2.7 and 3.3 to 3.9, import from collections
-    from collections import MutableSequence
-except ImportError:
     # For Python version >= 3.10 import from collections.abc
     from collections.abc import MutableSequence
+except ImportError:
+    # For Python versions 2.7 and 3.3 to 3.9, import from collections
+    from collections import MutableSequence
 
 import importlib
 import json
