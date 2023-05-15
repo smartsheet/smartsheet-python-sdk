@@ -52,6 +52,10 @@ Use the following resources to learn more about the SDK capabilities:
 For details about logging, testing, how to use a passthrough option, and how to override HTTP client behavior,
 see [Advanced Topics](ADVANCED.md).
 
+## Developer Agreement
+
+Review the [Developer Program Agreement](https://www.smartsheet.com/legal/developer-program-agreement).
+
 ## Acknowledgements
 
 We would like to thank the following people for their contributions to this project:
