@@ -53,7 +53,7 @@ def pinned_session(pool_maxsize=8):
         pool_connections=4,
         pool_maxsize=pool_maxsize,
         max_retries=Retry(
-            total=1, method_whitelist=Retry.DEFAULT_ALLOWED_METHODS.union(["POST"])
+            total=1, allowed_methods=Retry.DEFAULT_ALLOWED_METHODS.union(["POST"])
         ),
     )
 
