@@ -33,3 +33,5 @@ except ImportError:
 
 from .smartsheet import (AbstractUserCalcBackoff, Smartsheet,  # NOQA
                          fresh_operation)
+
+from . import models
