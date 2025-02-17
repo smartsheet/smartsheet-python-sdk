@@ -13,9 +13,6 @@ REQUIRES = [
     'python-dateutil'
 ]
 
-if sys.version_info < (3, 4):
-    REQUIRES.append('enum34')
-
 # test packages:
 # https://github.com/pytest-dev/pytest
 
@@ -53,10 +50,9 @@ setup(
         'Operating System :: OS Independent',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Office/Business :: Financial :: Spreadsheet',
     ],
