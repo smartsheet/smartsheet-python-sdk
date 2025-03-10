@@ -24,10 +24,19 @@ jobs:
 
   mock-api-test:
     needs: lint
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10"]
+        include:
+          - python-version: "3.7"
+            os: ubuntu-22.04
+          - python-version: "3.8"
+            os: ubuntu-latest
+          - python-version: "3.9"
+            os: ubuntu-latest
+          - python-version: "3.10"
+            os: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -35,6 +44,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          os: ${{ matrix.os }}
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
@@ -66,18 +76,16 @@ jobs:
     needs: [mock-api-test]
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
       - name: Install build packages
         run: |
-          pip install enum34 requests six python-dateutil setuptools-scm gitchangelog mako wheel twine 
+          pip install enum34 requests six python-dateutil setuptools-scm==7.1.0 gitchangelog mako wheel twine 
       - name: Build distribution
         run: |
           python setup.py sdist bdist_wheel
       - name: Archive distribution artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: distribution
           path: dist
@@ -96,7 +104,7 @@ jobs:
       - name: Generate HTML
         run: sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: html-docs
           path: docs/build/html/

@@ -63,7 +63,7 @@ setup(
     use_scm_version={
         'write_to': 'smartsheet/version.py'
     },
-    setup_requires=['setuptools_scm'],
+    setup_requires=['setuptools_scm==7.0.1'],
     install_requires=REQUIRES,
     packages=find_packages(),
     include_package_data=True,
