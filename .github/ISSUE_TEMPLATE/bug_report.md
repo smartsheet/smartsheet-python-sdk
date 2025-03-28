@@ -27,5 +27,6 @@ If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
  - OS: [e.g. Windows 10]
+ - Smartsheet API Version [e.g. 2.0]
  - Smartsheet Python SDK Version [e.g. 3.0.0]
  - Python Version [e.g. 3.10]
