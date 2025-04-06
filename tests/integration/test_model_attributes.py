@@ -2043,6 +2043,40 @@ class TestModelAttributes:
         as_dict = model.to_dict()
         assert isinstance(as_dict, dict)
 
+    def test_deactivated_user(self, smart_setup):
+        smart = smart_setup['smart']
+        model = smart.models.UserProfile({
+            'account': smart.models.Account(),
+            'admin': True,
+            'email': 'foo',
+            'firstName': 'foo',
+            'groupAdmin': True,
+            'id': 19082,
+            'lastName': 'foo',
+            'licensedSheetCreator': True,
+            'locale': 'foo',
+            'resourceViewer': True,
+            'status': 'DEACTIVATED',
+            'timeZone': 'foo'
+        })
+
+        assert isinstance(model.account, smart.models.Account)
+        assert model.admin == True
+        assert model.email == 'foo'
+        assert model.first_name == 'foo'
+        assert model.group_admin == True
+        assert model.id == 19082
+        assert model.last_name == 'foo'
+        assert model.licensed_sheet_creator == True
+        assert model.locale == 'foo'
+        assert model.resource_viewer == True
+        assert model.status == 'DEACTIVATED'
+        assert model.time_zone == 'foo'
+        model.account = {}
+        assert isinstance(model.account, smart.models.Account)
+        as_dict = model.to_dict()
+        assert isinstance(as_dict, dict)
+
     def test_user_profile_snake(self, smart_setup):
         smart = smart_setup['smart']
         model = smart.models.UserProfile({

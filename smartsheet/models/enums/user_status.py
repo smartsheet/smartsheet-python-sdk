@@ -21,3 +21,4 @@ class UserStatus(Enum):
     ACTIVE = 1
     PENDING = 2
     DECLINED = 3
+    DEACTIVATED = 4
