@@ -157,7 +157,7 @@ last_week = datetime.now() - timedelta(days=7)
 events_list = smartsheet_client.Events.list_events(since=last_week.isoformat(), max_count=1000)
 print_new_sheet_events_in_list(events_list)
 
-# continue listing events in the stream by using the stream_position, if the previous response indicates that more 
+# continue listing events in the stream by using the stream_position, if the previous response indicates that more
 # data is available.
 while events_list.more_available:
     events_list = smartsheet_client.Events.list_events(stream_position=events_list.next_stream_position, max_count=10000,

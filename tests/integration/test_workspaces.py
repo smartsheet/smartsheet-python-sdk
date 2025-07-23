@@ -134,6 +134,55 @@ class TestWorkspaces:
         )
         assert action.message == 'SUCCESS'
 
+    def test_get_workspace_metadata(self, smart_setup):
+        smart = smart_setup['smart']
+        workspace = smart.Workspaces.get_workspace_metadata(TestWorkspaces.a.id)
+        assert isinstance(workspace, smart.models.workspace.Workspace)
+        assert workspace.id == TestWorkspaces.a.id
+        assert workspace.name is not None
+
+    def test_get_workspace_metadata_with_include(self, smart_setup):
+        smart = smart_setup['smart']
+        workspace = smart.Workspaces.get_workspace_metadata(
+            TestWorkspaces.a.id,
+            include=['source']
+        )
+        assert isinstance(workspace, smart.models.workspace.Workspace)
+        assert workspace.id == TestWorkspaces.a.id
+
+    def test_get_workspace_children(self, smart_setup):
+        smart = smart_setup['smart']
+        children = smart.Workspaces.get_workspace_children(TestWorkspaces.a.id)
+        assert isinstance(children, smart.models.paginated_children_result.PaginatedChildrenResult)
+
+    def test_get_workspace_children_with_filters(self, smart_setup):
+        smart = smart_setup['smart']
+        # Test with resource type filter
+        children = smart.Workspaces.get_workspace_children(
+            TestWorkspaces.a.id,
+            children_resource_types=['folders']
+        )
+        assert isinstance(children, smart.models.paginated_children_result.PaginatedChildrenResult)
+        # Verify all children are of the filtered type
+        for child in children.data:
+            assert isinstance(child, smart.models.folder.Folder)
+
+        # Test with include parameter
+        children = smart.Workspaces.get_workspace_children(
+            TestWorkspaces.a.id,
+            include=['source', 'ownerInfo']
+        )
+        assert isinstance(children, smart.models.paginated_children_result.PaginatedChildrenResult)
+
+    def test_get_workspace_children_with_pagination(self, smart_setup):
+        smart = smart_setup['smart']
+        # Test with pagination parameters
+        children = smart.Workspaces.get_workspace_children(
+            TestWorkspaces.a.id,
+            max_items=100
+        )
+        assert isinstance(children, smart.models.paginated_children_result.PaginatedChildrenResult)
+
     def test_update_workspace(self, smart_setup):
         smart = smart_setup['smart']
         new_workspace = smart.models.Workspace()
