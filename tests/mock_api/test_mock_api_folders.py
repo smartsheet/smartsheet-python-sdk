@@ -158,3 +158,27 @@ class TestMockApiFolders(MockApiTestHelper):
         assert report.source is not None
         assert report.source.id == 111
         assert report.source.type == "report"
+
+    @clean_api_error
+    def test_get_folder_children_max_items_and_last_key(self):
+        self.client.as_test_scenario('Get Folder Children - MaxItems and LastKey')
+
+        response = self.client.Folders.get_folder_children(
+            456,
+            max_items=100,
+            last_key="aslkjf4wlkta4n4900sjfklf499sjwlk4356lkj"
+        )
+
+        assert isinstance(response, PaginatedChildrenResult)
+        assert len(response.data) == 1
+
+        # Verify the single child (sight) matches the expected values
+        sight = response.data[0]
+        assert isinstance(sight, Sight)
+        assert sight.id == 567
+        assert sight.name == "Project Dashboard"
+        assert sight.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
+        assert sight.access_level == "EDITOR"
+
+        # Verify the lastKey is returned in the response
+        assert response.last_key == "xvmnw4mnx8v9wriot20574xvnjoqt4iuhnow490"
