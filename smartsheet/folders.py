@@ -286,9 +286,8 @@ class Folders:
 
         Args:
             folder_id (int): Folder ID
-            include (list[str]): A comma-separated list of
-                optional elements to include in the response. Valid list
-                values: source.
+            include (list[str]): A list of optional elements to include
+            in the response. Valid list values: source.
 
         Returns:
             Folder
@@ -312,9 +311,8 @@ class Folders:
             children_resource_types (list[str]): The types of the children resources.
                 If not provided, returns children of all types.
                 Valid list values: sheets, reports, sights, folders.
-            include (list[str]): A comma-separated list of
-                optional elements to include in the response. Valid list
-                values: source, ownerInfo.
+            include (list[str]): A list of optional elements to include in the
+                response. Valid list values: source, ownerInfo.
             last_key (str): The token from a previous request that will allow this one
                 to fetch the next page of results.
             max_items (int): The maximum number of items to return in the response.
