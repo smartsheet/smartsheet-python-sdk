@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [3.2.0]
 
+## [3.1.0] - 2025-08-07
 ### Added
 
 - Token-based pagination support for `list_workspaces` method. Use the new `pagination_type='token'` parameter with `last_key` and `max_items` for more efficient pagination. When `pagination_type='token'` is used, the method returns a `Result` object containing `data` and `lastKey`.

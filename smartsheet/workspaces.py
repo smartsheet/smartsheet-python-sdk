@@ -346,18 +346,18 @@ class Workspaces:
         """Get the list of Workspaces the authenticated User may access.
             
         Args:
-            pagination_type (str, optional): Use 'token' for efficient cursor-based pagination.
-                Defaults to legacy offset-based pagination if not specified.
-            max_items (int, optional): Maximum items per page (token pagination only).
-                Must be a positive integer.
-            last_key (str, optional): Pagination cursor for next page (token pagination only).
             page_size (int, optional): [DEPRECATED] The maximum number of items to
                 return per page. Use pagination_type='token' with max_items instead.
-            page (int, optional): [DEPRECATED] Which page to return. 
+            page (int, optional): [DEPRECATED] Which page to return.
                 Use pagination_type='token' with last_key instead.
             include_all (bool, optional): [DEPRECATED] If true, include all results
                 (i.e. do not paginate). Use pagination_type='token' instead.
-                
+            last_key (str, optional): Pagination cursor for next page (token pagination only).
+            max_items (int, optional): Maximum items per page (token pagination only).
+                Must be a positive integer.
+            pagination_type (str, optional): Use 'token' for efficient cursor-based pagination.
+                Defaults to legacy offset-based pagination if not specified.
+
         Returns:
             IndexResult: When pagination_type='token', contains 'data' and 'last_key' attributes.
             When using legacy pagination, contains paginated results with
