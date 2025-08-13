@@ -2,6 +2,8 @@ import pytest
 import six
 import os.path
 
+import smartsheet
+
 _dir = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -31,6 +33,24 @@ class TestUsers:
             })
         )
         user = action.result
+        assert action.message == 'SUCCESS'
+
+    def test_upgrade_user_plan(self, smart_setup):
+        smart = smart_setup['smart']
+        user_id = 123
+        plan_id = 456
+        seat_type = 'MEMBER'
+
+        action = smart.Users.upgrade_user_plan(user_id, plan_id, seat_type)
+        assert action.message == 'SUCCESS'
+
+    def test_downgrade_user_plan(self, smart_setup):
+        smart = smart_setup['smart']
+        user_id = 123
+        plan_id = 456
+        seat_type = 'MEMBER'
+
+        action = smart.Users.downgrade_user_plan(user_id, plan_id, seat_type)
         assert action.message == 'SUCCESS'
 
     def test_add_user(self, smart_setup):

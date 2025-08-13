@@ -358,6 +358,52 @@ class Users:
 
         return response
 
+    def upgrade_user_plan(self, user_id, plan_id, seat_type):
+        """Upgrade a user's plan.
+
+        Args:
+            user_id (int): User ID
+            plan_id (int): Plan ID
+            seat_type (str): Type of seat to upgrade to
+
+        Returns:
+            dict: Response from the API
+        """
+        _op = fresh_operation("upgrade_user_plan")
+        _op["method"] = "POST"
+        _op["path"] = f"/users/{user_id}/plans/{plan_id}/upgrade"
+        _op["json"] = {"seatType": seat_type}
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def downgrade_user_plan(self, user_id, plan_id, seat_type):
+        """Downgrade a user's plan.
+
+        Args:
+            user_id (int): User ID
+            plan_id (int): Plan ID
+            seat_type (str): Type of seat to downgrade to
+
+        Returns:
+            dict: Response from the API
+        """
+        _op = fresh_operation("downgrade_user_plan")
+        _op["method"] = "POST"
+        _op["path"] = f"/users/{user_id}/plans/{plan_id}/downgrade"
+        _op["json"] = {"seatType": seat_type}
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
     def add_profile_image(self, user_id, file, file_type):
         """Uploads a profile image for the specified user.
 
