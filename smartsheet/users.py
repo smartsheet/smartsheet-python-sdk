@@ -359,7 +359,7 @@ class Users:
         return response
 
     def upgrade_user_for_plan(self, user_id, plan_id, seat_type):
-        """Upgrade a user's plan.
+        """Upgrades a user for a plan.
 
         Args:
             user_id (int): User ID
@@ -382,7 +382,7 @@ class Users:
         return response
 
     def downgrade_user_for_plan(self, user_id, plan_id, seat_type):
-        """Downgrade a user's plan.
+        """Downgrades a user for a plan.
 
         Args:
             user_id (int): User ID
