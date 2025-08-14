@@ -80,7 +80,7 @@ response = client.Passthrough.post('/sheets', payload)
 
 ### Integration Tests
 
-1. Follow the instructions in [ the README.md test section](tests/integration/README.md)
+1. Follow the instructions in [the README.md test section](tests/integration/README.md)
 2. Run `pytest tests/integration`
 
 ### Mock API Tests
