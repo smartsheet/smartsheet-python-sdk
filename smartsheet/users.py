@@ -358,7 +358,7 @@ class Users:
 
         return response
 
-    def upgrade_user_plan(self, user_id, plan_id, seat_type):
+    def upgrade_user_for_plan(self, user_id, plan_id, seat_type):
         """Upgrade a user's plan.
 
         Args:
@@ -369,7 +369,7 @@ class Users:
         Returns:
             dict: Response from the API
         """
-        _op = fresh_operation("upgrade_user_plan")
+        _op = fresh_operation("upgrade_user_for_plan")
         _op["method"] = "POST"
         _op["path"] = f"/users/{user_id}/plans/{plan_id}/upgrade"
         _op["json"] = {"seatType": seat_type}
@@ -381,7 +381,7 @@ class Users:
 
         return response
 
-    def downgrade_user_plan(self, user_id, plan_id, seat_type):
+    def downgrade_user_for_plan(self, user_id, plan_id, seat_type):
         """Downgrade a user's plan.
 
         Args:
@@ -392,7 +392,7 @@ class Users:
         Returns:
             dict: Response from the API
         """
-        _op = fresh_operation("downgrade_user_plan")
+        _op = fresh_operation("downgrade_user_for_plan")
         _op["method"] = "POST"
         _op["path"] = f"/users/{user_id}/plans/{plan_id}/downgrade"
         _op["json"] = {"seatType": seat_type}
