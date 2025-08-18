@@ -186,6 +186,7 @@ class Smartsheet:
         self._assume_user = None
         self._test_scenario_name = None
         self._change_agent = None
+        self._smartsheet_integration_source = None
 
     def assume_user(self, email=None):
         """Assume identity of specified user.
@@ -235,6 +236,21 @@ class Smartsheet:
             change_agent: (str) the name of this change agent
         """
         self._change_agent = change_agent
+
+    def with_smartsheet_integration_source(self, smartsheet_integration_source):
+        """
+        Request headers will contain the 'Smartsheet-Integration-Source' header value
+
+        Agrs:
+            smartsheet_integration_source: (str) the name of this integration source
+            
+            Format: $TYPE,$ORG_NAME,$INTEGRATOR_NAME
+            (NB: Comma is used as a delimiter and is required if value is missing)
+            $INTEGRATION-TYPE - Required, the type of the integrator (e.g. AI, SCRIPT, APPLICATION)
+            $SMAR-ORGANIZATION-NAME - Optional (but COMMA is required), organization name (e.g. Microsoft, Google, OpenAI, etc.)
+            $INTEGRATOR-NAME - Required, the name of the integrator (e.g. Claude, Copilot, ChatGPT, DeepSeek, etc.)
+        """
+        self._smartsheet_integration_source = smartsheet_integration_source
 
     def request(self, prepped_request, expected, operation):
         """
@@ -445,6 +461,16 @@ class Smartsheet:
         else:
             try:
                 del prepped_request.headers["Smartsheet-Change-Agent"]
+            except KeyError:
+                pass
+        
+        if self._smartsheet_integration_source is not None:
+            prepped_request.headers.update(
+                {"Smartsheet-Integration-Source": self._smartsheet_integration_source}
+            )
+        else:
+            try:
+                del prepped_request.headers["Smartsheet-Integration-Source"]
             except KeyError:
                 pass
 

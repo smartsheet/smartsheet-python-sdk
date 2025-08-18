@@ -9,6 +9,7 @@ class TestMockChangeAgent(MockApiTestHelper):
     def test_create_sheet(self):
         self.client.as_test_scenario('Change Agent Header - Can Be Passed')
         self.client.with_change_agent('MyChangeAgent')
+        self.client.with_smartsheet_integration_source('AI,MyCompany,MyGPT')
 
         new_sheet = Sheet({
             "name": "My new sheet",
