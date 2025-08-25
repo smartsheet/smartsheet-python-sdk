@@ -344,7 +344,6 @@ class Workspaces:
         pagination_type: Optional[str] = None
     ):
         """Get the list of Workspaces the authenticated User may access.
-            
         Args:
             page_size (int, optional): [DEPRECATED] The maximum number of items to
                 return per page. Use pagination_type='token' with max_items instead.
