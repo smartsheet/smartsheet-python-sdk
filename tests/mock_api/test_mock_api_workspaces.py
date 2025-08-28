@@ -115,6 +115,82 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert sheet2.name == "Project Timeline"
         assert sheet2.access_level == "EDITOR"
 
+    @clean_api_error
+    def test_get_workspace_children_include_source_and_owner_info(self):
+        self.client.as_test_scenario('Get Workspace Children - Include Source and OwnerInfo')
+
+        response = self.client.Workspaces.get_workspace_children(
+            123,
+            include=['source', 'ownerInfo']
+        )
+
+        assert isinstance(response, PaginatedChildrenResult)
+        assert len(response.data) == 4
+
+        # Verify first child (folder) has source but no ownerInfo - real values
+        folder = response.data[0]
+        assert isinstance(folder, Folder)
+        assert folder.id == 456
+        assert folder.name == "Project Folder"
+        assert folder.source is not None
+        assert folder.source.id == 888
+        assert folder.source.type == "folder"
+
+        # Verify second child (sheet) has both source and ownerInfo - real values
+        sheet = response.data[1]
+        assert isinstance(sheet, Sheet)
+        assert sheet.id == 789
+        assert sheet.name == "Budget Sheet"
+        assert sheet.access_level == "EDITOR"
+        assert sheet.source is not None
+        assert sheet.source.id == 777
+        assert sheet.source.type == "sheet"
+        assert sheet.owner_id == 1001
+        assert sheet.owner == "john.doe@example.com"
+
+        # Verify third child (sight) has source - real values
+        sight = response.data[2]
+        assert isinstance(sight, Sight)
+        assert sight.id == 321
+        assert sight.name == "Dashboard Overview"
+        assert sight.access_level == "VIEWER"
+        assert sight.source is not None
+        assert sight.source.id == 666
+        assert sight.source.type == "sight"
+
+        # Verify fourth child (report) has source - real values
+        report = response.data[3]
+        assert isinstance(report, Report)
+        assert report.id == 654
+        assert report.name == "Monthly Report"
+        assert report.access_level == "ADMIN"
+        assert report.source is not None
+        assert report.source.id == 555
+        assert report.source.type == "report"
+
+    @clean_api_error
+    def test_get_workspace_children_max_items_and_last_key(self):
+        self.client.as_test_scenario('Get Workspace Children - MaxItems and LastKey')
+
+        response = self.client.Workspaces.get_workspace_children(
+            123,
+            max_items=1000,
+            last_key="aslkjf4wlkta4n4900sjfklf499sjwlk4356lkj"
+        )
+
+        assert isinstance(response, PaginatedChildrenResult)
+        assert len(response.data) == 1
+
+        # Verify the single child (sheet) matches the expected values
+        sheet = response.data[0]
+        assert isinstance(sheet, Sheet)
+        assert sheet.id == 789
+        assert sheet.name == "Budget Sheet"
+        assert sheet.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
+        assert sheet.access_level == "EDITOR"
+
+        # Verify the lastKey is returned in the response
+        assert response.last_key == "xvmnw4mnx8v9wriot20574xvnjoqt4iuhnow490"
 
     @clean_api_error
     def test_list_workspaces_with_token_pagination_firstPage(self):
@@ -163,6 +239,3 @@ class TestMockApiWorkspaces(MockApiTestHelper):
 
         workspaces = response.result
         assert response.total_count >= 0
-
-
-
