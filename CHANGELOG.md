@@ -5,17 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [3.2.0] - 2025-08-28
-
-### Added
-
-- Token-based pagination support for `list_workspaces` method. Use the new `pagination_type='token'` parameter with `last_key` and `max_items` for more efficient pagination. When `pagination_type='token'` is used, the method returns a `Result` object containing `data` and `lastKey`.
-
-### Deprecated
-
-- `page_size`, `page`, and `include_all` parameters in `list_workspaces` method are now deprecated. Use `pagination_type='token'` with `max_items` and `last_key` instead. Deprecated parameters will issue `DeprecationWarning` when used.
-
-## [3.1.0] - 2025-08-04
+## [3.1.0] - 2025-08-28
 
 ### Added
 
@@ -25,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - New `get_folder_children()` method to get folder children with filtering and pagination support
 - New `TokenPaginatedResult<T>` generic model for type-safe paginated API responses
 - New `PaginatedChildrenResult` model with custom deserialization for mixed children types based on resourceType
+- Updated `list_workspaces()` method to support Token-based pagination . Use the new `pagination_type='token'` parameter with `last_key` and `max_items` for more efficient pagination. When `pagination_type='token'` is used, the method returns a `Result` object containing `data` and `lastKey`.
 
 ### Deprecated
 
@@ -37,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `create_sheet_from_template()` in Home
 - `list_all_contents()` in Home
 - `list_folders()` in Home
+- `page_size`, `page`, and `include_all` parameters in `list_workspaces()` method are now deprecated. Use `pagination_type='token'` with `max_items` and `last_key` instead. Deprecated parameters will issue `DeprecationWarning` when used.
 
 ## [3.0.5] - 2025-04-07
 
