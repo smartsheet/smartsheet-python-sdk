@@ -191,3 +191,51 @@ class TestMockApiWorkspaces(MockApiTestHelper):
 
         # Verify the lastKey is returned in the response
         assert response.last_key == "xvmnw4mnx8v9wriot20574xvnjoqt4iuhnow490"
+
+    @clean_api_error
+    def test_list_workspaces_with_token_pagination_firstPage(self):
+        self.client.as_test_scenario('List Workspaces - First Page with Pagination')
+
+        response = self.client.Workspaces.list_workspaces(pagination_type='token', max_items=100)
+        workspaces = response.result
+        assert hasattr(response, 'result')
+        assert hasattr(response, 'data')
+        assert hasattr(response, 'last_key')
+
+    @clean_api_error
+    def test_list_workspaces_with_last_key_MiddlePage(self):
+        self.client.as_test_scenario('List Workspaces - Middle Page with Pagination')
+
+        response = self.client.Workspaces.list_workspaces(
+            pagination_type='token',
+            last_key='eyJsYXN0SWQiOjEwMDJ9',
+            max_items=100
+        )
+        workspaces = response.result
+        assert hasattr(response, 'result')
+        assert hasattr(response, 'data')
+        assert hasattr(response, 'last_key')
+
+
+    @clean_api_error
+    def test_list_workspaces_with_last_key_LastPage(self):
+        self.client.as_test_scenario('List Workspaces - Final Page with Pagination')
+
+        response = self.client.Workspaces.list_workspaces(
+            pagination_type='token',
+            last_key='eyJsYXN0SWQiOjEwMDR9',
+            max_items=100
+        )
+        workspaces = response.result
+        assert hasattr(response, 'result')
+        assert hasattr(response, 'data')
+        assert not hasattr(response, 'last_key') or response.last_key is None
+
+    @clean_api_error
+    def test_list_workspaces_traditional_pagination(self):
+        self.client.as_test_scenario('List Workspaces - No Pagination Parameters')
+
+        response = self.client.Workspaces.list_workspaces()
+
+        workspaces = response.result
+        assert response.total_count >= 0
