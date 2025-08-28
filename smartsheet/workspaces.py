@@ -335,12 +335,12 @@ class Workspaces:
         return response
 
     def list_workspaces(
-        self, 
-        page_size: Optional[int] = None, 
-        page: Optional[int] = None, 
-        include_all: Optional[bool] = None, 
-        last_key: Optional[str] = None, 
-        max_items: Optional[int] = None, 
+        self,
+        page_size: Optional[int] = None,
+        page: Optional[int] = None,
+        include_all: Optional[bool] = None,
+        last_key: Optional[str] = None,
+        max_items: Optional[int] = None,
         pagination_type: Optional[str] = None
     ):
         """Get the list of Workspaces the authenticated User may access.
@@ -369,14 +369,12 @@ class Workspaces:
         # Parameter validation
         if pagination_type is not None and pagination_type not in ['token']:
             raise ValueError("pagination_type must be 'token' or None")
-        
         if pagination_type == 'token' and max_items is not None and max_items <= 0:
             raise ValueError("max_items must be a positive integer")
-        
         _op = fresh_operation("list_workspaces")
         _op["method"] = "GET"
         _op["path"] = "/workspaces"
-        
+
         # Issue deprecation warnings for old parameters when used
         if page_size is not None:
             warnings.warn(
@@ -396,7 +394,7 @@ class Workspaces:
                 DeprecationWarning,
                 stacklevel=2
             )
-        
+
         if pagination_type == "token":
             _op["query_params"]["lastKey"] = last_key
             _op["query_params"]["maxItems"] = max_items
