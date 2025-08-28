@@ -47,6 +47,74 @@ class TestWorkspaces:
         action = smart.Workspaces.list_workspaces()
         assert action.total_count > 0
 
+    def test_list_workspaces_with_token_pagination(self, smart_setup):
+        smart = smart_setup['smart']
+        action = smart.Workspaces.list_workspaces(pagination_type='token', max_items=100)
+        
+        # Stronger assertions
+        assert hasattr(action, 'data') or hasattr(action, 'result')
+        data = action.data if hasattr(action, 'data') else action.result
+        assert isinstance(data, list)
+        if hasattr(action, 'last_key'):
+            assert action.last_key is None or isinstance(action.last_key, str)
+        
+    def test_list_workspaces_with_last_key(self, smart_setup):
+        smart = smart_setup['smart']
+        first_action = smart.Workspaces.list_workspaces(pagination_type='token', max_items=100)
+        if hasattr(first_action, 'last_key') or (hasattr(first_action, 'result') and hasattr(first_action.result, 'last_key')):
+            last_key = getattr(first_action, 'last_key', None) or getattr(first_action.result, 'last_key', None)
+            if last_key:
+                second_action = smart.Workspaces.list_workspaces(pagination_type='token', last_key=last_key, max_items=100)
+                # Stronger assertions
+                assert hasattr(second_action, 'data') or hasattr(second_action, 'result')
+                data = second_action.data if hasattr(second_action, 'data') else second_action.result
+                assert isinstance(data, list)
+                
+    def test_list_workspaces_traditional_pagination_still_works(self, smart_setup):
+        smart = smart_setup['smart']
+        action = smart.Workspaces.list_workspaces(page_size=10, page=1)
+        assert action.total_count >= 0
+        
+    def test_list_workspaces_deprecated_parameters_warn(self, smart_setup):
+        import warnings
+        smart = smart_setup['smart']
+        
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            smart.Workspaces.list_workspaces(page_size=10)
+            assert len(w) == 1
+            assert issubclass(w[0].category, DeprecationWarning)
+            assert "page_size parameter is deprecated" in str(w[0].message)
+            
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            smart.Workspaces.list_workspaces(page=1)
+            assert len(w) == 1
+            assert issubclass(w[0].category, DeprecationWarning)
+            assert "page parameter is deprecated" in str(w[0].message)
+            
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            smart.Workspaces.list_workspaces(include_all=True)
+            assert len(w) == 1
+            assert issubclass(w[0].category, DeprecationWarning)
+            assert "include_all parameter is deprecated" in str(w[0].message)
+
+    def test_list_workspaces_token_pagination_validation(self, smart_setup):
+        import pytest
+        smart = smart_setup['smart']
+        
+        # Test invalid pagination_type
+        with pytest.raises(ValueError, match="pagination_type must be 'token' or None"):
+            smart.Workspaces.list_workspaces(pagination_type='invalid')
+        
+        # Test invalid max_items
+        with pytest.raises(ValueError, match="max_items must be a positive integer"):
+            smart.Workspaces.list_workspaces(pagination_type='token', max_items=0)
+            
+        with pytest.raises(ValueError, match="max_items must be a positive integer"):
+            smart.Workspaces.list_workspaces(pagination_type='token', max_items=-1)
+
     def test_create_sheet_from_template_in_workspace(self, smart_setup):
         smart = smart_setup['smart']
         action = smart.Workspaces.create_sheet_in_workspace_from_template(
