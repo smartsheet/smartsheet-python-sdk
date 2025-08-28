@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2025-08-04
+
+### Added
+
+- New `get_workspace_metadata()` method to get workspace metadata without children
+- New `get_workspace_children()` method to get workspace children with filtering and pagination support
+- New `get_folder_metadata()` method to get folder metadata without children
+- New `get_folder_children()` method to get folder children with filtering and pagination support
+- New `TokenPaginatedResult<T>` generic model for type-safe paginated API responses
+- New `PaginatedChildrenResult` model with custom deserialization for mixed children types based on resourceType
+
+### Deprecated
+
+- `get_workspace()` - Use `get_workspace_metadata()` and `get_workspace_children()` instead
+- `list_folders()` in Workspaces - Use `get_workspace_children()` with `children_resource_types=['folders']` instead
+- `get_folder()` - Use `get_folder_metadata()` and `get_folder_children()` instead
+- `list_folders()` in Folders - Use `get_folder_children()` with `children_resource_types=['folders']` instead
+- `create_folder()` in Home
+- `create_sheet()` in Home
+- `create_sheet_from_template()` in Home
+- `list_all_contents()` in Home
+- `list_folders()` in Home
+
 ## [3.0.5] - 2025-04-07
 
 ### Changed
@@ -253,7 +276,7 @@ if sheet.access_level == 'OWNER':
     ...
 ```
 
-[enum34](https://pypi.python.org/pypi/enum34) has been added as a required package for the SDK  
+[enum34](https://pypi.python.org/pypi/enum34) has been added as a required package for the SDK
 
 ## [1.3.0] - 2018-02-21
 

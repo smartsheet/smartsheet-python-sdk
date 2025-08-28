@@ -22,6 +22,7 @@ import os.path
 
 from . import fresh_operation
 from .models.folder import Folder
+from .util import deprecated
 
 
 class Workspaces:
@@ -235,8 +236,12 @@ class Workspaces:
 
         return response
 
+    @deprecated
     def get_workspace(self, workspace_id, load_all=False, include=None):
         """Get the specified Workspace and list its contents.
+
+        Deprecated: 3.1.0
+           Use `get_workspace_metadata` and `get_workspace_children` instead.
 
         Get the specified Workspace and list its contents. By
         default, this operation only returns top-level items in the
@@ -266,9 +271,13 @@ class Workspaces:
 
         return response
 
+    @deprecated
     def list_folders(self, workspace_id, page_size=None, page=None, include_all=None):
         """Get a list of top-level child Folders within the specified
         Workspace.
+
+        Deprecated: 3.1.0
+           Use `get_workspace_children` with children_resource_types=['folders'] instead.
 
         Args:
             workspace_id (int): Workspace ID
@@ -424,6 +433,59 @@ class Workspaces:
 
         expected = ["Result", "Workspace"]
 
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_workspace_metadata(self, workspace_id, include=None):
+        """Get metadata of a workspace.
+
+        Args:
+            workspace_id (int): Workspace ID
+            include (list[str]): A list of optional elements to include
+                in the response. Valid list values: source
+
+        Returns:
+            Workspace
+        """
+        _op = fresh_operation("get_workspace_metadata")
+        _op["method"] = "GET"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/metadata"
+        _op["query_params"]["include"] = include
+
+        expected = "Workspace"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_workspace_children(self, workspace_id, children_resource_types=None, include=None, last_key=None, max_items=None):
+        """Get children of a workspace.
+
+        Args:
+            workspace_id (int): Workspace ID
+            children_resource_types (list[str]): The types of the children resources.
+                If not provided, returns children of all types.
+                Valid list values: sheets, reports, sights, folders.
+            include (list[str]): A list of optional elements to include in the response.
+                Valid list values: source, ownerInfo.
+            last_key (str): The token from a previous request that will allow this one
+                to fetch the next page of results.
+            max_items (int): The maximum number of items to return in the response.
+
+        Returns:
+            PaginatedChildrenResult
+        """
+        _op = fresh_operation("get_workspace_children")
+        _op["method"] = "GET"
+        _op["path"] = "/workspaces/" + str(workspace_id) + "/children"
+        _op["query_params"]["childrenResourceTypes"] = children_resource_types
+        _op["query_params"]["include"] = include
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
+
+        expected = "PaginatedChildrenResult"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
