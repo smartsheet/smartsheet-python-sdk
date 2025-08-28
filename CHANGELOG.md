@@ -5,8 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-
 ## [3.2.0] - 2025-08-28
+
 ### Added
 
 - Token-based pagination support for `list_workspaces` method. Use the new `pagination_type='token'` parameter with `last_key` and `max_items` for more efficient pagination. When `pagination_type='token'` is used, the method returns a `Result` object containing `data` and `lastKey`.
