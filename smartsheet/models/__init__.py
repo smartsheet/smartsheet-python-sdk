@@ -73,6 +73,8 @@ from .multi_row_email import MultiRowEmail
 from .number_object_value import NumberObjectValue
 from .o_auth_error import OAuthError
 from .object_value import ObjectValue
+from .paginated_children_result import PaginatedChildrenResult
+from .token_paginated_result import TokenPaginatedResult
 from .predecessor import Predecessor
 from .predecessor_list import PredecessorList
 from .project_settings import ProjectSettings

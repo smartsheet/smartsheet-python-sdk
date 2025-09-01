@@ -1,6 +1,7 @@
 .sw[op]
 .*.sw[op]
 *.pyc
+*.iml
 
 # Ignore setup.py artifacts
 build/
