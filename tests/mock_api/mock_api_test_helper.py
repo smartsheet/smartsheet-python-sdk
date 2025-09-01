@@ -15,7 +15,11 @@ def clean_api_error(test_func):
 
 class MockApiTestHelper(object):
     def setup_method(self, method):
-        self.client = smartsheet.Smartsheet(access_token='abc123', api_base='http://localhost:8082')
+        self.client = smartsheet.Smartsheet(
+            access_token='abc123', 
+            smartsheet_integration_source='AI,MyOrg,MyGPT',
+            api_base='http://localhost:8082'
+        )
         self.client.errors_as_exceptions()
 
     def check_error_code(self, exception_info, expected_error_code):

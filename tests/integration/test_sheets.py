@@ -113,7 +113,7 @@ class TestSheets:
 
     # on behalf of Moe, I try to make this change
     def test_update_sheet(self, smart_setup):
-        smart = smartsheet.Smartsheet()
+        smart = smartsheet.Smartsheet(smartsheet_integration_source='AI,MyOrg,MyGPT')
         smart.assume_user(smart_setup['users']['moe'].email)
         action = smart.Sheets.update_sheet(
             smart_setup['sheet'].id,
@@ -131,7 +131,7 @@ class TestSheets:
         assert action.message == 'SUCCESS'
 
     def test_new_and_shared_sheet(self, smart_setup):
-        smart = smartsheet.Smartsheet()
+        smart = smartsheet.Smartsheet(smartsheet_integration_source='AI,MyOrg,MyGPT')
         newsheet = smart.models.Sheet({
             'name': 'pytest_social_sheet',
             'columns': [{
