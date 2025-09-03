@@ -6,6 +6,9 @@ from enum import Enum
 from .exceptions import SmartsheetException
 from .models.enums.smartsheet_integration_source_type import SmartsheetIntegrationSourceType
 
+# Documentation link for error messages
+DOCUMENTATION_LINK = "https://developers.smartsheet.com/api/smartsheet/guides/basics/http-and-rest#http-headers"
+
 def is_valid_format(input_value: str) -> bool:
     """
     Validates a smartsheet integration source string in the format:
@@ -20,16 +23,20 @@ def is_valid_format(input_value: str) -> bool:
 
     parts = input_value.split(",", -1)  # -1 keeps empty slots
     if len(parts) != 3:
-        raise SmartsheetException("Invalid smartsheet integration source format")
+        raise SmartsheetException(
+            "Invalid smartsheet integration source format. "
+            f"Expected format: 'TYPE,ORGANIZATION,INTEGRATOR. {DOCUMENTATION_LINK}"
+        )
 
     integration_type = parts[0]
     integrator_name = parts[2]
 
     if not _is_valid_type(integration_type):
-        allowed = ", ".join([t.name for t in SmartsheetIntegrationSourceType])
+        allowed = [t.name for t in SmartsheetIntegrationSourceType]
         raise SmartsheetException(
             "Invalid smartsheet integration source format. "
-            "The integration type has to be one of the following: " + allowed
+            f"The integration type has to be one of the following: {allowed}. "
+            f"Invalid integration type: {integration_type} {DOCUMENTATION_LINK}"
         )
 
     if integrator_name == "":
