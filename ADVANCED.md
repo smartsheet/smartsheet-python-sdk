@@ -80,7 +80,7 @@ response = client.Passthrough.post('/sheets', payload)
 
 ### Integration Tests
 
-1. Follow the instructions [here](tests/integration/README.md)
+1. Follow the [Integration test instructions](tests/integration/README.md)
 2. Run `pytest tests/integration`
 
 ### Mock API Tests
@@ -134,7 +134,7 @@ using the same `stream_position` value until the next list of events is retrieve
 Many events have additional information available as a part of the event. That information can be accessed using
 the Python dictionary stored in the `additional_details` property (Note that values of the `additional_details`
 dictionary use camelCase/JSON names, e.g. `sheetName` not `sheet_name`). Information about the additional details
-provided can be found [here.](https://smartsheet.redoc.ly/tag/eventsDescription)
+provided can be found on the [Events Description](https://smartsheet.redoc.ly/tag/eventsDescription) page of the API Documentation.
 
 ```python
 # this example is looking specifically for new sheet events
@@ -157,7 +157,7 @@ last_week = datetime.now() - timedelta(days=7)
 events_list = smartsheet_client.Events.list_events(since=last_week.isoformat(), max_count=1000)
 print_new_sheet_events_in_list(events_list)
 
-# continue listing events in the stream by using the stream_position, if the previous response indicates that more 
+# continue listing events in the stream by using the stream_position, if the previous response indicates that more
 # data is available.
 while events_list.more_available:
     events_list = smartsheet_client.Events.list_events(stream_position=events_list.next_stream_position, max_count=10000,

@@ -22,6 +22,7 @@ import os.path
 
 from . import fresh_operation
 from .models.folder import Folder
+from .util import deprecated
 
 
 class Folders:
@@ -173,8 +174,12 @@ class Folders:
 
         return response
 
+    @deprecated
     def get_folder(self, folder_id, include=None):
         """Get the specified Folder (and list its contents).
+
+        Deprecated: 3.1.0
+           Use `get_folder_metadata` and `get_folder_children` instead.
 
         Args:
             folder_id (int): Folder ID
@@ -196,8 +201,12 @@ class Folders:
 
         return response
 
+    @deprecated
     def list_folders(self, folder_id, page_size=None, page=None, include_all=None):
         """Get a list of top-level child Folders within the specified Folder.
+
+        Deprecated: 3.1.0
+           Use `get_folder_children` with children_resource_types=['folders'] instead.
 
         Args:
             folder_id (int): Folder ID
@@ -267,6 +276,59 @@ class Folders:
 
         expected = ["Result", "Folder"]
 
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_folder_metadata(self, folder_id, include=None):
+        """Get the metadata of a folder.
+
+        Args:
+            folder_id (int): Folder ID
+            include (list[str]): A list of optional elements to include
+            in the response. Valid list values: source.
+
+        Returns:
+            Folder
+        """
+        _op = fresh_operation("get_folder_metadata")
+        _op["method"] = "GET"
+        _op["path"] = "/folders/" + str(folder_id) + "/metadata"
+        _op["query_params"]["include"] = include
+
+        expected = "Folder"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_folder_children(self, folder_id, children_resource_types=None, include=None, last_key=None, max_items=None):
+        """Get the children of a folder.
+
+        Args:
+            folder_id (int): Folder ID
+            children_resource_types (list[str]): The types of the children resources.
+                If not provided, returns children of all types.
+                Valid list values: sheets, reports, sights, folders.
+            include (list[str]): A list of optional elements to include in the
+                response. Valid list values: source, ownerInfo.
+            last_key (str): The token from a previous request that will allow this one
+                to fetch the next page of results.
+            max_items (int): The maximum number of items to return in the response.
+
+        Returns:
+            PaginatedChildrenResult
+        """
+        _op = fresh_operation("get_folder_children")
+        _op["method"] = "GET"
+        _op["path"] = "/folders/" + str(folder_id) + "/children"
+        _op["query_params"]["childrenResourceTypes"] = children_resource_types
+        _op["query_params"]["include"] = include
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
+
+        expected = "PaginatedChildrenResult"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
