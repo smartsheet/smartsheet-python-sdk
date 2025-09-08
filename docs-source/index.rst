@@ -9,6 +9,10 @@ Smartsheet Python SDK Documentation
 
 Release v\ |version|.
 
+`GitHub repository <https://github.com/smartsheet/smartsheet-python-sdk>`_.
+
+`Changelog <https://github.com/smartsheet/smartsheet-python-sdk/blob/mainline/CHANGELOG.md>`_.
+
 Quickstart
 ----------
 
