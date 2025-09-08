@@ -17,13 +17,14 @@
 
 from __future__ import absolute_import
 
-from ..types import Boolean, EnumeratedValue, Number, String, TypedList, json
+from ..types import Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject, json
 from ..util import deserialize, serialize
 from .enums import AccessLevel
 from .folder import Folder
 from .report import Report
 from .sheet import Sheet
 from .sight import Sight
+from .source import Source
 from .template import Template
 
 
@@ -38,14 +39,17 @@ class Workspace:
             self._base = base_obj
 
         self._access_level = EnumeratedValue(AccessLevel)
+        self._created_at = Timestamp()
         self._favorite = Boolean()
         self._folders = TypedList(Folder)
         self._id_ = Number()
+        self._modified_at = Timestamp()
         self._name = String()
         self._permalink = String()
         self._reports = TypedList(Report)
         self._sheets = TypedList(Sheet)
         self._sights = TypedList(Sight)
+        self._source = TypedObject(Source)
         self._templates = TypedList(Template)
 
         if props:
@@ -76,6 +80,14 @@ class Workspace:
         self._access_level.set(value)
 
     @property
+    def created_at(self):
+        return self._created_at.value
+
+    @created_at.setter
+    def created_at(self, value):
+        self._created_at.value = value
+
+    @property
     def favorite(self):
         return self._favorite.value
 
@@ -98,6 +110,14 @@ class Workspace:
     @id_.setter
     def id_(self, value):
         self._id_.value = value
+
+    @property
+    def modified_at(self):
+        return self._modified_at.value
+
+    @modified_at.setter
+    def modified_at(self, value):
+        self._modified_at.value = value
 
     @property
     def name(self):
@@ -138,6 +158,14 @@ class Workspace:
     @sights.setter
     def sights(self, value):
         self._sights.load(value)
+
+    @property
+    def source(self):
+        return self._source.value
+
+    @source.setter
+    def source(self, value):
+        self._source.value = value
 
     @property
     def templates(self):

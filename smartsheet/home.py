@@ -22,6 +22,7 @@ import logging
 from . import fresh_operation
 from .models.folder import Folder
 from .models.sheet import Sheet
+from .util import deprecated
 
 
 class Home:
@@ -33,6 +34,7 @@ class Home:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
+    @deprecated
     def create_folder(self, folder_obj):
         """Creates a Folder in the user's Sheets folder (Home).
 
@@ -57,6 +59,7 @@ class Home:
 
         return response
 
+    @deprecated
     def create_sheet(self, sheet_obj):
         """Create a Sheet from scratch in the user's Sheets folder within
         Home.
@@ -82,6 +85,7 @@ class Home:
 
         return response
 
+    @deprecated
     def create_sheet_from_template(self, sheet_obj, include=None):
         """Create a Sheet in the Sheets folder from the specified Template.
 
@@ -118,6 +122,7 @@ class Home:
 
         return response
 
+    @deprecated
     def list_all_contents(self, include=None, exclude=None):
         """Get a nested list of all Home objects, including Sheets,
         Workspaces, Folders, Reports and Templates.
@@ -145,6 +150,7 @@ class Home:
 
         return response
 
+    @deprecated
     def list_folders(self, page_size=None, page=None, include_all=None):
         """Gets a list of top-level child Folders within the user's Sheets
         folder.

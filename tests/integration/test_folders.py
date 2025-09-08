@@ -64,6 +64,55 @@ class TestFolders:
         action = smart.Folders.get_folder(smart_setup['folder'].id)
         assert 'app.smartsheet.com' in action.permalink
 
+    def test_get_folder_metadata(self, smart_setup):
+        smart = smart_setup['smart']
+        folder = smart.Folders.get_folder_metadata(smart_setup['folder'].id)
+        assert isinstance(folder, smart.models.folder.Folder)
+        assert folder.id == smart_setup['folder'].id
+        assert folder.name is not None
+
+    def test_get_folder_metadata_with_include(self, smart_setup):
+        smart = smart_setup['smart']
+        folder = smart.Folders.get_folder_metadata(
+            smart_setup['folder'].id,
+            include=['source']
+        )
+        assert isinstance(folder, smart.models.folder.Folder)
+        assert folder.id == smart_setup['folder'].id
+
+    def test_get_folder_children(self, smart_setup):
+        smart = smart_setup['smart']
+        children = smart.Folders.get_folder_children(smart_setup['folder'].id)
+        assert isinstance(children, smart.models.paginated_children_result.PaginatedChildrenResult)
+
+    def test_get_folder_children_with_filters(self, smart_setup):
+        smart = smart_setup['smart']
+        # Test with resource type filter
+        children = smart.Folders.get_folder_children(
+            smart_setup['folder'].id,
+            children_resource_types=['folders']
+        )
+        assert isinstance(children, smart.models.paginated_children_result.PaginatedChildrenResult)
+        # Verify all children are of the filtered type
+        for child in children.data:
+            assert isinstance(child, smart.models.folder.Folder)
+
+        # Test with include parameter
+        children = smart.Folders.get_folder_children(
+            smart_setup['folder'].id,
+            include=['source', 'ownerInfo']
+        )
+        assert isinstance(children, smart.models.paginated_children_result.PaginatedChildrenResult)
+
+    def test_get_folder_children_with_pagination(self, smart_setup):
+        smart = smart_setup['smart']
+        # Test with pagination parameters
+        children = smart.Folders.get_folder_children(
+            smart_setup['folder'].id,
+            max_items=100
+        )
+        assert isinstance(children, smart.models.paginated_children_result.PaginatedChildrenResult)
+
     def test_delete_folder(self, smart_setup):
         smart = smart_setup['smart']
         action = smart.Folders.delete_folder(TestFolders.copied_folder.id)

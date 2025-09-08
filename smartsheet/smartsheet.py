@@ -520,9 +520,25 @@ class OperationResult:
             if expected != "DownloadedFile":
                 data = self.resp.json()
             else:
-                filename = re.findall(
-                    'filename="(.+)";', self.resp.headers["Content-Disposition"]
-                )
+                # default
+                filename = ["download"]
+
+                if "Content-Disposition" in self.resp.headers:
+                    # use the provided filename
+                    filename = re.findall(
+                        'filename="(.+)";', self.resp.headers["Content-Disposition"]
+                    )
+                else:
+                    content_type = self.resp.headers.get("Content-Type", "")
+                    if content_type in [
+                        "application/vnd.ms-excel",
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    ]:
+                        filename[0] += ".xlsx"
+                    elif content_type == "application/pdf":
+                        filename[0] += ".pdf"
+                    elif content_type == "text/csv":
+                        filename[0] += ".csv"
 
                 data = {
                     "resultCode": 0,
