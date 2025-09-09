@@ -358,6 +358,57 @@ class Users:
 
         return response
 
+    def get_user_plans(self, user_id):
+        _op = fresh_operation("get_user_plans")
+        _op["method"] = "GET"
+        _op["path"] = f"/users/{user_id}/plans"
+
+        expected = ["UserPlansResponse"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def delete_user_from_plan(self, user_id, plan_id):
+        _op = fresh_operation("delete_user_from_plan")
+        _op["method"] = "DELETE"
+        _op["path"] = f"/users/{user_id}/plans/{plan_id}"
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def list_users_with_filters(self,
+                   plan_id=None,
+                   seat_type=None,
+                   emails=None,
+                   page_size=100,
+                   page=1,
+                   numeric_dates=False
+    ):
+        _op = fresh_operation("list_users")
+        _op["method"] = "GET"
+        _op["path"] = "/users"
+        _op["query_params"] = {
+            "planId": plan_id,
+            "seatType": seat_type,
+            "emails": emails,
+            "pageSize": page_size,
+            "page": page,
+            "numericDates": numeric_dates,
+        }
+
+        expected = ["IndexResult", "User"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
     def add_profile_image(self, user_id, file, file_type):
         """Uploads a profile image for the specified user.
 
