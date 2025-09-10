@@ -359,6 +359,12 @@ class Users:
         return response
 
     def get_user_plans(self, user_id):
+        """Fetch all user's plans.
+                Args:
+                    user_id (int): User ID
+                Returns:
+                    UserPlansResponse
+         """
         _op = fresh_operation("get_user_plans")
         _op["method"] = "GET"
         _op["path"] = f"/users/{user_id}/plans"
@@ -371,6 +377,13 @@ class Users:
         return response
 
     def delete_user_from_plan(self, user_id, plan_id):
+        """Delete user from plan.
+                        Args:
+                            user_id (int): User ID
+                            plan_id (int): Plan ID
+                        Returns:
+                            Result
+                 """
         _op = fresh_operation("delete_user_from_plan")
         _op["method"] = "DELETE"
         _op["path"] = f"/users/{user_id}/plans/{plan_id}"
@@ -390,6 +403,17 @@ class Users:
                    page=1,
                    numeric_dates=False
     ):
+        """List users.
+                Args:
+                    plan_id (int): Plan ID
+                    seat_type (int): User seat type
+                    emails (list[str], optional): List of email addresses to filter users.
+                    page_size (int, optional): Number of items per page (default: 100).
+                    page (int, optional): Page number to retrieve (default: 1).
+                    numeric_dates (bool, optional): Whether to use numeric dates (default: False).
+                Returns:
+                    IndexResult
+        """
         _op = fresh_operation("list_users")
         _op["method"] = "GET"
         _op["path"] = "/users"
