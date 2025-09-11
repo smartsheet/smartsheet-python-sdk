@@ -26,10 +26,10 @@ from .object_value import ObjectValue, six
 
 
 class DatetimeObjectValue(ObjectValue):
-    """Smartsheet DateObjectValue data model."""
+    """Smartsheet DatetimeObjectValue data model."""
 
     def __init__(self, props=None, object_type=None, base_obj=None):
-        """Initialize the DateObjectValue model."""
+        """Initialize the DatetimeObjectValue model."""
         super().__init__(object_type, base_obj)
         self._base = None
         if base_obj is not None:
