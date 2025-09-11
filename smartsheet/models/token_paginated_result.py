@@ -17,61 +17,46 @@
 
 from __future__ import absolute_import
 
-from ..types import Number, String, json
+from typing import TypeVar, Generic, List
+from ..types import String, json
 from ..util import deserialize, serialize
 
+T = TypeVar('T')
 
-class Source:
 
-    """Smartsheet Source data model."""
+class TokenPaginatedResult(Generic[T]):
+    """Smartsheet TokenPaginatedResult data model with generic type support."""
 
     def __init__(self, props=None, base_obj=None):
-        """Initialize the Source model."""
+        """Initialize the TokenPaginatedResult model."""
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        self.allowed_values = {"_type": ["folder", "report", "sheet", "sight", "template", "workspace"]}
-
-        self._id_ = Number()
-        self._type_ = String(accept=self.allowed_values["_type"])
+        self._data = []
+        self._last_key = String()
 
         if props:
             deserialize(self, props)
 
+        self.request_response = None
         self.__initialized = True
 
-    def __getattr__(self, key):
-        if key == "id":
-            return self.id_
-        elif key == "type":
-            return self.type_
-        else:
-            raise AttributeError(key)
+    @property
+    def data(self) -> List[T]:
+        return self._data
 
-    def __setattr__(self, key, value):
-        if key == "id":
-            self.id_ = value
-        elif key == "type":
-            self.type_ = value
-        else:
-            super().__setattr__(key, value)
+    @data.setter
+    def data(self, value):
+        self._data = value
 
     @property
-    def id_(self):
-        return self._id_.value
+    def last_key(self):
+        return self._last_key.value
 
-    @id_.setter
-    def id_(self, value):
-        self._id_.value = value
-
-    @property
-    def type_(self):
-        return self._type_.value
-
-    @type_.setter
-    def type_(self, value):
-        self._type_.value = value
+    @last_key.setter
+    def last_key(self, value):
+        self._last_key.value = value
 
     def to_dict(self):
         return serialize(self)

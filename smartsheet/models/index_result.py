@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from ..types import Number, TypedList, importlib, json
+from ..types import Number, TypedList, importlib, json, String
 from ..util import deserialize, serialize
 
 
@@ -40,6 +40,7 @@ class IndexResult:
         self._page_size = Number()
         self._total_count = Number()
         self._total_pages = Number()
+        self._last_key = String()
 
         if props:
             deserialize(self, props)
@@ -93,6 +94,14 @@ class IndexResult:
     @total_pages.setter
     def total_pages(self, value):
         self._total_pages.value = value
+
+    @property
+    def last_key(self):
+        return self._last_key.value
+
+    @last_key.setter
+    def last_key(self, value):
+        self._last_key.value = value
 
     @property
     def result(self):
