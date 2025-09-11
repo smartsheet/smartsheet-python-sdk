@@ -2,8 +2,6 @@ import pytest
 import six
 import os.path
 
-import smartsheet
-
 _dir = os.path.dirname(os.path.abspath(__file__))
 
 

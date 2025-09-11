@@ -21,6 +21,7 @@ import logging
 from datetime import datetime
 
 from . import fresh_operation
+from .models.enums.seat_type import SeatType
 
 
 class Users:
@@ -358,7 +359,7 @@ class Users:
 
         return response
 
-    def upgrade_user_for_plan(self, user_id, plan_id, seat_type):
+    def upgrade_user_for_plan(self, user_id, plan_id, seat_type: SeatType):
         """Upgrades a user for a plan.
 
         Args:
@@ -367,7 +368,7 @@ class Users:
             seat_type (str): Type of seat to upgrade to
 
         Returns:
-            dict: Response from the API
+            dict: Result
         """
         _op = fresh_operation("upgrade_user_for_plan")
         _op["method"] = "POST"
@@ -381,7 +382,7 @@ class Users:
 
         return response
 
-    def downgrade_user_for_plan(self, user_id, plan_id, seat_type):
+    def downgrade_user_for_plan(self, user_id, plan_id, seat_type: SeatType):
         """Downgrades a user for a plan.
 
         Args:
@@ -390,7 +391,7 @@ class Users:
             seat_type (str): Type of seat to downgrade to
 
         Returns:
-            dict: Response from the API
+            dict: Result
         """
         _op = fresh_operation("downgrade_user_for_plan")
         _op["method"] = "POST"
