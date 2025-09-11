@@ -359,13 +359,13 @@ class Users:
 
         return response
 
-    def upgrade_user_for_plan(self, user_id, plan_id, seat_type: SeatType):
+    def upgrade_user_for_plan(self, user_id, plan_id, seat_type):
         """Upgrades a user for a plan.
 
         Args:
             user_id (int): User ID
             plan_id (int): Plan ID
-            seat_type (str): Type of seat to upgrade to
+            seat_type (SeatType): Type of seat to upgrade to
 
         Returns:
             dict: Result
@@ -382,13 +382,13 @@ class Users:
 
         return response
 
-    def downgrade_user_for_plan(self, user_id, plan_id, seat_type: SeatType):
+    def downgrade_user_for_plan(self, user_id, plan_id, seat_type):
         """Downgrades a user for a plan.
 
         Args:
             user_id (int): User ID
             plan_id (int): Plan ID
-            seat_type (str): Type of seat to downgrade to
+            seat_type (SeatType): Type of seat to downgrade to
 
         Returns:
             dict: Result
