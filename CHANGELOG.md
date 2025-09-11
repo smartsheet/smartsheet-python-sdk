@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Support for POST /users/{userId}/plans/{planId}/downgrade
-- Support for POST /users/{userId}/plans/{planId}/upgrade
+- Support for POST /2.0/users/{userId}/plans/{planId}/downgrade
+- Support for POST /2.0/users/{userId}/plans/{planId}/upgrade
 
 ## [3.0.5] - 2025-04-07
 
