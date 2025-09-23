@@ -1,6 +1,6 @@
 from enum import Enum
 
-class SeatType(Enum):
+class SeatType(str, Enum):
     VIEWER = 'VIEWER'
     GUEST = 'GUEST'
     MEMBER = 'MEMBER'
