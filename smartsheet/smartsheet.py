@@ -36,6 +36,7 @@ from .exceptions import ApiError, HttpError, UnexpectedRequestError
 from .models import Error, ErrorResult
 from .session import pinned_session
 from .util import is_multipart, serialize
+from .smartsheet_integration_source_validator import is_valid_format
 
 __all__ = ("Smartsheet", "fresh_operation", "AbstractUserCalcBackoff")
 
@@ -121,6 +122,7 @@ class Smartsheet:
     def __init__(
         self,
         access_token=None,
+        smartsheet_integration_source=None,
         max_connections=8,
         user_agent=None,
         max_retry_time=30,
@@ -134,6 +136,9 @@ class Smartsheet:
             access_token (str): Access Token for making client
                 requests. May also be set as an env variable in
                 SMARTSHEET_ACCESS_TOKEN. (required)
+            smartsheet_integration_source (str): Integration source identifier.
+                Format: $TYPE,$ORG_NAME,$INTEGRATOR_NAME
+                Required. Must be provided to identify the integration source.
             max_connections (int): Maximum connection pool size.
             max_retry_time (int or AbstractUserCalcBackoff): user provided maximum
                 elapsed time or AbstractUserCalcBackoff class for user back off calculation on retry.
@@ -158,6 +163,10 @@ class Smartsheet:
                 "or passed to smartsheet.Smartsheet() "
                 "as a parameter."
             )
+
+        # Validate Smartsheet integration source format
+        is_valid_format(smartsheet_integration_source)
+        self._smartsheet_integration_source = smartsheet_integration_source
 
         if isinstance(max_retry_time, AbstractUserCalcBackoff):
             self._user_calc_backoff = max_retry_time
@@ -235,6 +244,23 @@ class Smartsheet:
             change_agent: (str) the name of this change agent
         """
         self._change_agent = change_agent
+
+    def with_smartsheet_integration_source(self, smartsheet_integration_source):
+        """
+        Request headers will contain the 'Smartsheet-Integration-Source' header value
+
+        Args:
+            smartsheet_integration_source: (str) the name of this integration source
+            
+            Format: $TYPE,$ORG_NAME,$INTEGRATOR_NAME
+            (NB: Comma is used as a delimiter and is required if value is missing)
+            $INTEGRATION-TYPE - Required, the type of the integrator (e.g. AI, SCRIPT, APPLICATION)
+            $SMAR-ORGANIZATION-NAME - Optional (but COMMA is required), organization name (e.g. Microsoft, Google, OpenAI, etc.)
+            $INTEGRATOR-NAME - Required, the name of the integrator (e.g. Claude, Copilot, ChatGPT, DeepSeek, etc.)
+        """
+        # Validate before setting
+        is_valid_format(smartsheet_integration_source)
+        self._smartsheet_integration_source = smartsheet_integration_source
 
     def request(self, prepped_request, expected, operation):
         """
@@ -445,6 +471,16 @@ class Smartsheet:
         else:
             try:
                 del prepped_request.headers["Smartsheet-Change-Agent"]
+            except KeyError:
+                pass
+        
+        if self._smartsheet_integration_source is not None:
+            prepped_request.headers.update(
+                {"Smartsheet-Integration-Source": self._smartsheet_integration_source}
+            )
+        else:
+            try:
+                del prepped_request.headers["Smartsheet-Integration-Source"]
             except KeyError:
                 pass
 

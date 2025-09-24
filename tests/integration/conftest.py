@@ -10,7 +10,10 @@ import six
 @pytest.fixture(scope="module")
 def smart_setup(request):
     # set up a test session folder with basic starting points
-    smart = smartsheet.Smartsheet(max_retry_time=60)
+    smart = smartsheet.Smartsheet(
+        smartsheet_integration_source='AI,MyOrg,MyGPT',
+        max_retry_time=60
+    )
     now = datetime.now(tzlocal()).strftime("%Y-%m-%d %H:%M:%S")
 
     users = os.environ.get('SMARTSHEET_FIXTURE_USERS', None)
