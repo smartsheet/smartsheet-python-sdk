@@ -1,30 +1,67 @@
+from __future__ import absolute_import
+
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, TypedObject, json)
+from ..util import deserialize, serialize
+
+
 class UserPlan:
-    def __init__(self, plan_id=None, seat_type=None, seat_type_last_changed_at=None, is_internal=False):
-        self._plan_id = plan_id
-        self._seat_type = seat_type
-        self._seat_type_last_changed_at = seat_type_last_changed_at
-        self._is_internal = is_internal
 
-    def get_plan_id(self):
-        return self._plan_id
+    """Smartsheet Plan for a User data model."""
 
-    def set_plan_id(self, plan_id):
-        self._plan_id = plan_id
+    def __init__(self, props=None, base_obj=None):
+        """Initialize the UserPlan model."""
+        self._base = None
+        if base_obj is not None:
+            self._base = base_obj
 
-    def get_seat_type(self):
-        return self._seat_type
+        self._plan_id = Number()
+        self._seat_type = String()
+        self._seat_type_last_changed_at = Timestamp()
+        self._is_internal = Boolean()
 
-    def set_seat_type(self, seat_type):
-        self._seat_type = seat_type
+        if props:
+            deserialize(self, props)
 
-    def get_seat_type_last_changed_at(self):
-        return self._seat_type_last_changed_at
+        self.__initialized = True
 
-    def set_seat_type_last_changed_at(self, seat_type_last_changed_at):
-        self._seat_type_last_changed_at = seat_type_last_changed_at
+    @property
+    def plan_id(self):
+        return self._plan_id.value
 
+    @plan_id.setter
+    def plan_id(self, value):
+        self._plan_id.value = value
+
+    @property
+    def seat_type(self):
+        return self._seat_type.value
+
+    @seat_type.setter
+    def seat_type(self, value):
+        self._seat_type.value = value
+
+    @property
+    def seat_type_last_changed_at(self):
+        return self._seat_type_last_changed_at.value
+
+    @seat_type_last_changed_at.setter
+    def seat_type_last_changed_at(self, value):
+        self._seat_type_last_changed_at.value = value
+
+    @property
     def is_internal(self):
-        return self._is_internal
+        return self._is_internal.value
 
-    def set_is_internal(self, is_internal):
-        self._is_internal = is_internal
+    @is_internal.setter
+    def is_internal(self, value):
+        self._is_internal.value = value
+
+    def to_dict(self):
+        return serialize(self)
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
+
+    def __str__(self):
+        return self.to_json()

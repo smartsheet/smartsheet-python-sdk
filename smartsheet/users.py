@@ -254,7 +254,8 @@ class Users:
         return response
 
     def list_users(
-        self, email=None, page_size=None, page=None, include_all=None, include=None
+        self, email=None, page_size=None, page=None, include_all=None, include=None,
+        plan_id=None, seat_type=None
     ):
         """Get the list of Users in the organization.
 
@@ -268,6 +269,10 @@ class Users:
                 (i.e. do not paginate).
             include(list[str]): optional include parameter, only current
                 accepted value is 'lastLogin'
+            plan_id(int): optional plan_id parameter, returns users
+                in the selected plan.
+            seat_type(SeatType): optional seat_type parameter, filters users
+                by their seat type.
 
         Returns:
             IndexResult
@@ -280,6 +285,8 @@ class Users:
         _op["query_params"]["pageSize"] = page_size
         _op["query_params"]["page"] = page
         _op["query_params"]["includeAll"] = include_all
+        _op["query_params"]["planId"] = plan_id
+        _op["query_params"]["seatType"] = seat_type
 
         expected = ["IndexResult", "User"]
 
@@ -358,75 +365,39 @@ class Users:
 
         return response
 
-    def get_user_plans(self, user_id):
-        """Fetch all user's plans.
+    def list_user_plans(self, user_id, last_key=None, max_items=None):
+        """List user's plans.
                 Args:
                     user_id (int): User ID
                 Returns:
-                    UserPlansResponse
+                    TokenPaginatedResult
          """
-        _op = fresh_operation("get_user_plans")
+        _op = fresh_operation("list_user_plans")
         _op["method"] = "GET"
         _op["path"] = f"/users/{user_id}/plans"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
 
-        expected = ["UserPlansResponse"]
+        expected = ["TokenPaginatedResult", "UserPlan"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
         return response
 
-    def delete_user_from_plan(self, user_id, plan_id):
-        """Delete user from plan.
+    def remove_user_from_plan(self, user_id, plan_id):
+        """Remove user from plan.
                         Args:
                             user_id (int): User ID
                             plan_id (int): Plan ID
                         Returns:
                             Result
                  """
-        _op = fresh_operation("delete_user_from_plan")
+        _op = fresh_operation("remove_user_from_plan")
         _op["method"] = "DELETE"
         _op["path"] = f"/users/{user_id}/plans/{plan_id}"
 
         expected = ["Result", None]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def list_users_with_filters(self,
-                   plan_id=None,
-                   seat_type=None,
-                   emails=None,
-                   page_size=100,
-                   page=1,
-                   numeric_dates=False
-    ):
-        """List users.
-                Args:
-                    plan_id (int): Plan ID
-                    seat_type (int): User seat type
-                    emails (list[str], optional): List of email addresses to filter users.
-                    page_size (int, optional): Number of items per page (default: 100).
-                    page (int, optional): Page number to retrieve (default: 1).
-                    numeric_dates (bool, optional): Whether to use numeric dates (default: False).
-                Returns:
-                    IndexResult
-        """
-        _op = fresh_operation("list_users")
-        _op["method"] = "GET"
-        _op["path"] = "/users"
-        _op["query_params"] = {
-            "planId": plan_id,
-            "seatType": seat_type,
-            "emails": emails,
-            "pageSize": page_size,
-            "page": page,
-            "numericDates": numeric_dates,
-        }
-
-        expected = ["IndexResult", "User"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
