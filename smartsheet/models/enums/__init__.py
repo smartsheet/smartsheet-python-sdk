@@ -52,3 +52,4 @@ from .system_column_type import SystemColumnType
 from .update_request_status import UpdateRequestStatus
 from .user_status import UserStatus
 from .widget_type import WidgetType
+from .seat_type import SeatType, DowngradeSeatType, UpgradeSeatType

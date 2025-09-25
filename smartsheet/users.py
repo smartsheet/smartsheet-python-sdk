@@ -365,7 +365,7 @@ class Users:
         Args:
             user_id (int): User ID
             plan_id (int): Plan ID
-            seat_type (SeatType): Type of seat to upgrade to
+            seat_type (UpgradeSeatType): Seat type to upgrade to
 
         Returns:
             dict: Result
@@ -388,7 +388,7 @@ class Users:
         Args:
             user_id (int): User ID
             plan_id (int): Plan ID
-            seat_type (SeatType): Type of seat to downgrade to
+            seat_type (DowngradeSeatType): Seat type to downgrade to
 
         Returns:
             dict: Result
