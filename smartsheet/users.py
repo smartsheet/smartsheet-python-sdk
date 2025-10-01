@@ -21,6 +21,7 @@ import logging
 from datetime import datetime
 
 from . import fresh_operation
+from .models.enums.seat_type import SeatType
 
 
 class Users:
@@ -365,7 +366,53 @@ class Users:
 
         return response
 
-    def list_user_plans(self, user_id, last_key=None, max_items=None):
+    def upgrade_user(self, user_id, plan_id, seat_type):
+        """Upgrades a user for a plan.
+
+        Args:
+            user_id (int): User ID
+            plan_id (int): Plan ID
+            seat_type (UpgradeSeatType): Seat type to upgrade to
+
+        Returns:
+            dict: Result
+        """
+        _op = fresh_operation("upgrade_user")
+        _op["method"] = "POST"
+        _op["path"] = f"/users/{user_id}/plans/{plan_id}/upgrade"
+        _op["json"] = {"seatType": seat_type}
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def downgrade_user(self, user_id, plan_id, seat_type):
+        """Downgrades a user for a plan.
+
+        Args:
+            user_id (int): User ID
+            plan_id (int): Plan ID
+            seat_type (DowngradeSeatType): Seat type to downgrade to
+
+        Returns:
+            dict: Result
+        """
+        _op = fresh_operation("downgrade_user")
+        _op["method"] = "POST"
+        _op["path"] = f"/users/{user_id}/plans/{plan_id}/downgrade"
+        _op["json"] = {"seatType": seat_type}
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+      def list_user_plans(self, user_id, last_key=None, max_items=None):
         """List user's plans.
                 Args:
                     user_id (int): User ID
@@ -380,11 +427,6 @@ class Users:
 
         expected = ["TokenPaginatedResult", "UserPlan"]
 
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
     def remove_user_from_plan(self, user_id, plan_id):
         """Remove user from plan.
                         Args:
@@ -396,13 +438,6 @@ class Users:
         _op = fresh_operation("remove_user_from_plan")
         _op["method"] = "DELETE"
         _op["path"] = f"/users/{user_id}/plans/{plan_id}"
-
-        expected = ["Result", None]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
 
     def add_profile_image(self, user_id, file, file_type):
         """Uploads a profile image for the specified user.
