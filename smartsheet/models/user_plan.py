@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
                      TypedList, TypedObject, json)
+from ..models.enums import SeatType
 from ..util import deserialize, serialize
 
 
@@ -16,7 +17,7 @@ class UserPlan:
             self._base = base_obj
 
         self._plan_id = Number()
-        self._seat_type = String()
+        self._seat_type = EnumeratedValue(SeatType)
         self._seat_type_last_changed_at = Timestamp()
         self._is_internal = Boolean()
 
@@ -35,11 +36,11 @@ class UserPlan:
 
     @property
     def seat_type(self):
-        return self._seat_type.value
+        return self._seat_type
 
     @seat_type.setter
     def seat_type(self, value):
-        self._seat_type.value = value
+        self._seat_type.set(value)
 
     @property
     def seat_type_last_changed_at(self):

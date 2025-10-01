@@ -19,6 +19,7 @@ from __future__ import absolute_import
 
 from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
                      TypedList, TypedObject, json)
+from ..models.enums import SeatType
 from ..util import deserialize, serialize
 from .alternate_email import AlternateEmail
 from .enums import UserStatus
@@ -52,7 +53,7 @@ class UserModel:
         self._profile_image = TypedObject(ProfileImage)
         self._resource_viewer = Boolean()
         self._role = String()
-        self._seat_type = String()
+        self._seat_type = EnumeratedValue(SeatType)
         self._seat_type_last_changed_at = Timestamp()
         self._sheet_count = Number()
         self._status = EnumeratedValue(UserStatus)
@@ -214,11 +215,11 @@ class UserModel:
 
     @property
     def seat_type(self):
-        return self._seat_type.value
+        return self._seat_type
 
     @seat_type.setter
     def seat_type(self, value):
-        self._seat_type.value = value
+        self._seat_type.set(value)
 
     @property
     def seat_type_last_changed_at(self):
