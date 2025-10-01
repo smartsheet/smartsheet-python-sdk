@@ -19,6 +19,7 @@ from __future__ import absolute_import
 
 from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
                      TypedList, TypedObject, json)
+from ..models.enums import SeatType
 from ..util import deserialize, serialize
 from .alternate_email import AlternateEmail
 from .enums import UserStatus
@@ -44,6 +45,7 @@ class UserModel:
         self._first_name = String()
         self._group_admin = Boolean()
         self._id_ = Number()
+        self._is_internal = Boolean()
         self._last_login = Timestamp()
         self._last_name = String()
         self._licensed_sheet_creator = Boolean()
@@ -51,6 +53,8 @@ class UserModel:
         self._profile_image = TypedObject(ProfileImage)
         self._resource_viewer = Boolean()
         self._role = String()
+        self._seat_type = EnumeratedValue(SeatType)
+        self._seat_type_last_changed_at = Timestamp()
         self._sheet_count = Number()
         self._status = EnumeratedValue(UserStatus)
         self._title = String()
@@ -146,6 +150,14 @@ class UserModel:
         self._id_.value = value
 
     @property
+    def is_internal(self):
+        return self._is_internal.value
+
+    @is_internal.setter
+    def is_internal(self, value):
+        self._is_internal.value = value
+
+    @property
     def last_login(self):
         return self._last_login.value
 
@@ -200,6 +212,22 @@ class UserModel:
     @role.setter
     def role(self, value):
         self._role.value = value
+
+    @property
+    def seat_type(self):
+        return self._seat_type
+
+    @seat_type.setter
+    def seat_type(self, value):
+        self._seat_type.set(value)
+
+    @property
+    def seat_type_last_changed_at(self):
+        return self._seat_type_last_changed_at.value
+
+    @seat_type_last_changed_at.setter
+    def seat_type_last_changed_at(self, value):
+        self._seat_type_last_changed_at.value = value
 
     @property
     def sheet_count(self):

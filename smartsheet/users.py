@@ -255,7 +255,8 @@ class Users:
         return response
 
     def list_users(
-        self, email=None, page_size=None, page=None, include_all=None, include=None
+        self, email=None, page_size=None, page=None, include_all=None, include=None,
+        plan_id=None, seat_type=None
     ):
         """Get the list of Users in the organization.
 
@@ -269,6 +270,10 @@ class Users:
                 (i.e. do not paginate).
             include(list[str]): optional include parameter, only current
                 accepted value is 'lastLogin'
+            plan_id(int): optional plan_id parameter, returns users
+                in the selected plan.
+            seat_type(SeatType): optional seat_type parameter, filters users
+                by their seat type.
 
         Returns:
             IndexResult
@@ -281,6 +286,8 @@ class Users:
         _op["query_params"]["pageSize"] = page_size
         _op["query_params"]["page"] = page
         _op["query_params"]["includeAll"] = include_all
+        _op["query_params"]["planId"] = plan_id
+        _op["query_params"]["seatType"] = seat_type
 
         expected = ["IndexResult", "User"]
 
@@ -397,6 +404,45 @@ class Users:
         _op["method"] = "POST"
         _op["path"] = f"/users/{user_id}/plans/{plan_id}/downgrade"
         _op["json"] = {"seatType": seat_type}
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def list_user_plans(self, user_id, last_key=None, max_items=None):
+        """List user's plans.
+                Args:
+                    user_id (int): User ID
+                Returns:
+                    TokenPaginatedResult
+         """
+        _op = fresh_operation("list_user_plans")
+        _op["method"] = "GET"
+        _op["path"] = f"/users/{user_id}/plans"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
+
+        expected = ["TokenPaginatedResult", "UserPlan"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def remove_user_from_plan(self, user_id, plan_id):
+        """Remove user from plan.
+                        Args:
+                            user_id (int): User ID
+                            plan_id (int): Plan ID
+                        Returns:
+                            Result
+                 """
+        _op = fresh_operation("remove_user_from_plan")
+        _op["method"] = "DELETE"
+        _op["path"] = f"/users/{user_id}/plans/{plan_id}"
 
         expected = ["Result", None]
 
