@@ -21,6 +21,7 @@ import logging
 from datetime import datetime
 
 from . import fresh_operation
+from .models.enums.seat_type import SeatType
 
 
 class Users:
@@ -352,6 +353,52 @@ class Users:
         _op["json"] = user_obj
 
         expected = ["Result", "User"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def upgrade_user(self, user_id, plan_id, seat_type):
+        """Upgrades a user for a plan.
+
+        Args:
+            user_id (int): User ID
+            plan_id (int): Plan ID
+            seat_type (UpgradeSeatType): Seat type to upgrade to
+
+        Returns:
+            dict: Result
+        """
+        _op = fresh_operation("upgrade_user")
+        _op["method"] = "POST"
+        _op["path"] = f"/users/{user_id}/plans/{plan_id}/upgrade"
+        _op["json"] = {"seatType": seat_type}
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def downgrade_user(self, user_id, plan_id, seat_type):
+        """Downgrades a user for a plan.
+
+        Args:
+            user_id (int): User ID
+            plan_id (int): Plan ID
+            seat_type (DowngradeSeatType): Seat type to downgrade to
+
+        Returns:
+            dict: Result
+        """
+        _op = fresh_operation("downgrade_user")
+        _op["method"] = "POST"
+        _op["path"] = f"/users/{user_id}/plans/{plan_id}/downgrade"
+        _op["json"] = {"seatType": seat_type}
+
+        expected = ["Result", None]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
