@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Support for POST /2.0/users/{userId}/plans/{planId}/downgrade
 - Support for POST /2.0/users/{userId}/plans/{planId}/upgrade
+- Support for GET /2.0/users/{userId}/plans
+- Support for GET /2.0/users
+- Support for DELETE /2.0/users/{userId}/plans/{planId}
 
 ## [3.1.0] - 2025-08-28
 
@@ -36,14 +39,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `list_all_contents()` in Home
 - `list_folders()` in Home
 - `page_size`, `page`, and `include_all` parameters in `list_workspaces()` method are now deprecated. Use `pagination_type='token'` with `max_items` and `last_key` instead. Deprecated parameters will issue `DeprecationWarning` when used.
-
-## [3.0.7] - 2025-09-05
-
-### Added
-
-- Support for GET /2.0/users/{userId}/plans
-- Support for GET /2.0/users
-- Support for DELETE /2.0/users/{userId}/plans/{planId}
 
 ## [3.0.5] - 2025-04-07
 
