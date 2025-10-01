@@ -412,7 +412,7 @@ class Users:
 
         return response
 
-      def list_user_plans(self, user_id, last_key=None, max_items=None):
+    def list_user_plans(self, user_id, last_key=None, max_items=None):
         """List user's plans.
                 Args:
                     user_id (int): User ID
@@ -427,6 +427,11 @@ class Users:
 
         expected = ["TokenPaginatedResult", "UserPlan"]
 
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
     def remove_user_from_plan(self, user_id, plan_id):
         """Remove user from plan.
                         Args:
@@ -438,6 +443,13 @@ class Users:
         _op = fresh_operation("remove_user_from_plan")
         _op["method"] = "DELETE"
         _op["path"] = f"/users/{user_id}/plans/{plan_id}"
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
 
     def add_profile_image(self, user_id, file, file_type):
         """Uploads a profile image for the specified user.
