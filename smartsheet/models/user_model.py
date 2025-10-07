@@ -51,6 +51,7 @@ class UserModel:
         self._licensed_sheet_creator = Boolean()
         self._mobile_phone = String()
         self._profile_image = TypedObject(ProfileImage)
+        self._provisional_expiration_date = Timestamp()
         self._resource_viewer = Boolean()
         self._role = String()
         self._seat_type = EnumeratedValue(SeatType)
@@ -196,6 +197,14 @@ class UserModel:
     @profile_image.setter
     def profile_image(self, value):
         self._profile_image.value = value
+
+    @property
+    def provisional_expiration_date(self):
+        return self._provisional_expiration_date.value
+
+    @provisional_expiration_date.setter
+    def provisional_expiration_date(self, value):
+        self._provisional_expiration_date.value = value
 
     @property
     def resource_viewer(self):

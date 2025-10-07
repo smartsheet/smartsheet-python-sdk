@@ -20,6 +20,7 @@ class UserPlan:
         self._seat_type = EnumeratedValue(SeatType)
         self._seat_type_last_changed_at = Timestamp()
         self._is_internal = Boolean()
+        self._provisional_expiration_date = Timestamp()
 
         if props:
             deserialize(self, props)
@@ -57,6 +58,14 @@ class UserPlan:
     @is_internal.setter
     def is_internal(self, value):
         self._is_internal.value = value
+
+    @property
+    def provisional_expiration_date(self):
+        return self._provisional_expiration_date.value
+
+    @provisional_expiration_date.setter
+    def provisional_expiration_date(self, value):
+        self._provisional_expiration_date.value = value
 
     def to_dict(self):
         return serialize(self)
