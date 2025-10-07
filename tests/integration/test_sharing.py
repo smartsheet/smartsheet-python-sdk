@@ -1,5 +1,5 @@
 import pytest
-import smartsheet
+from smartsheet.exceptions import ApiError
 from smartsheet.models import Share
 
 @pytest.mark.usefixtures("smart_setup")
@@ -20,7 +20,7 @@ class TestSharing:
         sheet_id = smart_setup['sheet_b'].id
         
         # Create a share object
-        share_spec = smart.models.Share({
+        share = Share({
             'email': 'test@example.com',
             'access_level': 'VIEWER'
         })
@@ -29,15 +29,17 @@ class TestSharing:
         action = smart.Sharing.share_asset(
             asset_type='sheet',
             asset_id=sheet_id,
-            shares=[share_spec],
+            shares=[share],
             send_email=False
         )
         
         # Verify the share was created
-        assert action.result is not None
-        assert len(action.result) > 0
-        assert action.result[0].email == 'test@example.com'
-        assert action.result[0].access_level == 'VIEWER'
+        assert isinstance(action.result, list) and action.result
+        if isinstance(action.result, list) and action.result:
+            assert action.result[0].email == 'test@example.com'
+            assert action.result[0].access_level == 'VIEWER'
+        else:
+            pytest.fail(f"Unexpected result type/shape: {type(action.result)} ({action.result})")
         
         # Store the share ID for later tests
         share_id = action.result[0].id
@@ -52,7 +54,7 @@ class TestSharing:
         assert get_action.result.id == share_id
         
         # Test update_share
-        update_share_spec = smart.models.Share({
+        update_share_spec = Share({
             'id': share_id,
             'access_level': 'EDITOR'
         })
@@ -73,7 +75,7 @@ class TestSharing:
         )
         
         # Verify the share was deleted by trying to get it (should raise exception)
-        with pytest.raises(smartsheet.exceptions.ApiError):
+        with pytest.raises(ApiError):
             smart.Sharing.get_asset_share(
                 asset_type='sheet',
                 asset_id=sheet_id,
