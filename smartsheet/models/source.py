@@ -31,7 +31,7 @@ class Source:
         if base_obj is not None:
             self._base = base_obj
 
-        self.allowed_values = {"_type": ["report", "sheet", "sight", "template"]}
+        self.allowed_values = {"_type": ["folder", "report", "sheet", "sight", "template", "workspace"]}
 
         self._id_ = Number()
         self._type_ = String(accept=self.allowed_values["_type"])

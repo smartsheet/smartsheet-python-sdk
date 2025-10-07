@@ -17,16 +17,18 @@
 
 from __future__ import absolute_import
 
-from ..types import Number, TypedList, importlib, json, String
+from typing import TypeVar, Generic, List
+from ..types import String, json, TypedList, importlib
 from ..util import deserialize, serialize
 
+T = TypeVar('T')
 
-class IndexResult:
 
-    """Smartsheet IndexResult data model."""
+class TokenPaginatedResult(Generic[T]):
+    """Smartsheet TokenPaginatedResult data model with generic type support."""
 
     def __init__(self, props=None, dynamic_data_type=None, base_obj=None):
-        """Initialize the IndexResult model."""
+        """Initialize the TokenPaginatedResult model."""
         self._base = None
         if base_obj is not None:
             self._base = base_obj
@@ -36,21 +38,16 @@ class IndexResult:
             self._dynamic_data_type = dynamic_data_type
 
         self._data = TypedList(object)
-        self._page_number = Number()
-        self._page_size = Number()
-        self._total_count = Number()
-        self._total_pages = Number()
         self._last_key = String()
 
         if props:
             deserialize(self, props)
-            # account for alternate variable names from raw API response
 
-        # requests package Response object
         self.request_response = None
+        self.__initialized = True
 
     @property
-    def data(self):
+    def data(self) -> List[T]:
         return self._data
 
     @data.setter
@@ -63,37 +60,6 @@ class IndexResult:
         else:
             self._data = class_(value, self._base)
 
-    @property
-    def page_number(self):
-        return self._page_number.value
-
-    @page_number.setter
-    def page_number(self, value):
-        self._page_number.value = value
-
-    @property
-    def page_size(self):
-        return self._page_size.value
-
-    @page_size.setter
-    def page_size(self, value):
-        self._page_size.value = value
-
-    @property
-    def total_count(self):
-        return self._total_count.value
-
-    @total_count.setter
-    def total_count(self, value):
-        self._total_count.value = value
-
-    @property
-    def total_pages(self):
-        return self._total_pages.value
-
-    @total_pages.setter
-    def total_pages(self, value):
-        self._total_pages.value = value
 
     @property
     def last_key(self):
@@ -102,11 +68,6 @@ class IndexResult:
     @last_key.setter
     def last_key(self, value):
         self._last_key.value = value
-
-    @property
-    def result(self):
-        """Simplify difference between Result and IndexResult"""
-        return self._data
 
     def to_dict(self):
         return serialize(self)
