@@ -18,7 +18,7 @@
 from __future__ import absolute_import
 
 from typing import TypeVar, Generic, List
-from ..types import String, json
+from ..types import String, json, TypedList, importlib
 from ..util import deserialize, serialize
 
 T = TypeVar('T')
@@ -27,13 +27,17 @@ T = TypeVar('T')
 class TokenPaginatedResult(Generic[T]):
     """Smartsheet TokenPaginatedResult data model with generic type support."""
 
-    def __init__(self, props=None, base_obj=None):
+    def __init__(self, props=None, dynamic_data_type=None, base_obj=None):
         """Initialize the TokenPaginatedResult model."""
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        self._data = []
+        self._dynamic_data_type = None
+        if dynamic_data_type is not None:
+            self._dynamic_data_type = dynamic_data_type
+
+        self._data = TypedList(object)
         self._last_key = String()
 
         if props:
@@ -48,7 +52,14 @@ class TokenPaginatedResult(Generic[T]):
 
     @data.setter
     def data(self, value):
-        self._data = value
+        class_ = getattr(
+            importlib.import_module("smartsheet.models"), self._dynamic_data_type
+        )
+        if isinstance(value, list):
+            self._data = [class_(x, self._base) for x in value]
+        else:
+            self._data = class_(value, self._base)
+
 
     @property
     def last_key(self):
