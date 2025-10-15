@@ -38,7 +38,7 @@ class Sharing:
                 return in the response.
             last_key (str): The token from a previous request that will allow this one
                 to pick up where the previous one left off.
-            sharing_include (SharingInclude): Scope of share to include in response
+            sharing_include (ShareScope): Scope of share to include in response
 
         Returns:
             IndexResult
