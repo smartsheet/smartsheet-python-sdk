@@ -19,6 +19,7 @@ from __future__ import absolute_import
 
 # import enums into enum package
 from .access_level import AccessLevel
+from .asset_type import AssetType
 from .attachment_parent_type import AttachmentParentType
 from .attachment_sub_type import AttachmentSubType
 from .attachment_type import AttachmentType
@@ -43,6 +44,7 @@ from .publish_accessible_by import PublishAccessibleBy
 from .schedule_type import ScheduleType
 from .share_scope import ShareScope
 from .share_type import ShareType
+from .sharing_include import SharingInclude
 from .sheet_email_format import SheetEmailFormat
 from .sheet_filter_operator import SheetFilterOperator
 from .sheet_filter_type import SheetFilterType

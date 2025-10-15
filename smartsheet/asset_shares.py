@@ -16,19 +16,7 @@
 # under the License.
 
 import logging
-from enum import Enum
 from . import fresh_operation
-
-
-class AssetType(str, Enum):
-    """Defines the asset types supported by the Sharing API."""
-    SHEET = 'sheet'
-    REPORT = 'report'
-    SIGHT = 'sight'
-    WORKSPACE = 'workspace'
-    COLLECTION = 'collection'
-    FILE = 'file'
-
 
 class Sharing:
     """Class for handling Sharing operations."""
@@ -38,22 +26,19 @@ class Sharing:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def list_asset_shares(self, asset_type, asset_id, page_size=None, page=None, 
-                         include_all=None, include_workspace_shares=False, 
-                         access_api_level=0):
+    def list_asset_shares(self, asset_type, asset_id, max_items=None, last_key=None,
+                         sharing_include=None):
         """Get the list of all Users and Groups to whom the specified asset is
         shared, and their access level.
 
         Args:
             asset_type (AssetType): Type of asset (sheet, report, sight, workspace, etc.)
             asset_id (int): Asset ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-            include_workspace_shares(bool): Include Workspace shares
-            access_api_level (int): Access API level
+            max_items (int): The maximum number of items to
+                return in the response.
+            last_key (str): The token from a previous request that will allow this one
+                to pick up where the previous one left off.
+            sharing_include (SharingInclude): Scope of share to include in response
 
         Returns:
             IndexResult
@@ -63,12 +48,9 @@ class Sharing:
         _op['path'] = '/shares'
         _op['query_params']['assetType'] = asset_type
         _op['query_params']['assetId'] = asset_id
-        _op['query_params']['pageSize'] = page_size
-        _op['query_params']['page'] = page
-        _op['query_params']['includeAll'] = include_all
-        _op['query_params']['accessApiLevel'] = access_api_level
-        if include_workspace_shares:
-            _op['query_params']['include'] = 'workspaceShares'
+        _op['query_params']['maxItems'] = max_items
+        _op['query_params']['lastKey'] = last_key
+        _op['query_params']['sharingInclude'] = sharing_include
 
         expected = ['IndexResult', 'Share']
 
@@ -100,13 +82,13 @@ class Sharing:
 
         return response
 
-    def share_asset(self, asset_type, asset_id, share_obj, send_email=None):
+    def share_asset(self, share_obj, asset_type, asset_id, send_email=None):
         """Share an asset with the specified Users and Groups.
 
         Args:
+            share_obj (Share or list[Share]): Share object or list of Share objects.
             asset_type (AssetType): Type of asset (sheet, report, sight, workspace, etc.)
             asset_id (int): Asset ID
-            share_obj (Share or list[Share]): Share object or list of Share objects.
             send_email (bool): Either true or false to
                 indicate whether or not to notify the user by email. Default
                 is false.
@@ -129,14 +111,14 @@ class Sharing:
 
         return response
 
-    def update_share(self, asset_type, asset_id, share_id, share_obj):
+    def update_share(self, share_obj, asset_type, asset_id, share_id):
         """Update the access level of a User or Group for the specified asset.
 
         Args:
+            share_obj (Share): Share object.
             asset_type (AssetType): Type of asset (sheet, report, sight, workspace, etc.)
             asset_id (int): Asset ID
             share_id (str): Share ID
-            share_obj (Share): Share object.
 
         Returns:
             Result
@@ -155,7 +137,7 @@ class Sharing:
 
         return response
 
-    def delete_share(self, asset_type, asset_id, share_id):
+    def delete_asset_share(self, asset_type, asset_id, share_id):
         """Delete the specified Share.
 
         Args:

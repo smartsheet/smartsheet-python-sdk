@@ -68,7 +68,7 @@ class TestSharing:
         assert update_action.result.access_level == 'EDITOR'
         
         # Test delete_share
-        smart.Sharing.delete_share(
+        smart.Sharing.delete_asset_share(
             asset_type='sheet',
             asset_id=sheet_id,
             share_id=share_id

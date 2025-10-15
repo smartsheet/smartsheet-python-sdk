@@ -29,8 +29,6 @@ from .models.row import Row
 from .models.summary_field import SummaryField
 from .types import TypedList
 from .util import deprecated
-from .sharing import AssetType
-
 
 class Sheets:
 
