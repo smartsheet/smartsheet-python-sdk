@@ -17,6 +17,8 @@
 
 import logging
 from . import fresh_operation
+from .models.enums import ShareScope
+
 
 class Sharing:
     """Class for handling Sharing operations."""
@@ -27,7 +29,7 @@ class Sharing:
         self._log = logging.getLogger(__name__)
 
     def list_asset_shares(self, asset_type, asset_id, max_items=None, last_key=None,
-                         sharing_include=None):
+                          sharing_include: ShareScope = None):
         """Get the list of all Users and Groups to whom the specified asset is
         shared, and their access level.
 
@@ -50,7 +52,7 @@ class Sharing:
         _op['query_params']['assetId'] = asset_id
         _op['query_params']['maxItems'] = max_items
         _op['query_params']['lastKey'] = last_key
-        _op['query_params']['sharingInclude'] = sharing_include
+        _op['query_params']['sharingInclude'] = sharing_include.name if sharing_include else None
 
         expected = ['IndexResult', 'Share']
 
@@ -111,7 +113,7 @@ class Sharing:
 
         return response
 
-    def update_share(self, share_obj, asset_type, asset_id, share_id):
+    def update_asset_share(self, share_obj, asset_type, asset_id, share_id):
         """Update the access level of a User or Group for the specified asset.
 
         Args:
