@@ -61,6 +61,7 @@ jobs:
           smartsheet-sdk-tests/ci_scripts/start_wiremock.sh
       - name: Run mock API tests
         run: |
+          python setup.py sdist bdist_wheel
           coverage run --source=smartsheet -m pytest tests/mock_api/
           coverage lcov
       - name: Coveralls Parallel
