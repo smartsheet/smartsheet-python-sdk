@@ -185,6 +185,7 @@ def deprecated(func):
     @functools.wraps(func)
     def new_func(*args, **kwargs):
         warnings.simplefilter("always", DeprecationWarning)  # turn off filter
+        print("func => {func}")
         warnings.warn(
             f"Call to deprecated function {func.__name__}.",
             category=DeprecationWarning,
