@@ -30,7 +30,6 @@ from .models.summary_field import SummaryField
 from .types import TypedList
 from .util import deprecated
 
-
 class Sheets:
 
     """Class for handling Sheets operations."""
@@ -310,6 +309,7 @@ class Sheets:
 
         return response
 
+    @deprecated("Use sharing.delete_share instead")
     def delete_share(self, sheet_id, share_id):
         """Delete the specified Share.
 
@@ -319,6 +319,9 @@ class Sheets:
 
         Returns:
             Result
+            
+        Deprecated:
+            Use sharing.delete_share instead with assetType=AssetType.SHEET
         """
         _op = fresh_operation("delete_share")
         _op["method"] = "DELETE"
@@ -470,6 +473,7 @@ class Sheets:
 
         return response
 
+    @deprecated("Use sharing.get_asset_share instead")
     def get_share(self, sheet_id, share_id):
         """Get the specified Share.
 
@@ -479,6 +483,9 @@ class Sheets:
 
         Returns:
             Share
+            
+        Deprecated:
+            Use sharing.get_asset_share instead with assetType=AssetType.SHEET
         """
         _op = fresh_operation("get_share")
         _op["method"] = "GET"
@@ -991,6 +998,7 @@ class Sheets:
 
         return response
 
+    @deprecated("Use sharing.share_asset instead")
     def share_sheet(self, sheet_id, share_obj, send_email=None):
         """Share the specified Sheet.
 
@@ -1006,6 +1014,9 @@ class Sheets:
 
         Returns:
             Result
+            
+        Deprecated:
+            Use sharing.share_asset instead with assetType=AssetType.SHEET
         """
         _op = fresh_operation("share_sheet")
         _op["method"] = "POST"
@@ -1120,6 +1131,7 @@ class Sheets:
 
         return response
 
+    @deprecated("Use sharing.update_share instead")
     def update_share(self, sheet_id, share_id, share_obj):
         """Update the access level of a User or Group for the specified Sheet.
 
@@ -1130,6 +1142,9 @@ class Sheets:
 
         Returns:
             Result
+            
+        Deprecated:
+            Use sharing.update_share instead with assetType=AssetType.SHEET
         """
         if not all(val is not None for val in ["sheet_id", "share_id", "share_obj"]):
             raise ValueError(
