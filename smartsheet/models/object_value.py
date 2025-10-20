@@ -49,7 +49,7 @@ OBJECT_VALUE = {
     ]
 }
 
-_typeToName = {
+_TYPE_TO_NAME = {
     DATE: "DATE",
     DATETIME: "DATETIME",
     ABSTRACT_DATETIME: "ABSTRACT_DATETIME",
@@ -60,7 +60,7 @@ _typeToName = {
     MULTI_PICKLIST: "MULTI_PICKLIST",
 }
 
-_nameToType = {
+_NAME_TO_TYPE = {
     "DATE": DATE,
     "DATETIME": DATETIME,
     "ABSTRACT_DATETIME": ABSTRACT_DATETIME,
@@ -73,7 +73,7 @@ _nameToType = {
 
 
 def enum_object_value_type(object_type=None):
-    return _nameToType.get(object_type)
+    return _NAME_TO_TYPE.get(object_type)
 
 
 class ObjectValue:
@@ -96,7 +96,7 @@ class ObjectValue:
     @object_type.setter
     def object_type(self, value):
         if isinstance(value, six.string_types):
-            self._object_type = _nameToType.get(value)
+            self._object_type = _NAME_TO_TYPE.get(value)
         else:
             self._object_type = value
 
@@ -117,7 +117,7 @@ class ObjectValue:
                 elif serialized is not None:
                     retval[camel_case] = serialized
 
-        retval["objectType"] = _typeToName.get(self._object_type)
+        retval["objectType"] = _TYPE_TO_NAME.get(self._object_type)
         return retval
 
     def to_dict(self):

@@ -309,7 +309,7 @@ class Sheets:
 
         return response
 
-    @deprecated("Use sharing.delete_share instead")
+    @deprecated
     def delete_share(self, sheet_id, share_id):
         """Delete the specified Share.
 
@@ -319,7 +319,7 @@ class Sheets:
 
         Returns:
             Result
-            
+
         Deprecated:
             Use sharing.delete_share instead with assetType=AssetType.SHEET
         """
@@ -473,7 +473,7 @@ class Sheets:
 
         return response
 
-    @deprecated("Use sharing.get_asset_share instead")
+    @deprecated
     def get_share(self, sheet_id, share_id):
         """Get the specified Share.
 
@@ -483,7 +483,7 @@ class Sheets:
 
         Returns:
             Share
-            
+
         Deprecated:
             Use sharing.get_asset_share instead with assetType=AssetType.SHEET
         """
@@ -998,7 +998,7 @@ class Sheets:
 
         return response
 
-    @deprecated("Use sharing.share_asset instead")
+    @deprecated
     def share_sheet(self, sheet_id, share_obj, send_email=None):
         """Share the specified Sheet.
 
@@ -1014,7 +1014,7 @@ class Sheets:
 
         Returns:
             Result
-            
+
         Deprecated:
             Use sharing.share_asset instead with assetType=AssetType.SHEET
         """
@@ -1131,7 +1131,7 @@ class Sheets:
 
         return response
 
-    @deprecated("Use sharing.update_share instead")
+    @deprecated
     def update_share(self, sheet_id, share_id, share_obj):
         """Update the access level of a User or Group for the specified Sheet.
 
@@ -1142,7 +1142,7 @@ class Sheets:
 
         Returns:
             Result
-            
+
         Deprecated:
             Use sharing.update_share instead with assetType=AssetType.SHEET
         """
