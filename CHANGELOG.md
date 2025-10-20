@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
- - Fix minor lint issue
- - Use pytest directly to run tests
- - Fix @deprecated decorator use.
+- Fix minor lint issue
+- Use pytest directly to run tests
+- Fix @deprecated decorator use.
 
 ## [3.3.0] - 2025-10-07
 
