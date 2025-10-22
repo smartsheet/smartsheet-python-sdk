@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/smartsheet/smartsheet-python-sdk/actions/workflows/test-build.yaml/badge.svg)](https://github.com/smartsheet/smartsheet-python-sdk/actions/workflows/test-build.yaml) [![Coverage Status](https://coveralls.io/repos/github/smartsheet/smartsheet-python-sdk/badge.svg?branch=mainline)](https://coveralls.io/github/smartsheet/smartsheet-python-sdk?branch=mainline) [![PyPI version](https://badge.fury.io/py/smartsheet-python-sdk.svg)](https://badge.fury.io/py/smartsheet-python-sdk)
 
-A library for connecting to the [Smartsheet API](https://smartsheet.redoc.ly) from Python applications.
+A library for connecting to the [Smartsheet API](https://developers.smartsheet.com/api/smartsheet/) from Python applications.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ pip install smartsheet-python-sdk
 
 To get started with the Smartsheet Python SDK:
 
-1. Set **SMARTSHEET_ACCESS_TOKEN** in your environment, using your Smartsheet API key. Find out more about [Authentication and Access Tokens](https://smartsheet.redoc.ly/#section/API-Basics/Authentication-and-Access-Tokens) in the Smartsheet API Documentation. You can generate an access token in Smartsheet UI under Account > Personal Settings > API Access.
+1. Set **SMARTSHEET_ACCESS_TOKEN** in your environment, using your Smartsheet API key. Find out more about [Authentication and Access Tokens](https://developers.smartsheet.com/api/smartsheet/guides/basics/authentication) in the Smartsheet API Documentation. You can generate an access token in Smartsheet UI under Account > Personal Settings > API Access.
 
 2. Install the Smartsheet Python SDK (see the installation instructions above)
 
@@ -45,7 +45,7 @@ Use the following resources to learn more about the SDK capabilities:
 
 1. [Smartsheet Python SDK sample project](https://github.com/smartsheet-samples/python-read-write-sheet)
 2. [Python SDK documentation](https://smartsheet.github.io/smartsheet-python-sdk/)
-3. [Smartsheet API Documentation](https://smartsheet.redoc.ly)
+3. [Smartsheet API Documentation](https://developers.smartsheet.com/api/smartsheet/)
 
 ## Advanced Topics
 

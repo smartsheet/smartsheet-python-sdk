@@ -19,6 +19,7 @@ from __future__ import absolute_import
 
 # import enums into enum package
 from .access_level import AccessLevel
+from .asset_type import AssetType
 from .attachment_parent_type import AttachmentParentType
 from .attachment_sub_type import AttachmentSubType
 from .attachment_type import AttachmentType

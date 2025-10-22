@@ -48,7 +48,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install certifi enum34 requests six python-dateutil coverage coveralls[yaml] pytest pytest-instafail requests-toolbelt
+          pip install certifi enum34 requests six python-dateutil coverage coveralls[yaml] pytest pytest-instafail requests-toolbelt setuptools-scm
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Clone smartsheet/smartsheet-sdk-tests PUBLIC repository
         uses: GuillaumeFalourd/clone-github-repo-action@v2
@@ -61,14 +61,14 @@ jobs:
           smartsheet-sdk-tests/ci_scripts/start_wiremock.sh
       - name: Run mock API tests
         run: |
-          coverage run --source=smartsheet setup.py test -a tests/mock_api/
+          coverage run --source=smartsheet -m pytest tests/mock_api/
           coverage lcov
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: run-${{ matrix.python-version }}
-          path-to-lcov: "coverage.lcov"          
+          path-to-lcov: "coverage.lcov"
           parallel: true
 
   build-packages-test:
@@ -80,7 +80,7 @@ jobs:
         uses: actions/setup-python@v4
       - name: Install build packages
         run: |
-          pip install enum34 requests six python-dateutil setuptools-scm==7.1.0 gitchangelog mako wheel twine 
+          pip install enum34 requests six python-dateutil setuptools-scm==7.1.0 gitchangelog mako wheel twine
       - name: Build distribution
         run: |
           python setup.py sdist bdist_wheel
@@ -99,8 +99,8 @@ jobs:
       - name: Install documentation tools
         run: |
           pip install sphinx sphinx_rtd_theme setuptools-scm
-      - name: Generate API documentation 
-        run: sphinx-apidoc -o docs-source smartsheet 
+      - name: Generate API documentation
+        run: sphinx-apidoc -o docs-source smartsheet
       - name: Generate HTML
         run: sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
       - name: Upload artifacts

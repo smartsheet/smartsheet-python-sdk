@@ -5,10 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] - 2025-10-07
+
+### Added
+
+- Add provisionalExpirationDate field to the user_model and user_plan models
+
+## [3.4.0] - 2025-10-20
+
+### Fixed
+
+- Fix minor lint issue
+- Use pytest directly to run tests
+- Fix @deprecated decorator use.
+
 ## [3.3.0] - 2025-10-07
 
 ### Added
-- Add provisionalExpirationDate field to the user_model and user_plan models
+
+- Support for new asset-based sharing endpoints in a new `sharing` module:
+  - `list_asset_shares`: List all shares for a specified asset
+  - `get_asset_share`: Get a specific share for a specified asset
+  - `share_asset`: Share an asset with specified users and/or groups
+  - `update_share`: Update a specific share for a specified asset
+  - `delete_share`: Delete a specific share for a specified asset
+- Added `AssetType` enum for use with sharing endpoints
+
+### Updated
+
+- Deprecated old sharing endpoints in the `sheets` module
+- Added deprecation notices and migration examples in documentation
 
 ## [3.2.0] - 2025-09-25
 
