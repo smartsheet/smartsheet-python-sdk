@@ -629,8 +629,13 @@ class OperationErrorResult:
             expected (list): Dashed expectations
         """
         # look up name of the error
-        error_payload = self.resp.json()
-        error_code = error_payload["errorCode"]
+        error_payload = {}
+        try:
+            error_payload = self.resp.json()
+        except json.JSONDecodeError:
+            # Do not fail if the response is not JSON
+            pass
+        error_code = error_payload.get("errorCode", 0)
         try:
             error_name = OperationErrorResult.error_lookup[error_code]["name"]
             recommendation = OperationErrorResult.error_lookup[error_code][
@@ -638,6 +643,7 @@ class OperationErrorResult:
             ]
             should_retry = OperationErrorResult.error_lookup[error_code]["should_retry"]
         except:
+            # If error_code is present in the response but not in the lookup, default to ApiError
             error_name = OperationErrorResult.error_lookup[0]["name"]
             recommendation = OperationErrorResult.error_lookup[0]["recommendation"]
             should_retry = OperationErrorResult.error_lookup[0]["should_retry"]
@@ -649,8 +655,8 @@ class OperationErrorResult:
                         "name": error_name,
                         "status_code": self.resp.status_code,
                         "code": error_code,
-                        "message": error_payload["message"],
-                        "ref_id": error_payload["refId"],
+                        "message": error_payload.get("message"),
+                        "ref_id": error_payload.get("refId"),
                         "recommendation": recommendation,
                         "should_retry": should_retry,
                     }
