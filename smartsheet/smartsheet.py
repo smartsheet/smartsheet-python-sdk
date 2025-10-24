@@ -636,9 +636,17 @@ class OperationErrorResult:
             # Do not fail if the response is not JSON
             pass
         error_code = error_payload.get("errorCode", 0)
-        error_name = OperationErrorResult.error_lookup[error_code]["name"]
-        recommendation = OperationErrorResult.error_lookup[error_code]["recommendation"]
-        should_retry = OperationErrorResult.error_lookup[error_code]["should_retry"]
+        try:
+            error_name = OperationErrorResult.error_lookup[error_code]["name"]
+            recommendation = OperationErrorResult.error_lookup[error_code][
+                "recommendation"
+            ]
+            should_retry = OperationErrorResult.error_lookup[error_code]["should_retry"]
+        except:
+            # If error_code is present in the response but not in the lookup, default to ApiError
+            error_name = OperationErrorResult.error_lookup[0]["name"]
+            recommendation = OperationErrorResult.error_lookup[0]["recommendation"]
+            should_retry = OperationErrorResult.error_lookup[0]["should_retry"]
 
         obj = Error(
             {
