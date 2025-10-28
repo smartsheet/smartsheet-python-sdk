@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.5.1] - 2025-10-28
+
+### Fixed
+
+- Rename asset_shares.py to sharing.py so that Smartsheet.__getattr__ can pick it up.
+
 ## [3.5.0] - 2025-10-24
 
 ### Added
