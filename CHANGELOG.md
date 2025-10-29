@@ -17,7 +17,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add AssetSharesPaginatedResult for list asset shares.
 - Add mock api tests for sharing endpoints.
 
-
 ## [3.5.1] - 2025-10-28
 
 ### Fixed
