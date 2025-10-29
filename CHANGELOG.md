@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.5.2] - 2025-10-29
+
+### Fixed
+
+- Fix list_asset_shares to return AssetSharesPaginatedResult.
+- Fix update_asset_share to return Share
+
+## Added
+
+- Add AssetSharesPaginatedResult for list asset shares.
+- Add mock api tests for sharing endpoints.
+
 ## [3.5.1] - 2025-10-28
 
 ### Fixed

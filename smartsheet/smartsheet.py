@@ -185,6 +185,8 @@ class Smartsheet:
         self._api_base = api_base
         self._assume_user = None
         self._test_scenario_name = None
+        self._wiremock_test_name = None
+        self._wiremock_request_id = None
         self._change_agent = None
 
     def assume_user(self, email=None):
@@ -226,6 +228,18 @@ class Smartsheet:
             name (str): The name of the test scenario.
         """
         self._test_scenario_name = name
+
+    def with_wiremock_test_case(self, test_name: str, request_id: str):
+        """
+        Configure client with x-test-name and x-request-id headers.
+        Used for wiremock test cases.
+
+        Args:
+            test_name (str): The name of the wiremock test case.
+            request_id (str): The unique request ID for this test scenario.
+        """
+        self._wiremock_test_name = test_name
+        self._wiremock_request_id = request_id
 
     def with_change_agent(self, change_agent):
         """
@@ -437,6 +451,9 @@ class Smartsheet:
                 del prepped_request.headers["Api-Scenario"]
             except KeyError:
                 pass
+        if self._wiremock_test_name is not None and self._wiremock_request_id is not None:
+            prepped_request.headers["X-Test-Name"] = self._wiremock_test_name
+            prepped_request.headers["X-Request-ID"] = self._wiremock_request_id
 
         if self._change_agent is not None:
             prepped_request.headers.update(

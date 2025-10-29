@@ -1,7 +1,7 @@
 # pylint: disable=C0103,W0232
 
 from smartsheet.models import Column
-from mock_api_test_helper import MockApiTestHelper, clean_api_error
+from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
 class TestMockApiColumns(MockApiTestHelper):
     @clean_api_error
