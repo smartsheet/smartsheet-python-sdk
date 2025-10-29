@@ -17,14 +17,15 @@
 
 from __future__ import absolute_import
 
-from typing import TypeVar, Generic, List
+from typing import TypeVar, List
 from ..types import String, json, TypedList, importlib
 from ..util import deserialize, serialize
+from . import Share
 
 T = TypeVar('T')
 
 
-class AssetSharesPaginatedResult(Generic[T]):
+class AssetSharesPaginatedResult:
     """Smartsheet AssetSharesPaginatedResult data model with generic type support.
     Use only for deserializing the response from GET /2.0/shares.
     Created because GET /2.0/shares returns items in the response body instead of data.
@@ -51,7 +52,7 @@ class AssetSharesPaginatedResult(Generic[T]):
         self.__initialized = True
 
     @property
-    def items(self) -> List[T]:
+    def items(self) -> List[Share]:
         return self._items
 
     @items.setter
