@@ -3,7 +3,7 @@
 import pytest
 from smartsheet.models import Sheet, ExplicitNull
 from smartsheet.exceptions import ApiError
-from mock_api_test_helper import MockApiTestHelper, clean_api_error
+from .mock_api_test_helper import MockApiTestHelper, clean_api_error
 
 
 class TestMockApiSheets(MockApiTestHelper):

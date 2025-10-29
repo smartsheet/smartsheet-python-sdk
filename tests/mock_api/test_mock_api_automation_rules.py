@@ -2,7 +2,7 @@
 
 import smartsheet
 import pytest
-from mock_api_test_helper import MockApiTestHelper, clean_api_error
+from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
 
 class TestMockApiSheets(MockApiTestHelper):

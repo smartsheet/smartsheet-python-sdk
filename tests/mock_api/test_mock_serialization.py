@@ -8,7 +8,7 @@ from smartsheet.models import (
 )
 from smartsheet.models.object_value import DURATION
 
-from mock_api_test_helper import MockApiTestHelper, clean_api_error
+from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
 class TestMockSerialization(MockApiTestHelper):
     @clean_api_error

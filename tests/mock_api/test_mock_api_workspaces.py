@@ -3,7 +3,7 @@
 import pytest
 from smartsheet.models import Workspace, PaginatedChildrenResult, Folder, Sheet, Sight, Report
 from smartsheet.exceptions import ApiError
-from mock_api_test_helper import MockApiTestHelper, clean_api_error
+from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
 
 class TestMockApiWorkspaces(MockApiTestHelper):

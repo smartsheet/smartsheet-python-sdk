@@ -4,7 +4,7 @@ import pytest
 from smartsheet.models import Row, PredecessorList, Duration, ExplicitNull
 from smartsheet.exceptions import ApiError
 
-from mock_api_test_helper import MockApiTestHelper, clean_api_error
+from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
 
 class TestMockApiRows(MockApiTestHelper):

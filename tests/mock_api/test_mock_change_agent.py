@@ -1,7 +1,7 @@
 # pylint: disable=C0103,W0232
 
 from smartsheet.models import Sheet
-from mock_api_test_helper import MockApiTestHelper, clean_api_error
+from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
 
 class TestMockChangeAgent(MockApiTestHelper):
@@ -24,4 +24,3 @@ class TestMockChangeAgent(MockApiTestHelper):
         response = self.client.Home.create_sheet(new_sheet)
 
         assert response.message == "SUCCESS"
-

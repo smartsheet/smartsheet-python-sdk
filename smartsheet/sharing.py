@@ -43,7 +43,7 @@ class Sharing:
             sharing_include (ShareScope): Scope of share to include in response
 
         Returns:
-            IndexResult
+            AssetSharesPaginatedResult[Share]
         """
         _op = fresh_operation('list_asset_shares')
         _op['method'] = 'GET'
@@ -54,7 +54,7 @@ class Sharing:
         _op['query_params']['lastKey'] = last_key
         _op['query_params']['sharingInclude'] = sharing_include.name if sharing_include else None
 
-        expected = ['IndexResult', 'Share']
+        expected = ['AssetSharesPaginatedResult', 'Share']
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -132,7 +132,7 @@ class Sharing:
         _op['query_params']['assetId'] = asset_id
         _op['json'] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = 'Share'
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
