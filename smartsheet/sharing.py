@@ -43,7 +43,7 @@ class Sharing:
             sharing_include (ShareScope): Scope of share to include in response
 
         Returns:
-            AssetSharesPaginatedResult[Share]
+            AssetSharesPaginatedResult
         """
         _op = fresh_operation('list_asset_shares')
         _op['method'] = 'GET'
