@@ -4,7 +4,7 @@ from urllib.parse import urlparse, parse_qs
 
 import pytest
 from smartsheet.models.enums import AssetType, AccessLevel, ShareScope, ShareType
-from smartsheet.models import Share, AssetSharesPaginatedResult, Error
+from smartsheet.models import AssetShare, AssetSharesPaginatedResult, Error
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
@@ -16,8 +16,8 @@ TEST_ASSET_ID = "AAAMCmYGFOeE"
 TEST_SHARE_ID = "AAABbbbCccDdd"
 TEST_ASSET_TYPE = AssetType.SHEET
 TEST_EMAIL = "test.email@smartsheet.com"
-TEST_USER_ID = 9876543210
-TEST_GROUP_ID = 1234567890
+TEST_USER_ID = "9876543210"
+TEST_GROUP_ID = "1234567890"
 TEST_NAME = "Example Name"
 TEST_SHARE_TYPE = ShareType.USER
 TEST_ACCESS_LEVEL = AccessLevel.ADMIN
@@ -25,11 +25,17 @@ TEST_SCOPE = ShareScope.ITEM
 TEST_MAX_ITEMS = 100
 TEST_LAST_KEY = "test_last_key"
 TEST_LAST_KEY_RESPONSE = "abcDefGhIjKlMnOpQrStUvWxYz"
+TEST_ACCESS_LEVEL_STRING = "ADMIN"
+TEST_SUCCESS_MESSAGE = "SUCCESS"
+TEST_SUCCESS_RESULT_CODE = 0
+TEST_ASSET_TYPE_STRING = "sheet"
+TEST_SCOPE_STRING = "ITEM"
+TEST_SEND_EMAIL_FALSE = "False"
 
 
 def assert_share_properties(share, include_name=True):
     """Helper function to assert common share properties."""
-    assert isinstance(share, Share)
+    assert isinstance(share, AssetShare)
     assert share.id == TEST_ASSET_ID
     assert share.email == TEST_EMAIL
     assert share.user_id == TEST_USER_ID
@@ -45,8 +51,8 @@ def assert_share_properties(share, include_name=True):
 
 @pytest.fixture
 def test_share():
-    """Pytest fixture to create a test Share object."""
-    return Share({"email": TEST_EMAIL, "access_level": AccessLevel.VIEWER})
+    """Pytest fixture to create a test AssetShare object."""
+    return AssetShare({"email": TEST_EMAIL, "access_level": TEST_ACCESS_LEVEL})
 
 
 def test_list_asset_shares_generated_url_is_correct():
@@ -56,22 +62,22 @@ def test_list_asset_shares_generated_url_is_correct():
     )
 
     client.Sharing.list_asset_shares(
-        asset_type=AssetType.SHEET,
-        asset_id="AAAMCmYGFOeE",
-        max_items=100,
-        last_key="test_last_key",
-        sharing_include=ShareScope.ITEM,
+        asset_type=TEST_ASSET_TYPE,
+        asset_id=TEST_ASSET_ID,
+        max_items=TEST_MAX_ITEMS,
+        last_key=TEST_LAST_KEY,
+        sharing_include=TEST_SCOPE,
     )
 
     wiremock_request = get_wiremock_request(request_id)
     url = urlparse(wiremock_request["absoluteUrl"])
     query = parse_qs(url.query)
     assert query == {
-        "assetType": ["sheet"],
-        "assetId": ["AAAMCmYGFOeE"],
-        "maxItems": ["100"],
-        "lastKey": ["test_last_key"],
-        "sharingInclude": ["ITEM"],
+        "assetType": [TEST_ASSET_TYPE_STRING],
+        "assetId": [TEST_ASSET_ID],
+        "maxItems": [str(TEST_MAX_ITEMS)],
+        "lastKey": [TEST_LAST_KEY],
+        "sharingInclude": [TEST_SCOPE_STRING],
     }
 
 
@@ -82,25 +88,25 @@ def test_list_asset_shares_all_response_properties():
     )
 
     response = client.Sharing.list_asset_shares(
-        asset_type=AssetType.SHEET, asset_id="AAAMCmYGFOeE"
+        asset_type=TEST_ASSET_TYPE, asset_id=TEST_ASSET_ID
     )
 
     assert isinstance(response, AssetSharesPaginatedResult)
 
-    assert response.last_key == "abcDefGhIjKlMnOpQrStUvWxYz"
+    assert response.last_key == TEST_LAST_KEY_RESPONSE
     assert len(response.items) == 1
 
     share = response.items[0]
-    assert isinstance(share, Share)
+    assert isinstance(share, AssetShare)
 
-    assert share.id == "AAAMCmYGFOeE"
-    assert share.email == "test.email@smartsheet.com"
-    assert share.user_id == 9876543210
-    assert share.group_id == 1234567890
-    assert share.name == "Example Name"
-    assert share.type == ShareType.USER
-    assert share.access_level == AccessLevel.ADMIN
-    assert share.scope == ShareScope.ITEM
+    assert share.id == TEST_ASSET_ID
+    assert share.email == TEST_EMAIL
+    assert share.user_id == TEST_USER_ID
+    assert share.group_id == TEST_GROUP_ID
+    assert share.name == TEST_NAME
+    assert share.type == TEST_SHARE_TYPE
+    assert share.access_level == TEST_ACCESS_LEVEL
+    assert share.scope == TEST_SCOPE
 
 
 def test_list_asset_shares_required_response_properties():
@@ -110,7 +116,7 @@ def test_list_asset_shares_required_response_properties():
     )
 
     response = client.Sharing.list_asset_shares(
-        asset_type=AssetType.SHEET, asset_id="AAAMCmYGFOeE"
+        asset_type=TEST_ASSET_TYPE, asset_id=TEST_ASSET_ID
     )
 
     assert isinstance(response, AssetSharesPaginatedResult)
@@ -119,16 +125,16 @@ def test_list_asset_shares_required_response_properties():
     assert len(response.items) == 1
 
     share = response.items[0]
-    assert isinstance(share, Share)
+    assert isinstance(share, AssetShare)
 
-    assert share.id == "AAAMCmYGFOeE"
-    assert share.email == "test.email@smartsheet.com"
-    assert share.user_id == 9876543210
-    assert share.group_id == 1234567890
+    assert share.id == TEST_ASSET_ID
+    assert share.email == TEST_EMAIL
+    assert share.user_id == TEST_USER_ID
+    assert share.group_id == TEST_GROUP_ID
     assert share.name is None
-    assert share.type == ShareType.USER
-    assert share.access_level == AccessLevel.ADMIN
-    assert share.scope == ShareScope.ITEM
+    assert share.type == TEST_SHARE_TYPE
+    assert share.access_level == TEST_ACCESS_LEVEL
+    assert share.scope == TEST_SCOPE
 
 def test_list_asset_shares_error_4xx():
     request_id = uuid.uuid4().hex
@@ -137,11 +143,11 @@ def test_list_asset_shares_error_4xx():
     )
 
     response = client.Sharing.list_asset_shares(
-        asset_type=AssetType.SHEET,
-        asset_id="AAAMCmYGFOeE",
-        max_items=100,
-        last_key="test_last_key",
-        sharing_include=ShareScope.ITEM,
+        asset_type=TEST_ASSET_TYPE,
+        asset_id=TEST_ASSET_ID,
+        max_items=TEST_MAX_ITEMS,
+        last_key=TEST_LAST_KEY,
+        sharing_include=TEST_SCOPE,
     )
 
     assert isinstance(response, Error)
@@ -153,11 +159,11 @@ def test_list_asset_shares_error_5xx():
     )
 
     response = client.Sharing.list_asset_shares(
-        asset_type=AssetType.SHEET,
-        asset_id="AAAMCmYGFOeE",
-        max_items=100,
-        last_key="test_last_key",
-        sharing_include=ShareScope.ITEM,
+        asset_type=TEST_ASSET_TYPE,
+        asset_id=TEST_ASSET_ID,
+        max_items=TEST_MAX_ITEMS,
+        last_key=TEST_LAST_KEY,
+        sharing_include=TEST_SCOPE,
     )
 
     assert isinstance(response, Error)
@@ -177,7 +183,7 @@ def test_get_asset_share_generated_url_is_correct():
     assert url.path == f'/2.0/shares/{TEST_SHARE_ID}'
     query = parse_qs(url.query)
     assert query == {
-        "assetType": ["sheet"],
+        "assetType": [TEST_ASSET_TYPE_STRING],
         "assetId": [TEST_ASSET_ID],
     }
 
@@ -248,9 +254,9 @@ def test_share_asset_generated_url_is_correct(test_share):
     assert url.path == '/2.0/shares'
     query = parse_qs(url.query)
     assert query == {
-        "assetType": ["sheet"],
+        "assetType": [TEST_ASSET_TYPE_STRING],
         "assetId": [TEST_ASSET_ID],
-        "sendEmail": ["False"]
+        "sendEmail": [TEST_SEND_EMAIL_FALSE]
     }
 
 def test_share_asset_all_response_properties(test_share):
@@ -275,7 +281,7 @@ def test_share_asset_all_response_properties(test_share):
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
-    assert body == {"accessLevel": "VIEWER", "email": TEST_EMAIL}
+    assert body == {"accessLevel": TEST_ACCESS_LEVEL_STRING, "email": TEST_EMAIL}
 
 
 def test_share_multiple_assets_all_response_properties(test_share):
@@ -302,7 +308,7 @@ def test_share_multiple_assets_all_response_properties(test_share):
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
-    assert body == [{"accessLevel": "VIEWER", "email": TEST_EMAIL}]
+    assert body == [{"accessLevel": TEST_ACCESS_LEVEL_STRING, "email": TEST_EMAIL}]
 
 
 
@@ -362,7 +368,7 @@ def test_update_asset_share_generated_url_is_correct():
         "/sharing/update-asset-share/all-response-body-properties", request_id
     )
 
-    share = Share({"access_level": AccessLevel.EDITOR})
+    share = AssetShare({"access_level": TEST_ACCESS_LEVEL})
 
     client.Sharing.update_asset_share(
         share_obj=share,
@@ -376,7 +382,7 @@ def test_update_asset_share_generated_url_is_correct():
     assert url.path == f'/2.0/shares/{TEST_SHARE_ID}'
     query = parse_qs(url.query)
     assert query == {
-        "assetType": ["sheet"],
+        "assetType": [TEST_ASSET_TYPE_STRING],
         "assetId": [TEST_ASSET_ID],
     }
 
@@ -386,7 +392,7 @@ def test_update_asset_share_all_response_properties():
         "/sharing/update-asset-share/all-response-body-properties", request_id
     )
 
-    share = Share({"access_level": AccessLevel.EDITOR})
+    share = AssetShare({"access_level": TEST_ACCESS_LEVEL})
 
     response = client.Sharing.update_asset_share(
         share_obj=share,
@@ -395,7 +401,7 @@ def test_update_asset_share_all_response_properties():
         share_id=TEST_SHARE_ID,
     )
 
-    # Update returns the Share object directly, not wrapped in result
+    # Update returns the AssetShare object directly, not wrapped in result
     assert_share_properties(response, include_name=True)
 
 
@@ -405,7 +411,7 @@ def test_update_asset_share_required_response_properties():
         "/sharing/update-asset-share/required-response-body-properties", request_id
     )
 
-    share = Share({"access_level": TEST_ACCESS_LEVEL})
+    share = AssetShare({"access_level": TEST_ACCESS_LEVEL})
 
     response = client.Sharing.update_asset_share(
         share_obj=share,
@@ -414,7 +420,7 @@ def test_update_asset_share_required_response_properties():
         share_id=TEST_SHARE_ID,
     )
 
-    # Update returns the Share object directly, not wrapped in result
+    # Update returns the AssetShare object directly, not wrapped in result
     assert_share_properties(response, include_name=False)
 
 def test_update_asset_share_error_4xx():
@@ -423,7 +429,7 @@ def test_update_asset_share_error_4xx():
         "/errors/400-response", request_id
     )
 
-    share = Share({"access_level": AccessLevel.EDITOR})
+    share = AssetShare({"access_level": TEST_ACCESS_LEVEL})
 
     response = client.Sharing.update_asset_share(
         share_obj=share,
@@ -440,7 +446,7 @@ def test_update_asset_share_error_5xx():
         "/errors/500-response", request_id
     )
 
-    share = Share({"access_level": AccessLevel.EDITOR})
+    share = AssetShare({"access_level": TEST_ACCESS_LEVEL})
 
     response = client.Sharing.update_asset_share(
         share_obj=share,
@@ -466,7 +472,7 @@ def test_delete_asset_share_generated_url_is_correct():
     assert url.path == f'/2.0/shares/{TEST_SHARE_ID}'
     query = parse_qs(url.query)
     assert query == {
-        "assetType": ["sheet"],
+        "assetType": [TEST_ASSET_TYPE_STRING],
         "assetId": [TEST_ASSET_ID],
     }
 
@@ -480,8 +486,8 @@ def test_delete_asset_share_all_response_properties():
         asset_type=TEST_ASSET_TYPE, asset_id=TEST_ASSET_ID, share_id=TEST_SHARE_ID
     )
 
-    assert response.message == "SUCCESS"
-    assert response.result_code == 0
+    assert response.message == TEST_SUCCESS_MESSAGE
+    assert response.result_code == TEST_SUCCESS_RESULT_CODE
 
 def test_delete_asset_share_error_4xx():
     request_id = uuid.uuid4().hex

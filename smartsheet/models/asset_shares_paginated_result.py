@@ -20,7 +20,7 @@ from __future__ import absolute_import
 from typing import TypeVar, List
 from ..types import String, json, TypedList, importlib
 from ..util import deserialize, serialize
-from . import Share
+from .asset_share import AssetShare
 
 T = TypeVar('T')
 
@@ -52,7 +52,7 @@ class AssetSharesPaginatedResult:
         self.__initialized = True
 
     @property
-    def items(self) -> List[Share]:
+    def items(self) -> List[AssetShare]:
         return self._items
 
     @items.setter
