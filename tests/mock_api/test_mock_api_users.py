@@ -13,7 +13,7 @@ from tests.mock_api.mock_api_test_helper import (
 
 USER_ID = 12345678
 PLAN_ID = 1234567890123456
-LAST_KEY = "abcDefGhIjKlMnOpQrStUvWxYz"
+LAST_KEY = '12345678901234569'
 MAX_ITEMS = 100
 EMAIL = "test.user@smartsheet.com"
 SEAT_TYPE = seat_type.SeatType.MEMBER.value
@@ -57,9 +57,9 @@ def test_list_user_plans_all_response_properties():
     )
 
     assert isinstance(response, TokenPaginatedResult)
-    assert response.last_key == "12345678901234569"
-    assert response.data[0].plan_id == 1234567890123456
-    assert response.data[0].seat_type == "MEMBER"
+    assert response.last_key == LAST_KEY
+    assert response.data[0].plan_id == PLAN_ID
+    assert response.data[0].seat_type == SEAT_TYPE
     assert response.data[0].seat_type_last_changed_at == parser.isoparse(
         "2025-01-01T00:00:00.123456789Z")
     assert response.data[0].provisional_expiration_date == parser.isoparse(
@@ -80,8 +80,8 @@ def test_list_user_plans_required_response_properties():
     )
 
     assert isinstance(response, TokenPaginatedResult)
-    assert response.data[0].plan_id == 1234567890123456
-    assert response.data[0].seat_type == "MEMBER"
+    assert response.data[0].plan_id == PLAN_ID
+    assert response.data[0].seat_type == SEAT_TYPE
     assert response.data[0].seat_type_last_changed_at is None
     assert response.data[0].provisional_expiration_date is None
     assert response.data[0].is_internal is False
@@ -156,7 +156,7 @@ def test_list_users_all_response_properties():
     )
 
     assert isinstance(response, IndexResult)
-    assert response.data[0].seat_type == "MEMBER"
+    assert response.data[0].seat_type == SEAT_TYPE
     assert response.data[0].seat_type_last_changed_at == parser.isoparse(
         "2025-06-14T09:55:30Z")
     assert response.data[0].provisional_expiration_date == parser.isoparse(
@@ -176,7 +176,7 @@ def test_list_users_all_response_properties():
         "2020-10-04T18:32:47Z")
     assert response.data[0].custom_welcome_screen_viewed == parser.isoparse(
         "2020-08-25T12:15:47Z")
-    assert response.data[0].id == 1234567890123456
+    assert response.data[0].id == PLAN_ID
 
 
 def test_list_users_required_response_properties():
@@ -190,7 +190,7 @@ def test_list_users_required_response_properties():
     )
 
     assert isinstance(response, IndexResult)
-    assert response.data[0].seat_type == "MEMBER"
+    assert response.data[0].seat_type == SEAT_TYPE
     assert response.data[0].seat_type_last_changed_at is None
     assert response.data[0].provisional_expiration_date is None
     assert response.data[0].is_internal is True
@@ -206,7 +206,7 @@ def test_list_users_required_response_properties():
     assert response.data[0].sheet_count == -1
     assert response.data[0].last_login is None
     assert response.data[0].custom_welcome_screen_viewed is None
-    assert response.data[0].id == 1234567890123456
+    assert response.data[0].id == PLAN_ID
 
 
 def test_list_users_error_400_response():
