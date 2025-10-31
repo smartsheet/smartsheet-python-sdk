@@ -54,7 +54,7 @@ class Sharing:
         _op['query_params']['lastKey'] = last_key
         _op['query_params']['sharingInclude'] = sharing_include.name if sharing_include else None
 
-        expected = ['AssetSharesPaginatedResult', 'Share']
+        expected = ['AssetSharesPaginatedResult', 'AssetShare']
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -70,7 +70,7 @@ class Sharing:
             share_id (str): Share ID
 
         Returns:
-            Share
+            AssetShare
         """
         _op = fresh_operation('get_asset_share')
         _op['method'] = 'GET'
@@ -78,7 +78,7 @@ class Sharing:
         _op['query_params']['assetType'] = asset_type
         _op['query_params']['assetId'] = asset_id
 
-        expected = 'Share'
+        expected = 'AssetShare'
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -106,7 +106,7 @@ class Sharing:
         _op['query_params']['sendEmail'] = send_email
         _op['json'] = share_obj
 
-        expected = ['Result', 'Share']
+        expected = ['Result', 'AssetShare']
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -132,7 +132,7 @@ class Sharing:
         _op['query_params']['assetId'] = asset_id
         _op['json'] = share_obj
 
-        expected = 'Share'
+        expected = 'AssetShare'
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
