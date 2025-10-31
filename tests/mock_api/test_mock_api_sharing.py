@@ -46,8 +46,8 @@ def assert_share_properties(share, include_name=True):
     assert share.scope == TEST_SCOPE
 
 
-@pytest.fixture
-def test_share():
+@pytest.fixture(name="test_share")
+def test_share_fixture():
     """Pytest fixture to create a test AssetShare object."""
     return AssetShare({"email": TEST_EMAIL, "access_level": TEST_ACCESS_LEVEL})
 
