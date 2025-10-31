@@ -11,7 +11,7 @@ from tests.mock_api.mock_api_test_helper import (
     get_wiremock_request,
 )
 
-USER_ID = 12345678
+ID = 12345678
 PLAN_ID = 1234567890123456
 LAST_KEY = '12345678901234569'
 MAX_ITEMS = 100
@@ -20,6 +20,22 @@ TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
 PAGE = 1
 PAGE_SIZE = 100
 INCLUDE_ALL = False
+FIRST_NAME = "Test"
+LAST_NAME = "User"
+NAME = "Test User"
+ADMIN = True
+LICENSED_SHEET_CREATOR = True
+RESOURCE_VIEWER = True
+GROUP_ADMIN = True
+STATUS = "ACTIVE"
+SHEET_COUNT = -1
+ID_VALUE = PLAN_ID
+SEAT_TYPE_LAST_CHANGED_AT = parser.isoparse("2025-06-14T09:55:30Z")
+PROVISIONAL_EXPIRATION_DATE = parser.isoparse("2026-12-13T12:17:52.525696Z")
+IS_INTERNAL_TRUE = True
+IS_INTERNAL_FALSE = False
+LAST_LOGIN = parser.isoparse("2020-10-04T18:32:47Z")
+CUSTOM_WELCOME_SCREEN_VIEWED = parser.isoparse("2020-08-25T12:15:47Z")
 
 
 def test_list_user_plans_generated_url_is_correct():
@@ -29,7 +45,7 @@ def test_list_user_plans_generated_url_is_correct():
     )
 
     client.Users.list_user_plans(
-        user_id=USER_ID,
+        user_id=ID,
         last_key=LAST_KEY,
         max_items=MAX_ITEMS
     )
@@ -41,7 +57,7 @@ def test_list_user_plans_generated_url_is_correct():
         "lastKey": [LAST_KEY],
         "maxItems": [str(MAX_ITEMS)]
     }
-    assert url.path == f"/2.0/users/{USER_ID}/plans"
+    assert url.path == f"/2.0/users/{ID}/plans"
 
 
 def test_list_user_plans_all_response_properties():
@@ -51,7 +67,7 @@ def test_list_user_plans_all_response_properties():
     )
 
     response = client.Users.list_user_plans(
-        user_id=USER_ID,
+        user_id=ID,
         last_key=LAST_KEY,
         max_items=MAX_ITEMS
     )
@@ -74,7 +90,7 @@ def test_list_user_plans_required_response_properties():
     )
 
     response = client.Users.list_user_plans(
-        user_id=USER_ID,
+        user_id=ID,
         last_key=LAST_KEY,
         max_items=MAX_ITEMS
     )
@@ -94,7 +110,7 @@ def test_list_user_plans_error_400_response():
     )
 
     response = client.Users.list_user_plans(
-        user_id=USER_ID,
+        user_id=ID,
         last_key=LAST_KEY,
         max_items=MAX_ITEMS
     )
@@ -109,7 +125,7 @@ def test_list_user_plans_error_500_reponse():
     )
 
     response = client.Users.list_user_plans(
-        user_id=USER_ID,
+        user_id=ID,
         last_key=LAST_KEY,
         max_items=MAX_ITEMS
     )
@@ -157,26 +173,22 @@ def test_list_users_all_response_properties():
 
     assert isinstance(response, IndexResult)
     assert response.data[0].seat_type == TEST_SEAT_TYPE.value
-    assert response.data[0].seat_type_last_changed_at == parser.isoparse(
-        "2025-06-14T09:55:30Z")
-    assert response.data[0].provisional_expiration_date == parser.isoparse(
-        "2026-12-13T12:17:52.525696Z")
-    assert response.data[0].is_internal is True
-    assert response.data[0].first_name == "Test"
-    assert response.data[0].last_name == "User"
-    assert response.data[0].name == "Test User"
-    assert response.data[0].email == "test.user@smartsheet.com"
-    assert response.data[0].admin is True
-    assert response.data[0].licensed_sheet_creator is True
-    assert response.data[0].resource_viewer is True
-    assert response.data[0].group_admin is True
-    assert response.data[0].status == "ACTIVE"
-    assert response.data[0].sheet_count == -1
-    assert response.data[0].last_login == parser.isoparse(
-        "2020-10-04T18:32:47Z")
-    assert response.data[0].custom_welcome_screen_viewed == parser.isoparse(
-        "2020-08-25T12:15:47Z")
-    assert response.data[0].id == PLAN_ID
+    assert response.data[0].seat_type_last_changed_at == SEAT_TYPE_LAST_CHANGED_AT
+    assert response.data[0].provisional_expiration_date == PROVISIONAL_EXPIRATION_DATE
+    assert response.data[0].is_internal is IS_INTERNAL_TRUE
+    assert response.data[0].first_name == FIRST_NAME
+    assert response.data[0].last_name == LAST_NAME
+    assert response.data[0].name == NAME
+    assert response.data[0].email == EMAIL
+    assert response.data[0].admin is ADMIN
+    assert response.data[0].licensed_sheet_creator is LICENSED_SHEET_CREATOR
+    assert response.data[0].resource_viewer is RESOURCE_VIEWER
+    assert response.data[0].group_admin is GROUP_ADMIN
+    assert response.data[0].status == STATUS
+    assert response.data[0].sheet_count == SHEET_COUNT
+    assert response.data[0].last_login == LAST_LOGIN
+    assert response.data[0].custom_welcome_screen_viewed == CUSTOM_WELCOME_SCREEN_VIEWED
+    assert response.data[0].id == ID_VALUE
 
 
 def test_list_users_required_response_properties():
@@ -193,20 +205,20 @@ def test_list_users_required_response_properties():
     assert response.data[0].seat_type == TEST_SEAT_TYPE.value
     assert response.data[0].seat_type_last_changed_at is None
     assert response.data[0].provisional_expiration_date is None
-    assert response.data[0].is_internal is True
-    assert response.data[0].first_name == "Test"
-    assert response.data[0].last_name == "User"
-    assert response.data[0].name == "Test User"
-    assert response.data[0].email == "test.user@smartsheet.com"
-    assert response.data[0].admin is True
-    assert response.data[0].licensed_sheet_creator is True
-    assert response.data[0].resource_viewer is True
-    assert response.data[0].group_admin is True
-    assert response.data[0].status == "ACTIVE"
-    assert response.data[0].sheet_count == -1
+    assert response.data[0].is_internal is IS_INTERNAL_TRUE
+    assert response.data[0].first_name == FIRST_NAME
+    assert response.data[0].last_name == LAST_NAME
+    assert response.data[0].name == NAME
+    assert response.data[0].email == EMAIL
+    assert response.data[0].admin is ADMIN
+    assert response.data[0].licensed_sheet_creator is LICENSED_SHEET_CREATOR
+    assert response.data[0].resource_viewer is RESOURCE_VIEWER
+    assert response.data[0].group_admin is GROUP_ADMIN
+    assert response.data[0].status == STATUS
+    assert response.data[0].sheet_count == SHEET_COUNT
     assert response.data[0].last_login is None
     assert response.data[0].custom_welcome_screen_viewed is None
-    assert response.data[0].id == PLAN_ID
+    assert response.data[0].id == ID_VALUE
 
 
 def test_list_users_error_400_response():
