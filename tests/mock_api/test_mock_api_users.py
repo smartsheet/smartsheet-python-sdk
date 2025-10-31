@@ -16,7 +16,7 @@ PLAN_ID = 1234567890123456
 LAST_KEY = '12345678901234569'
 MAX_ITEMS = 100
 EMAIL = "test.user@smartsheet.com"
-SEAT_TYPE = seat_type.SeatType.MEMBER.value
+TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
 PAGE = 1
 PAGE_SIZE = 100
 INCLUDE_ALL = False
@@ -59,7 +59,7 @@ def test_list_user_plans_all_response_properties():
     assert isinstance(response, TokenPaginatedResult)
     assert response.last_key == LAST_KEY
     assert response.data[0].plan_id == PLAN_ID
-    assert response.data[0].seat_type == SEAT_TYPE
+    assert response.data[0].seat_type == TEST_SEAT_TYPE.value
     assert response.data[0].seat_type_last_changed_at == parser.isoparse(
         "2025-01-01T00:00:00.123456789Z")
     assert response.data[0].provisional_expiration_date == parser.isoparse(
@@ -81,7 +81,7 @@ def test_list_user_plans_required_response_properties():
 
     assert isinstance(response, TokenPaginatedResult)
     assert response.data[0].plan_id == PLAN_ID
-    assert response.data[0].seat_type == SEAT_TYPE
+    assert response.data[0].seat_type == TEST_SEAT_TYPE.value
     assert response.data[0].seat_type_last_changed_at is None
     assert response.data[0].provisional_expiration_date is None
     assert response.data[0].is_internal is False
@@ -126,7 +126,7 @@ def test_list_users_generated_url_is_correct():
 
     client.Users.list_users(
         email=EMAIL,
-        seat_type=SEAT_TYPE,
+        seat_type=TEST_SEAT_TYPE.value,
         page=PAGE,
         page_size=PAGE_SIZE,
         include_all=INCLUDE_ALL
@@ -137,7 +137,7 @@ def test_list_users_generated_url_is_correct():
     query = parse_qs(url.query)
     assert query == {
         "email": [EMAIL],
-        "seatType": [SEAT_TYPE],
+        "seatType": [TEST_SEAT_TYPE.value],
         "page": [str(PAGE)],
         "pageSize": [str(PAGE_SIZE)],
         "includeAll": [str(INCLUDE_ALL)]
@@ -156,7 +156,7 @@ def test_list_users_all_response_properties():
     )
 
     assert isinstance(response, IndexResult)
-    assert response.data[0].seat_type == SEAT_TYPE
+    assert response.data[0].seat_type == TEST_SEAT_TYPE.value
     assert response.data[0].seat_type_last_changed_at == parser.isoparse(
         "2025-06-14T09:55:30Z")
     assert response.data[0].provisional_expiration_date == parser.isoparse(
@@ -190,7 +190,7 @@ def test_list_users_required_response_properties():
     )
 
     assert isinstance(response, IndexResult)
-    assert response.data[0].seat_type == SEAT_TYPE
+    assert response.data[0].seat_type == TEST_SEAT_TYPE.value
     assert response.data[0].seat_type_last_changed_at is None
     assert response.data[0].provisional_expiration_date is None
     assert response.data[0].is_internal is True
