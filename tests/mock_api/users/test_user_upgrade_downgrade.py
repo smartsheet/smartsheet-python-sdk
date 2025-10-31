@@ -4,14 +4,12 @@ from urllib.parse import urlparse
 
 from smartsheet.models import Error
 from smartsheet.models.enums import UpgradeSeatType, DowngradeSeatType
+from tests.mock_api.users.common_test_constants import TEST_USER_ID, TEST_PLAN_ID, TEST_SUCCESS_MESSAGE, TEST_RESULT_CODE
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
 )
 
-
-TEST_USER_ID = 1234567890
-TEST_PLAN_ID = 1234567890123456
 TEST_UPGRADE_SEAT_TYPE = UpgradeSeatType.MEMBER
 TEST_DOWNGRADE_SEAT_TYPE = DowngradeSeatType.VIEWER
 
@@ -45,8 +43,8 @@ def test_upgrade_user_all_response_properties():
         seat_type=TEST_UPGRADE_SEAT_TYPE,
     )
 
-    assert response.message == "SUCCESS"
-    assert response.result_code == 0
+    assert response.message == TEST_SUCCESS_MESSAGE
+    assert response.result_code == TEST_RESULT_CODE
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
@@ -111,8 +109,8 @@ def test_downgrade_user_all_response_properties():
         seat_type=TEST_DOWNGRADE_SEAT_TYPE,
     )
 
-    assert response.message == "SUCCESS"
-    assert response.result_code == 0
+    assert response.message == TEST_SUCCESS_MESSAGE
+    assert response.result_code == TEST_RESULT_CODE
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
