@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - The new sharing endpoints (/2.0/shares) return string for userId and groupId, adjust the SDK to that.
 
-## Added
+### Added
 
 - `AssetShare` model to fully comply with the new sharing endpoints (/2.0/shares) DTO.
 
