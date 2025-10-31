@@ -25,12 +25,9 @@ TEST_SCOPE = ShareScope.ITEM
 TEST_MAX_ITEMS = 100
 TEST_LAST_KEY = "test_last_key"
 TEST_LAST_KEY_RESPONSE = "abcDefGhIjKlMnOpQrStUvWxYz"
-TEST_ACCESS_LEVEL_STRING = "ADMIN"
 TEST_SUCCESS_MESSAGE = "SUCCESS"
 TEST_SUCCESS_RESULT_CODE = 0
-TEST_ASSET_TYPE_STRING = "sheet"
-TEST_SCOPE_STRING = "ITEM"
-TEST_SEND_EMAIL_FALSE = "False"
+TEST_SEND_EMAIL = False
 
 
 def assert_share_properties(share, include_name=True):
@@ -73,11 +70,11 @@ def test_list_asset_shares_generated_url_is_correct():
     url = urlparse(wiremock_request["absoluteUrl"])
     query = parse_qs(url.query)
     assert query == {
-        "assetType": [TEST_ASSET_TYPE_STRING],
+        "assetType": [TEST_ASSET_TYPE.value],
         "assetId": [TEST_ASSET_ID],
         "maxItems": [str(TEST_MAX_ITEMS)],
         "lastKey": [TEST_LAST_KEY],
-        "sharingInclude": [TEST_SCOPE_STRING],
+        "sharingInclude": [TEST_SCOPE.name],
     }
 
 
@@ -183,7 +180,7 @@ def test_get_asset_share_generated_url_is_correct():
     assert url.path == f'/2.0/shares/{TEST_SHARE_ID}'
     query = parse_qs(url.query)
     assert query == {
-        "assetType": [TEST_ASSET_TYPE_STRING],
+        "assetType": [TEST_ASSET_TYPE.value],
         "assetId": [TEST_ASSET_ID],
     }
 
@@ -254,9 +251,9 @@ def test_share_asset_generated_url_is_correct(test_share):
     assert url.path == '/2.0/shares'
     query = parse_qs(url.query)
     assert query == {
-        "assetType": [TEST_ASSET_TYPE_STRING],
+        "assetType": [TEST_ASSET_TYPE.value],
         "assetId": [TEST_ASSET_ID],
-        "sendEmail": [TEST_SEND_EMAIL_FALSE]
+        "sendEmail": [str(TEST_SEND_EMAIL)]
     }
 
 def test_share_asset_all_response_properties(test_share):
@@ -281,7 +278,7 @@ def test_share_asset_all_response_properties(test_share):
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
-    assert body == {"accessLevel": TEST_ACCESS_LEVEL_STRING, "email": TEST_EMAIL}
+    assert body == {"accessLevel": TEST_ACCESS_LEVEL.name, "email": TEST_EMAIL}
 
 
 def test_share_multiple_assets_all_response_properties(test_share):
@@ -308,7 +305,7 @@ def test_share_multiple_assets_all_response_properties(test_share):
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
-    assert body == [{"accessLevel": TEST_ACCESS_LEVEL_STRING, "email": TEST_EMAIL}]
+    assert body == [{"accessLevel": TEST_ACCESS_LEVEL.name, "email": TEST_EMAIL}]
 
 
 
@@ -382,7 +379,7 @@ def test_update_asset_share_generated_url_is_correct():
     assert url.path == f'/2.0/shares/{TEST_SHARE_ID}'
     query = parse_qs(url.query)
     assert query == {
-        "assetType": [TEST_ASSET_TYPE_STRING],
+        "assetType": [TEST_ASSET_TYPE.value],
         "assetId": [TEST_ASSET_ID],
     }
 
@@ -472,7 +469,7 @@ def test_delete_asset_share_generated_url_is_correct():
     assert url.path == f'/2.0/shares/{TEST_SHARE_ID}'
     query = parse_qs(url.query)
     assert query == {
-        "assetType": [TEST_ASSET_TYPE_STRING],
+        "assetType": [TEST_ASSET_TYPE.value],
         "assetId": [TEST_ASSET_ID],
     }
 
