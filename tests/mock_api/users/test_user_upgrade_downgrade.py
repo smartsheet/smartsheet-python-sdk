@@ -50,6 +50,25 @@ def test_upgrade_user_all_response_properties():
     body = json.loads(wiremock_request["body"])
     assert body == {"seatType": TEST_UPGRADE_SEAT_TYPE.value}
 
+def test_upgrade_user_no_seat_type():
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/users/upgrade-user/all-response-body-properties", request_id
+    )
+
+    response = client.Users.upgrade_user(
+        user_id=TEST_USER_ID,
+        plan_id=TEST_PLAN_ID,
+        seat_type=None,
+    )
+
+    assert response.message == TEST_SUCCESS_MESSAGE
+    assert response.result_code == TEST_RESULT_CODE
+
+    wiremock_request = get_wiremock_request(request_id)
+    body = json.loads(wiremock_request["body"])
+    assert body == {"seatType": {}}
+
 def test_upgrade_user_error_4xx():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
