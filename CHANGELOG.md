@@ -16,8 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - [Issue-92](https://github.com/smartsheet/smartsheet-python-sdk/issues/92): Only include the `smartsheet` package in the build.
  
- ### Updated
- 
+### Updated
+
 - Folder structure for the Users related WireMock tests
 
 ## [3.5.3] - 2025-10-31
