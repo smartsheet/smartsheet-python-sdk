@@ -67,7 +67,7 @@ def test_upgrade_user_no_seat_type():
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
-    assert body == {"seatType": {}}
+    assert body == {"seatType": None}
 
 def test_upgrade_user_error_4xx():
     request_id = uuid.uuid4().hex
