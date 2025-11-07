@@ -79,10 +79,10 @@ jobs:
         uses: actions/setup-python@v4
       - name: Install build packages
         run: |
-          pip install enum34 requests six python-dateutil setuptools-scm==7.1.0 gitchangelog mako wheel twine
+          pip install build enum34 requests six python-dateutil setuptools-scm==7.1.0 gitchangelog mako wheel twine
       - name: Build distribution
         run: |
-          python setup.py sdist bdist_wheel
+          python -m build
       - name: Archive distribution artifacts
         uses: actions/upload-artifact@v4
         with:
