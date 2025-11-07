@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel", "setuptools_scm==7.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smartsheet-python-sdk"
+description = "Library that uses Python to connect to Smartsheet services (using API 2.0)."
+authors = [
+    { name = "smartsheet-python-sdk" }
+]
+dynamic = ["version"]
+license = { file = "LICENSE.md" }
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "requests",
+    "requests-toolbelt",
+    "six>=1.9",
+    "certifi",
+    "python-dateutil"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Office/Business :: Financial :: Spreadsheet"
+]
+
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "coveralls",
+    "pytest",
+    "pytest-rerunfailures"
+]
+develop = [
+    "coverage",
+    "coveralls[yaml]",
+    "pytest",
+    "pytest-instafail"
+]
+
+[tool.setuptools]
+packages = ["smartsheet"]
+include-package-data = true
+
+[tool.setuptools_scm]
+write_to = "smartsheet/version.py"
+
+[tool.pytest.ini_options]
+addopts = "-ra --color=yes --showlocals --verbose --ignore=docs --ignore=examples --tb=native"
+log_cli = true
+log_level = "ERROR"
+
+[tool.coverage.run]
+omit = ["smartsheet/exceptions.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "# renable standard pragma",
+    "pragma: no cover",
+    "def to_json",
+    "def __str__",
+    "raise ValueError",
+    "raise AttributeError",
+    "except TypeError",
+    "except ImportError",
+    "except ValueError",
+    "raise UnexpectedRequestError",
+    "backoff",
+    "time.sleep",
+    "if attempt",
+    "self.log",
+    "self._log",
+    "if base_obj is not None"
+]
+
+[tool.flake8]
+ignore = ["D100", "D101", "D102", "D104", "D105", "D203", "D205", "F403"]
