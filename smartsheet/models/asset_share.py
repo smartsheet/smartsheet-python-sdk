@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from ..types import EnumeratedValue, String, json
+from ..types import EnumeratedValue, String, Boolean, json
 from ..util import deserialize, serialize
 from .enums import AccessLevel, ShareScope, ShareType
 
@@ -40,6 +40,9 @@ class AssetShare:
         self._scope = EnumeratedValue(ShareScope)
         self._type_ = EnumeratedValue(ShareType)
         self._user_id = String()
+        self._cc_me = Boolean()
+        self._message = String()
+        self._subject = String()
 
         if props:
             deserialize(self, props)
@@ -127,6 +130,30 @@ class AssetShare:
     @user_id.setter
     def user_id(self, value):
         self._user_id.value = value
+
+    @property
+    def cc_me(self):
+        return self._cc_me.value
+
+    @cc_me.setter
+    def cc_me(self, value):
+        self._cc_me.value = value
+
+    @property
+    def message(self):
+        return self._message.value
+
+    @message.setter
+    def message(self, value):
+        self._message.value = value
+
+    @property
+    def subject(self):
+        return self._subject.value
+
+    @subject.setter
+    def subject(self, value):
+        self._subject.value = value
 
     def to_dict(self):
         return serialize(self)

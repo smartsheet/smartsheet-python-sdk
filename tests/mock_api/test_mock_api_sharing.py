@@ -28,6 +28,9 @@ TEST_LAST_KEY_RESPONSE = "abcDefGhIjKlMnOpQrStUvWxYz"
 TEST_SUCCESS_MESSAGE = "SUCCESS"
 TEST_SUCCESS_RESULT_CODE = 0
 TEST_SEND_EMAIL = False
+TEST_CC_ME = True
+TEST_MESSAGE = "Test message"
+TEST_SUBJECT = "Test subject"
 
 
 def assert_share_properties(share, include_name=True):
@@ -49,7 +52,13 @@ def assert_share_properties(share, include_name=True):
 @pytest.fixture(name="test_share")
 def test_share_fixture():
     """Pytest fixture to create a test AssetShare object."""
-    return AssetShare({"email": TEST_EMAIL, "access_level": TEST_ACCESS_LEVEL})
+    return AssetShare({
+        "email": TEST_EMAIL,
+        "access_level": TEST_ACCESS_LEVEL,
+        "cc_me": TEST_CC_ME,
+        "message": TEST_MESSAGE,
+        "subject": TEST_SUBJECT
+    })
 
 
 def test_list_asset_shares_generated_url_is_correct():
@@ -278,7 +287,13 @@ def test_share_asset_all_response_properties(test_share):
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
-    assert body == {"accessLevel": TEST_ACCESS_LEVEL.name, "email": TEST_EMAIL}
+    assert body == {
+        "accessLevel": TEST_ACCESS_LEVEL.name,
+        "email": TEST_EMAIL,
+        "ccMe": TEST_CC_ME,
+        "message": TEST_MESSAGE,
+        "subject": TEST_SUBJECT
+    }
 
 
 def test_share_multiple_assets_all_response_properties(test_share):
@@ -305,7 +320,13 @@ def test_share_multiple_assets_all_response_properties(test_share):
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
-    assert body == [{"accessLevel": TEST_ACCESS_LEVEL.name, "email": TEST_EMAIL}]
+    assert body == [{
+        "accessLevel": TEST_ACCESS_LEVEL.name,
+        "email": TEST_EMAIL,
+        "ccMe": TEST_CC_ME,
+        "message": TEST_MESSAGE,
+        "subject": TEST_SUBJECT
+    }]
 
 
 
