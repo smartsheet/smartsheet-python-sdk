@@ -116,9 +116,12 @@ def serialize(obj):
     elif isinstance(obj, dict):
         retval = {}
         for key, value in obj.items():
-            serialized_value = serialize(value)
-            if not hasattr(serialized_value, "is_explicit_null"):
-                retval[key] = serialized_value
+            if value is None:
+                retval[key] = None
+            else:
+                serialized_value = serialize(value)
+                if not hasattr(serialized_value, "is_explicit_null"):
+                    retval[key] = serialized_value
 
     else:
         retval = {}
