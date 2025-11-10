@@ -1,13 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel", "setuptools_scm==7.0.1"]
+requires = ["setuptools>=61.0", "setuptools_scm==7.0.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "smartsheet-python-sdk"
 description = "Library that uses Python to connect to Smartsheet services (using API 2.0)."
-authors = [
-    { name = "smartsheet-python-sdk" }
-]
 dynamic = ["version"]
 license = "Apache-2.0"
 license-files = ["LICENSE.md", "NOTICE"]
@@ -47,10 +44,6 @@ develop = [
     "pytest",
     "pytest-instafail"
 ]
-
-[tool.setuptools]
-packages = ["smartsheet"]
-include-package-data = true
 
 [tool.setuptools_scm]
 write_to = "smartsheet/version.py"
