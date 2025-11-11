@@ -90,6 +90,7 @@ exclude_lines = [
 
 [tool.pylint.main]
 jobs = 0
+ignore = ["version.py"]
 
 [tool.pylint."messages control"]
 disable = [
