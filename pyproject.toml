@@ -53,7 +53,8 @@ develop = [
 ]
 docs = [
     "sphinx",
-    "sphinx_rtd_theme"
+    "sphinx_rtd_theme",
+    "setuptools_scm"
 ]
 packaging = [
     "wheel",
