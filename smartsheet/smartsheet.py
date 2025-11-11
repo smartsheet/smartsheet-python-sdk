@@ -302,7 +302,7 @@ class Smartsheet:
             self._log.debug('{"requestBody": %s}', body_dumps)
         # response
         content_dumps = f'"<< {response.headers.get("Content-Type")} content type suppressed >>"'
-        if response.request.headers.get("Content-Type") is not None and "application/json" in response.headers.get("Content-Type"):
+        if response.headers.get("Content-Type") is not None and "application/json" in response.headers.get("Content-Type"):
             content = response.content.decode("utf8")
             content_dumps = json.dumps(json.loads(content), sort_keys=True)
         if 200 <= response.status_code <= 299:
