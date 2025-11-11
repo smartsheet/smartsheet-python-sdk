@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0", "setuptools_scm==7.0.1"]
+requires = ["setuptools>=61.0", "setuptools_scm>=7.0.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -36,13 +36,25 @@ test = [
     "coverage",
     "coveralls",
     "pytest",
-    "pytest-rerunfailures"
+    "pytest-rerunfailures",
+    "requests-toolbelt"
 ]
 develop = [
     "coverage",
     "coveralls[yaml]",
     "pytest",
-    "pytest-instafail"
+    "pytest-instafail",
+    "pylint"
+]
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme"
+]
+packaging = [
+    "wheel",
+    "twine",
+    "gitchangelog",
+    "mako"
 ]
 
 [tool.setuptools_scm]
@@ -76,5 +88,33 @@ exclude_lines = [
     "if base_obj is not None"
 ]
 
-[tool.flake8]
-ignore = ["D100", "D101", "D102", "D104", "D105", "D203", "D205", "F403"]
+[tool.pylint.main]
+jobs = 0
+
+[tool.pylint."messages control"]
+disable = [
+    "missing-docstring",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "locally-disabled",
+    "too-few-public-methods",
+    "too-many-public-methods",
+    "duplicate-code",
+    "too-many-instance-attributes",
+    "too-many-lines",
+    "no-else-return",
+    "unused-private-member",
+    "cyclic-import",
+    "unused-import",
+    "import-outside-toplevel",
+    "consider-using-with"
+]
+
+[tool.pylint.reports]
+output-format = "colorized"
+
+[tool.pylint.basic]
+include-naming-hint = true
+
+[tool.pylint.format]
+max-line-length = 160
