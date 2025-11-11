@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Fixed
+
+- Fix response body logging. When the response Content-Type is application/json the response body is logged.
+
 ### Added
 
 - WiremMock integration tests for contract testing for GET /2.0/users/{userId}/plans and GET /2.0/users endpoints
 - WireMock integration tests for contract testing for POST /2.0/users/{userId}/plans/{planId}/upgrade and POST /2.0/users/{userId}/plans/{planId}/downgrade
+- WireMock integration tests for contract testing for DELETE /{userId}/plans/{planId} endpoint
 - Add dict serialization tests
 - Add missing properties from [AssetShare](smartsheet/models/asset_share.py): `cc_me`, `message`, `subject`.
 
