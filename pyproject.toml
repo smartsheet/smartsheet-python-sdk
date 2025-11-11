@@ -1,0 +1,127 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools_scm>=7.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smartsheet-python-sdk"
+description = "Library that uses Python to connect to Smartsheet services (using API 2.0)."
+dynamic = ["version"]
+license = "Apache-2.0"
+license-files = ["LICENSE.md", "NOTICE"]
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "requests",
+    "requests-toolbelt",
+    "six>=1.9",
+    "certifi",
+    "python-dateutil"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Office/Business :: Financial :: Spreadsheet"
+]
+
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "coveralls",
+    "pytest",
+    "pytest-rerunfailures",
+    "requests-toolbelt"
+]
+develop = [
+    "coverage",
+    "coveralls[yaml]",
+    "pytest",
+    "pytest-instafail",
+    "pylint"
+]
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme",
+    "setuptools_scm"
+]
+packaging = [
+    "wheel",
+    "twine",
+    "gitchangelog",
+    "mako"
+]
+
+[tool.setuptools_scm]
+write_to = "smartsheet/version.py"
+
+[tool.pytest.ini_options]
+addopts = "-ra --color=yes --showlocals --verbose --ignore=docs --ignore=examples --tb=native"
+log_cli = true
+log_level = "ERROR"
+
+[tool.coverage.run]
+omit = ["smartsheet/exceptions.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "# renable standard pragma",
+    "pragma: no cover",
+    "def to_json",
+    "def __str__",
+    "raise ValueError",
+    "raise AttributeError",
+    "except TypeError",
+    "except ImportError",
+    "except ValueError",
+    "raise UnexpectedRequestError",
+    "backoff",
+    "time.sleep",
+    "if attempt",
+    "self.log",
+    "self._log",
+    "if base_obj is not None"
+]
+
+[tool.pylint.main]
+jobs = 0
+ignore = ["version.py"]
+
+[tool.pylint."messages control"]
+disable = [
+    "missing-docstring",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "locally-disabled",
+    "too-few-public-methods",
+    "too-many-public-methods",
+    "duplicate-code",
+    "too-many-instance-attributes",
+    "too-many-lines",
+    "no-else-return",
+    "unused-private-member",
+    "cyclic-import",
+    "unused-import",
+    "import-outside-toplevel",
+    "consider-using-with"
+]
+
+[tool.pylint.reports]
+output-format = "colorized"
+
+[tool.pylint.basic]
+include-naming-hint = true
+
+[tool.pylint.format]
+max-line-length = 160

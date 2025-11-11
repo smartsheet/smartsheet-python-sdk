@@ -10,33 +10,27 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.14'
       - name: Install dependencies
         run: |
-          pip install pylint requests six python-dateutil
+          pip install build
+      - name: Install project and lint dependencies
+        run: |
+          pip install .[develop]
       - name: Run Markdown Lint
         uses: articulate/actions-markdownlint@v1
         with:
           ignore: ./LICENSE.md
       - name: Run Pylint
         run: |
-          pylint smartsheet --rcfile pylintrc
+          pylint smartsheet
 
   mock-api-test:
     needs: lint
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
-        include:
-          - python-version: "3.7"
-            os: ubuntu-22.04
-          - python-version: "3.8"
-            os: ubuntu-latest
-          - python-version: "3.9"
-            os: ubuntu-latest
-          - python-version: "3.10"
-            os: ubuntu-latest
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
     steps:
       - uses: actions/checkout@v4
@@ -44,12 +38,13 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          os: ${{ matrix.os }}
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install certifi enum34 requests six python-dateutil coverage coveralls[yaml] pytest pytest-instafail requests-toolbelt setuptools-scm
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install build
+      - name: Install test dependencies
+        run: |
+          pip install .[test]
       - name: Clone smartsheet/smartsheet-sdk-tests PUBLIC repository
         uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
@@ -79,10 +74,10 @@ jobs:
         uses: actions/setup-python@v4
       - name: Install build packages
         run: |
-          pip install enum34 requests six python-dateutil setuptools-scm==7.1.0 gitchangelog mako wheel twine
+          pip install build
       - name: Build distribution
         run: |
-          python setup.py sdist bdist_wheel
+          python -m build
       - name: Archive distribution artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -97,7 +92,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install documentation tools
         run: |
-          pip install sphinx sphinx_rtd_theme setuptools-scm
+          pip install build
+      - name: Install documentation dependencies
+        run: |
+          pip install .[docs]
       - name: Generate API documentation
         run: sphinx-apidoc -o docs-source smartsheet
       - name: Generate HTML

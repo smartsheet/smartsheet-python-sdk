@@ -10,13 +10,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python 3.10
+      - name: Set up Python 3.14
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.14'
       - name: Install build packages
         run: |
-          pip install enum34 requests six python-dateutil setuptools-scm==7.1.0 gitchangelog mako wheel twine sphinx sphinx_rtd_theme
+          pip install build
+      - name: Install documentation dependencies
+        run: |
+          pip install .[docs]
       - name: Generate documentation
         run: |
           sphinx-apidoc -o docs-source smartsheet
