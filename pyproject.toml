@@ -7,7 +7,6 @@ name = "smartsheet-python-sdk"
 description = "Library that uses Python to connect to Smartsheet services (using API 2.0)."
 dynamic = ["version"]
 license = "Apache-2.0"
-license-files = ["LICENSE.md", "NOTICE"]
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
