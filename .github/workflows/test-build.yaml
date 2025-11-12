@@ -25,7 +25,7 @@ jobs:
         run: |
           pylint smartsheet
 
-  mock-api-test:
+  test:
     needs: lint
     runs-on: ubuntu-latest
     strategy:
@@ -53,7 +53,7 @@ jobs:
       - name: Setup Mock API
         run: |
           docker compose -f smartsheet-sdk-tests/docker-compose.yml up -d --wait
-      - name: Run mock API tests
+      - name: Run tests
         run: |
           coverage run --source=smartsheet -m pytest
           coverage lcov
@@ -67,7 +67,7 @@ jobs:
 
   build-packages-test:
     runs-on: ubuntu-latest
-    needs: [mock-api-test]
+    needs: [test]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
