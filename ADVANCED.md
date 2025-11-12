@@ -4,9 +4,9 @@
 
 The following packages are required.
 
-* [setuptools](https://pypi.org/project/setuptools/)
-* [six](https://pypi.python.org/pypi/six)
-* [requests](https://pypi.python.org/pypi/requests)
+- [setuptools](https://pypi.org/project/setuptools/)
+- [six](https://pypi.python.org/pypi/six)
+- [requests](https://pypi.python.org/pypi/requests)
 
 To install this SDK manually:
 
@@ -55,9 +55,9 @@ To invoke the passthrough, your code can call one of the following four methods:
 
 `response = client.Passthrough.delete(endpoint)`
 
-* `endpoint`: The specific API endpoint you wish to invoke. The client object base URL gets prepended to the caller’s endpoint URL argument, so in the above `get` example, if endpoint is `'/sheets'` an HTTP GET is requested from the URL `https://api.smartsheet.com/2.0/sheets`
-* `payload`: The data to be passed through, can be either a dictionary or string.
-* `query_params`: An optional dictionary of query parameters.
+- `endpoint`: The specific API endpoint you wish to invoke. The client object base URL gets prepended to the caller’s endpoint URL argument, so in the above `get` example, if endpoint is `'/sheets'` an HTTP GET is requested from the URL `https://api.smartsheet.com/2.0/sheets`
+- `payload`: The data to be passed through, can be either a dictionary or string.
+- `query_params`: An optional dictionary of query parameters.
 
 All calls to passthrough methods return a JSON result. The `data` attribute contains the JSON result as a dictionary. For example, after a PUT operation the API's result message will be contained in `response.data['message']`. If you prefer raw JSON instead of a dictionary, you can use the `to_json()` method, for example `response.to_json()`.
 
@@ -88,59 +88,63 @@ Common test cases use catch-all path patterns (e.g., /errors/500-response).
 
 We use two custom headers:
 
-- x-test-name: Used for exact mapping match, allowing different mock responses for the same HTTP method and endpoint.
-- x-request-id: A UUID generated for each request, used to verify request URLs and search for requests in WireMock admin history.
+* x-test-name: Used for exact mapping match, allowing different mock responses for the same HTTP method and endpoint.
+* x-request-id: A UUID generated for each request, used to verify request URLs and search for requests in WireMock admin history.
 
 To run the mock API tests:
+
 1. Clone the [smartsheet-sdk-tests](https://github.com/smartsheet/smartsheet-sdk-tests) repo and follow the instructions from the readme to start the mock server.
+
 2. `pytest tests/mock_api`
 
 To add new mock API tests:
 
 1. Add a WireMock Mapping (JSON) in the [smartsheet-sdk-tests](https://github.com/smartsheet/smartsheet-sdk-tests):
+
 ```json
 {
-    "request": {
-        "urlPathTemplate": "/2.0/users/{userId}/plans",
-        "method": "GET",
-        "headers": {
-            "Authorization": {
-                "matches": "Bearer .*"
-            },
-            "x-test-name": {
-                "equalTo": "/users/list-user-plans/all-response-body-properties"
-            },
-            "x-request-id": {
-                "matches" : ".*"
-            }
-        }
-    },
-    "response": {
-        "statusMessage": "OK",
-        "status": 200,
-        "jsonBody": {
-            "lastKey": "12345678901234569",
-            "data": [
-                {
-                    "planId": 1234567890123456,
-                    "seatType": "MEMBER",
-                    "seatTypeLastChangedAt": "2025-01-01T00:00:00.123456789Z",
-                    "provisionalExpirationDate": "2026-12-13T12:17:52.525696Z",
-                    "isInternal": false
-                }
-            ]
-        },
-        "headers": {
-            "Content-Type": "application/json"
-        }
+  "request": {
+    "urlPathTemplate": "/2.0/users/{userId}/plans",
+    "method": "GET",
+    "headers": {
+      "Authorization": {
+        "matches": "Bearer .*"
+      },
+      "x-test-name": {
+        "equalTo": "/users/list-user-plans/all-response-body-properties"
+      },
+      "x-request-id": {
+        "matches": ".*"
+      }
     }
+  },
+  "response": {
+    "statusMessage": "OK",
+    "status": 200,
+    "jsonBody": {
+      "lastKey": "12345678901234569",
+      "data": [
+        {
+          "planId": 1234567890123456,
+          "seatType": "MEMBER",
+          "seatTypeLastChangedAt": "2025-01-01T00:00:00.123456789Z",
+          "provisionalExpirationDate": "2026-12-13T12:17:52.525696Z",
+          "isInternal": false
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
 }
 ```
+
 2. Write a Test in the SDK:
 
-- Always use x-test-name to target specific mock responses.
-- Use x-request-id for traceability in WireMock admin.
-- Keep mappings in the smartsheet-sdk-tests repository organized and descriptive
+* Always use x-test-name to target specific mock responses.
+* Use x-request-id for traceability in WireMock admin.
+* Keep mappings in the smartsheet-sdk-tests repository organized and descriptive
 
 ```python
     def test_list_user_plans_all_response_properties():
