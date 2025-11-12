@@ -55,7 +55,7 @@ jobs:
           docker compose -f smartsheet-sdk-tests/docker-compose.yml up -d --wait
       - name: Run mock API tests
         run: |
-          coverage run --source=smartsheet -m pytest tests/mock_api/
+          coverage run --source=smartsheet -m pytest
           coverage lcov
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
