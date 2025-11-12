@@ -88,8 +88,8 @@ Common test cases use catch-all path patterns (e.g., /errors/500-response).
 
 We use two custom headers:
 
-* x-test-name: Used for exact mapping match, allowing different mock responses for the same HTTP method and endpoint.
-* x-request-id: A UUID generated for each request, used to verify request URLs and search for requests in WireMock admin history.
+- x-test-name: Used for exact mapping match, allowing different mock responses for the same HTTP method and endpoint.
+- x-request-id: A UUID generated for each request, used to verify request URLs and search for requests in WireMock admin history.
 
 To run the mock API tests:
 
@@ -140,11 +140,13 @@ To add new mock API tests:
 }
 ```
 
+<!-- markdownlint-disable MD029 -->
 2. Write a Test in the SDK:
+<!-- markdownlint-enable MD029 -->
 
-* Always use x-test-name to target specific mock responses.
-* Use x-request-id for traceability in WireMock admin.
-* Keep mappings in the smartsheet-sdk-tests repository organized and descriptive
+- Always use x-test-name to target specific mock responses.
+- Use x-request-id for traceability in WireMock admin.
+- Keep mappings in the smartsheet-sdk-tests repository organized and descriptive
 
 ```python
     def test_list_user_plans_all_response_properties():
