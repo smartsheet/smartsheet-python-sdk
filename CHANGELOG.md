@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove integration tests from the sdk test suite
 
+### Added
+
+- Add support for code completion. Now code editors will be able to recognize and complete expressions like `smart.Users` and `smart.Users.list_users`.
+
 ### Updated
 
 - ADVANCED.md integration and mock api testing documentation
