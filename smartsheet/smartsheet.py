@@ -1,4 +1,4 @@
-# pylint: disable=C0111,R0902,R0913,W0614,C0302,W0401,R0912,W0611,C0301,W0621,W0404,R1720,W0702,W0613
+# pylint: disable=C0103,C0111,R0902,R0913,W0614,C0302,W0401,R0912,W0611,C0301,W0621,W0404,R1720,W0702,W0613
 # Smartsheet Python SDK.
 #
 # Copyright 2016 Smartsheet.com, Inc.
@@ -27,6 +27,7 @@ import random
 import re
 import sys
 import time
+from typing import TYPE_CHECKING
 
 import requests
 import six
@@ -36,6 +37,29 @@ from .exceptions import ApiError, HttpError, UnexpectedRequestError
 from .models import Error, ErrorResult
 from .session import pinned_session
 from .util import is_multipart, serialize
+
+if TYPE_CHECKING:
+    from .attachments import Attachments
+    from .contacts import Contacts
+    from .discussions import Discussions
+    from .events import Events
+    from .favorites import Favorites
+    from .folders import Folders
+    from .groups import Groups
+    from .home import Home
+    from .images import Images
+    from .passthrough import Passthrough
+    from .reports import Reports
+    from .search import Search
+    from .server import Server
+    from .sharing import Sharing
+    from .sheets import Sheets
+    from .sights import Sights
+    from .templates import Templates
+    from .token import Token
+    from .users import Users
+    from .webhooks import Webhooks
+    from .workspaces import Workspaces
 
 __all__ = ("Smartsheet", "fresh_operation", "AbstractUserCalcBackoff")
 
@@ -118,6 +142,7 @@ class Smartsheet:
 
     models = models
 
+    # pylint: disable=R0915
     def __init__(
         self,
         access_token=None,
@@ -188,6 +213,197 @@ class Smartsheet:
         self._wiremock_test_name = None
         self._wiremock_request_id = None
         self._change_agent = None
+
+        # Cache for lazy-loaded API modules
+        self._attachments = None
+        self._contacts = None
+        self._discussions = None
+        self._events = None
+        self._favorites = None
+        self._folders = None
+        self._groups = None
+        self._home = None
+        self._images = None
+        self._passthrough = None
+        self._reports = None
+        self._search = None
+        self._server = None
+        self._sharing = None
+        self._sheets = None
+        self._sights = None
+        self._templates = None
+        self._token = None
+        self._users = None
+        self._webhooks = None
+        self._workspaces = None
+
+    @property
+    def Attachments(self) -> "Attachments":
+        """Access Attachments operations."""
+        if self._attachments is None:
+            from .attachments import Attachments
+            self._attachments = Attachments(self)
+        return self._attachments
+
+    @property
+    def Contacts(self) -> "Contacts":
+        """Access Contacts operations."""
+        if self._contacts is None:
+            from .contacts import Contacts
+            self._contacts = Contacts(self)
+        return self._contacts
+
+    @property
+    def Discussions(self) -> "Discussions":
+        """Access Discussions operations."""
+        if self._discussions is None:
+            from .discussions import Discussions
+            self._discussions = Discussions(self)
+        return self._discussions
+
+    @property
+    def Events(self) -> "Events":
+        """Access Events operations."""
+        if self._events is None:
+            from .events import Events
+            self._events = Events(self)
+        return self._events
+
+    @property
+    def Favorites(self) -> "Favorites":
+        """Access Favorites operations."""
+        if self._favorites is None:
+            from .favorites import Favorites
+            self._favorites = Favorites(self)
+        return self._favorites
+
+    @property
+    def Folders(self) -> "Folders":
+        """Access Folders operations."""
+        if self._folders is None:
+            from .folders import Folders
+            self._folders = Folders(self)
+        return self._folders
+
+    @property
+    def Groups(self) -> "Groups":
+        """Access Groups operations."""
+        if self._groups is None:
+            from .groups import Groups
+            self._groups = Groups(self)
+        return self._groups
+
+    @property
+    def Home(self) -> "Home":
+        """Access Home operations."""
+        if self._home is None:
+            from .home import Home
+            self._home = Home(self)
+        return self._home
+
+    @property
+    def Images(self) -> "Images":
+        """Access Images operations."""
+        if self._images is None:
+            from .images import Images
+            self._images = Images(self)
+        return self._images
+
+    @property
+    def Passthrough(self) -> "Passthrough":
+        """Access Passthrough operations."""
+        if self._passthrough is None:
+            from .passthrough import Passthrough
+            self._passthrough = Passthrough(self)
+        return self._passthrough
+
+    @property
+    def Reports(self) -> "Reports":
+        """Access Reports operations."""
+        if self._reports is None:
+            from .reports import Reports
+            self._reports = Reports(self)
+        return self._reports
+
+    @property
+    def Search(self) -> "Search":
+        """Access Search operations."""
+        if self._search is None:
+            from .search import Search
+            self._search = Search(self)
+        return self._search
+
+    @property
+    def Server(self) -> "Server":
+        """Access Server operations."""
+        if self._server is None:
+            from .server import Server
+            self._server = Server(self)
+        return self._server
+
+    @property
+    def Sharing(self) -> "Sharing":
+        """Access Sharing operations."""
+        if self._sharing is None:
+            from .sharing import Sharing
+            self._sharing = Sharing(self)
+        return self._sharing
+
+    @property
+    def Sheets(self) -> "Sheets":
+        """Access Sheets operations."""
+        if self._sheets is None:
+            from .sheets import Sheets
+            self._sheets = Sheets(self)
+        return self._sheets
+
+    @property
+    def Sights(self) -> "Sights":
+        """Access Sights operations."""
+        if self._sights is None:
+            from .sights import Sights
+            self._sights = Sights(self)
+        return self._sights
+
+    @property
+    def Templates(self) -> "Templates":
+        """Access Templates operations."""
+        if self._templates is None:
+            from .templates import Templates
+            self._templates = Templates(self)
+        return self._templates
+
+    @property
+    def Token(self) -> "Token":
+        """Access Token operations."""
+        if self._token is None:
+            from .token import Token
+            self._token = Token(self)
+        return self._token
+
+    @property
+    def Users(self) -> "Users":
+        """Access Users operations."""
+        if self._users is None:
+            from .users import Users
+            self._users = Users(self)
+        return self._users
+
+    @property
+    def Webhooks(self) -> "Webhooks":
+        """Access Webhooks operations."""
+        if self._webhooks is None:
+            from .webhooks import Webhooks
+            self._webhooks = Webhooks(self)
+        return self._webhooks
+
+    @property
+    def Workspaces(self) -> "Workspaces":
+        """Access Workspaces operations."""
+        if self._workspaces is None:
+            from .workspaces import Workspaces
+            self._workspaces = Workspaces(self)
+        return self._workspaces
 
     def assume_user(self, email=None):
         """Assume identity of specified user.
@@ -469,7 +685,10 @@ class Smartsheet:
 
     def __getattr__(self, name):
         """
-        Handle sub-class instantiation.
+        Handle sub-class instantiation for backward compatibility.
+
+        This method is kept for backward compatibility with any dynamic access patterns,
+        but the preferred way is to use the explicit properties defined above.
 
         Args:
             name (str): Name of smartsheet to instantiate.
@@ -477,12 +696,23 @@ class Smartsheet:
         Returns:
             Instance of named class.
         """
+        # Check if there's a property for this attribute (for caching)
+        cache_attr = f"_{name.lower()}"
+        if hasattr(self, cache_attr):
+            cached = getattr(self, cache_attr, None)
+            if cached is not None:
+                return cached
+
         try:
             # api class first
             class_ = getattr(
                 importlib.import_module(__package__ + "." + name.lower()), name
             )
-            return class_(self)
+            instance = class_(self)
+            # Cache it if we have a cache attribute for it
+            if hasattr(self, cache_attr):
+                setattr(self, cache_attr, instance)
+            return instance
         except ImportError:
             # model class next:
             try:
