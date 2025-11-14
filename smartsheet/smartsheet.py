@@ -142,6 +142,7 @@ class Smartsheet:
 
     models = models
 
+    # pylint: disable=R0915
     def __init__(
         self,
         access_token=None,
