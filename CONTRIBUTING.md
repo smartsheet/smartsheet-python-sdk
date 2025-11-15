@@ -1,5 +1,11 @@
 # Contributing to Smartsheet Python SDK
 
+## Issue First Approach
+
+**All contributions to the Smartsheet Python SDK must begin with a GitHub Issue.** This includes bug fixes, new features, and documentation improvements.
+
+For detailed guidance on creating effective issues that work well with both human reviewers and AI-powered Cloud Agents, see our [Issue First documentation](ISSUE-FIRST.md).
+
 ## Did you find a bug?
 
 - **Send all security related bugs to our maintainer email, <sdk-python@smartsheet.com>**.
@@ -10,19 +16,23 @@
 
 ## Did you write a patch that fixes a bug?
 
-- Open a new GitHub pull request with the patch.
+- **First, ensure there is a GitHub issue** describing the bug (see above).
 
-- Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
+- Open a new GitHub pull request with the patch, referencing the issue number.
+
+- Ensure the PR description clearly describes the problem and solution. Include the relevant issue number.
 
 - A maintainer should review your PR within the next few days. If the PR has been dormant for more than a week, consider sending an email to <sdk-python@smartsheet.com>
 
 ## Did you fix whitespace, format code, or make a purely cosmetic patch?
 
-Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability may take longer to review, but are still welcome.
+Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability may take longer to review, but are still welcome. Please create an issue first describing the cosmetic changes you'd like to make.
 
 ## Do you intend to add a new feature or change an existing one?
 
-- Suggest your change as an issue with the label #enhancement. Make sure that your new feature description outlines why this would be helpful for users, and how difficult a change it would be to make.
+- **First, create an issue** with the label #enhancement. Make sure that your new feature description outlines why this would be helpful for users, and how difficult a change it would be to make.
+
+- Once the feature is discussed and approved in the issue, you can submit a pull request implementing it.
 
 ## Code Style and Quality
 
