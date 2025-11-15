@@ -81,7 +81,6 @@ client = smartsheet.Smartsheet('your_token')
 
 #### For Feature Requests
 
-
 ```markdown
 **Feature Description**: Clear description of the new functionality needed in the Smartsheet Python SDK
 
@@ -105,7 +104,6 @@ client.Sheets.new_method(parameters)
 \`\`\`
 
 #### For Documentation Improvements
-
 
 ```markdown
 **Documentation Issue**: What documentation is missing, unclear, or incorrect
