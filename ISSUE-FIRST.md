@@ -74,10 +74,10 @@ When creating an issue that will be used by a Roo Cloud Agent, provide comprehen
 import smartsheet
 client = smartsheet.Smartsheet('your_token')
 # Your code that demonstrates the issue
-```
+\`\`\`
 
 **Additional Context**: Any relevant details about the Smartsheet API, error messages, or stack traces
-```
+\`\`\`
 
 #### For Feature Requests
 
@@ -102,7 +102,7 @@ client.Sheets.new_method(parameters)
 - Backwards compatibility concerns
 
 **Alternatives Considered**: Other approaches that were considered
-```
+\`\`\`
 
 #### For Documentation Improvements
 
@@ -115,7 +115,7 @@ client.Sheets.new_method(parameters)
 **Suggested Improvement**: What should be added or changed
 
 **Context**: Why this documentation is important for SDK users
-```
+\`\`\`
 
 ### Step 2: Let the Cloud Agent Work
 
@@ -218,11 +218,11 @@ where the url property is null, the SDK raises an AttributeError during deserial
 1. Create a sheet in Smartsheet with a cell containing a hyperlink with no URL
 2. Use the SDK to get the sheet:
 
-```python
+\`\`\`python
 import smartsheet
 client = smartsheet.Smartsheet('token')
 sheet = client.Sheets.get_sheet(sheet_id)
-```
+\`\`\`
 
 3. Observe the AttributeError
 
@@ -231,10 +231,11 @@ The SDK should handle null hyperlink URLs gracefully, either by setting the url 
 or providing a default value.
 
 **Actual Behavior**:
-```
+
+\`\`\`text
 AttributeError: 'NoneType' object has no attribute 'strip'
   File "smartsheet/models/hyperlink.py", line 45, in __init__
-```
+\`\`\`
 
 **Environment**:
 
@@ -245,7 +246,7 @@ AttributeError: 'NoneType' object has no attribute 'strip'
 **Smartsheet API Reference**:
 <https://smartsheet.redoc.ly/#tag/cellsRelated/operation/get-sheet>
 
-```
+\`\`\`
 
 ### Example 2: Feature Request
 
@@ -261,7 +262,8 @@ Users need to automate updating project metadata stored in sheet summaries, such
 project status, start dates, and custom KPIs.
 
 **Proposed API**:
-```python
+
+\`\`\`python
 # Get summary fields
 summary = client.Sheets.get_sheet_summary(sheet_id)
 for field in summary.fields:
@@ -273,7 +275,7 @@ client.Sheets.update_summary_field(
     field_id=field_id,
     value="Updated value"
 )
-```
+\`\`\`
 
 **Smartsheet API Reference**:
 
@@ -292,7 +294,7 @@ client.Sheets.update_summary_field(
 **Alternatives Considered**:
 Using direct API calls with the `Passthrough` module, but a native SDK implementation
 would provide better type hints and error handling.
-```
+\`\`\`
 
 ## Conclusion
 
