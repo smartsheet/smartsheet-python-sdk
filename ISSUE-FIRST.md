@@ -50,7 +50,7 @@ By requiring an issue first, we ensure that:
 
 When creating an issue that will be used by a Roo Cloud Agent, provide comprehensive details:
 
-#### For Bug Reports:
+#### For Bug Reports
 
 ```markdown
 **Description**: Clear description of the bug in the Smartsheet Python SDK
@@ -79,7 +79,8 @@ client = smartsheet.Smartsheet('your_token')
 **Additional Context**: Any relevant details about the Smartsheet API, error messages, or stack traces
 ```
 
-#### For Feature Requests:
+#### For Feature Requests
+
 
 ```markdown
 **Feature Description**: Clear description of the new functionality needed in the Smartsheet Python SDK
@@ -95,6 +96,7 @@ client.Sheets.new_method(parameters)
 **Smartsheet API Reference**: Link to relevant Smartsheet API documentation if applicable
 
 **Implementation Considerations**:
+
 - Which SDK modules would be affected (e.g., `smartsheet/sheets.py`, `smartsheet/models/`)
 - Any dependencies or related features
 - Backwards compatibility concerns
@@ -102,7 +104,8 @@ client.Sheets.new_method(parameters)
 **Alternatives Considered**: Other approaches that were considered
 ```
 
-#### For Documentation Improvements:
+#### For Documentation Improvements
+
 
 ```markdown
 **Documentation Issue**: What documentation is missing, unclear, or incorrect
@@ -206,21 +209,24 @@ Use GitHub labels to help categorize your issue:
 ```markdown
 **Title**: Cell deserialization fails when cell contains hyperlink with null url
 
-**Description**: 
+**Description**:
 When using the Smartsheet Python SDK to retrieve a sheet that contains cells with hyperlinks
 where the url property is null, the SDK raises an AttributeError during deserialization.
 
 **Steps to Reproduce**:
+
 1. Create a sheet in Smartsheet with a cell containing a hyperlink with no URL
 2. Use the SDK to get the sheet:
+
 ```python
 import smartsheet
 client = smartsheet.Smartsheet('token')
 sheet = client.Sheets.get_sheet(sheet_id)
 ```
+
 3. Observe the AttributeError
 
-**Expected Behavior**: 
+**Expected Behavior**:
 The SDK should handle null hyperlink URLs gracefully, either by setting the url to None
 or providing a default value.
 
@@ -231,12 +237,14 @@ AttributeError: 'NoneType' object has no attribute 'strip'
 ```
 
 **Environment**:
+
 - SDK Version: 2.105.1
 - Python Version: 3.9.7
 - OS: macOS 12.6
 
 **Smartsheet API Reference**:
-https://smartsheet.redoc.ly/#tag/cellsRelated/operation/get-sheet
+<https://smartsheet.redoc.ly/#tag/cellsRelated/operation/get-sheet>
+
 ```
 
 ### Example 2: Feature Request
@@ -268,10 +276,12 @@ client.Sheets.update_summary_field(
 ```
 
 **Smartsheet API Reference**:
-- https://smartsheet.redoc.ly/#tag/summaryFields
-- https://smartsheet.redoc.ly/#operation/get-sheet-summary
+
+- <https://smartsheet.redoc.ly/#tag/summaryFields>
+- <https://smartsheet.redoc.ly/#operation/get-sheet-summary>
 
 **Implementation Considerations**:
+
 - Add new methods to `smartsheet/sheets.py`
 - Create `SummaryField` model in `smartsheet/models/`
 - Add tests to verify API integration
@@ -279,7 +289,7 @@ client.Sheets.update_summary_field(
 
 **Related Issues**: None
 
-**Alternatives Considered**: 
+**Alternatives Considered**:
 Using direct API calls with the `Passthrough` module, but a native SDK implementation
 would provide better type hints and error handling.
 ```
