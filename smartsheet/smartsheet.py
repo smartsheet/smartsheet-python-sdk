@@ -212,6 +212,7 @@ class Smartsheet:
         self._wiremock_test_name = None
         self._wiremock_request_id = None
         self._change_agent = None
+        self._api_modules_cache = {}
 
     def assume_user(self, email=None):
         """Assume identity of specified user.
@@ -501,12 +502,9 @@ class Smartsheet:
         Returns:
             Instance of named class.
         """
-        # Check if there's a property for this attribute (for caching)
-        cache_attr = f"_{name.lower()}"
-        if hasattr(self, cache_attr):
-            cached = getattr(self, cache_attr, None)
-            if cached is not None:
-                return cached
+        # Check if module is already cached
+        if name in self._api_modules_cache:
+            return self._api_modules_cache[name]
 
         try:
             # api class first
@@ -514,9 +512,8 @@ class Smartsheet:
                 importlib.import_module(__package__ + "." + name.lower()), name
             )
             instance = class_(self)
-            # Cache it if we have a cache attribute for it
-            if hasattr(self, cache_attr):
-                setattr(self, cache_attr, instance)
+            # Cache the instance
+            self._api_modules_cache[name] = instance
             return instance
         except ImportError:
             # model class next:
