@@ -132,7 +132,7 @@ EventAction
 EventObjectType
 -------------------------------------------------------
 
-.. automodule:: smartsheet.models.enums.event_obejct_type
+.. automodule:: smartsheet.models.enums.event_object_type
    :members:
    :undoc-members:
    :show-inheritance:
