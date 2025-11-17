@@ -36,6 +36,27 @@ Changes that are cosmetic in nature and do not add anything substantial to the s
 
 - Write unit tests for new features and bug fixes. All tests should pass before submitting a PR.
 
+## Documentation
+
+- If your changes affect the public API, you must update the corresponding Sphinx documentation files in `docs-source/`:
+  - **API Resources** (modules in `smartsheet/`): Update `docs-source/smartsheet_api.rst`
+  - **Models** (classes in `smartsheet/models/`): Update `docs-source/smartsheet_models.rst`
+  - **Enums** (enums in `smartsheet/models/enums/`): Update `docs-source/smartsheet_enums.rst`
+  - **Types** (type definitions in `smartsheet/types.py`): Update `docs-source/smartsheet_types.rst`
+  - **Exceptions** (exceptions in `smartsheet/exceptions.py`): Update `docs-source/smartsheet_exceptions.rst`
+  - **General documentation** (installation, quickstart, examples): Update `docs-source/index.rst`
+
+- The documentation uses Sphinx with autodoc to generate API documentation from docstrings. Ensure your docstrings follow Google-style format as configured in `docs-source/conf.py`.
+
+- After making changes to `docs-source/`, you can build the documentation locally to verify your changes:
+
+  ```bash
+  cd docs-source
+  make html
+  ```
+
+- The built documentation will be in `docs-source/_build/html/`. Open `index.html` in a browser to review your changes.
+
 ## Running Tests
 
 - To run the test suite, use the following command:
