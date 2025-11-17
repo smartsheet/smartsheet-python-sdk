@@ -21,7 +21,7 @@ import logging
 
 import six
 
-from . import fresh_operation
+from .util import fresh_operation
 
 
 class Discussions:

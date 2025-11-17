@@ -31,7 +31,7 @@ except ImportError:
 
     __version__ = get_version()
 
-from .smartsheet import (AbstractUserCalcBackoff, Smartsheet,  # NOQA
-                         fresh_operation)
+from .smartsheet import AbstractUserCalcBackoff, Smartsheet  # NOQA
+from .util import fresh_operation  # NOQA
 
 from . import models

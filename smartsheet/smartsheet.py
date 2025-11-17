@@ -38,50 +38,29 @@ from .models import Error, ErrorResult
 from .session import pinned_session
 from .util import is_multipart, serialize
 
-if TYPE_CHECKING:
-    from .attachments import Attachments
-    from .contacts import Contacts
-    from .discussions import Discussions
-    from .events import Events
-    from .favorites import Favorites
-    from .folders import Folders
-    from .groups import Groups
-    from .home import Home
-    from .images import Images
-    from .passthrough import Passthrough
-    from .reports import Reports
-    from .search import Search
-    from .server import Server
-    from .sharing import Sharing
-    from .sheets import Sheets
-    from .sights import Sights
-    from .templates import Templates
-    from .token import Token
-    from .users import Users
-    from .webhooks import Webhooks
-    from .workspaces import Workspaces
+from .attachments import Attachments
+from .contacts import Contacts
+from .discussions import Discussions
+from .events import Events
+from .favorites import Favorites
+from .folders import Folders
+from .groups import Groups
+from .home import Home
+from .images import Images
+from .passthrough import Passthrough
+from .reports import Reports
+from .search import Search
+from .server import Server
+from .sharing import Sharing
+from .sheets import Sheets
+from .sights import Sights
+from .templates import Templates
+from .token import Token
+from .users import Users
+from .webhooks import Webhooks
+from .workspaces import Workspaces
 
-__all__ = ("Smartsheet", "fresh_operation", "AbstractUserCalcBackoff")
-
-
-def fresh_operation(op_id):
-    """Create a default operation object."""
-    operation = {
-        "path": "",
-        "headers": {},
-        "header_params": {},
-        "path_params": {},
-        "query_params": {},
-        "params": {},
-        "files": None,
-        "form_data": None,
-        "json": None,
-        "id": op_id,
-        "dl_path": None,
-        "auth_settings": "access_token",
-    }
-
-    return operation
+__all__ = ("Smartsheet", "AbstractUserCalcBackoff")
 
 
 def setup_logging():
@@ -238,170 +217,149 @@ class Smartsheet:
         self._workspaces = None
 
     @property
-    def Attachments(self) -> "Attachments":
+    def Attachments(self) -> Attachments:
         """Access Attachments operations."""
         if self._attachments is None:
-            from .attachments import Attachments
             self._attachments = Attachments(self)
         return self._attachments
 
     @property
-    def Contacts(self) -> "Contacts":
+    def Contacts(self) -> Contacts:
         """Access Contacts operations."""
         if self._contacts is None:
-            from .contacts import Contacts
             self._contacts = Contacts(self)
         return self._contacts
 
     @property
-    def Discussions(self) -> "Discussions":
+    def Discussions(self) -> Discussions:
         """Access Discussions operations."""
         if self._discussions is None:
-            from .discussions import Discussions
             self._discussions = Discussions(self)
         return self._discussions
 
     @property
-    def Events(self) -> "Events":
+    def Events(self) -> Events:
         """Access Events operations."""
         if self._events is None:
-            from .events import Events
             self._events = Events(self)
         return self._events
 
     @property
-    def Favorites(self) -> "Favorites":
+    def Favorites(self) -> Favorites:
         """Access Favorites operations."""
         if self._favorites is None:
-            from .favorites import Favorites
             self._favorites = Favorites(self)
         return self._favorites
 
     @property
-    def Folders(self) -> "Folders":
+    def Folders(self) -> Folders:
         """Access Folders operations."""
         if self._folders is None:
-            from .folders import Folders
             self._folders = Folders(self)
         return self._folders
 
     @property
-    def Groups(self) -> "Groups":
+    def Groups(self) -> Groups:
         """Access Groups operations."""
         if self._groups is None:
-            from .groups import Groups
             self._groups = Groups(self)
         return self._groups
 
     @property
-    def Home(self) -> "Home":
+    def Home(self) -> Home:
         """Access Home operations."""
         if self._home is None:
-            from .home import Home
             self._home = Home(self)
         return self._home
 
     @property
-    def Images(self) -> "Images":
+    def Images(self) -> Images:
         """Access Images operations."""
         if self._images is None:
-            from .images import Images
             self._images = Images(self)
         return self._images
 
     @property
-    def Passthrough(self) -> "Passthrough":
+    def Passthrough(self) -> Passthrough:
         """Access Passthrough operations."""
         if self._passthrough is None:
-            from .passthrough import Passthrough
             self._passthrough = Passthrough(self)
         return self._passthrough
 
     @property
-    def Reports(self) -> "Reports":
+    def Reports(self) -> Reports:
         """Access Reports operations."""
         if self._reports is None:
-            from .reports import Reports
             self._reports = Reports(self)
         return self._reports
 
     @property
-    def Search(self) -> "Search":
+    def Search(self) -> Search:
         """Access Search operations."""
         if self._search is None:
-            from .search import Search
             self._search = Search(self)
         return self._search
 
     @property
-    def Server(self) -> "Server":
+    def Server(self) -> Server:
         """Access Server operations."""
         if self._server is None:
-            from .server import Server
             self._server = Server(self)
         return self._server
 
     @property
-    def Sharing(self) -> "Sharing":
+    def Sharing(self) -> Sharing:
         """Access Sharing operations."""
         if self._sharing is None:
-            from .sharing import Sharing
             self._sharing = Sharing(self)
         return self._sharing
 
     @property
-    def Sheets(self) -> "Sheets":
+    def Sheets(self) -> Sheets:
         """Access Sheets operations."""
         if self._sheets is None:
-            from .sheets import Sheets
             self._sheets = Sheets(self)
         return self._sheets
 
     @property
-    def Sights(self) -> "Sights":
+    def Sights(self) -> Sights:
         """Access Sights operations."""
         if self._sights is None:
-            from .sights import Sights
             self._sights = Sights(self)
         return self._sights
 
     @property
-    def Templates(self) -> "Templates":
+    def Templates(self) -> Templates:
         """Access Templates operations."""
         if self._templates is None:
-            from .templates import Templates
             self._templates = Templates(self)
         return self._templates
 
     @property
-    def Token(self) -> "Token":
+    def Token(self) -> Token:
         """Access Token operations."""
         if self._token is None:
-            from .token import Token
             self._token = Token(self)
         return self._token
 
     @property
-    def Users(self) -> "Users":
+    def Users(self) -> Users:
         """Access Users operations."""
         if self._users is None:
-            from .users import Users
             self._users = Users(self)
         return self._users
 
     @property
-    def Webhooks(self) -> "Webhooks":
+    def Webhooks(self) -> Webhooks:
         """Access Webhooks operations."""
         if self._webhooks is None:
-            from .webhooks import Webhooks
             self._webhooks = Webhooks(self)
         return self._webhooks
 
     @property
-    def Workspaces(self) -> "Workspaces":
+    def Workspaces(self) -> Workspaces:
         """Access Workspaces operations."""
         if self._workspaces is None:
-            from .workspaces import Workspaces
             self._workspaces = Workspaces(self)
         return self._workspaces
 
