@@ -171,7 +171,7 @@ print(sheet.rows[0].cells[0].value)  # TypeError here
 Link to relevant Smartsheet API documentation to help the Cloud Agent understand the expected behavior:
 
 ```markdown
-According to the [Smartsheet API documentation for Get Sheet](https://smartsheet.redoc.ly/#operation/get-sheet),
+According to the [Smartsheet API documentation for Get Sheet](https://developers.smartsheet.com/api/smartsheet/openapi/sheets/get-sheet),
 the response should include...
 ```
 
@@ -242,7 +242,7 @@ AttributeError: 'NoneType' object has no attribute 'strip'
 - OS: macOS 12.6
 
 **Smartsheet API Reference**:
-<https://smartsheet.redoc.ly/#tag/cellsRelated/operation/get-sheet>
+<https://developers.smartsheet.com/api/smartsheet/openapi/sheets/get-sheet>
 
 \`\`\`
 
@@ -277,8 +277,8 @@ client.Sheets.update_summary_field(
 
 **Smartsheet API Reference**:
 
-- <https://smartsheet.redoc.ly/#tag/summaryFields>
-- <https://smartsheet.redoc.ly/#operation/get-sheet-summary>
+- <https://developers.smartsheet.com/api/smartsheet/openapi/sheetsummary/list-summary-fields>
+- <https://developers.smartsheet.com/api/smartsheet/openapi/sheetsummary/get-sheet-summary>
 
 **Implementation Considerations**:
 
