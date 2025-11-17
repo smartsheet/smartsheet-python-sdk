@@ -15,7 +15,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from __future__ import absolute_import
+from __future__ import absolute_import, annotations
 
 import importlib
 import inspect
@@ -27,7 +27,6 @@ import random
 import re
 import sys
 import time
-from typing import TYPE_CHECKING
 
 import requests
 import six
@@ -119,9 +118,30 @@ class DefaultCalcBackoff(AbstractUserCalcBackoff):
 class Smartsheet:
     """Use this to make requests to the Smartsheet API."""
 
+    Attachments: Attachments
+    Contacts: Contacts
+    Discussions: Discussions
+    Events: Events
+    Favorites: Favorites
+    Folders: Folders
+    Groups: Groups
+    Home: Home
+    Images: Images
+    Passthrough: Passthrough
+    Reports: Reports
+    Search: Search
+    Server: Server
+    Sharing: Sharing
+    Sheets: Sheets
+    Sights: Sights
+    Templates: Templates
+    Token: Token
+    Users: Users
+    Webhooks: Webhooks
+    Workspaces: Workspaces
+
     models = models
 
-    # pylint: disable=R0915
     def __init__(
         self,
         access_token=None,
@@ -192,176 +212,6 @@ class Smartsheet:
         self._wiremock_test_name = None
         self._wiremock_request_id = None
         self._change_agent = None
-
-        # Cache for lazy-loaded API modules
-        self._attachments = None
-        self._contacts = None
-        self._discussions = None
-        self._events = None
-        self._favorites = None
-        self._folders = None
-        self._groups = None
-        self._home = None
-        self._images = None
-        self._passthrough = None
-        self._reports = None
-        self._search = None
-        self._server = None
-        self._sharing = None
-        self._sheets = None
-        self._sights = None
-        self._templates = None
-        self._token = None
-        self._users = None
-        self._webhooks = None
-        self._workspaces = None
-
-    @property
-    def Attachments(self) -> Attachments:
-        """Access Attachments operations."""
-        if self._attachments is None:
-            self._attachments = Attachments(self)
-        return self._attachments
-
-    @property
-    def Contacts(self) -> Contacts:
-        """Access Contacts operations."""
-        if self._contacts is None:
-            self._contacts = Contacts(self)
-        return self._contacts
-
-    @property
-    def Discussions(self) -> Discussions:
-        """Access Discussions operations."""
-        if self._discussions is None:
-            self._discussions = Discussions(self)
-        return self._discussions
-
-    @property
-    def Events(self) -> Events:
-        """Access Events operations."""
-        if self._events is None:
-            self._events = Events(self)
-        return self._events
-
-    @property
-    def Favorites(self) -> Favorites:
-        """Access Favorites operations."""
-        if self._favorites is None:
-            self._favorites = Favorites(self)
-        return self._favorites
-
-    @property
-    def Folders(self) -> Folders:
-        """Access Folders operations."""
-        if self._folders is None:
-            self._folders = Folders(self)
-        return self._folders
-
-    @property
-    def Groups(self) -> Groups:
-        """Access Groups operations."""
-        if self._groups is None:
-            self._groups = Groups(self)
-        return self._groups
-
-    @property
-    def Home(self) -> Home:
-        """Access Home operations."""
-        if self._home is None:
-            self._home = Home(self)
-        return self._home
-
-    @property
-    def Images(self) -> Images:
-        """Access Images operations."""
-        if self._images is None:
-            self._images = Images(self)
-        return self._images
-
-    @property
-    def Passthrough(self) -> Passthrough:
-        """Access Passthrough operations."""
-        if self._passthrough is None:
-            self._passthrough = Passthrough(self)
-        return self._passthrough
-
-    @property
-    def Reports(self) -> Reports:
-        """Access Reports operations."""
-        if self._reports is None:
-            self._reports = Reports(self)
-        return self._reports
-
-    @property
-    def Search(self) -> Search:
-        """Access Search operations."""
-        if self._search is None:
-            self._search = Search(self)
-        return self._search
-
-    @property
-    def Server(self) -> Server:
-        """Access Server operations."""
-        if self._server is None:
-            self._server = Server(self)
-        return self._server
-
-    @property
-    def Sharing(self) -> Sharing:
-        """Access Sharing operations."""
-        if self._sharing is None:
-            self._sharing = Sharing(self)
-        return self._sharing
-
-    @property
-    def Sheets(self) -> Sheets:
-        """Access Sheets operations."""
-        if self._sheets is None:
-            self._sheets = Sheets(self)
-        return self._sheets
-
-    @property
-    def Sights(self) -> Sights:
-        """Access Sights operations."""
-        if self._sights is None:
-            self._sights = Sights(self)
-        return self._sights
-
-    @property
-    def Templates(self) -> Templates:
-        """Access Templates operations."""
-        if self._templates is None:
-            self._templates = Templates(self)
-        return self._templates
-
-    @property
-    def Token(self) -> Token:
-        """Access Token operations."""
-        if self._token is None:
-            self._token = Token(self)
-        return self._token
-
-    @property
-    def Users(self) -> Users:
-        """Access Users operations."""
-        if self._users is None:
-            self._users = Users(self)
-        return self._users
-
-    @property
-    def Webhooks(self) -> Webhooks:
-        """Access Webhooks operations."""
-        if self._webhooks is None:
-            self._webhooks = Webhooks(self)
-        return self._webhooks
-
-    @property
-    def Workspaces(self) -> Workspaces:
-        """Access Workspaces operations."""
-        if self._workspaces is None:
-            self._workspaces = Workspaces(self)
-        return self._workspaces
 
     def assume_user(self, email=None):
         """Assume identity of specified user.
@@ -643,13 +493,10 @@ class Smartsheet:
 
     def __getattr__(self, name):
         """
-        Handle sub-class instantiation for backward compatibility.
-
-        This method is kept for backward compatibility with any dynamic access patterns,
-        but the preferred way is to use the explicit properties defined above.
+        Handle sub-class instantiation.
 
         Args:
-            name (str): Name of smartsheet to instantiate.
+            name (str): Name of smartsheet resource class to instantiate.
 
         Returns:
             Instance of named class.
