@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 import logging
 
-from . import fresh_operation
+from .util import fresh_operation
 from .models.folder import Folder
 from .models.sheet import Sheet
 from .util import deprecated

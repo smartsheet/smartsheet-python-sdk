@@ -17,7 +17,7 @@
 
 import logging
 
-from . import fresh_operation
+from .util import fresh_operation
 
 
 class Webhooks:

@@ -23,7 +23,7 @@ from datetime import datetime
 
 import six
 
-from . import fresh_operation
+from .util import fresh_operation
 from .models.column import Column
 from .models.row import Row
 from .models.summary_field import SummaryField

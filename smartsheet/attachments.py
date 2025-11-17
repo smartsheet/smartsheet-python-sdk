@@ -22,7 +22,7 @@ import os.path
 
 import requests
 
-from . import fresh_operation
+from .util import fresh_operation
 from .models import DownloadedFile, Error, ErrorResult
 
 
