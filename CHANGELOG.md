@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Updated
 
+- Improved the generated reference documentation.
 - ADVANCED.md integration and mock api testing documentation
 
 ## [3.5.5] - 2025-11-11
