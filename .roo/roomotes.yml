@@ -6,7 +6,7 @@ commands:
       timeout: 60
       execution_phase: task_run
     - name: Install dependencies
-      run: pnpm install
+      run: pip install -e .[test,develop]
       timeout: 60
       execution_phase: task_run
 
