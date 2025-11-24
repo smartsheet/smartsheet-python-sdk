@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 import logging
 
-from . import fresh_operation
+from .util import fresh_operation
 from .models.image_url import ImageUrl
 from .types import TypedList
 

@@ -33,6 +33,26 @@ _primitive_types = (six.string_types, six.integer_types, float, bool)
 _list_types = (TypedList, list)
 
 
+def fresh_operation(op_id):
+    """Create a default operation object."""
+    operation = {
+        "path": "",
+        "headers": {},
+        "header_params": {},
+        "path_params": {},
+        "query_params": {},
+        "params": {},
+        "files": None,
+        "form_data": None,
+        "json": None,
+        "id": op_id,
+        "dl_path": None,
+        "auth_settings": "access_token",
+    }
+
+    return operation
+
+
 def _camel_to_underscore(name):
     camel_pat = re.compile(r"([A-Z])")
     return camel_pat.sub(lambda x: "_" + x.group(1).lower(), name)

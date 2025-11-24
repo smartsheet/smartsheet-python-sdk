@@ -16,7 +16,7 @@
 # under the License.
 
 import logging
-from . import fresh_operation
+from .util import fresh_operation
 from .models.enums import ShareScope
 
 

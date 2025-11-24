@@ -22,7 +22,7 @@ import os.path
 import warnings
 from typing import Optional, Union
 
-from . import fresh_operation
+from .util import fresh_operation
 from .models.folder import Folder
 from .util import deprecated
 
@@ -344,6 +344,7 @@ class Workspaces:
         pagination_type: Optional[str] = None
     ):
         """Get the list of Workspaces the authenticated User may access.
+
         Args:
             page_size (int, optional): [DEPRECATED] The maximum number of items to
                 return per page. Use pagination_type='token' with max_items instead.
@@ -359,9 +360,9 @@ class Workspaces:
 
         Returns:
             IndexResult: When pagination_type='token', contains 'data' and 'last_key' attributes.
-            When using legacy pagination, contains paginated results with
+                When using legacy pagination, contains paginated results with
                 total_count, total_pages, etc.
-                
+
         Raises:
             ValueError: If pagination_type is not 'token' or None, or if max_items <= 0
                 when using token pagination.
