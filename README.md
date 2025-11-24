@@ -47,6 +47,10 @@ Use the following resources to learn more about the SDK capabilities:
 2. [Python SDK documentation](https://smartsheet.github.io/smartsheet-python-sdk/)
 3. [Smartsheet API Documentation](https://developers.smartsheet.com/api/smartsheet/)
 
+## Contributing
+
+We welcome contributions! Before submitting code changes, please review our [Issue First approach](ISSUE-FIRST.md) for creating effective issues that work well with both human reviewers and AI-powered Cloud Agents. For additional contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Advanced Topics
 
 For details about logging, testing, how to use a passthrough option, and how to override HTTP client behavior,
