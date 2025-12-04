@@ -20,7 +20,7 @@ from __future__ import absolute_import
 import logging
 
 from .util import fresh_operation
-from .models import Folder, Home, IndexResult, Result, Sheet
+from .models import Folder, Home as HomeModel, IndexResult, Result, Sheet
 from .util import deprecated
 
 
@@ -122,7 +122,7 @@ class Home:
         return response
 
     @deprecated
-    def list_all_contents(self, include=None, exclude=None) -> Home:
+    def list_all_contents(self, include=None, exclude=None) -> HomeModel:
         """Get a nested list of all Home objects, including Sheets,
         Workspaces, Folders, Reports and Templates.
 
