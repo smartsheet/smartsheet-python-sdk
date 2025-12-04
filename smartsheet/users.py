@@ -133,7 +133,8 @@ class Users:
         _op = fresh_operation("delete_alternate_email")
         _op["method"] = "DELETE"
         _op["path"] = (
-            "/users/" + str(user_id) + "/alternateemails/" + str(alternate_email_id)
+            "/users/" + str(user_id) + "/alternateemails/" +
+            str(alternate_email_id)
         )
 
         expected = ["Result", None]
@@ -155,7 +156,8 @@ class Users:
         _op = fresh_operation("get_alternate_email")
         _op["method"] = "GET"
         _op["path"] = (
-            "/users/" + str(user_id) + "/alternateemails/" + str(alternate_email_id)
+            "/users/" + str(user_id) + "/alternateemails/" +
+            str(alternate_email_id)
         )
 
         expected = "AlternateEmail"
@@ -347,10 +349,10 @@ class Users:
         """Reactivate the user associated with the current Smartsheet plan.
 
         Restores the user's access to Smartsheet, owned items, and shared items.
-        
+
         Important: The user can only be reactivated if they have been deactivated
         for less than thirty (30) days.
-        
+
         Optionally, with Enterprise Plan Manager (EPM) enabled, you can specify
         the ID of a user within your managed plan hierarchy.
 
@@ -368,7 +370,7 @@ class Users:
                   current Smartsheet plan domain(s)
                 - The user is not in the plan's organization
                 - The user has been deactivated for more than 30 days
-        
+
         Note:
             Requires System Admin permissions.
             This operation is unavailable for Smartsheet Gov.
@@ -383,13 +385,12 @@ class Users:
         response = self._base.request(prepped_request, expected, _op)
 
         return response
-    
+
     def deactivate_user(self, user_id):
         """Deactivate the user associated with the current Smartsheet plan.
 
         Blocks the user from using Smartsheet in any way. Deactivating a user
         does not affect their existing permissions on owned or shared items.
-        
         Optionally, with Enterprise Plan Manager (EPM) enabled, you can deactivate
         a user from child organizations.
 
@@ -409,7 +410,7 @@ class Users:
                   provider (IdP) or directory integration (DI) provider
                   (e.g., Okta, Azure AD). Such users can only be deactivated
                   via the external source.
-        
+
         Note:
             Requires System Admin permissions.
             This operation is unavailable for Smartsheet Gov.
