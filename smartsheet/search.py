@@ -21,6 +21,7 @@ import logging
 from datetime import datetime
 
 from .util import fresh_operation
+from .models import SearchResult
 
 
 class Search:
@@ -34,7 +35,7 @@ class Search:
 
     def search(
         self, query, include=None, location=None, modified_since=None, scopes=None
-    ):
+    ) -> SearchResult:
         """Search all Sheets the User can access for the specified text.
 
         Args:
@@ -77,7 +78,7 @@ class Search:
 
         return response
 
-    def search_sheet(self, sheet_id, query):
+    def search_sheet(self, sheet_id, query) -> SearchResult:
         """Search the specified Sheet for the specified text.
 
         Args:

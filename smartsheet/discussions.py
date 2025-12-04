@@ -22,6 +22,7 @@ import logging
 import six
 
 from .util import fresh_operation
+from .models import Comment, Discussion, IndexResult, Result
 
 
 class Discussions:
@@ -33,7 +34,7 @@ class Discussions:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_comment_to_discussion(self, sheet_id, discussion_id, comment_obj=None):
+    def add_comment_to_discussion(self, sheet_id, discussion_id, comment_obj=None) -> Result[Comment]:
         """Add a Comment to the specified Discussion
 
         Args:
@@ -42,7 +43,7 @@ class Discussions:
             comment_obj (Comment): Comment object.
 
         Returns:
-            Result
+            Result[Comment]
         """
         _op = fresh_operation("add_comment_to_discussion")
         _op["method"] = "POST"
@@ -65,7 +66,7 @@ class Discussions:
     # pylint: disable=invalid-name
     def add_comment_to_discussion_with_attachment(
         self, sheet_id, discussion_id, comment, _file=None
-    ):
+    ) -> Result[Comment]:
         """Add a Comment with an Attachment to the specified Discussion
 
         Args:
@@ -75,7 +76,7 @@ class Discussions:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Result[Comment]
         """
         if not all(val is not None for val in ["sheet_id", "discussion_id", "comment"]):
             raise ValueError(
@@ -105,7 +106,7 @@ class Discussions:
 
     # pylint: enable=invalid-name
 
-    def create_discussion_on_row(self, sheet_id, row_id, discussion_obj=None):
+    def create_discussion_on_row(self, sheet_id, row_id, discussion_obj=None) -> Result[Discussion]:
         """Create a new Discussion on a Row.
 
 
@@ -116,7 +117,7 @@ class Discussions:
             discussion_obj (Discussion): Discussion object.
 
         Returns:
-            Result
+            Result[Discussion]
         """
         _op = fresh_operation("create_discussion_on_row")
         _op["method"] = "POST"
@@ -135,7 +136,7 @@ class Discussions:
     # pylint: disable=invalid-name
     def create_discussion_on_row_with_attachment(
         self, sheet_id, row_id, discussion, _file=None
-    ):
+    ) -> Result[Discussion]:
         """Create a new Discussion on a Row with an attachment.
 
         Args:
@@ -145,7 +146,7 @@ class Discussions:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Result[Discussion]
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "discussion"]):
             raise ValueError(
@@ -171,7 +172,7 @@ class Discussions:
 
     # pylint: enable=invalid-name
 
-    def create_discussion_on_sheet(self, sheet_id, discussion_obj=None):
+    def create_discussion_on_sheet(self, sheet_id, discussion_obj=None) -> Result[Discussion]:
         """Create a new Discussion on a Sheet.
 
         Args:
@@ -179,7 +180,7 @@ class Discussions:
             discussion_obj (Discussion): Discussion object.
 
         Returns:
-            Result
+            Result[Discussion]
         """
         _op = fresh_operation("create_discussion_on_sheet")
         _op["method"] = "POST"
@@ -196,7 +197,7 @@ class Discussions:
     # pylint: disable=invalid-name
     def create_discussion_on_sheet_with_attachment(
         self, sheet_id, discussion, _file=None
-    ):
+    ) -> Result[Discussion]:
         """Create a new Discussion on a Sheet with an attachment.
 
         Args:
@@ -205,7 +206,7 @@ class Discussions:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Result[Discussion]
         """
         _op = fresh_operation("create_discussion_on_sheet_with_attachment")
         _op["method"] = "POST"
@@ -224,7 +225,7 @@ class Discussions:
 
     # pylint: enable=invalid-name
 
-    def delete_discussion(self, sheet_id, discussion_id):
+    def delete_discussion(self, sheet_id, discussion_id) -> Result:
         """Delete the specified Discussion.
 
         Args:
@@ -244,7 +245,7 @@ class Discussions:
 
         return response
 
-    def delete_discussion_comment(self, sheet_id, comment_id):
+    def delete_discussion_comment(self, sheet_id, comment_id) -> Result:
         """Delete the specified Sheet Comment.
 
         Delete the specified Comment from the specified Sheet.
@@ -268,7 +269,7 @@ class Discussions:
 
     def get_all_discussions(
         self, sheet_id, include=None, page_size=None, page=None, include_all=None
-    ):
+    ) -> IndexResult[Discussion]:
         """Get a list of all Discussions on the specified Sheet.
 
         Get a list of all Discussions associated with the specified
@@ -286,7 +287,7 @@ class Discussions:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Discussion]
         """
         _op = fresh_operation("get_all_discussions")
         _op["method"] = "GET"
@@ -303,7 +304,7 @@ class Discussions:
 
         return response
 
-    def get_discussion(self, sheet_id, discussion_id):
+    def get_discussion(self, sheet_id, discussion_id) -> Discussion:
         """Get the specified Discussion.
 
         Args:
@@ -323,7 +324,7 @@ class Discussions:
 
         return response
 
-    def get_discussion_comment(self, sheet_id, comment_id):
+    def get_discussion_comment(self, sheet_id, comment_id) -> Comment:
         """Get the specified Comment.
 
         Args:
@@ -351,7 +352,7 @@ class Discussions:
         page_size=None,
         page=None,
         include_all=None,
-    ):
+    ) -> IndexResult[Discussion]:
         """Get a list of all Discussions associated with the specified Row.
 
         Args:
@@ -368,7 +369,7 @@ class Discussions:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Discussion]
         """
         _op = fresh_operation("get_row_discussions")
         _op["method"] = "GET"
@@ -387,7 +388,7 @@ class Discussions:
 
         return response
 
-    def update_comment(self, sheet_id, comment_id, comment_obj):
+    def update_comment(self, sheet_id, comment_id, comment_obj) -> Result[Comment]:
         """Update the specified Comment.
 
         Args:
@@ -396,7 +397,7 @@ class Discussions:
             comment_obj (Comment): Comment object with the following attributes:
 
         Returns:
-            Result
+            Result[Comment]
         """
         _op = fresh_operation("update_comment")
         _op["method"] = "PUT"

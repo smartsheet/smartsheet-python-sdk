@@ -20,6 +20,7 @@ from __future__ import absolute_import
 import logging
 
 from .util import fresh_operation
+from .models import Contact, IndexResult
 
 
 class Contacts:
@@ -31,7 +32,7 @@ class Contacts:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def get_contact(self, contact_id):
+    def get_contact(self, contact_id) -> Contact:
         """Get the specified Contact.
 
         Args:
@@ -50,7 +51,7 @@ class Contacts:
 
         return response
 
-    def list_contacts(self, page_size=None, page=None, include_all=None):
+    def list_contacts(self, page_size=None, page=None, include_all=None) -> IndexResult[Contact]:
         """Get a list of the user's Smartsheet Contacts.
 
         Args:
@@ -61,7 +62,7 @@ class Contacts:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Contact]
         """
         _op = fresh_operation("list_contacts")
         _op["method"] = "GET"

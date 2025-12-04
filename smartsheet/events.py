@@ -21,6 +21,7 @@ import logging
 from datetime import datetime
 
 from .util import fresh_operation
+from .models import Event, EventResult
 
 
 class Events:
@@ -31,7 +32,7 @@ class Events:
 
     def list_events(
         self, since=None, to=None, stream_position=None, max_count=None, numeric_dates=None # pylint: disable=invalid-name
-    ):
+    ) -> EventResult[Event]:
         """Get the list of all Events.
 
         Args:
@@ -53,7 +54,7 @@ class Events:
                 Default is false, which means ISO-8601 format
 
         Returns:
-            EventResult containing Event array as data[]
+            EventResult[Event]
         """
         _op = fresh_operation("list_events")
         _op["method"] = "GET"

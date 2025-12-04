@@ -21,6 +21,7 @@ import logging
 from datetime import datetime
 
 from .util import fresh_operation
+from .models import AlternateEmail, IndexResult, Result, Sheet, TokenPaginatedResult, User, UserPlan, UserProfile
 from .models.enums.seat_type import SeatType
 
 
@@ -33,7 +34,7 @@ class Users:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_alternate_email(self, user_id, list_of_alternate_emails):
+    def add_alternate_email(self, user_id, list_of_alternate_emails) -> Result[AlternateEmail]:
         """Add one or more alternate email addresses for the specified User
 
         Args:
@@ -42,7 +43,7 @@ class Users:
                 An array of one or more AlternateEmail objects.
 
         Returns:
-            Result
+            Result[AlternateEmail]
         """
         _op = fresh_operation("add_alternate_email")
         _op["method"] = "POST"
@@ -56,7 +57,7 @@ class Users:
 
         return response
 
-    def promote_alternate_email(self, user_id, alt_id):
+    def promote_alternate_email(self, user_id, alt_id) -> Result[AlternateEmail]:
         """Promote an email address to primary
 
         Args:
@@ -64,7 +65,7 @@ class Users:
             alt_id(int):  AlternateEmail ID to be promoted
 
         Returns:
-            Result
+            Result[AlternateEmail]
         """
         _op = fresh_operation("promote_alternate_email")
         _op["method"] = "POST"
@@ -83,7 +84,7 @@ class Users:
 
         return response
 
-    def add_user(self, user_obj, send_email=None):
+    def add_user(self, user_obj, send_email=None) -> Result[User]:
         """Add a User to the organization.
 
         Args:
@@ -105,7 +106,7 @@ class Users:
             whether or not to notify the user by email. Default is false.
 
         Returns:
-            Result
+            Result[User]
         """
         _op = fresh_operation("add_user")
         _op["method"] = "POST"
@@ -120,7 +121,7 @@ class Users:
 
         return response
 
-    def delete_alternate_email(self, user_id, alternate_email_id):
+    def delete_alternate_email(self, user_id, alternate_email_id) -> Result:
         """Deletes the specified alternate email address for the specified User.
 
         Args:
@@ -143,7 +144,7 @@ class Users:
 
         return response
 
-    def get_alternate_email(self, user_id, alternate_email_id):
+    def get_alternate_email(self, user_id, alternate_email_id) -> AlternateEmail:
         """Get the specified Alternate Email
 
         Args:
@@ -166,7 +167,7 @@ class Users:
 
         return response
 
-    def get_current_user(self, include=None):
+    def get_current_user(self, include=None) -> UserProfile:
         """Get the currently authenticated User.
         Returns:
             UserProfile
@@ -182,7 +183,7 @@ class Users:
 
         return response
 
-    def get_user(self, user_id):
+    def get_user(self, user_id) -> UserProfile:
         """Get the specified User.
 
         Args:
@@ -201,14 +202,14 @@ class Users:
 
         return response
 
-    def list_alternate_emails(self, user_id):
+    def list_alternate_emails(self, user_id) -> IndexResult[AlternateEmail]:
         """Get a list of the Alternate Emails for the specified User.
 
         Args:
             user_id (int): User ID
 
         Returns:
-            IndexResult
+            IndexResult[AlternateEmail]
         """
         _op = fresh_operation("list_alternate_emails")
         _op["method"] = "GET"
@@ -223,7 +224,7 @@ class Users:
 
     def list_org_sheets(
         self, page_size=None, page=None, include_all=None, modified_since=None
-    ):
+    ) -> IndexResult[Sheet]:
         """Get a list of all Sheets owned by an organization.
 
         Get the list of all Sheets owned by the members of the
@@ -238,7 +239,7 @@ class Users:
             modified_since(datetime): list organization sheets modified since datetime
 
         Returns:
-            IndexResult
+            IndexResult[Sheet]
         """
         _op = fresh_operation("list_org_sheets")
         _op["method"] = "GET"
@@ -259,7 +260,7 @@ class Users:
     def list_users(
         self, email=None, page_size=None, page=None, include_all=None, include=None,
         plan_id=None, seat_type=None
-    ):
+    ) -> IndexResult[User]:
         """Get the list of Users in the organization.
 
         Args:
@@ -278,7 +279,7 @@ class Users:
                 by their seat type.
 
         Returns:
-            IndexResult
+            IndexResult[User]
         """
         _op = fresh_operation("list_users")
         _op["method"] = "GET"
@@ -304,7 +305,7 @@ class Users:
         transfer_to=None,
         transfer_sheets=False,
         remove_from_sharing=False,
-    ):
+    ) -> Result:
         """Remove a user from an organization.
 
         Remove a User from an organization. User is transitioned to
@@ -345,7 +346,7 @@ class Users:
 
         return response
 
-    def reactivate_user(self, user_id):
+    def reactivate_user(self, user_id) -> Result:
         """Reactivate the user associated with the current Smartsheet plan.
 
         Restores the user's access to Smartsheet, owned items, and shared items.
@@ -386,7 +387,7 @@ class Users:
 
         return response
 
-    def deactivate_user(self, user_id):
+    def deactivate_user(self, user_id) -> Result:
         """Deactivate the user associated with the current Smartsheet plan.
 
         Blocks the user from using Smartsheet in any way. Deactivating a user
@@ -426,7 +427,7 @@ class Users:
 
         return response
 
-    def update_user(self, user_id, user_obj):
+    def update_user(self, user_id, user_obj) -> Result[User]:
         """Update the specified User.
 
         Args:
@@ -435,7 +436,7 @@ class Users:
                 attributes:
 
         Returns:
-            Result
+            Result[User]
         """
         _op = fresh_operation("update_user")
         _op["method"] = "PUT"
@@ -449,7 +450,7 @@ class Users:
 
         return response
 
-    def upgrade_user(self, user_id, plan_id, seat_type):
+    def upgrade_user(self, user_id, plan_id, seat_type) -> Result:
         """Upgrades a user for a plan.
 
         Args:
@@ -458,7 +459,7 @@ class Users:
             seat_type (UpgradeSeatType): Seat type to upgrade to
 
         Returns:
-            dict: Result
+            Result
         """
         _op = fresh_operation("upgrade_user")
         _op["method"] = "POST"
@@ -472,7 +473,7 @@ class Users:
 
         return response
 
-    def downgrade_user(self, user_id, plan_id, seat_type):
+    def downgrade_user(self, user_id, plan_id, seat_type) -> Result:
         """Downgrades a user for a plan.
 
         Args:
@@ -481,7 +482,7 @@ class Users:
             seat_type (DowngradeSeatType): Seat type to downgrade to
 
         Returns:
-            dict: Result
+            Result
         """
         _op = fresh_operation("downgrade_user")
         _op["method"] = "POST"
@@ -495,12 +496,12 @@ class Users:
 
         return response
 
-    def list_user_plans(self, user_id, last_key=None, max_items=None):
+    def list_user_plans(self, user_id, last_key=None, max_items=None) -> TokenPaginatedResult[UserPlan]:
         """List user's plans.
                 Args:
                     user_id (int): User ID
                 Returns:
-                    TokenPaginatedResult
+                    TokenPaginatedResult[UserPlan]
          """
         _op = fresh_operation("list_user_plans")
         _op["method"] = "GET"
@@ -515,7 +516,7 @@ class Users:
 
         return response
 
-    def remove_user_from_plan(self, user_id, plan_id):
+    def remove_user_from_plan(self, user_id, plan_id) -> Result:
         """Remove user from plan.
                         Args:
                             user_id (int): User ID
@@ -534,7 +535,7 @@ class Users:
 
         return response
 
-    def add_profile_image(self, user_id, file, file_type):
+    def add_profile_image(self, user_id, file, file_type) -> Result[User]:
         """Uploads a profile image for the specified user.
 
         Args:
@@ -543,7 +544,7 @@ class Users:
             file_type (string): content type of image file
 
         Returns:
-            Result
+            Result[User]
         """
         if not all(val is not None for val in ["user_id", "file", "file_type"]):
             raise ValueError(
@@ -552,7 +553,7 @@ class Users:
 
         return self._attach_profile_image(user_id, file, file_type)
 
-    def _attach_profile_image(self, user_id, file, file_type):
+    def _attach_profile_image(self, user_id, file, file_type) -> Result[User]:
         """Internal function used to load image"""
 
         _data = open(file, "rb").read()

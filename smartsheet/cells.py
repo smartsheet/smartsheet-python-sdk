@@ -20,6 +20,7 @@ from __future__ import absolute_import
 import logging
 
 from .util import fresh_operation
+from .models import CellHistory, IndexResult, Result, Row
 
 
 class Cells:
@@ -41,7 +42,7 @@ class Cells:
         page=None,
         include_all=None,
         level=None,
-    ):
+    ) -> IndexResult[CellHistory]:
         """Get the Cell modification history.
 
         Args:
@@ -58,7 +59,7 @@ class Cells:
             level (int): compatibility level
 
         Returns:
-            IndexResult
+            IndexResult[CellHistory]
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "column_id"]):
             raise ValueError(
@@ -98,7 +99,7 @@ class Cells:
         file_type,
         override_validation=False,
         alt_text=None,
-    ):
+    ) -> Result[Row]:
         """Uploads an image to the specified cell.
 
         Args:
@@ -111,7 +112,7 @@ class Cells:
             alt_text: alternate text for the image
 
         Returns:
-            Result
+            Result[Row]
         """
         if not all(
             val is not None
@@ -134,7 +135,7 @@ class Cells:
         file_type,
         override_validation,
         alt_text,
-    ):
+    ) -> Result[Row]:
 
         _data = open(file, "rb").read()
         _op = fresh_operation("attach_file_to_cell")

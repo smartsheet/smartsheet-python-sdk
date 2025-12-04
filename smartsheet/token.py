@@ -20,6 +20,7 @@ from __future__ import absolute_import
 import logging
 
 from .util import fresh_operation
+from .models import AccessToken, Result
 
 
 class Token:
@@ -31,7 +32,7 @@ class Token:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def get_access_token(self, client_id, code, _hash, redirect_uri=None):
+    def get_access_token(self, client_id, code, _hash, redirect_uri=None) -> AccessToken:
         """Get an access token, as part of the OAuth process. For more
         information, see [OAuth
         Flow](http://smartsheet-platform.github.io/api-docs/index.html#oauth-flow)
@@ -70,7 +71,7 @@ class Token:
 
         return response
 
-    def refresh_access_token(self, client_id, refresh_token, _hash, redirect_uri=None):
+    def refresh_access_token(self, client_id, refresh_token, _hash, redirect_uri=None) -> AccessToken:
         """Refresh an access token, as part of the OAuth process. For more
         information, see [OAuth
         Flow](http://smartsheet-platform.github.io/api-docs/index.html#oauth-flow)
@@ -108,7 +109,7 @@ class Token:
 
         return response
 
-    def revoke_access_token(self):
+    def revoke_access_token(self) -> Result:
         """Revoke the access token used to make the request.
 
         Revoke the access token used to make the request. The

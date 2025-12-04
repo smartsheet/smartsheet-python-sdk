@@ -19,6 +19,7 @@ import logging
 from datetime import datetime
 
 from .util import fresh_operation
+from .models import IndexResult, Result, Share, Sight, SightPublish
 
 
 class Sights:
@@ -32,7 +33,7 @@ class Sights:
 
     def list_sights(
         self, page_size=None, page=None, include_all=None, modified_since=None
-    ):
+    ) -> IndexResult[Sight]:
         """Get the list of all Sights the User has access to, in alphabetical
         order, by name.
 
@@ -45,7 +46,7 @@ class Sights:
             modified_since(datetime): return sights modified since datetime
 
         Returns:
-            IndexResult
+            IndexResult[Sight]
         """
         _op = fresh_operation("list_sights")
         _op["method"] = "GET"
@@ -63,7 +64,7 @@ class Sights:
 
         return response
 
-    def get_sight(self, sight_id, level=None, include=None):
+    def get_sight(self, sight_id, level=None, include=None) -> Sight:
         """Get the specified Sight.
 
         Args:
@@ -86,7 +87,7 @@ class Sights:
 
         return response
 
-    def update_sight(self, sight_id, sight_obj):
+    def update_sight(self, sight_id, sight_obj) -> Result[Sight]:
         """Updates the specified Sight.
 
         Args:
@@ -94,7 +95,7 @@ class Sights:
             sight_obj (Sight): Sight object.
 
         Returns:
-            Result
+            Result[Sight]
         """
         _op = fresh_operation("update_sight")
         _op["method"] = "PUT"
@@ -108,7 +109,7 @@ class Sights:
 
         return response
 
-    def delete_sight(self, sight_id):
+    def delete_sight(self, sight_id) -> Result:
         """Delete the specified Sight.
 
         Args:
@@ -127,7 +128,7 @@ class Sights:
 
         return response
 
-    def copy_sight(self, sight_id, container_destination_obj):
+    def copy_sight(self, sight_id, container_destination_obj) -> Result[Sight]:
         """Creates a copy of the specified Sight
 
         Args:
@@ -136,7 +137,7 @@ class Sights:
                 (ContainerDestination): Container Destination object.
 
         Returns:
-            Result
+            Result[Sight]
         """
         _op = fresh_operation("copy_sight")
         _op["method"] = "POST"
@@ -150,7 +151,7 @@ class Sights:
 
         return response
 
-    def move_sight(self, sight_id, container_destination_obj):
+    def move_sight(self, sight_id, container_destination_obj) -> Result[Sight]:
         """Creates a copy of the specified Sight
 
         Args:
@@ -159,7 +160,7 @@ class Sights:
                 (ContainerDestination): Container Destination object.
 
         Returns:
-            Result
+            Result[Sight]
         """
         _op = fresh_operation("move_sight")
         _op["method"] = "POST"
@@ -180,7 +181,7 @@ class Sights:
         page=None,
         include_all=None,
         include_workspace_shares=False,
-    ):
+    ) -> IndexResult[Share]:
         """Get the list of all Users and Groups to whom the specified Sight is
         shared, and their access level.
 
@@ -194,7 +195,7 @@ class Sights:
             include_workspace_shares(bool): Include Workspace shares
 
         Returns:
-            IndexResult
+            IndexResult[Share]
         """
         _op = fresh_operation("list_shares")
         _op["method"] = "GET"
@@ -212,7 +213,7 @@ class Sights:
 
         return response
 
-    def get_share(self, sight_id, share_id):
+    def get_share(self, sight_id, share_id) -> Share:
         """Get the specified Share.
 
         Args:
@@ -232,7 +233,7 @@ class Sights:
 
         return response
 
-    def share_sight(self, sight_id, share_obj, send_email=False):
+    def share_sight(self, sight_id, share_obj, send_email=False) -> Result[Share]:
         """Share the specified Sight.
 
         Share the specified Sight with the specified Users and
@@ -246,7 +247,7 @@ class Sights:
                 is false.
 
         Returns:
-            Result
+            Result[Share]
         """
         _op = fresh_operation("share_sight")
         _op["method"] = "POST"
@@ -261,7 +262,7 @@ class Sights:
 
         return response
 
-    def update_share(self, sight_id, share_id, share_obj):
+    def update_share(self, sight_id, share_id, share_obj) -> Result[Share]:
         """Update the access level of a User or Group for the specified Sight.
 
         Args:
@@ -270,7 +271,7 @@ class Sights:
             share_obj (Share): Share object.
 
         Returns:
-            Result
+            Result[Share]
         """
         if not all(val is not None for val in ["sight_id", "share_id", "share_obj"]):
             raise ValueError(
@@ -289,7 +290,7 @@ class Sights:
 
         return response
 
-    def delete_share(self, sight_id, share_id):
+    def delete_share(self, sight_id, share_id) -> Result:
         """Delete the specified Share.
 
         Args:
@@ -309,7 +310,7 @@ class Sights:
 
         return response
 
-    def get_publish_status(self, sight_id):
+    def get_publish_status(self, sight_id) -> SightPublish:
         """Get the Publish status of the Sight.
 
         Get the status of the Publish settings of the Sight,
@@ -331,7 +332,7 @@ class Sights:
 
         return response
 
-    def set_publish_status(self, sight_id, sight_publish_obj):
+    def set_publish_status(self, sight_id, sight_publish_obj) -> Result[SightPublish]:
         """Set the publish status of the Sight and returns the new status,
         including the URLs of any enabled publishings.
 
@@ -340,7 +341,7 @@ class Sights:
             sight_publish_obj (SightPublish): SightPublish object.
 
         Returns:
-            Result
+            Result[SightPublish]
         """
         attributes = ["read_only_full_enabled", "read_only_full_accessible_by"]
 

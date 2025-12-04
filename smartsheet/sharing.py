@@ -17,6 +17,7 @@
 
 import logging
 from .util import fresh_operation
+from .models import AssetShare, AssetSharesPaginatedResult, Result
 from .models.enums import ShareScope
 
 
@@ -29,7 +30,7 @@ class Sharing:
         self._log = logging.getLogger(__name__)
 
     def list_asset_shares(self, asset_type, asset_id, max_items=None, last_key=None,
-                          sharing_include: ShareScope = None):
+                          sharing_include: ShareScope = None) -> AssetSharesPaginatedResult[AssetShare]:
         """Get the list of all Users and Groups to whom the specified asset is
         shared, and their access level.
 
@@ -43,7 +44,7 @@ class Sharing:
             sharing_include (ShareScope): Scope of share to include in response
 
         Returns:
-            AssetSharesPaginatedResult
+            AssetSharesPaginatedResult[AssetShare]
         """
         _op = fresh_operation('list_asset_shares')
         _op['method'] = 'GET'
@@ -61,7 +62,7 @@ class Sharing:
 
         return response
 
-    def get_asset_share(self, asset_type, asset_id, share_id):
+    def get_asset_share(self, asset_type, asset_id, share_id) -> AssetShare:
         """Get a specific share for the specified asset.
 
         Args:
@@ -84,7 +85,7 @@ class Sharing:
 
         return response
 
-    def share_asset(self, share_obj, asset_type, asset_id, send_email=None):
+    def share_asset(self, share_obj, asset_type, asset_id, send_email=None) -> Result[AssetShare]:
         """Share an asset with the specified Users and Groups.
 
         Args:
@@ -96,7 +97,7 @@ class Sharing:
                 is false.
 
         Returns:
-            Result
+            Result[AssetShare]
         """
         _op = fresh_operation('share_asset')
         _op['method'] = 'POST'
@@ -113,7 +114,7 @@ class Sharing:
 
         return response
 
-    def update_asset_share(self, share_obj, asset_type, asset_id, share_id):
+    def update_asset_share(self, share_obj, asset_type, asset_id, share_id) -> AssetShare:
         """Update the access level of a User or Group for the specified asset.
 
         Args:
@@ -123,7 +124,7 @@ class Sharing:
             share_id (str): Share ID
 
         Returns:
-            Result
+            AssetShare
         """
         _op = fresh_operation('update_share')
         _op['method'] = 'PATCH'
@@ -139,7 +140,7 @@ class Sharing:
 
         return response
 
-    def delete_asset_share(self, asset_type, asset_id, share_id):
+    def delete_asset_share(self, asset_type, asset_id, share_id) -> Result:
         """Delete the specified Share.
 
         Args:

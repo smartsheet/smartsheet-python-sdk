@@ -20,6 +20,7 @@ from __future__ import absolute_import
 import logging
 
 from .util import fresh_operation
+from .models import Group, GroupMember, IndexResult, Result
 
 
 class Groups:
@@ -31,7 +32,7 @@ class Groups:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_members(self, group_id, group_member_obj):
+    def add_members(self, group_id, group_member_obj) -> Result[GroupMember]:
         """Add one or more members to a Group.
 
         Args:
@@ -40,7 +41,7 @@ class Groups:
                 object(s).
 
         Returns:
-            Result
+            Result[GroupMember]
         """
         _op = fresh_operation("add_members")
         _op["method"] = "POST"
@@ -54,14 +55,14 @@ class Groups:
 
         return response
 
-    def create_group(self, group_obj):
+    def create_group(self, group_obj) -> Result[Group]:
         """Create a new Group
 
         Args:
             group_obj (Group): Group object.
 
         Returns:
-            Result
+            Result[Group]
         """
         _op = fresh_operation("create_group")
         _op["method"] = "POST"
@@ -75,7 +76,7 @@ class Groups:
 
         return response
 
-    def delete_group(self, group_id):
+    def delete_group(self, group_id) -> Result:
         """Delete the specified Group.
 
         Args:
@@ -94,7 +95,7 @@ class Groups:
 
         return response
 
-    def get_group(self, group_id):
+    def get_group(self, group_id) -> Group:
         """Get the specified Group.
 
         Args:
@@ -113,7 +114,7 @@ class Groups:
 
         return response
 
-    def list_groups(self, page_size=None, page=None, include_all=None):
+    def list_groups(self, page_size=None, page=None, include_all=None) -> IndexResult[Group]:
         """Get all Groups in an organization.
 
         Get the list of all Groups in an organization. To fetch the
@@ -127,7 +128,7 @@ class Groups:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Group]
         """
         _op = fresh_operation("list_groups")
         _op["method"] = "GET"
@@ -143,7 +144,7 @@ class Groups:
 
         return response
 
-    def remove_member(self, group_id, user_id):
+    def remove_member(self, group_id, user_id) -> Result:
         """Removes a member from the specified Group.
 
         Args:
@@ -163,7 +164,7 @@ class Groups:
 
         return response
 
-    def update_group(self, group_id, group_obj):
+    def update_group(self, group_id, group_obj) -> Result[Group]:
         """Updates the specified Group.
 
         Args:
@@ -171,7 +172,7 @@ class Groups:
             group_obj (Group): Group object.
 
         Returns:
-            Result
+            Result[Group]
         """
         _op = fresh_operation("update_group")
         _op["method"] = "PUT"

@@ -22,6 +22,7 @@ import os.path
 from datetime import datetime
 
 from .util import fresh_operation
+from .models import DownloadedFile, IndexResult, Report, ReportPublish, Result, Share
 
 
 class Reports:
@@ -33,7 +34,7 @@ class Reports:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def delete_share(self, report_id, share_id):
+    def delete_share(self, report_id, share_id) -> Result:
         """Deletes the specified Share
 
         Args:
@@ -55,7 +56,7 @@ class Reports:
 
     def get_report(
         self, report_id, page_size=None, page=None, include=None, level=None
-    ):
+    ) -> Report:
         """Get the specified Report, including one page of Rows.
 
         Get the specified Report, including one page of Rows, and
@@ -88,7 +89,7 @@ class Reports:
 
         return response
 
-    def get_report_as_csv(self, report_id, download_path, alternate_file_name=None):
+    def get_report_as_csv(self, report_id, download_path, alternate_file_name=None) -> DownloadedFile:
         """Get the specified Report as a CSV file.
 
         Args:
@@ -119,7 +120,7 @@ class Reports:
         response.save_to_file()
         return response
 
-    def get_report_as_excel(self, report_id, download_path, alternate_file_name=None):
+    def get_report_as_excel(self, report_id, download_path, alternate_file_name=None) -> DownloadedFile:
         """Get the specified Report as an Excel .xls document.
 
         Args:
@@ -150,7 +151,7 @@ class Reports:
         response.save_to_file()
         return response
 
-    def get_share(self, report_id, share_id):
+    def get_share(self, report_id, share_id) -> Share:
         """Get the specified Share.
 
         Args:
@@ -172,7 +173,7 @@ class Reports:
 
     def list_reports(
         self, page_size=None, page=None, include_all=None, modified_since=None
-    ):
+    ) -> IndexResult[Report]:
         """Get the list of all Reports accessible by the User.
 
         Get the list of all Reports that the User has access to, in
@@ -187,7 +188,7 @@ class Reports:
             modified_since(datetime): return reports modified after the specified modified_since
 
         Returns:
-            IndexResult
+            IndexResult[Report]
         """
         _op = fresh_operation("list_reports")
         _op["method"] = "GET"
@@ -212,7 +213,7 @@ class Reports:
         page=None,
         include_all=None,
         include_workspace_shares=False,
-    ):
+    ) -> IndexResult[Share]:
         """Get a list of all Users and Groups to whom the specified Report is
         shared, and their access level.
 
@@ -226,7 +227,7 @@ class Reports:
             include_workspace_shares(bool): include Workspace shares
 
         Returns:
-            IndexResult
+            IndexResult[Share]
         """
         _op = fresh_operation("list_shares")
         _op["method"] = "GET"
@@ -244,7 +245,7 @@ class Reports:
 
         return response
 
-    def send_report(self, report_id, sheet_email_obj):
+    def send_report(self, report_id, sheet_email_obj) -> Result:
         """Send the specified Report as a PDF attachment via email to the
         designated recipients.
 
@@ -266,7 +267,7 @@ class Reports:
 
         return response
 
-    def share_report(self, report_id, share_obj, send_email=False):
+    def share_report(self, report_id, share_obj, send_email=False) -> Result[Share]:
         """Shares a Report with the specified Users and Groups.
 
         Args:
@@ -277,7 +278,7 @@ class Reports:
                 is false.
 
         Returns:
-            Result
+            Result[Share]
         """
         _op = fresh_operation("share_report")
         _op["method"] = "POST"
@@ -292,7 +293,7 @@ class Reports:
 
         return response
 
-    def update_share(self, report_id, share_id, share_obj):
+    def update_share(self, report_id, share_id, share_obj) -> Result[Share]:
         """Update the access level of a User or Group for the specified Report
 
         Args:
@@ -301,7 +302,7 @@ class Reports:
             share_obj (Share): Share object.
 
         Returns:
-            Result
+            Result[Share]
         """
         if not all(val is not None for val in ["report_id", "share_id", "share_obj"]):
             raise ValueError(
@@ -320,7 +321,7 @@ class Reports:
 
         return response
 
-    def get_publish_status(self, report_id):
+    def get_publish_status(self, report_id) -> ReportPublish:
         """Get the Publish status of the Report.
 
         Get the status of the Publish settings of the Report,
@@ -342,7 +343,7 @@ class Reports:
 
         return response
 
-    def set_publish_status(self, report_id, report_publish_obj):
+    def set_publish_status(self, report_id, report_publish_obj) -> Result[ReportPublish]:
         """Set the publish status of the Report and returns the new status,
         including the URLs of any enabled publishings.
 
@@ -352,7 +353,7 @@ class Reports:
                 object.
 
         Returns:
-            Result
+            Result[ReportPublish]
         """
         attributes = ["read_only_full_enabled", "read_only_full_accessible_by"]
 

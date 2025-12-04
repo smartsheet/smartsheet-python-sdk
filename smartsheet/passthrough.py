@@ -32,7 +32,7 @@ class Passthrough:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def get(self, endpoint, query_params=None):
+    def get(self, endpoint, query_params=None) -> JSONObject:
         """Issue a GET request on the specified URL.
 
         Args:
@@ -54,7 +54,7 @@ class Passthrough:
 
         return response
 
-    def post(self, endpoint, payload, query_params=None):
+    def post(self, endpoint, payload, query_params=None) -> JSONObject:
         """Issue a POST request on the specified URL.
 
         Args:
@@ -80,7 +80,7 @@ class Passthrough:
 
         return response
 
-    def put(self, endpoint, payload, query_params=None):
+    def put(self, endpoint, payload, query_params=None) -> JSONObject:
         """Issue a PUT request on the specified URL.
 
         Args:
@@ -106,7 +106,7 @@ class Passthrough:
 
         return response
 
-    def delete(self, endpoint):
+    def delete(self, endpoint) -> JSONObject:
         """Issue a DELETE request on the specified URL.
 
         Args:

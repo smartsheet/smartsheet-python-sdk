@@ -20,6 +20,7 @@ from __future__ import absolute_import
 import logging
 
 from .util import fresh_operation
+from .models import ServerInfo
 
 
 class Server:
@@ -31,7 +32,7 @@ class Server:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def server_info(self):
+    def server_info(self) -> ServerInfo:
         """Get application constants.
         Returns:
             ServerInfo

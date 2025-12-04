@@ -18,6 +18,7 @@
 import logging
 
 from .util import fresh_operation
+from .models import IndexResult, Result, Webhook, WebhookSecret
 
 
 class Webhooks:
@@ -29,7 +30,7 @@ class Webhooks:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def list_webhooks(self, page_size=None, page=None, include_all=None):
+    def list_webhooks(self, page_size=None, page=None, include_all=None) -> IndexResult[Webhook]:
         """Get the list of all Webhooks the User has access to, in alphabetical
         order, by name.
 
@@ -41,7 +42,7 @@ class Webhooks:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Webhook]
         """
         _op = fresh_operation("list_webhooks")
         _op["method"] = "GET"
@@ -57,7 +58,7 @@ class Webhooks:
 
         return response
 
-    def get_webhook(self, webhook_id):
+    def get_webhook(self, webhook_id) -> Webhook:
         """Get the specified Webhook.
 
         Args:
@@ -77,14 +78,14 @@ class Webhooks:
 
         return response
 
-    def create_webhook(self, webhook_obj):
+    def create_webhook(self, webhook_obj) -> Result[Webhook]:
         """Creates the specified Webhook.
 
         Args:
             webhook_obj (Webhook): Webhook object.
 
         Returns:
-            Result
+            Result[Webhook]
         """
         _op = fresh_operation("create_webhook")
         _op["method"] = "POST"
@@ -98,7 +99,7 @@ class Webhooks:
 
         return response
 
-    def update_webhook(self, webhook_id, webhook_obj):
+    def update_webhook(self, webhook_id, webhook_obj) -> Result[Webhook]:
         """Updates the specified Webhook.
 
         Args:
@@ -106,7 +107,7 @@ class Webhooks:
             webhook_obj (Webhook): Webhook object.
 
         Returns:
-            Result
+            Result[Webhook]
         """
         _op = fresh_operation("update_webhook")
         _op["method"] = "PUT"
@@ -120,7 +121,7 @@ class Webhooks:
 
         return response
 
-    def delete_webhook(self, webhook_id):
+    def delete_webhook(self, webhook_id) -> Result:
         """Delete the specified Webhook.
 
         Args:
@@ -140,14 +141,14 @@ class Webhooks:
 
         return response
 
-    def reset_shared_secret(self, webhook_id):
+    def reset_shared_secret(self, webhook_id) -> Result[WebhookSecret]:
         """Resets the shared secret for the specified Webhook.
 
         Args:
             webhook_id (int): Webhook ID
 
         Returns:
-            Webhook
+            Result[WebhookSecret]
         """
         _op = fresh_operation("reset_webhook")
         _op["method"] = "POST"

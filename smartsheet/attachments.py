@@ -23,7 +23,7 @@ import os.path
 import requests
 
 from .util import fresh_operation
-from .models import DownloadedFile, Error, ErrorResult
+from .models import Attachment, DownloadedFile, Error, ErrorResult, IndexResult, Result
 
 
 class Attachments:
@@ -35,7 +35,7 @@ class Attachments:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def attach_file_to_comment(self, sheet_id, comment_id, _file):
+    def attach_file_to_comment(self, sheet_id, comment_id, _file) -> Result[Attachment]:
         """Add a file to a Comment.
 
         Args:
@@ -44,7 +44,7 @@ class Attachments:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Result[Attachment]
         """
         if not all(val is not None for val in ["sheet_id", "comment_id", "_file"]):
             raise ValueError(
@@ -66,7 +66,7 @@ class Attachments:
 
         return response
 
-    def attach_file_to_row(self, sheet_id, row_id, _file):
+    def attach_file_to_row(self, sheet_id, row_id, _file) -> Result[Attachment]:
         """Add a file to the row.
 
         Args:
@@ -75,7 +75,7 @@ class Attachments:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Result[Attachment]
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "_file"]):
             raise ValueError(
@@ -97,7 +97,7 @@ class Attachments:
 
         return response
 
-    def attach_file_to_sheet(self, sheet_id, _file):
+    def attach_file_to_sheet(self, sheet_id, _file) -> Result[Attachment]:
         """Attach a file to the specified Sheet.
 
         Args:
@@ -105,7 +105,7 @@ class Attachments:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Result[Attachment]
         """
         _op = fresh_operation("attach_file_to_sheet")
         _op["method"] = "POST"
@@ -120,7 +120,7 @@ class Attachments:
 
         return response
 
-    def attach_new_version(self, sheet_id, attachment_id, _file):
+    def attach_new_version(self, sheet_id, attachment_id, _file) -> Result[Attachment]:
         """Upload a new version of a file to a Sheet or Row.
 
         Args:
@@ -129,7 +129,7 @@ class Attachments:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Result[Attachment]
         """
         if not all(val is not None for val in ["sheet_id", "attachment_id", "_file"]):
             raise ValueError(
@@ -155,7 +155,7 @@ class Attachments:
 
         return response
 
-    def attach_url_to_comment(self, sheet_id, comment_id, attachment_obj):
+    def attach_url_to_comment(self, sheet_id, comment_id, attachment_obj) -> Result[Attachment]:
         """Add a URL to a Comment.
 
         Attachment object for this request should be limited to the
@@ -185,7 +185,7 @@ class Attachments:
             attachment_obj (Attachment): Attachment object.
 
         Returns:
-            Result
+            Result[Attachment]
         """
         if not all(
             val is not None for val in ["sheet_id", "comment_id", "attachment_obj"]
@@ -208,7 +208,7 @@ class Attachments:
 
         return response
 
-    def attach_url_to_row(self, sheet_id, row_id, attachment_obj):
+    def attach_url_to_row(self, sheet_id, row_id, attachment_obj) -> Result[Attachment]:
         """Add a URL to a Row.
 
         Attachment object for this request should be limited to the
@@ -238,7 +238,7 @@ class Attachments:
             attachment_obj (Attachment): Attachment object.
 
         Returns:
-            Result
+            Result[Attachment]
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "attachment_obj"]):
             raise ValueError(
@@ -259,7 +259,7 @@ class Attachments:
 
         return response
 
-    def attach_url_to_sheet(self, sheet_id, attachment_obj):
+    def attach_url_to_sheet(self, sheet_id, attachment_obj) -> Result[Attachment]:
         """Add a URL to a Sheet.
 
         Attachment object for this request should be limited to the
@@ -288,7 +288,7 @@ class Attachments:
             attachment_obj (Attachment): Attachment object.
 
         Returns:
-            Result
+            Result[Attachment]
         """
         _op = fresh_operation("attach_url_to_sheet")
         _op["method"] = "POST"
@@ -302,7 +302,7 @@ class Attachments:
 
         return response
 
-    def delete_attachment(self, sheet_id, attachment_id):
+    def delete_attachment(self, sheet_id, attachment_id) -> Result:
         """Delete the specified Attachment.
 
         Args:
@@ -322,7 +322,7 @@ class Attachments:
 
         return response
 
-    def delete_attachment_versions(self, sheet_id, attachment_id):
+    def delete_attachment_versions(self, sheet_id, attachment_id) -> Result:
         """Delete all versions of the specified Attachment.
 
         Delete all versions of the attachment corresponding to the
@@ -351,7 +351,7 @@ class Attachments:
 
         return response
 
-    def get_attachment(self, sheet_id, attachment_id):
+    def get_attachment(self, sheet_id, attachment_id) -> Attachment:
         """Fetch the specified Attachment.
 
         Args:
@@ -373,7 +373,7 @@ class Attachments:
 
     def list_all_attachments(
         self, sheet_id, page_size=None, page=None, include_all=None
-    ):
+    ) -> IndexResult[Attachment]:
         """Get a list of Attachments for a Sheet.
 
         Get a list of all Attachments for the specified Sheet,
@@ -388,7 +388,7 @@ class Attachments:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Attachment]
         """
         _op = fresh_operation("list_all_attachments")
         _op["method"] = "GET"
@@ -406,7 +406,7 @@ class Attachments:
 
     def list_attachment_versions(
         self, sheet_id, attachment_id, page_size=None, page=None, include_all=None
-    ):
+    ) -> IndexResult[Attachment]:
         """Get a list of versions for an Attachment.
 
         Get a list of all versions of the given Attachment ID, in
@@ -422,7 +422,7 @@ class Attachments:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Attachment]
         """
         _op = fresh_operation("list_attachment_versions")
         _op["method"] = "GET"
@@ -446,7 +446,7 @@ class Attachments:
 
     def list_discussion_attachments(
         self, sheet_id, discussion_id, page_size=None, page=None, include_all=None
-    ):
+    ) -> IndexResult[Attachment]:
         """Get a list of Attachments for the Sheet Discussion.
 
         Get a list of all Attachments for the specified Sheet
@@ -462,7 +462,7 @@ class Attachments:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Attachment]
         """
         _op = fresh_operation("list_discussion_attachments")
         _op["method"] = "GET"
@@ -486,7 +486,7 @@ class Attachments:
 
     def list_row_attachments(
         self, sheet_id, row_id, page_size=None, page=None, include_all=None
-    ):
+    ) -> IndexResult[Attachment]:
         """Get a list of all Attachments for the specified Sheet Row.
 
         Args:
@@ -499,7 +499,7 @@ class Attachments:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            IndexResult[Attachment]
         """
         _op = fresh_operation("list_row_attachments")
         _op["method"] = "GET"

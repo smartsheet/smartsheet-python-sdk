@@ -20,7 +20,7 @@ from __future__ import absolute_import
 import logging
 
 from .util import fresh_operation
-from .models.image_url import ImageUrl
+from .models import ImageUrl, ImageUrlMap
 from .types import TypedList
 
 
@@ -33,7 +33,7 @@ class Images:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def get_image_urls(self, list_of_images):
+    def get_image_urls(self, list_of_images) -> ImageUrlMap:
         """Get URLs that can be used to retrieve specified cell images.
 
         Args:
@@ -41,7 +41,7 @@ class Images:
                 or more ImageURL objects.
 
         Returns:
-            ImageURLMap
+            ImageUrlMap
         """
         if isinstance(list_of_images, (dict, ImageUrl)):
             arg_value = list_of_images
