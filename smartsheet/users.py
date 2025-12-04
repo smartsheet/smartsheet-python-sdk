@@ -343,6 +343,88 @@ class Users:
 
         return response
 
+    def reactivate_user(self, user_id):
+        """Reactivate the user associated with the current Smartsheet plan.
+
+        Restores the user's access to Smartsheet, owned items, and shared items.
+        
+        Important: The user can only be reactivated if they have been deactivated
+        for less than thirty (30) days.
+        
+        Optionally, with Enterprise Plan Manager (EPM) enabled, you can specify
+        the ID of a user within your managed plan hierarchy.
+
+        Args:
+            user_id (int): User ID
+
+        Returns:
+            Result
+
+        Raises:
+            ApiError: If the user cannot be reactivated. This occurs when:
+                - The user's primary email address belongs to an ISP domain
+                  (e.g., gmail.com, yahoo.com, outlook.com)
+                - The user's primary email address is unassociated with the
+                  current Smartsheet plan domain(s)
+                - The user is not in the plan's organization
+                - The user has been deactivated for more than 30 days
+        
+        Note:
+            Requires System Admin permissions.
+            This operation is unavailable for Smartsheet Gov.
+        """
+        _op = fresh_operation("reactivate_user")
+        _op["method"] = "POST"
+        _op["path"] = "/users/" + str(user_id) + "/reactivate"
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+    
+    def deactivate_user(self, user_id):
+        """Deactivate the user associated with the current Smartsheet plan.
+
+        Blocks the user from using Smartsheet in any way. Deactivating a user
+        does not affect their existing permissions on owned or shared items.
+        
+        Optionally, with Enterprise Plan Manager (EPM) enabled, you can deactivate
+        a user from child organizations.
+
+        Args:
+            user_id (int): User ID
+
+        Returns:
+            Result
+
+        Raises:
+            ApiError: If the user cannot be deactivated. This occurs when:
+                - The user's primary email address belongs to an ISP domain
+                  (e.g., gmail.com, yahoo.com, outlook.com)
+                - The user's primary email address is unassociated with the
+                  current Smartsheet plan domain(s)
+                - The user is managed by an external source, such as an identity
+                  provider (IdP) or directory integration (DI) provider
+                  (e.g., Okta, Azure AD). Such users can only be deactivated
+                  via the external source.
+        
+        Note:
+            Requires System Admin permissions.
+            This operation is unavailable for Smartsheet Gov.
+        """
+        _op = fresh_operation("deactivate_user")
+        _op["method"] = "POST"
+        _op["path"] = "/users/" + str(user_id) + "/deactivate"
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
     def update_user(self, user_id, user_obj):
         """Update the specified User.
 
