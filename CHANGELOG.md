@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+## [3.6.0] - 2025-12-04
+
 ### Added
 
 - Support for POST /2.0/users/{userId}/reactivate endpoint
