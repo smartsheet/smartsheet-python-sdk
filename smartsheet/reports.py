@@ -34,7 +34,7 @@ class Reports:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def delete_share(self, report_id, share_id) -> Result:
+    def delete_share(self, report_id, share_id) -> Result[None]:
         """Deletes the specified Share
 
         Args:
@@ -42,7 +42,7 @@ class Reports:
             share_id (str): Share ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_share")
         _op["method"] = "DELETE"
@@ -245,7 +245,7 @@ class Reports:
 
         return response
 
-    def send_report(self, report_id, sheet_email_obj) -> Result:
+    def send_report(self, report_id, sheet_email_obj) -> Result[None]:
         """Send the specified Report as a PDF attachment via email to the
         designated recipients.
 
@@ -254,7 +254,7 @@ class Reports:
             sheet_email_obj (SheetEmail): SheetEmail object.
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("send_report")
         _op["method"] = "POST"

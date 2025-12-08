@@ -155,14 +155,14 @@ class Folders:
 
     # pylint: enable=invalid-name
 
-    def delete_folder(self, folder_id) -> Result:
+    def delete_folder(self, folder_id) -> Result[None]:
         """Delete the Folder (and its contents) specified in the request.
 
         Args:
             folder_id (int): Folder ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_folder")
         _op["method"] = "DELETE"

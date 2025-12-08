@@ -140,7 +140,7 @@ class Sharing:
 
         return response
 
-    def delete_asset_share(self, asset_type, asset_id, share_id) -> Result:
+    def delete_asset_share(self, asset_type, asset_id, share_id) -> Result[None]:
         """Delete the specified Share.
 
         Args:
@@ -149,7 +149,7 @@ class Sharing:
             share_id (str): Share ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation('delete_share')
         _op['method'] = 'DELETE'

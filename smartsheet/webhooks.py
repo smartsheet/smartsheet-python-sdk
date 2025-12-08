@@ -121,14 +121,14 @@ class Webhooks:
 
         return response
 
-    def delete_webhook(self, webhook_id) -> Result:
+    def delete_webhook(self, webhook_id) -> Result[None]:
         """Delete the specified Webhook.
 
         Args:
             webhook_id (int): Webhook ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_webhook")
         _op["method"] = "DELETE"

@@ -109,14 +109,14 @@ class Token:
 
         return response
 
-    def revoke_access_token(self) -> Result:
+    def revoke_access_token(self) -> Result[None]:
         """Revoke the access token used to make the request.
 
         Revoke the access token used to make the request. The
         access token will no longer be valid, and subsequent API calls
         using the token will fail.
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("revoke_access_token")
         _op["method"] = "DELETE"

@@ -121,7 +121,7 @@ class Users:
 
         return response
 
-    def delete_alternate_email(self, user_id, alternate_email_id) -> Result:
+    def delete_alternate_email(self, user_id, alternate_email_id) -> Result[None]:
         """Deletes the specified alternate email address for the specified User.
 
         Args:
@@ -129,7 +129,7 @@ class Users:
             alternate_email_id (int): Alternate Email ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_alternate_email")
         _op["method"] = "DELETE"
@@ -305,7 +305,7 @@ class Users:
         transfer_to=None,
         transfer_sheets=False,
         remove_from_sharing=False,
-    ) -> Result:
+    ) -> Result[None]:
         """Remove a user from an organization.
 
         Remove a User from an organization. User is transitioned to
@@ -331,7 +331,7 @@ class Users:
                 from sharing.
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("remove_user")
         _op["method"] = "DELETE"
@@ -346,7 +346,7 @@ class Users:
 
         return response
 
-    def reactivate_user(self, user_id) -> Result:
+    def reactivate_user(self, user_id) -> Result[None]:
         """Reactivate the user associated with the current Smartsheet plan.
 
         Restores the user's access to Smartsheet, owned items, and shared items.
@@ -361,7 +361,7 @@ class Users:
             user_id (int): User ID
 
         Returns:
-            Result
+            Result[None]
 
         Raises:
             ApiError: If the user cannot be reactivated. This occurs when:
@@ -387,7 +387,7 @@ class Users:
 
         return response
 
-    def deactivate_user(self, user_id) -> Result:
+    def deactivate_user(self, user_id) -> Result[None]:
         """Deactivate the user associated with the current Smartsheet plan.
 
         Blocks the user from using Smartsheet in any way. Deactivating a user
@@ -399,7 +399,7 @@ class Users:
             user_id (int): User ID
 
         Returns:
-            Result
+            Result[None]
 
         Raises:
             ApiError: If the user cannot be deactivated. This occurs when:
@@ -450,7 +450,7 @@ class Users:
 
         return response
 
-    def upgrade_user(self, user_id, plan_id, seat_type) -> Result:
+    def upgrade_user(self, user_id, plan_id, seat_type) -> Result[None]:
         """Upgrades a user for a plan.
 
         Args:
@@ -459,7 +459,7 @@ class Users:
             seat_type (UpgradeSeatType): Seat type to upgrade to
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("upgrade_user")
         _op["method"] = "POST"
@@ -473,7 +473,7 @@ class Users:
 
         return response
 
-    def downgrade_user(self, user_id, plan_id, seat_type) -> Result:
+    def downgrade_user(self, user_id, plan_id, seat_type) -> Result[None]:
         """Downgrades a user for a plan.
 
         Args:
@@ -482,7 +482,7 @@ class Users:
             seat_type (DowngradeSeatType): Seat type to downgrade to
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("downgrade_user")
         _op["method"] = "POST"
@@ -516,13 +516,13 @@ class Users:
 
         return response
 
-    def remove_user_from_plan(self, user_id, plan_id) -> Result:
+    def remove_user_from_plan(self, user_id, plan_id) -> Result[None]:
         """Remove user from plan.
                         Args:
                             user_id (int): User ID
                             plan_id (int): Plan ID
                         Returns:
-                            Result
+                            Result[None]
                  """
         _op = fresh_operation("remove_user_from_plan")
         _op["method"] = "DELETE"

@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import TypeVar, Generic, List
+from typing import TypeVar, Generic, List, Type
 
 from ..types import Number, String, TypedList, importlib, json
 from ..util import deserialize, serialize
@@ -30,7 +30,7 @@ class BulkItemResult(Generic[T]):
 
     """Smartsheet BulkItemResult data model."""
 
-    def __init__(self, props=None, dynamic_result_type: type[T] = None, base_obj=None):
+    def __init__(self, props=None, dynamic_result_type: Type[T] = None, base_obj=None):
         """Initialize the BulkItemResult model."""
         self._base = None
         if base_obj is not None:

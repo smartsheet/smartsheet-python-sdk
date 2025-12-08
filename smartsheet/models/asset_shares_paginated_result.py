@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import TypeVar, List, Generic
+from typing import TypeVar, List, Generic, Type
 from ..types import String, json, TypedList, importlib
 from ..util import deserialize, serialize
 
@@ -31,7 +31,7 @@ class AssetSharesPaginatedResult(Generic[T]):
     As a result TokenPaginatedResult cannot be used.
     """
 
-    def __init__(self, props=None, dynamic_data_type: type[T] = None, base_obj=None):
+    def __init__(self, props=None, dynamic_data_type: Type[T] = None, base_obj=None):
         """Initialize the TokenPaginatedResult model."""
         self._base = None
         if base_obj is not None:

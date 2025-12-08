@@ -302,7 +302,7 @@ class Attachments:
 
         return response
 
-    def delete_attachment(self, sheet_id, attachment_id) -> Result:
+    def delete_attachment(self, sheet_id, attachment_id) -> Result[None]:
         """Delete the specified Attachment.
 
         Args:
@@ -310,7 +310,7 @@ class Attachments:
             attachment_id (int): Attachment ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_attachment")
         _op["method"] = "DELETE"
@@ -322,7 +322,7 @@ class Attachments:
 
         return response
 
-    def delete_attachment_versions(self, sheet_id, attachment_id) -> Result:
+    def delete_attachment_versions(self, sheet_id, attachment_id) -> Result[None]:
         """Delete all versions of the specified Attachment.
 
         Delete all versions of the attachment corresponding to the
@@ -333,7 +333,7 @@ class Attachments:
             attachment_id (int): Attachment ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_attachment_versions")
         _op["method"] = "DELETE"

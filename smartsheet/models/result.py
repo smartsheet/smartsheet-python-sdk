@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import TypeVar, Generic
+from typing import TypeVar, Generic, Type
 
 from ..types import Number, String, TypedList, importlib, json, logging
 from ..util import deserialize, serialize
@@ -28,7 +28,7 @@ class Result(Generic[T]):
 
     """Smartsheet Result data model."""
 
-    def __init__(self, props=None, dynamic_result_type: type[T] = None, base_obj=None):
+    def __init__(self, props=None, dynamic_result_type: Type[T] = None, base_obj=None):
         """Initialize the Result model."""
         self._base = None
         if base_obj is not None:

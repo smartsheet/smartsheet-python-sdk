@@ -20,11 +20,11 @@ from __future__ import absolute_import
 import logging
 import os.path
 import warnings
-from typing import Optional, Union
+from typing import Optional
 
-from .util import fresh_operation
 from .models import Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, Workspace
 from .util import deprecated
+from .util import fresh_operation
 
 
 class Workspaces:
@@ -179,7 +179,7 @@ class Workspaces:
 
         return response
 
-    def delete_share(self, workspace_id, share_id) -> Result:
+    def delete_share(self, workspace_id, share_id) -> Result[None]:
         """Delete the Share specified.
 
         Args:
@@ -187,7 +187,7 @@ class Workspaces:
             share_id (str): Share ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_share")
         _op["method"] = "DELETE"
@@ -199,14 +199,14 @@ class Workspaces:
 
         return response
 
-    def delete_workspace(self, workspace_id) -> Result:
+    def delete_workspace(self, workspace_id) -> Result[None]:
         """Delete the specified Workspace and its contents.
 
         Args:
             workspace_id (int): Workspace ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_workspace")
         _op["method"] = "DELETE"

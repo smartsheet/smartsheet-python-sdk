@@ -109,14 +109,14 @@ class Sights:
 
         return response
 
-    def delete_sight(self, sight_id) -> Result:
+    def delete_sight(self, sight_id) -> Result[None]:
         """Delete the specified Sight.
 
         Args:
             sight_id (int): Sight ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_sight")
         _op["method"] = "DELETE"
@@ -290,7 +290,7 @@ class Sights:
 
         return response
 
-    def delete_share(self, sight_id, share_id) -> Result:
+    def delete_share(self, sight_id, share_id) -> Result[None]:
         """Delete the specified Share.
 
         Args:
@@ -298,7 +298,7 @@ class Sights:
             share_id (str): Share ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_share")
         _op["method"] = "DELETE"

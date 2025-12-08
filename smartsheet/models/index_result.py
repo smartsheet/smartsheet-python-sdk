@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import TypeVar, Generic, List
+from typing import TypeVar, Generic, List, Type
 
 from ..types import Number, TypedList, importlib, json, String
 from ..util import deserialize, serialize
@@ -28,7 +28,7 @@ class IndexResult(Generic[T]):
 
     """Smartsheet IndexResult data model."""
 
-    def __init__(self, props=None, dynamic_data_type: type[T] =None, base_obj=None):
+    def __init__(self, props=None, dynamic_data_type: Type[T] = None, base_obj=None):
         """Initialize the IndexResult model."""
         self._base = None
         if base_obj is not None:

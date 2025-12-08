@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import TypeVar, Generic, List
+from typing import TypeVar, Generic, List, Type
 from ..types import String, json, TypedList, importlib
 from ..util import deserialize, serialize
 
@@ -27,7 +27,7 @@ T = TypeVar('T')
 class TokenPaginatedResult(Generic[T]):
     """Smartsheet TokenPaginatedResult data model with generic type support."""
 
-    def __init__(self, props=None, dynamic_data_type: type[T] = None, base_obj=None):
+    def __init__(self, props=None, dynamic_data_type: Type[T] = None, base_obj=None):
         """Initialize the TokenPaginatedResult model."""
         self._base = None
         if base_obj is not None:

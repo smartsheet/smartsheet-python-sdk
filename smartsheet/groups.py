@@ -76,14 +76,14 @@ class Groups:
 
         return response
 
-    def delete_group(self, group_id) -> Result:
+    def delete_group(self, group_id) -> Result[None]:
         """Delete the specified Group.
 
         Args:
             group_id (int): Group ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_group")
         _op["method"] = "DELETE"
@@ -144,7 +144,7 @@ class Groups:
 
         return response
 
-    def remove_member(self, group_id, user_id) -> Result:
+    def remove_member(self, group_id, user_id) -> Result[None]:
         """Removes a member from the specified Group.
 
         Args:
@@ -152,7 +152,7 @@ class Groups:
             user_id (int): User ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("remove_member")
         _op["method"] = "DELETE"

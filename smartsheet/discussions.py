@@ -225,7 +225,7 @@ class Discussions:
 
     # pylint: enable=invalid-name
 
-    def delete_discussion(self, sheet_id, discussion_id) -> Result:
+    def delete_discussion(self, sheet_id, discussion_id) -> Result[None]:
         """Delete the specified Discussion.
 
         Args:
@@ -233,7 +233,7 @@ class Discussions:
             discussion_id (int): Discussion ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_discussion")
         _op["method"] = "DELETE"
@@ -245,7 +245,7 @@ class Discussions:
 
         return response
 
-    def delete_discussion_comment(self, sheet_id, comment_id) -> Result:
+    def delete_discussion_comment(self, sheet_id, comment_id) -> Result[None]:
         """Delete the specified Sheet Comment.
 
         Delete the specified Comment from the specified Sheet.
@@ -255,7 +255,7 @@ class Discussions:
             comment_id (int): Comment ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_discussion_comment")
         _op["method"] = "DELETE"

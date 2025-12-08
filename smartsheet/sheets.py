@@ -259,7 +259,7 @@ class Sheets:
 
         return response
 
-    def delete_column(self, sheet_id, column_id) -> Result:
+    def delete_column(self, sheet_id, column_id) -> Result[None]:
         """Delete the specified Column.
 
         Args:
@@ -267,7 +267,7 @@ class Sheets:
             column_id (int): Column ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_column")
         _op["method"] = "DELETE"
@@ -309,7 +309,7 @@ class Sheets:
         return response
 
     @deprecated
-    def delete_share(self, sheet_id, share_id) -> Result:
+    def delete_share(self, sheet_id, share_id) -> Result[None]:
         """Delete the specified Share.
 
         Args:
@@ -317,7 +317,7 @@ class Sheets:
             share_id (str): Share ID
 
         Returns:
-            Result
+            Result[None]
 
         Deprecated:
             Use sharing.delete_share instead with assetType=AssetType.SHEET
@@ -332,14 +332,14 @@ class Sheets:
 
         return response
 
-    def delete_sheet(self, sheet_id) -> Result:
+    def delete_sheet(self, sheet_id) -> Result[None]:
         """Delete the specified Sheet.
 
         Args:
             sheet_id (int): Sheet ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_sheet")
         _op["method"] = "DELETE"
@@ -882,7 +882,7 @@ class Sheets:
 
         return response
 
-    def send_rows(self, sheet_id, multi_row_email_obj) -> Result:
+    def send_rows(self, sheet_id, multi_row_email_obj) -> Result[None]:
         """Send one or more rows via email
 
         Args:
@@ -891,7 +891,7 @@ class Sheets:
                 MultiRowEmail object.
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("send_rows")
         _op["method"] = "POST"
@@ -904,7 +904,7 @@ class Sheets:
 
         return response
 
-    def send_sheet(self, sheet_id, sheet_email_obj) -> Result:
+    def send_sheet(self, sheet_id, sheet_email_obj) -> Result[None]:
         """Sends the sheet as an attachment via email to the designated
         recipients.
 
@@ -913,7 +913,7 @@ class Sheets:
             sheet_email_obj (SheetEmail): SheetEmail object.
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("send_sheet")
         _op["method"] = "POST"
@@ -1258,7 +1258,7 @@ class Sheets:
 
         return response
 
-    def delete_update_request(self, sheet_id, update_request_id) -> Result:
+    def delete_update_request(self, sheet_id, update_request_id) -> Result[None]:
         """Deletes an UpdateRequest for the specified Sheet.
 
         Args:
@@ -1266,7 +1266,7 @@ class Sheets:
             update_request_id (int): UpdateRequest ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_update_request")
         _op["method"] = "DELETE"
@@ -1360,7 +1360,7 @@ class Sheets:
 
         return response
 
-    def delete_sent_update_request(self, sheet_id, sent_update_request_id) -> Result:
+    def delete_sent_update_request(self, sheet_id, sent_update_request_id) -> Result[None]:
         """Deletes a SentUpdateRequest for the specified Sheet.
 
         Args:
@@ -1368,7 +1368,7 @@ class Sheets:
             sent_update_request_id (int): SentUpdateRequest ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_update_request")
         _op["method"] = "DELETE"
@@ -1433,7 +1433,7 @@ class Sheets:
 
         return response
 
-    def delete_filter(self, sheet_id, filter_id) -> Result:
+    def delete_filter(self, sheet_id, filter_id) -> Result[None]:
         """Deletes a Filter for the specified Sheet.
 
         Args:
@@ -1441,7 +1441,7 @@ class Sheets:
             filter_id (int): Filter ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_sheet_filter")
         _op["method"] = "DELETE"
@@ -1607,7 +1607,7 @@ class Sheets:
 
         return response
 
-    def delete_automation_rule(self, sheet_id, automation_rule_id) -> Result:
+    def delete_automation_rule(self, sheet_id, automation_rule_id) -> Result[None]:
         """Deletes an AutomationRule for the specified Sheet.
 
         Args:
@@ -1615,7 +1615,7 @@ class Sheets:
             automation_rule_id (int): AutomationRule ID
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("delete_automation_rule")
         _op["method"] = "DELETE"

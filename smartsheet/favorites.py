@@ -89,7 +89,7 @@ class Favorites:
 
         return response
 
-    def remove_favorites(self, favorite_type, object_ids) -> Result:
+    def remove_favorites(self, favorite_type, object_ids) -> Result[None]:
         """Delete one or more of Favorite objects of the specified type.
 
         Specify a favorite type of: folder, report, sheet,
@@ -103,7 +103,7 @@ class Favorites:
                 of object IDs representing the items to work on.
 
         Returns:
-            Result
+            Result[None]
         """
         _op = fresh_operation("remove_favorites")
         _op["method"] = "DELETE"
