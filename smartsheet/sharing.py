@@ -1,4 +1,3 @@
-from typing import Union
 # pylint: disable=C0111,R0902,R0913
 # Smartsheet Python SDK.
 #
@@ -17,6 +16,8 @@ from typing import Union
 # under the License.
 
 import logging
+from typing import Union
+
 from .util import fresh_operation
 from .models import Error, AssetShare, AssetSharesPaginatedResult, Result
 from .models.enums import ShareScope

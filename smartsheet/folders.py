@@ -305,7 +305,14 @@ class Folders:
 
         return response
 
-    def get_folder_children(self, folder_id, children_resource_types=None, include=None, last_key=None, max_items=None) -> Union[PaginatedChildrenResult, Error]:
+    def get_folder_children(
+            self,
+            folder_id,
+            children_resource_types=None,
+            include=None,
+            last_key=None,
+            max_items=None
+    ) -> Union[PaginatedChildrenResult, Error]:
         """Get the children of a folder.
 
         Args:

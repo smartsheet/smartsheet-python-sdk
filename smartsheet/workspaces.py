@@ -513,7 +513,14 @@ class Workspaces:
 
         return response
 
-    def get_workspace_children(self, workspace_id, children_resource_types=None, include=None, last_key=None, max_items=None) -> Union[PaginatedChildrenResult, Error]:
+    def get_workspace_children(
+            self,
+            workspace_id,
+            children_resource_types=None,
+            include=None,
+            last_key=None,
+            max_items=None
+    ) -> Union[PaginatedChildrenResult, Error]:
         """Get children of a workspace.
 
         Args:
