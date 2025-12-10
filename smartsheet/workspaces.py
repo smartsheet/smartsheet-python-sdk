@@ -20,9 +20,9 @@ from __future__ import absolute_import
 import logging
 import os.path
 import warnings
-from typing import Optional
+from typing import Union, Optional
 
-from .models import Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, Workspace
+from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, Workspace
 from .util import deprecated
 from .util import fresh_operation
 
@@ -38,7 +38,7 @@ class Workspaces:
 
     def copy_workspace(
         self, workspace_id, container_destination_obj, include=None, skip_remap=None
-    ) -> Result[Workspace]:
+    ) -> Union[Result[Workspace], Error]:
         """Create a copy of the specified Workspace.
 
         Args:
@@ -52,7 +52,7 @@ class Workspaces:
                 the newly created resource.
                 Valid list items: cellLinks, reports, sheetHyperlinks, sights
         Returns:
-            Result[Workspace]
+            Union[Result[Workspace], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("copy_workspace")
         _op["method"] = "POST"
@@ -68,7 +68,7 @@ class Workspaces:
 
         return response
 
-    def create_folder_in_workspace(self, workspace_id, folder_obj) -> Result[Folder]:
+    def create_folder_in_workspace(self, workspace_id, folder_obj) -> Union[Result[Folder], Error]:
         """Creates a Folder in the specified Workspace
 
         Args:
@@ -76,7 +76,7 @@ class Workspaces:
             folder_obj (Folder): Folder object.
 
         Returns:
-            Result[Folder]
+            Union[Result[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(folder_obj, str):
             folder_obj = Folder({"name": folder_obj})
@@ -93,7 +93,7 @@ class Workspaces:
 
         return response
 
-    def create_sheet_in_workspace(self, workspace_id, sheet_obj) -> Result[Sheet]:
+    def create_sheet_in_workspace(self, workspace_id, sheet_obj) -> Union[Result[Sheet], Error]:
         """Create a Sheet from scratch at the top-level of the specified
         Workspace.
 
@@ -102,7 +102,7 @@ class Workspaces:
             sheet_obj (Sheet): Sheet object.
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_sheet_in_workspace")
         _op["method"] = "POST"
@@ -119,7 +119,7 @@ class Workspaces:
     # pylint: disable=invalid-name
     def create_sheet_in_workspace_from_template(
         self, workspace_id, sheet_obj, include=None
-    ) -> Result[Sheet]:
+    ) -> Union[Result[Sheet], Error]:
         """Create a Sheet in the specified Workspace from the specified Template.
 
         The Sheet object should be limited to the following
@@ -141,7 +141,7 @@ class Workspaces:
                 data, attachments, discussions, cellLinks, forms.
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_sheet_in_workspace_from_template")
         _op["method"] = "POST"
@@ -158,14 +158,14 @@ class Workspaces:
 
     # pylint: enable=invalid-name
 
-    def create_workspace(self, workspace_obj) -> Result[Workspace]:
+    def create_workspace(self, workspace_obj) -> Union[Result[Workspace], Error]:
         """Create a Workspace.
 
         Args:
             workspace_obj (Workspace): A Workspace object.
 
         Returns:
-            Result[Workspace]
+            Union[Result[Workspace], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_workspace")
         _op["method"] = "POST"
@@ -179,7 +179,7 @@ class Workspaces:
 
         return response
 
-    def delete_share(self, workspace_id, share_id) -> Result[None]:
+    def delete_share(self, workspace_id, share_id) -> Union[Result[None], Error]:
         """Delete the Share specified.
 
         Args:
@@ -187,7 +187,7 @@ class Workspaces:
             share_id (str): Share ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_share")
         _op["method"] = "DELETE"
@@ -199,14 +199,14 @@ class Workspaces:
 
         return response
 
-    def delete_workspace(self, workspace_id) -> Result[None]:
+    def delete_workspace(self, workspace_id) -> Union[Result[None], Error]:
         """Delete the specified Workspace and its contents.
 
         Args:
             workspace_id (int): Workspace ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_workspace")
         _op["method"] = "DELETE"
@@ -218,7 +218,7 @@ class Workspaces:
 
         return response
 
-    def get_share(self, workspace_id, share_id) -> Share:
+    def get_share(self, workspace_id, share_id) -> Union[Share, Error]:
         """Get the specified Share.
 
         Args:
@@ -226,7 +226,7 @@ class Workspaces:
             share_id (str): Share ID
 
         Returns:
-            Share
+            Union[Share, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_share")
         _op["method"] = "GET"
@@ -239,7 +239,7 @@ class Workspaces:
         return response
 
     @deprecated
-    def get_workspace(self, workspace_id, load_all=False, include=None) -> Workspace:
+    def get_workspace(self, workspace_id, load_all=False, include=None) -> Union[Workspace, Error]:
         """Get the specified Workspace and list its contents.
 
         Deprecated: 3.1.0
@@ -259,7 +259,7 @@ class Workspaces:
                 values: ownerInfo, sheetVersion, source.
 
         Returns:
-            Workspace
+            Union[Workspace, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_workspace")
         _op["method"] = "GET"
@@ -274,7 +274,7 @@ class Workspaces:
         return response
 
     @deprecated
-    def list_folders(self, workspace_id, page_size=None, page=None, include_all=None) -> IndexResult[Folder]:
+    def list_folders(self, workspace_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Folder], Error]:
         """Get a list of top-level child Folders within the specified
         Workspace.
 
@@ -290,7 +290,7 @@ class Workspaces:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[Folder]
+            Union[IndexResult[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_folders")
         _op["method"] = "GET"
@@ -306,7 +306,7 @@ class Workspaces:
 
         return response
 
-    def list_shares(self, workspace_id, page_size=None, page=None, include_all=None) -> IndexResult[Share]:
+    def list_shares(self, workspace_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Share], Error]:
         """Get a list of all Users and Groups to whom the specified Workspace
         is shared, and their access level.
 
@@ -319,7 +319,7 @@ class Workspaces:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[Share]
+            Union[IndexResult[Share], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_shares")
         _op["method"] = "GET"
@@ -342,7 +342,7 @@ class Workspaces:
         last_key: Optional[str] = None,
         max_items: Optional[int] = None,
         pagination_type: Optional[str] = None
-    ) -> IndexResult[Workspace]:
+    ) -> Union[IndexResult[Workspace], Error]:
         """Get the list of Workspaces the authenticated User may access.
 
         Args:
@@ -359,7 +359,7 @@ class Workspaces:
                 Defaults to legacy offset-based pagination if not specified.
 
         Returns:
-            IndexResult[Workspace]
+            Union[IndexResult[Workspace], Error]: The result of the operation, or an Error object if the request fails.
                 When using legacy pagination, contains paginated results with
                 total_count, total_pages, etc.
 
@@ -412,7 +412,7 @@ class Workspaces:
 
         return response
 
-    def share_workspace(self, workspace_id, share_obj, send_email=False) -> Result[Share]:
+    def share_workspace(self, workspace_id, share_obj, send_email=False) -> Union[Result[Share], Error]:
         """Share a Workspace with the specified Users and Groups.
 
         Args:
@@ -423,7 +423,7 @@ class Workspaces:
                 is false.
 
         Returns:
-            Result[Share]
+            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("share_workspace")
         _op["method"] = "POST"
@@ -438,7 +438,7 @@ class Workspaces:
 
         return response
 
-    def update_share(self, workspace_id, share_id, share_obj) -> Result[Share]:
+    def update_share(self, workspace_id, share_id, share_obj) -> Union[Result[Share], Error]:
         """Update the access level of a User or Group for the specified
         Workspace.
 
@@ -448,7 +448,7 @@ class Workspaces:
             share_obj (Share): Share object.
 
         Returns:
-            Result[Share]
+            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(
             val is not None for val in ["workspace_id", "share_id", "share_obj"]
@@ -469,7 +469,7 @@ class Workspaces:
 
         return response
 
-    def update_workspace(self, workspace_id, workspace_obj) -> Result[Workspace]:
+    def update_workspace(self, workspace_id, workspace_obj) -> Union[Result[Workspace], Error]:
         """Update the specified Workspace.
 
         Args:
@@ -477,7 +477,7 @@ class Workspaces:
             workspace_obj (Workspace): A Workspace object.
 
         Returns:
-            Result[Workspace]
+            Union[Result[Workspace], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_workspace")
         _op["method"] = "PUT"
@@ -491,7 +491,7 @@ class Workspaces:
 
         return response
 
-    def get_workspace_metadata(self, workspace_id, include=None) -> Workspace:
+    def get_workspace_metadata(self, workspace_id, include=None) -> Union[Workspace, Error]:
         """Get metadata of a workspace.
 
         Args:
@@ -500,7 +500,7 @@ class Workspaces:
                 in the response. Valid list values: source
 
         Returns:
-            Workspace
+            Union[Workspace, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_workspace_metadata")
         _op["method"] = "GET"
@@ -513,7 +513,7 @@ class Workspaces:
 
         return response
 
-    def get_workspace_children(self, workspace_id, children_resource_types=None, include=None, last_key=None, max_items=None) -> PaginatedChildrenResult:
+    def get_workspace_children(self, workspace_id, children_resource_types=None, include=None, last_key=None, max_items=None) -> Union[PaginatedChildrenResult, Error]:
         """Get children of a workspace.
 
         Args:
@@ -528,7 +528,7 @@ class Workspaces:
             max_items (int): The maximum number of items to return in the response.
 
         Returns:
-            PaginatedChildrenResult
+            Union[PaginatedChildrenResult, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_workspace_children")
         _op["method"] = "GET"
@@ -551,7 +551,7 @@ class Workspaces:
         sheet_name=None,
         header_row_index=None,
         primary_column_index=None,
-    ) -> Result[Sheet]:
+    ) -> Union[Result[Sheet], Error]:
         """Imports a sheet in the specified workspace.
 
         Args:
@@ -562,7 +562,7 @@ class Workspaces:
             primary_column_index (int): index (0 based) of primary column
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
@@ -585,7 +585,7 @@ class Workspaces:
         sheet_name=None,
         header_row_index=None,
         primary_column_index=None,
-    ) -> Result[Sheet]:
+    ) -> Union[Result[Sheet], Error]:
         """Imports a sheet in the specified workspace.
 
         Args:
@@ -596,7 +596,7 @@ class Workspaces:
             primary_column_index (int): index (0 based) of primary column
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
@@ -620,7 +620,7 @@ class Workspaces:
         sheet_name,
         header_row_index,
         primary_column_index,
-    ) -> Result[Sheet]:
+    ) -> Union[Result[Sheet], Error]:
         """Internal function used to import sheet"""
 
         if sheet_name is None:

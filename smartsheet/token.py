@@ -18,9 +18,10 @@
 from __future__ import absolute_import
 
 import logging
+from typing import Union
 
 from .util import fresh_operation
-from .models import AccessToken, Result
+from .models import AccessToken, Result, Error
 
 
 class Token:
@@ -32,7 +33,7 @@ class Token:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def get_access_token(self, client_id, code, _hash, redirect_uri=None) -> AccessToken:
+    def get_access_token(self, client_id, code, _hash, redirect_uri=None) -> Union[AccessToken, Error]:
         """Get an access token, as part of the OAuth process. For more
         information, see [OAuth
         Flow](http://smartsheet-platform.github.io/api-docs/index.html#oauth-flow)
@@ -47,7 +48,7 @@ class Token:
                 provided, the redirect URL set during registration is used.
 
         Returns:
-            AccessToken
+            Union[AccessToken, Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["client_id", "code", "_hash"]):
             raise ValueError(
@@ -71,7 +72,7 @@ class Token:
 
         return response
 
-    def refresh_access_token(self, client_id, refresh_token, _hash, redirect_uri=None) -> AccessToken:
+    def refresh_access_token(self, client_id, refresh_token, _hash, redirect_uri=None) -> Union[AccessToken, Error]:
         """Refresh an access token, as part of the OAuth process. For more
         information, see [OAuth
         Flow](http://smartsheet-platform.github.io/api-docs/index.html#oauth-flow)
@@ -86,7 +87,7 @@ class Token:
                 provided, the redirect URL set during registration is used.
 
         Returns:
-            AccessToken
+            Union[AccessToken, Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["client_id", "refresh_token", "_hash"]):
             raise ValueError(
@@ -109,14 +110,14 @@ class Token:
 
         return response
 
-    def revoke_access_token(self) -> Result[None]:
+    def revoke_access_token(self) -> Union[Result[None], Error]:
         """Revoke the access token used to make the request.
 
         Revoke the access token used to make the request. The
         access token will no longer be valid, and subsequent API calls
         using the token will fail.
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("revoke_access_token")
         _op["method"] = "DELETE"

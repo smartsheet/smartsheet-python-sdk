@@ -17,11 +17,13 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 from datetime import datetime
 
 from .util import fresh_operation
-from .models import Event, EventResult
+from .models import Error, Event, EventResult
 
 
 class Events:
@@ -32,7 +34,7 @@ class Events:
 
     def list_events(
         self, since=None, to=None, stream_position=None, max_count=None, numeric_dates=None # pylint: disable=invalid-name
-    ) -> EventResult[Event]:
+    ) -> Union[EventResult[Event], Error]:
         """Get the list of all Events.
 
         Args:
@@ -54,7 +56,7 @@ class Events:
                 Default is false, which means ISO-8601 format
 
         Returns:
-            EventResult[Event]
+            Union[EventResult[Event], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_events")
         _op["method"] = "GET"

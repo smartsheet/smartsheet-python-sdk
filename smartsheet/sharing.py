@@ -1,3 +1,4 @@
+from typing import Union
 # pylint: disable=C0111,R0902,R0913
 # Smartsheet Python SDK.
 #
@@ -17,7 +18,7 @@
 
 import logging
 from .util import fresh_operation
-from .models import AssetShare, AssetSharesPaginatedResult, Result
+from .models import Error, AssetShare, AssetSharesPaginatedResult, Result
 from .models.enums import ShareScope
 
 
@@ -30,7 +31,7 @@ class Sharing:
         self._log = logging.getLogger(__name__)
 
     def list_asset_shares(self, asset_type, asset_id, max_items=None, last_key=None,
-                          sharing_include: ShareScope = None) -> AssetSharesPaginatedResult[AssetShare]:
+                          sharing_include: ShareScope = None) -> Union[AssetSharesPaginatedResult[AssetShare], Error]:
         """Get the list of all Users and Groups to whom the specified asset is
         shared, and their access level.
 
@@ -44,7 +45,7 @@ class Sharing:
             sharing_include (ShareScope): Scope of share to include in response
 
         Returns:
-            AssetSharesPaginatedResult[AssetShare]
+            Union[AssetSharesPaginatedResult[AssetShare], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation('list_asset_shares')
         _op['method'] = 'GET'
@@ -62,7 +63,7 @@ class Sharing:
 
         return response
 
-    def get_asset_share(self, asset_type, asset_id, share_id) -> AssetShare:
+    def get_asset_share(self, asset_type, asset_id, share_id) -> Union[AssetShare, Error]:
         """Get a specific share for the specified asset.
 
         Args:
@@ -71,7 +72,7 @@ class Sharing:
             share_id (str): Share ID
 
         Returns:
-            AssetShare
+            Union[AssetShare, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation('get_asset_share')
         _op['method'] = 'GET'
@@ -85,7 +86,7 @@ class Sharing:
 
         return response
 
-    def share_asset(self, share_obj, asset_type, asset_id, send_email=None) -> Result[AssetShare]:
+    def share_asset(self, share_obj, asset_type, asset_id, send_email=None) -> Union[Result[AssetShare], Error]:
         """Share an asset with the specified Users and Groups.
 
         Args:
@@ -97,7 +98,7 @@ class Sharing:
                 is false.
 
         Returns:
-            Result[AssetShare]
+            Union[Result[AssetShare], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation('share_asset')
         _op['method'] = 'POST'
@@ -114,7 +115,7 @@ class Sharing:
 
         return response
 
-    def update_asset_share(self, share_obj, asset_type, asset_id, share_id) -> AssetShare:
+    def update_asset_share(self, share_obj, asset_type, asset_id, share_id) -> Union[AssetShare, Error]:
         """Update the access level of a User or Group for the specified asset.
 
         Args:
@@ -124,7 +125,7 @@ class Sharing:
             share_id (str): Share ID
 
         Returns:
-            AssetShare
+            Union[AssetShare, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation('update_share')
         _op['method'] = 'PATCH'
@@ -140,7 +141,7 @@ class Sharing:
 
         return response
 
-    def delete_asset_share(self, asset_type, asset_id, share_id) -> Result[None]:
+    def delete_asset_share(self, asset_type, asset_id, share_id) -> Union[Result[None], Error]:
         """Delete the specified Share.
 
         Args:
@@ -149,7 +150,7 @@ class Sharing:
             share_id (str): Share ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation('delete_share')
         _op['method'] = 'DELETE'

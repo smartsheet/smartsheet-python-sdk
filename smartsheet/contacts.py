@@ -17,10 +17,12 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 
 from .util import fresh_operation
-from .models import Contact, IndexResult
+from .models import Error, Contact, IndexResult
 
 
 class Contacts:
@@ -32,14 +34,14 @@ class Contacts:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def get_contact(self, contact_id) -> Contact:
+    def get_contact(self, contact_id) -> Union[Contact, Error]:
         """Get the specified Contact.
 
         Args:
             contact_id (str): Contact ID
 
         Returns:
-            Contact
+            Union[Contact, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_contact")
         _op["method"] = "GET"
@@ -51,7 +53,7 @@ class Contacts:
 
         return response
 
-    def list_contacts(self, page_size=None, page=None, include_all=None) -> IndexResult[Contact]:
+    def list_contacts(self, page_size=None, page=None, include_all=None) -> Union[IndexResult[Contact], Error]:
         """Get a list of the user's Smartsheet Contacts.
 
         Args:
@@ -62,7 +64,7 @@ class Contacts:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[Contact]
+            Union[IndexResult[Contact], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_contacts")
         _op["method"] = "GET"

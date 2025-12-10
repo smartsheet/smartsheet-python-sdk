@@ -17,10 +17,12 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 
 from .util import fresh_operation
-from .models import CellHistory, IndexResult, Result, Row
+from .models import CellHistory, IndexResult, Result, Row, Error
 
 
 class Cells:
@@ -42,7 +44,7 @@ class Cells:
         page=None,
         include_all=None,
         level=None,
-    ) -> IndexResult[CellHistory]:
+    ) -> Union[IndexResult[CellHistory], Error]:
         """Get the Cell modification history.
 
         Args:
@@ -59,7 +61,7 @@ class Cells:
             level (int): compatibility level
 
         Returns:
-            IndexResult[CellHistory]
+            Union[IndexResult[CellHistory], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "column_id"]):
             raise ValueError(
@@ -99,7 +101,7 @@ class Cells:
         file_type,
         override_validation=False,
         alt_text=None,
-    ) -> Result[Row]:
+    ) -> Union[Result[Row], Error]:
         """Uploads an image to the specified cell.
 
         Args:
@@ -112,7 +114,7 @@ class Cells:
             alt_text: alternate text for the image
 
         Returns:
-            Result[Row]
+            Union[Result[Row], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(
             val is not None
@@ -135,7 +137,7 @@ class Cells:
         file_type,
         override_validation,
         alt_text,
-    ) -> Result[Row]:
+    ) -> Union[Result[Row], Error]:
 
         _data = open(file, "rb").read()
         _op = fresh_operation("attach_file_to_cell")

@@ -18,9 +18,10 @@
 from __future__ import absolute_import
 
 import logging
+from typing import Union
 
 from .util import fresh_operation
-from .models import JSONObject
+from .models import Error, JSONObject
 
 
 class Passthrough:
@@ -32,7 +33,7 @@ class Passthrough:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def get(self, endpoint, query_params=None) -> JSONObject:
+    def get(self, endpoint, query_params=None) -> Union[JSONObject, Error]:
         """Issue a GET request on the specified URL.
 
         Args:
@@ -40,7 +41,7 @@ class Passthrough:
             query_params (dict): Optional dictionary of additional query parameters
 
         Returns:
-            JSONObject
+            Union[JSONObject, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_passthrough")
         _op["method"] = "GET"
@@ -54,7 +55,7 @@ class Passthrough:
 
         return response
 
-    def post(self, endpoint, payload, query_params=None) -> JSONObject:
+    def post(self, endpoint, payload, query_params=None) -> Union[JSONObject, Error]:
         """Issue a POST request on the specified URL.
 
         Args:
@@ -63,7 +64,7 @@ class Passthrough:
             query_params (dict): Optional dictionary of additional query parameters
 
         Returns:
-            JSONObject
+            Union[JSONObject, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("post_passthrough")
         _op["method"] = "POST"
@@ -80,7 +81,7 @@ class Passthrough:
 
         return response
 
-    def put(self, endpoint, payload, query_params=None) -> JSONObject:
+    def put(self, endpoint, payload, query_params=None) -> Union[JSONObject, Error]:
         """Issue a PUT request on the specified URL.
 
         Args:
@@ -89,7 +90,7 @@ class Passthrough:
             query_params (dict): Optional dictionary of additional query parameters
 
         Returns:
-            JSONObject
+            Union[JSONObject, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("put_passthrough")
         _op["method"] = "PUT"
@@ -106,14 +107,14 @@ class Passthrough:
 
         return response
 
-    def delete(self, endpoint) -> JSONObject:
+    def delete(self, endpoint) -> Union[JSONObject, Error]:
         """Issue a DELETE request on the specified URL.
 
         Args:
             endpoint (str): Endpoint URL (relative to base), e.g. '/sheets/{id}'
 
         Returns:
-            JSONObject
+            Union[JSONObject, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_passthrough")
         _op["method"] = "DELETE"

@@ -17,12 +17,14 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 import os.path
 from datetime import datetime
 
 from .util import fresh_operation
-from .models import DownloadedFile, IndexResult, Report, ReportPublish, Result, Share
+from .models import Error, DownloadedFile, IndexResult, Report, ReportPublish, Result, Share
 
 
 class Reports:
@@ -34,7 +36,7 @@ class Reports:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def delete_share(self, report_id, share_id) -> Result[None]:
+    def delete_share(self, report_id, share_id) -> Union[Result[None], Error]:
         """Deletes the specified Share
 
         Args:
@@ -42,7 +44,7 @@ class Reports:
             share_id (str): Share ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_share")
         _op["method"] = "DELETE"
@@ -56,7 +58,7 @@ class Reports:
 
     def get_report(
         self, report_id, page_size=None, page=None, include=None, level=None
-    ) -> Report:
+    ) -> Union[Report, Error]:
         """Get the specified Report, including one page of Rows.
 
         Get the specified Report, including one page of Rows, and
@@ -73,7 +75,7 @@ class Reports:
             level (int): compatibility level
 
         Returns:
-            Report
+            Union[Report, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_report")
         _op["method"] = "GET"
@@ -89,7 +91,7 @@ class Reports:
 
         return response
 
-    def get_report_as_csv(self, report_id, download_path, alternate_file_name=None) -> DownloadedFile:
+    def get_report_as_csv(self, report_id, download_path, alternate_file_name=None) -> Union[DownloadedFile, Error]:
         """Get the specified Report as a CSV file.
 
         Args:
@@ -100,7 +102,7 @@ class Reports:
                 instead of name suggested by Content-Disposition.
 
         Returns:
-            DownloadedFile
+            Union[DownloadedFile, Error]: The result of the operation, or an Error object if the request fails.
         """
         if not os.path.isdir(download_path):
             raise ValueError("download_path must be a directory.")
@@ -120,7 +122,7 @@ class Reports:
         response.save_to_file()
         return response
 
-    def get_report_as_excel(self, report_id, download_path, alternate_file_name=None) -> DownloadedFile:
+    def get_report_as_excel(self, report_id, download_path, alternate_file_name=None) -> Union[DownloadedFile, Error]:
         """Get the specified Report as an Excel .xls document.
 
         Args:
@@ -131,7 +133,7 @@ class Reports:
                 instead of name suggested by Content-Disposition.
 
         Returns:
-            DownloadedFile
+            Union[DownloadedFile, Error]: The result of the operation, or an Error object if the request fails.
         """
         if not os.path.isdir(download_path):
             raise ValueError("download_path must be a directory.")
@@ -151,7 +153,7 @@ class Reports:
         response.save_to_file()
         return response
 
-    def get_share(self, report_id, share_id) -> Share:
+    def get_share(self, report_id, share_id) -> Union[Share, Error]:
         """Get the specified Share.
 
         Args:
@@ -159,7 +161,7 @@ class Reports:
             share_id (str): Share ID
 
         Returns:
-            Share
+            Union[Share, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_share")
         _op["method"] = "GET"
@@ -173,7 +175,7 @@ class Reports:
 
     def list_reports(
         self, page_size=None, page=None, include_all=None, modified_since=None
-    ) -> IndexResult[Report]:
+    ) -> Union[IndexResult[Report], Error]:
         """Get the list of all Reports accessible by the User.
 
         Get the list of all Reports that the User has access to, in
@@ -188,7 +190,7 @@ class Reports:
             modified_since(datetime): return reports modified after the specified modified_since
 
         Returns:
-            IndexResult[Report]
+            Union[IndexResult[Report], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_reports")
         _op["method"] = "GET"
@@ -213,7 +215,7 @@ class Reports:
         page=None,
         include_all=None,
         include_workspace_shares=False,
-    ) -> IndexResult[Share]:
+    ) -> Union[IndexResult[Share], Error]:
         """Get a list of all Users and Groups to whom the specified Report is
         shared, and their access level.
 
@@ -227,7 +229,7 @@ class Reports:
             include_workspace_shares(bool): include Workspace shares
 
         Returns:
-            IndexResult[Share]
+            Union[IndexResult[Share], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_shares")
         _op["method"] = "GET"
@@ -245,7 +247,7 @@ class Reports:
 
         return response
 
-    def send_report(self, report_id, sheet_email_obj) -> Result[None]:
+    def send_report(self, report_id, sheet_email_obj) -> Union[Result[None], Error]:
         """Send the specified Report as a PDF attachment via email to the
         designated recipients.
 
@@ -254,7 +256,7 @@ class Reports:
             sheet_email_obj (SheetEmail): SheetEmail object.
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("send_report")
         _op["method"] = "POST"
@@ -267,7 +269,7 @@ class Reports:
 
         return response
 
-    def share_report(self, report_id, share_obj, send_email=False) -> Result[Share]:
+    def share_report(self, report_id, share_obj, send_email=False) -> Union[Result[Share], Error]:
         """Shares a Report with the specified Users and Groups.
 
         Args:
@@ -278,7 +280,7 @@ class Reports:
                 is false.
 
         Returns:
-            Result[Share]
+            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("share_report")
         _op["method"] = "POST"
@@ -293,7 +295,7 @@ class Reports:
 
         return response
 
-    def update_share(self, report_id, share_id, share_obj) -> Result[Share]:
+    def update_share(self, report_id, share_id, share_obj) -> Union[Result[Share], Error]:
         """Update the access level of a User or Group for the specified Report
 
         Args:
@@ -302,7 +304,7 @@ class Reports:
             share_obj (Share): Share object.
 
         Returns:
-            Result[Share]
+            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["report_id", "share_id", "share_obj"]):
             raise ValueError(
@@ -321,7 +323,7 @@ class Reports:
 
         return response
 
-    def get_publish_status(self, report_id) -> ReportPublish:
+    def get_publish_status(self, report_id) -> Union[ReportPublish, Error]:
         """Get the Publish status of the Report.
 
         Get the status of the Publish settings of the Report,
@@ -331,7 +333,7 @@ class Reports:
             report_id (int): Report ID
 
         Returns:
-            ReportPublish
+            Union[ReportPublish, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_publish_status")
         _op["method"] = "GET"
@@ -343,7 +345,7 @@ class Reports:
 
         return response
 
-    def set_publish_status(self, report_id, report_publish_obj) -> Result[ReportPublish]:
+    def set_publish_status(self, report_id, report_publish_obj) -> Union[Result[ReportPublish], Error]:
         """Set the publish status of the Report and returns the new status,
         including the URLs of any enabled publishings.
 
@@ -353,7 +355,7 @@ class Reports:
                 object.
 
         Returns:
-            Result[ReportPublish]
+            Union[Result[ReportPublish], Error]: The result of the operation, or an Error object if the request fails.
         """
         attributes = ["read_only_full_enabled", "read_only_full_accessible_by"]
 

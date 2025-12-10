@@ -25,7 +25,9 @@ from typing import Union
 import six
 
 from .util import fresh_operation
-from .models import AutomationRule, BulkItemResult, Column, CopyOrMoveRowResult, CrossSheetReference, DownloadedFile, IndexResult, NumberObjectValue, Result, Row, SearchResult, SentUpdateRequest, Share, Sheet, SheetFilter, SheetPublish, SheetSummary, SummaryField, UpdateRequest, Version
+from .models import AutomationRule, BulkItemResult, Column, CopyOrMoveRowResult, CrossSheetReference, DownloadedFile, \
+    IndexResult, NumberObjectValue, Result, Row, SearchResult, SentUpdateRequest, Share, Sheet, SheetFilter, \
+    SheetPublish, SheetSummary, SummaryField, UpdateRequest, Version, Error
 from .types import TypedList
 from .util import deprecated
 
@@ -38,7 +40,7 @@ class Sheets:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_columns(self, sheet_id, list_of_columns) -> Result[Column]:
+    def add_columns(self, sheet_id, list_of_columns) -> Union[Result[Column], Error]:
         """Insert one or more Columns into the specified Sheet
 
         Args:
@@ -47,7 +49,7 @@ class Sheets:
                 Column objects
 
         Returns:
-            Result[Column]
+            Union[Result[Column], Error]: The result of the operation, or an Error object if the request fails.
         """
 
         if isinstance(list_of_columns, (dict, Column)):
@@ -67,7 +69,7 @@ class Sheets:
 
         return response
 
-    def add_rows(self, sheet_id, list_of_rows) -> Result[Row]:
+    def add_rows(self, sheet_id, list_of_rows) -> Union[Result[Row], Error]:
         """Insert one or more Rows into the specified Sheet.
 
         If multiple rows are specified in the request, all rows
@@ -82,7 +84,7 @@ class Sheets:
 
         Args:
             sheet_id (int): Sheet ID
-            row_or_list_of_rows (list[Row]): An array of Row objects with the following attributes:
+            list_of_rows (list[Row]): An array of Row objects with the following attributes:
 
                One or more location-specifier attributes (optional)
 
@@ -107,7 +109,7 @@ class Sheets:
                    hyperlink (optional)
 
         Returns:
-            Result[Row]
+            Union[Result[Row], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(list_of_rows, (dict, Row)):
             arg_value = list_of_rows
@@ -126,7 +128,7 @@ class Sheets:
 
         return response
 
-    def add_rows_with_partial_success(self, sheet_id, list_of_rows) -> BulkItemResult[Row]:
+    def add_rows_with_partial_success(self, sheet_id, list_of_rows) -> Union[BulkItemResult[Row], Error]:
         """Insert one or more Rows into the specified Sheet.
 
         If multiple rows are specified in the request, all rows
@@ -166,7 +168,7 @@ class Sheets:
                     hyperlink (optional)
 
         Returns:
-            BulkItemResult[Row]
+            Union[BulkItemResult[Row], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(list_of_rows, (dict, Row)):
             arg_value = list_of_rows
@@ -192,7 +194,7 @@ class Sheets:
         copy_or_move_row_directive_obj,
         include=None,
         ignore_rows_not_found=None,
-    ) -> CopyOrMoveRowResult:
+    ) -> Union[CopyOrMoveRowResult, Error]:
         """Copies Row(s) from the specified Sheet to the bottom of another
         Sheet.
 
@@ -211,7 +213,7 @@ class Sheets:
                 will be altered).
 
         Returns:
-            CopyOrMoveRowResult
+            Union[CopyOrMoveRowResult, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("copy_rows")
         _op["method"] = "POST"
@@ -228,7 +230,7 @@ class Sheets:
 
     def copy_sheet(
         self, sheet_id, container_destination_obj, include=None, exclude=None
-    ) -> Result[Sheet]:
+    ) -> Union[Result[Sheet], Error]:
         """Creates a copy of the specified Sheet
 
         Args:
@@ -243,7 +245,7 @@ class Sheets:
                 to omit. Only current valid value is sheetHyperlinks
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("copy_sheet")
         _op["method"] = "POST"
@@ -259,7 +261,7 @@ class Sheets:
 
         return response
 
-    def delete_column(self, sheet_id, column_id) -> Result[None]:
+    def delete_column(self, sheet_id, column_id) -> Union[Result[None], Error]:
         """Delete the specified Column.
 
         Args:
@@ -267,7 +269,7 @@ class Sheets:
             column_id (int): Column ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_column")
         _op["method"] = "DELETE"
@@ -279,7 +281,7 @@ class Sheets:
 
         return response
 
-    def delete_rows(self, sheet_id, ids, ignore_rows_not_found=False) -> Result[NumberObjectValue]:
+    def delete_rows(self, sheet_id, ids, ignore_rows_not_found=False) -> Union[Result[NumberObjectValue], Error]:
         """Deletes one or more Row(s) from the specified Sheeet.
 
         Args:
@@ -294,7 +296,7 @@ class Sheets:
                 will be altered).
 
         Returns:
-            Result[NumberObjectValue]
+            Union[Result[NumberObjectValue], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_rows")
         _op["method"] = "DELETE"
@@ -309,7 +311,7 @@ class Sheets:
         return response
 
     @deprecated
-    def delete_share(self, sheet_id, share_id) -> Result[None]:
+    def delete_share(self, sheet_id, share_id) -> Union[Result[None], Error]:
         """Delete the specified Share.
 
         Args:
@@ -317,7 +319,7 @@ class Sheets:
             share_id (str): Share ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
 
         Deprecated:
             Use sharing.delete_share instead with assetType=AssetType.SHEET
@@ -332,14 +334,14 @@ class Sheets:
 
         return response
 
-    def delete_sheet(self, sheet_id) -> Result[None]:
+    def delete_sheet(self, sheet_id) -> Union[Result[None], Error]:
         """Delete the specified Sheet.
 
         Args:
             sheet_id (int): Sheet ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_sheet")
         _op["method"] = "DELETE"
@@ -351,7 +353,7 @@ class Sheets:
 
         return response
 
-    def get_column(self, sheet_id, column_id, include=None) -> Column:
+    def get_column(self, sheet_id, column_id, include=None) -> Union[Column, Error]:
         """Get the specified Column.
 
         Args:
@@ -360,7 +362,7 @@ class Sheets:
             include (str): (future)
 
         Returns:
-            Column
+            Union[Column, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_column")
         _op["method"] = "GET"
@@ -381,7 +383,7 @@ class Sheets:
         page=None,
         include_all=None,
         level=None,
-    ) -> IndexResult[Column]:
+    ) -> Union[IndexResult[Column], Error]:
         """Get all columns belonging to the specified Sheet.
 
         Args:
@@ -395,7 +397,7 @@ class Sheets:
             level (int): compatibility level
 
         Returns:
-            IndexResult[Column]
+            Union[IndexResult[Column], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_columns")
         _op["method"] = "GET"
@@ -413,7 +415,7 @@ class Sheets:
 
         return response
 
-    def get_publish_status(self, sheet_id) -> SheetPublish:
+    def get_publish_status(self, sheet_id) -> Union[SheetPublish, Error]:
         """Get the Publish status of the Sheet.
 
         Get the status of the Publish settings of the Sheet,
@@ -423,7 +425,7 @@ class Sheets:
             sheet_id (int): Sheet ID
 
         Returns:
-            SheetPublish
+            Union[Sheet, Error]: The result of the operation, or an Error object if the request fails.Publish
         """
         _op = fresh_operation("get_publish_status")
         _op["method"] = "GET"
@@ -435,7 +437,7 @@ class Sheets:
 
         return response
 
-    def get_row(self, sheet_id, row_id, include=None, exclude=None, level=None) -> Row:
+    def get_row(self, sheet_id, row_id, include=None, exclude=None, level=None) -> Union[Row, Error]:
         """Get the specified Row of the specified Sheet.
 
         Args:
@@ -457,7 +459,7 @@ class Sheets:
                     2 - multi-picklist complex object
 
         Returns:
-            Row
+            Union[Row, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_row")
         _op["method"] = "GET"
@@ -473,7 +475,7 @@ class Sheets:
         return response
 
     @deprecated
-    def get_share(self, sheet_id, share_id) -> Share:
+    def get_share(self, sheet_id, share_id) -> Union[Share, Error]:
         """Get the specified Share.
 
         Args:
@@ -481,7 +483,7 @@ class Sheets:
             share_id (str): Share ID
 
         Returns:
-            Share
+            Union[Share, Error]: The result of the operation, or an Error object if the request fails.
 
         Deprecated:
             Use sharing.get_asset_share instead with assetType=AssetType.SHEET
@@ -510,7 +512,7 @@ class Sheets:
         level=None,
         rows_modified_since=None,
         filter_id=None,
-    ) -> Sheet:
+    ) -> Union[Sheet, Error]:
         """Get the specified Sheet.
 
         Get the specified Sheet. Returns the Sheet, including Rows,
@@ -546,7 +548,7 @@ class Sheets:
                 and marks the affected rows as "filteredOut": true
 
         Returns:
-            Sheet
+            Union[Sheet, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_sheet")
         _op["method"] = "GET"
@@ -569,7 +571,7 @@ class Sheets:
 
         return response
 
-    def get_sheet_as_csv(self, sheet_id, download_path, alternate_file_name=None) -> DownloadedFile:
+    def get_sheet_as_csv(self, sheet_id, download_path, alternate_file_name=None) -> Union[DownloadedFile, Error]:
         """Get the specified Sheet as a CSV file.
 
         Args:
@@ -580,7 +582,7 @@ class Sheets:
                 instead of name suggested by Content-Disposition.
 
         Returns:
-            DownloadedFile
+            Union[DownloadedFile, Error]: The result of the operation, or an Error object if the request fails.
         """
         if not os.path.isdir(download_path):
             raise ValueError("download_path must be a directory.")
@@ -600,7 +602,7 @@ class Sheets:
         response.save_to_file()
         return response
 
-    def get_sheet_as_excel(self, sheet_id, download_path, alternate_file_name=None) -> DownloadedFile:
+    def get_sheet_as_excel(self, sheet_id, download_path, alternate_file_name=None) -> Union[DownloadedFile, Error]:
         """Get the specified Sheet as an Excel .xls file.
 
         Args:
@@ -611,7 +613,7 @@ class Sheets:
                 instead of name suggested by Content-Disposition.
 
         Returns:
-            DownloadedFile
+            Union[DownloadedFile, Error]: The result of the operation, or an Error object if the request fails.
         """
         if not os.path.isdir(download_path):
             raise ValueError("download_path must be a directory.")
@@ -633,7 +635,7 @@ class Sheets:
 
     def get_sheet_as_pdf(
         self, sheet_id, download_path, paper_size=None, alternate_file_name=None
-    ) -> DownloadedFile:
+    ) -> Union[DownloadedFile, Error]:
         """Get the specified Sheet as a PDF file.
 
         Args:
@@ -646,7 +648,7 @@ class Sheets:
                 instead of name suggested by Content-Disposition.
 
         Returns:
-            DownloadedFile
+            Union[DownloadedFile, Error]: The result of the operation, or an Error object if the request fails.
         """
         if not os.path.isdir(download_path):
             raise ValueError("download_path must be a directory.")
@@ -667,14 +669,14 @@ class Sheets:
         response.save_to_file()
         return response
 
-    def get_sheet_version(self, sheet_id) -> Version:
+    def get_sheet_version(self, sheet_id) -> Union[Version, Error]:
         """Get the Sheet version without loading the entire Sheet.
 
         Args:
             sheet_id (int): Sheet ID
 
         Returns:
-            Version
+            Union[Version, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_sheet_version")
         _op["method"] = "GET"
@@ -687,13 +689,13 @@ class Sheets:
         return response
 
     @deprecated
-    def list_org_sheets(self) -> IndexResult[Sheet]:
+    def list_org_sheets(self) -> Union[IndexResult[Sheet], Error]:
         """Get a list of all Sheets owned by an organization.
 
         Get the list of all Sheets owned by the members of the
         account (organization).
         Returns:
-            IndexResult[Sheet]
+            Union[IndexResult[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_org_sheets")
         _op["method"] = "GET"
@@ -714,7 +716,7 @@ class Sheets:
         include_all=None,
         include_workspace_shares=False,
         access_api_level=0,
-    ) -> IndexResult[Share]:
+    ) -> Union[IndexResult[Share], Error]:
         """Get the list of all Users and Groups to whom the specified Sheet is
         shared, and their access level.
 
@@ -728,7 +730,7 @@ class Sheets:
             include_workspace_shares(bool): Include Workspace shares
 
         Returns:
-            IndexResult[Share]
+            Union[IndexResult[Share], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_shares")
         _op["method"] = "GET"
@@ -754,7 +756,7 @@ class Sheets:
         page=None,
         include_all=None,
         modified_since=None,
-    ) -> IndexResult[Sheet]:
+    ) -> Union[IndexResult[Sheet], Error]:
         """Get the list of all Sheets the User has access to, in alphabetical
         order, by name.
 
@@ -770,7 +772,7 @@ class Sheets:
             modified_since(datetime): Return sheets modified since provided datetime
 
         Returns:
-            IndexResult[Sheet]
+            Union[IndexResult[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_sheets")
         _op["method"] = "GET"
@@ -795,7 +797,7 @@ class Sheets:
         copy_or_move_row_directive_obj,
         include=None,
         ignore_rows_not_found=None,
-    ) -> CopyOrMoveRowResult:
+    ) -> Union[CopyOrMoveRowResult, Error]:
         """Moves Row(s) to the bottom of another Sheet.
 
         Up to 5,000 row IDs can be specified in the request, but if
@@ -822,7 +824,7 @@ class Sheets:
                 will be altered).
 
         Returns:
-            CopyOrMoveRowResult
+            Union[CopyOrMoveRowResult, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("move_rows")
         _op["method"] = "POST"
@@ -837,7 +839,7 @@ class Sheets:
 
         return response
 
-    def move_sheet(self, sheet_id, container_destination_obj) -> Result[Sheet]:
+    def move_sheet(self, sheet_id, container_destination_obj) -> Union[Result[Sheet], Error]:
         """Move the specified Sheet to a new location.
 
         Args:
@@ -846,7 +848,7 @@ class Sheets:
                 (ContainerDestination): Container Destination object.
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("move_sheet")
         _op["method"] = "POST"
@@ -860,7 +862,7 @@ class Sheets:
 
         return response
 
-    def search_sheet(self, sheet_id, query) -> SearchResult:
+    def search_sheet(self, sheet_id, query) -> Union[SearchResult, Error]:
         """Search the specified Sheet for the specified text.
 
         Args:
@@ -869,7 +871,7 @@ class Sheets:
                 search.
 
         Returns:
-            SearchResult
+            Union[SearchResult, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("search_sheet")
         _op["method"] = "GET"
@@ -882,7 +884,7 @@ class Sheets:
 
         return response
 
-    def send_rows(self, sheet_id, multi_row_email_obj) -> Result[None]:
+    def send_rows(self, sheet_id, multi_row_email_obj) -> Union[Result[None], Error]:
         """Send one or more rows via email
 
         Args:
@@ -891,7 +893,7 @@ class Sheets:
                 MultiRowEmail object.
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("send_rows")
         _op["method"] = "POST"
@@ -904,7 +906,7 @@ class Sheets:
 
         return response
 
-    def send_sheet(self, sheet_id, sheet_email_obj) -> Result[None]:
+    def send_sheet(self, sheet_id, sheet_email_obj) -> Union[Result[None], Error]:
         """Sends the sheet as an attachment via email to the designated
         recipients.
 
@@ -913,7 +915,7 @@ class Sheets:
             sheet_email_obj (SheetEmail): SheetEmail object.
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("send_sheet")
         _op["method"] = "POST"
@@ -927,7 +929,7 @@ class Sheets:
         return response
 
     @deprecated
-    def send_update_request(self, sheet_id, multi_row_email_obj) -> Result[UpdateRequest]:
+    def send_update_request(self, sheet_id, multi_row_email_obj) -> Union[Result[UpdateRequest], Error]:
         """Create an Update Request for the specified Row(s) within the
         Sheet. An email notification (containing a link to the
         update request) will be asynchronously send to the specified
@@ -939,7 +941,7 @@ class Sheets:
                 MultiRowEmail object.
 
         Returns:
-            Result[UpdateRequest]
+            Union[Result[UpdateRequest], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("send_update_request")
         _op["method"] = "POST"
@@ -953,7 +955,7 @@ class Sheets:
 
         return response
 
-    def set_publish_status(self, sheet_id, sheet_publish_obj) -> Result[SheetPublish]:
+    def set_publish_status(self, sheet_id, sheet_publish_obj) -> Union[Result[SheetPublish], Error]:
         """Set the publish status of the Sheet and returns the new status,
         including the URLs of any enabled publishings.
 
@@ -963,7 +965,7 @@ class Sheets:
                 object.
 
         Returns:
-            Result[SheetPublish]
+            Union[Result[SheetPublish], Error]: The result of the operation, or an Error object if the request fails.
         """
         attributes = [
             "read_only_lite_enabled",
@@ -998,7 +1000,7 @@ class Sheets:
         return response
 
     @deprecated
-    def share_sheet(self, sheet_id, share_obj, send_email=None) -> Result[Share]:
+    def share_sheet(self, sheet_id, share_obj, send_email=None) -> Union[Result[Share], Error]:
         """Share the specified Sheet.
 
         Share the specified Sheet with the specified Users and
@@ -1012,7 +1014,7 @@ class Sheets:
                 is false.
 
         Returns:
-            Result[Share]
+            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
 
         Deprecated:
             Use sharing.share_asset instead with assetType=AssetType.SHEET
@@ -1030,7 +1032,7 @@ class Sheets:
 
         return response
 
-    def update_column(self, sheet_id, column_id, column_obj) -> Result[Column]:
+    def update_column(self, sheet_id, column_id, column_obj) -> Union[Result[Column], Error]:
         """Update properties of the specified Column.
 
         Args:
@@ -1039,7 +1041,7 @@ class Sheets:
             column_obj (Column): A Column object.
 
         Returns:
-            Result[Column]
+            Union[Result[Column], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["sheet_id", "column_id", "column_obj"]):
             raise ValueError(
@@ -1061,7 +1063,7 @@ class Sheets:
 
         return response
 
-    def update_rows(self, sheet_id, list_of_rows) -> Result[Row]:
+    def update_rows(self, sheet_id, list_of_rows) -> Union[Result[Row], Error]:
         """Update properties of the specified Row.
 
         Updates cell values in the specified row(s),
@@ -1081,7 +1083,7 @@ class Sheets:
                 or more Row objects.
 
         Returns:
-            Result[Row]
+            Union[Result[Row], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_rows")
         _op["method"] = "PUT"
@@ -1095,7 +1097,7 @@ class Sheets:
 
         return response
 
-    def update_rows_with_partial_success(self, sheet_id, list_of_rows) -> BulkItemResult[Row]:
+    def update_rows_with_partial_success(self, sheet_id, list_of_rows) -> Union[BulkItemResult[Row], Error]:
         """Update properties of the specified Row(s).
 
         Updates cell values in the specified row(s),
@@ -1115,7 +1117,7 @@ class Sheets:
                 or more Row objects.
 
         Returns:
-            BulkItemResult[Row]
+            Union[BulkItemResult[Row], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_rows")
         _op["method"] = "PUT"
@@ -1131,7 +1133,7 @@ class Sheets:
         return response
 
     @deprecated
-    def update_share(self, sheet_id, share_id, share_obj) -> Result[Share]:
+    def update_share(self, sheet_id, share_id, share_obj) -> Union[Result[Share], Error]:
         """Update the access level of a User or Group for the specified Sheet.
 
         Args:
@@ -1140,7 +1142,7 @@ class Sheets:
             share_obj (Share): Share object.
 
         Returns:
-            Result[Share]
+            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
 
         Deprecated:
             Use sharing.update_share instead with assetType=AssetType.SHEET
@@ -1162,7 +1164,7 @@ class Sheets:
 
         return response
 
-    def update_sheet(self, sheet_id, sheet_obj) -> Result[Sheet]:
+    def update_sheet(self, sheet_id, sheet_obj) -> Union[Result[Sheet], Error]:
         """Updates the specified Sheet.
 
         Args:
@@ -1170,7 +1172,7 @@ class Sheets:
             sheet_obj (Sheet): Sheet object.
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_sheet")
         _op["method"] = "PUT"
@@ -1186,7 +1188,7 @@ class Sheets:
 
     def list_update_requests(
         self, sheet_id, page_size=None, page=None, include_all=None
-    ) -> IndexResult[UpdateRequest]:
+    ) -> Union[IndexResult[UpdateRequest], Error]:
         """Get the list of all Sheet UpdateRequests.
 
         Args:
@@ -1198,7 +1200,7 @@ class Sheets:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[UpdateRequest]
+            Union[IndexResult[UpdateRequest], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_update_requests")
         _op["method"] = "GET"
@@ -1214,7 +1216,7 @@ class Sheets:
 
         return response
 
-    def get_update_request(self, sheet_id, update_request_id) -> UpdateRequest:
+    def get_update_request(self, sheet_id, update_request_id) -> Union[UpdateRequest, Error]:
         """Get the UpdateRequest for Sheet that has a future schedule.
 
         Args:
@@ -1222,7 +1224,7 @@ class Sheets:
             update_request_id (int): UpdateRequest ID
 
         Returns:
-            UpdateRequest
+            Union[UpdateRequest, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_update_request")
         _op["method"] = "GET"
@@ -1236,7 +1238,7 @@ class Sheets:
 
         return response
 
-    def create_update_request(self, sheet_id, update_request_obj) -> Result[UpdateRequest]:
+    def create_update_request(self, sheet_id, update_request_obj) -> Union[Result[UpdateRequest], Error]:
         """Creates an UpdateRequest for the specified Rows(s) within the Sheet.
 
         Args:
@@ -1244,7 +1246,7 @@ class Sheets:
             update_request_obj (UpdateRequest): UpdateRequest object
 
         Returns:
-            Result[UpdateRequest]
+            Union[Result[UpdateRequest], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_update_request")
         _op["method"] = "POST"
@@ -1258,7 +1260,7 @@ class Sheets:
 
         return response
 
-    def delete_update_request(self, sheet_id, update_request_id) -> Result[None]:
+    def delete_update_request(self, sheet_id, update_request_id) -> Union[Result[None], Error]:
         """Deletes an UpdateRequest for the specified Sheet.
 
         Args:
@@ -1266,7 +1268,7 @@ class Sheets:
             update_request_id (int): UpdateRequest ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_update_request")
         _op["method"] = "DELETE"
@@ -1280,7 +1282,7 @@ class Sheets:
 
         return response
 
-    def update_update_request(self, sheet_id, update_request_id, update_request_obj) -> Result[UpdateRequest]:
+    def update_update_request(self, sheet_id, update_request_id, update_request_obj) -> Union[Result[UpdateRequest], Error]:
         """Updates an UpdateRequest for the specified Rows(s) within the Sheet.
 
         Args:
@@ -1289,7 +1291,7 @@ class Sheets:
             update_request_obj (UpdateRequest): UpdateRequest object
 
         Returns:
-            Result[UpdateRequest]
+            Union[Result[UpdateRequest], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_update_request")
         _op["method"] = "PUT"
@@ -1307,7 +1309,7 @@ class Sheets:
 
     def list_sent_update_requests(
         self, sheet_id, page_size=None, page=None, include_all=None
-    ) -> IndexResult[SentUpdateRequest]:
+    ) -> Union[IndexResult[SentUpdateRequest], Error]:
         """Get the list of all Sent UpdateRequests.
 
         Args:
@@ -1319,7 +1321,7 @@ class Sheets:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[SentUpdateRequest]
+            Union[IndexResult[SentUpdateRequest], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_update_requests")
         _op["method"] = "GET"
@@ -1335,7 +1337,7 @@ class Sheets:
 
         return response
 
-    def get_sent_update_request(self, sheet_id, sent_update_request_id) -> SentUpdateRequest:
+    def get_sent_update_request(self, sheet_id, sent_update_request_id) -> Union[SentUpdateRequest, Error]:
         """Get the SentUpdateRequest for Sheet.
 
         Args:
@@ -1343,7 +1345,7 @@ class Sheets:
             sent_update_request_id (int): SentUpdateRequest ID
 
         Returns:
-            SentUpdateRequest
+            Union[SentUpdateRequest, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_sent_update_request")
         _op["method"] = "GET"
@@ -1360,7 +1362,7 @@ class Sheets:
 
         return response
 
-    def delete_sent_update_request(self, sheet_id, sent_update_request_id) -> Result[None]:
+    def delete_sent_update_request(self, sheet_id, sent_update_request_id) -> Union[Result[None], Error]:
         """Deletes a SentUpdateRequest for the specified Sheet.
 
         Args:
@@ -1368,7 +1370,7 @@ class Sheets:
             sent_update_request_id (int): SentUpdateRequest ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_update_request")
         _op["method"] = "DELETE"
@@ -1385,7 +1387,7 @@ class Sheets:
 
         return response
 
-    def list_filters(self, sheet_id, page_size=None, page=None, include_all=None) -> IndexResult[SheetFilter]:
+    def list_filters(self, sheet_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[SheetFilter], Error]:
         """Returns a list of all saved sheet filters
 
         Args:
@@ -1397,7 +1399,7 @@ class Sheets:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[SheetFilter]
+            Union[IndexResult[SheetFilter], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_sheet_filters")
         _op["method"] = "GET"
@@ -1413,7 +1415,7 @@ class Sheets:
 
         return response
 
-    def get_filter(self, sheet_id, filter_id) -> SheetFilter:
+    def get_filter(self, sheet_id, filter_id) -> Union[SheetFilter, Error]:
         """Get the Filter.
 
         Args:
@@ -1421,7 +1423,7 @@ class Sheets:
             filter_id (int): Filter ID
 
         Returns:
-            SheetFilter
+            Union[Sheet, Error]: The result of the operation, or an Error object if the request fails.Filter
         """
         _op = fresh_operation("get_sheet_filter")
         _op["method"] = "GET"
@@ -1433,7 +1435,7 @@ class Sheets:
 
         return response
 
-    def delete_filter(self, sheet_id, filter_id) -> Result[None]:
+    def delete_filter(self, sheet_id, filter_id) -> Union[Result[None], Error]:
         """Deletes a Filter for the specified Sheet.
 
         Args:
@@ -1441,7 +1443,7 @@ class Sheets:
             filter_id (int): Filter ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_sheet_filter")
         _op["method"] = "DELETE"
@@ -1455,7 +1457,7 @@ class Sheets:
 
     def list_cross_sheet_references(
         self, sheet_id, page_size=None, page=None, include_all=None
-    ) -> IndexResult[CrossSheetReference]:
+    ) -> Union[IndexResult[CrossSheetReference], Error]:
         """Get the list of all CrossSheetReferences for this Sheet.
 
         Args:
@@ -1467,7 +1469,7 @@ class Sheets:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[CrossSheetReference]
+            Union[IndexResult[CrossSheetReference], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_cross_sheet_references")
         _op["method"] = "GET"
@@ -1483,7 +1485,7 @@ class Sheets:
 
         return response
 
-    def get_cross_sheet_reference(self, sheet_id, cross_sheet_reference_id) -> CrossSheetReference:
+    def get_cross_sheet_reference(self, sheet_id, cross_sheet_reference_id) -> Union[CrossSheetReference, Error]:
         """Get the CrossSheetReference.
 
         Args:
@@ -1491,7 +1493,7 @@ class Sheets:
             cross_sheet_reference_id (int): CrossSheetReferenceID
 
         Returns:
-            CrossSheetReference
+            Union[CrossSheetReference, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_cross_sheet_reference")
         _op["method"] = "GET"
@@ -1508,7 +1510,7 @@ class Sheets:
 
         return response
 
-    def create_cross_sheet_reference(self, sheet_id, cross_sheet_reference_obj) -> Result[CrossSheetReference]:
+    def create_cross_sheet_reference(self, sheet_id, cross_sheet_reference_obj) -> Union[Result[CrossSheetReference], Error]:
         """Creates a CrossSheetReference for the specified Sheet.
 
         Args:
@@ -1516,7 +1518,7 @@ class Sheets:
             cross_sheet_reference_obj (CrossSheetReference): CrossSheetReference object
 
         Returns:
-            Result[CrossSheetReference]
+            Union[Result[CrossSheetReference], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_cross_sheet_reference")
         _op["method"] = "POST"
@@ -1532,7 +1534,7 @@ class Sheets:
 
     def list_automation_rules(
         self, sheet_id, page_size=None, page=None, include_all=None
-    ) -> IndexResult[AutomationRule]:
+    ) -> Union[IndexResult[AutomationRule], Error]:
         """Get the list of all AutomationRules for this Sheet.
 
         Args:
@@ -1544,7 +1546,7 @@ class Sheets:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[AutomationRule]
+            Union[IndexResult[AutomationRule], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_automation_rules")
         _op["method"] = "GET"
@@ -1560,7 +1562,7 @@ class Sheets:
 
         return response
 
-    def get_automation_rule(self, sheet_id, automation_rule_id) -> AutomationRule:
+    def get_automation_rule(self, sheet_id, automation_rule_id) -> Union[AutomationRule, Error]:
         """Get the AutomationRule.
 
         Args:
@@ -1568,7 +1570,7 @@ class Sheets:
             automation_rule_id (long): AutomationRuleID
 
         Returns:
-            AutomationRule
+            Union[AutomationRule, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_automation_rule")
         _op["method"] = "GET"
@@ -1582,7 +1584,7 @@ class Sheets:
 
         return response
 
-    def update_automation_rule(self, sheet_id, automation_rule_id, automation_rule_obj) -> Result[AutomationRule]:
+    def update_automation_rule(self, sheet_id, automation_rule_id, automation_rule_obj) -> Union[Result[AutomationRule], Error]:
         """Updates an AutomationRule for the specified Sheet.
 
         Args:
@@ -1591,7 +1593,7 @@ class Sheets:
             automation_rule_obj (AutomationRule): AutomationRule object
 
         Returns:
-            Result[AutomationRule]
+            Union[Result[AutomationRule], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_automation_rule")
         _op["method"] = "PUT"
@@ -1607,7 +1609,7 @@ class Sheets:
 
         return response
 
-    def delete_automation_rule(self, sheet_id, automation_rule_id) -> Result[None]:
+    def delete_automation_rule(self, sheet_id, automation_rule_id) -> Union[Result[None], Error]:
         """Deletes an AutomationRule for the specified Sheet.
 
         Args:
@@ -1615,7 +1617,7 @@ class Sheets:
             automation_rule_id (int): AutomationRule ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_automation_rule")
         _op["method"] = "DELETE"
@@ -1629,7 +1631,7 @@ class Sheets:
 
         return response
 
-    def sort_sheet(self, sheet_id, sort_specifier_obj, level=None) -> Sheet:
+    def sort_sheet(self, sheet_id, sort_specifier_obj, level=None) -> Union[Sheet, Error]:
         """Sort Sheet according to SortSpecifier.
 
         Args:
@@ -1638,7 +1640,7 @@ class Sheets:
             level (int): compatibility level
 
         Returns:
-            Sheet
+            Union[Sheet, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("sort_sheet")
         _op["method"] = "POST"
@@ -1655,7 +1657,7 @@ class Sheets:
 
     def import_csv_sheet(
         self, file, sheet_name=None, header_row_index=None, primary_column_index=None
-    ) -> Result[Sheet]:
+    ) -> Union[Result[Sheet], Error]:
         """Imports a sheet.
 
         Args:
@@ -1665,7 +1667,7 @@ class Sheets:
             primary_column_index (int): index (0 based) of primary column
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
@@ -1678,7 +1680,7 @@ class Sheets:
 
     def import_xlsx_sheet(
         self, file, sheet_name=None, header_row_index=None, primary_column_index=None
-    ) -> Result[Sheet]:
+    ) -> Union[Result[Sheet], Error]:
         """Imports a sheet.
 
         Args:
@@ -1688,7 +1690,7 @@ class Sheets:
             primary_column_index (int): index (0 based) of primary column
 
         Returns:
-            Result[Sheet]
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
@@ -1705,7 +1707,7 @@ class Sheets:
 
     def _import_sheet(
         self, file, file_type, sheet_name, header_row_index, primary_column_index
-    ) -> Result[Sheet]:
+    ) -> Union[Result[Sheet], Error]:
         """Internal function used to import sheet"""
 
         if sheet_name is None:
@@ -1737,7 +1739,7 @@ class Sheets:
         sheet_id,
         include=None,
         exclude=None,
-    ) -> SheetSummary:
+    ) -> Union[SheetSummary, Error]:
         """Get the SheetSummary.
 
         Args:
@@ -1750,7 +1752,7 @@ class Sheets:
                 values: displayValue, image, imageAltText
 
         Returns:
-            SheetSummary
+            Union[Sheet, Error]: The result of the operation, or an Error object if the request fails.Summary
         """
         _op = fresh_operation("get_sheet_summary")
         _op["method"] = "GET"
@@ -1772,7 +1774,7 @@ class Sheets:
         page_size=None,
         page=None,
         include_all=None,
-    ) -> IndexResult[SummaryField]:
+    ) -> Union[IndexResult[SummaryField], Error]:
         """Get the list of summary fields for this Sheet.
 
         Args:
@@ -1790,7 +1792,7 @@ class Sheets:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult[SummaryField]
+            Union[IndexResult[SummaryField], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_summary_fields")
         _op["method"] = "GET"
@@ -1810,7 +1812,7 @@ class Sheets:
 
     def add_sheet_summary_fields(
         self, sheet_id, list_of_fields, rename_if_conflict=None
-    ) -> Result[SummaryField]:
+    ) -> Union[Result[SummaryField], Error]:
         """Insert one or more SummaryFields into the specified Sheet
 
         If an error occurs, the Error object returned will contain a detail attribute set to an object with the
@@ -1830,7 +1832,7 @@ class Sheets:
                 true, then new summary field names will be adjusted to ensure uniqueness.
 
         Returns:
-            Result[SummaryField]
+            Union[Result[SummaryField], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(list_of_fields, (dict, SummaryField)):
             arg_value = list_of_fields
@@ -1852,7 +1854,7 @@ class Sheets:
 
     def add_sheet_summary_fields_with_partial_success(
         self, sheet_id, list_of_fields, rename_if_conflict=None
-    ) -> BulkItemResult[SummaryField]:
+    ) -> Union[BulkItemResult[SummaryField], Error]:
         """Insert one or more SummaryFields into the specified Sheet
 
         When partial success is enabled, and one or more of the objects in the request fail to be added/updated/deleted,
@@ -1868,7 +1870,7 @@ class Sheets:
                 true, then new summary field names will be adjusted to ensure uniqueness.
 
         Returns:
-            BulkItemResult[SummaryField]
+            Union[BulkItemResult[SummaryField], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(list_of_fields, (dict, SummaryField)):
             arg_value = list_of_fields
@@ -1891,7 +1893,7 @@ class Sheets:
 
     def delete_sheet_summary_fields(
         self, sheet_id, list_of_ids, ignore_summary_fields_not_found=None
-    ) -> Result[NumberObjectValue]:
+    ) -> Union[Result[NumberObjectValue], Error]:
         """Deletes a list of SummaryFields for the specified Sheet.
 
         Args:
@@ -1903,7 +1905,7 @@ class Sheets:
                 fields were deleted.
 
         Returns:
-            Result[NumberObjectValue]
+            Union[Result[NumberObjectValue], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(list_of_ids, six.integer_types):
             arg_value = list_of_ids
@@ -1926,7 +1928,7 @@ class Sheets:
 
     def update_sheet_summary_fields(
         self, sheet_id, list_of_summary_fields, rename_if_conflict=None
-    ) -> Result[SummaryField]:
+    ) -> Union[Result[SummaryField], Error]:
         """Updates a list of SummaryFields for the specified Sheet.
 
         Args:
@@ -1935,7 +1937,7 @@ class Sheets:
             rename_if_conflict (Boolean): true to rename if a name conflict occurs
 
         Returns:
-            Result[SummaryField]
+            Union[Result[SummaryField], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(list_of_summary_fields, (dict, SummaryField)):
             arg_value = list_of_summary_fields
@@ -1957,7 +1959,7 @@ class Sheets:
 
     def update_sheet_summary_fields_with_partial_success(
         self, sheet_id, list_of_summary_fields, rename_if_conflict=None
-    ) -> BulkItemResult[SummaryField]:
+    ) -> Union[BulkItemResult[SummaryField], Error]:
         """Updates a list of SummaryFields for the specified Sheet.
 
         Args:
@@ -1966,7 +1968,7 @@ class Sheets:
             rename_if_conflict (Boolean): true to rename if a name conflict occurs
 
         Returns:
-            BulkItemResult[SummaryField]
+            Union[BulkItemResult[SummaryField], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(list_of_summary_fields, (dict, SummaryField)):
             arg_value = list_of_summary_fields
@@ -1989,7 +1991,7 @@ class Sheets:
 
     def add_sheet_summary_field_image(
         self, sheet_id, field_id, file, file_type, alt_text=None
-    ) -> Result[SummaryField]:
+    ) -> Union[Result[SummaryField], Error]:
 
         _data = open(file, "rb").read()
         _op = fresh_operation("add_sheet_summary_field_image")

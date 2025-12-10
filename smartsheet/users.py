@@ -17,11 +17,13 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 from datetime import datetime
 
 from .util import fresh_operation
-from .models import AlternateEmail, IndexResult, Result, Sheet, TokenPaginatedResult, User, UserPlan, UserProfile
+from .models import AlternateEmail, Error, IndexResult, Result, Sheet, TokenPaginatedResult, User, UserPlan, UserProfile
 from .models.enums.seat_type import SeatType
 
 
@@ -34,7 +36,7 @@ class Users:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_alternate_email(self, user_id, list_of_alternate_emails) -> Result[AlternateEmail]:
+    def add_alternate_email(self, user_id, list_of_alternate_emails) -> Union[Result[AlternateEmail], Error]:
         """Add one or more alternate email addresses for the specified User
 
         Args:
@@ -43,7 +45,7 @@ class Users:
                 An array of one or more AlternateEmail objects.
 
         Returns:
-            Result[AlternateEmail]
+            Union[Result[AlternateEmail], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("add_alternate_email")
         _op["method"] = "POST"
@@ -57,7 +59,7 @@ class Users:
 
         return response
 
-    def promote_alternate_email(self, user_id, alt_id) -> Result[AlternateEmail]:
+    def promote_alternate_email(self, user_id, alt_id) -> Union[Result[AlternateEmail], Error]:
         """Promote an email address to primary
 
         Args:
@@ -65,7 +67,7 @@ class Users:
             alt_id(int):  AlternateEmail ID to be promoted
 
         Returns:
-            Result[AlternateEmail]
+            Union[Result[AlternateEmail], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("promote_alternate_email")
         _op["method"] = "POST"
@@ -84,7 +86,7 @@ class Users:
 
         return response
 
-    def add_user(self, user_obj, send_email=None) -> Result[User]:
+    def add_user(self, user_obj, send_email=None) -> Union[Result[User], Error]:
         """Add a User to the organization.
 
         Args:
@@ -106,7 +108,7 @@ class Users:
             whether or not to notify the user by email. Default is false.
 
         Returns:
-            Result[User]
+            Union[Result[User], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("add_user")
         _op["method"] = "POST"
@@ -121,7 +123,7 @@ class Users:
 
         return response
 
-    def delete_alternate_email(self, user_id, alternate_email_id) -> Result[None]:
+    def delete_alternate_email(self, user_id, alternate_email_id) -> Union[Result[None], Error]:
         """Deletes the specified alternate email address for the specified User.
 
         Args:
@@ -129,7 +131,7 @@ class Users:
             alternate_email_id (int): Alternate Email ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_alternate_email")
         _op["method"] = "DELETE"
@@ -144,7 +146,7 @@ class Users:
 
         return response
 
-    def get_alternate_email(self, user_id, alternate_email_id) -> AlternateEmail:
+    def get_alternate_email(self, user_id, alternate_email_id) -> Union[AlternateEmail, Error]:
         """Get the specified Alternate Email
 
         Args:
@@ -152,7 +154,7 @@ class Users:
             alternate_email_id (int): Alternate Email ID
 
         Returns:
-            AlternateEmail
+            Union[AlternateEmail, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_alternate_email")
         _op["method"] = "GET"
@@ -167,10 +169,10 @@ class Users:
 
         return response
 
-    def get_current_user(self, include=None) -> UserProfile:
+    def get_current_user(self, include=None) -> Union[UserProfile, Error]:
         """Get the currently authenticated User.
         Returns:
-            UserProfile
+            Union[UserProfile, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_current_user")
         _op["method"] = "GET"
@@ -183,14 +185,14 @@ class Users:
 
         return response
 
-    def get_user(self, user_id) -> UserProfile:
+    def get_user(self, user_id) -> Union[UserProfile, Error]:
         """Get the specified User.
 
         Args:
             user_id (int): User ID
 
         Returns:
-            UserProfile
+            Union[UserProfile, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_user")
         _op["method"] = "GET"
@@ -202,14 +204,14 @@ class Users:
 
         return response
 
-    def list_alternate_emails(self, user_id) -> IndexResult[AlternateEmail]:
+    def list_alternate_emails(self, user_id) -> Union[IndexResult[AlternateEmail], Error]:
         """Get a list of the Alternate Emails for the specified User.
 
         Args:
             user_id (int): User ID
 
         Returns:
-            IndexResult[AlternateEmail]
+            Union[IndexResult[AlternateEmail], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_alternate_emails")
         _op["method"] = "GET"
@@ -224,7 +226,7 @@ class Users:
 
     def list_org_sheets(
         self, page_size=None, page=None, include_all=None, modified_since=None
-    ) -> IndexResult[Sheet]:
+    ) -> Union[IndexResult[Sheet], Error]:
         """Get a list of all Sheets owned by an organization.
 
         Get the list of all Sheets owned by the members of the
@@ -239,7 +241,7 @@ class Users:
             modified_since(datetime): list organization sheets modified since datetime
 
         Returns:
-            IndexResult[Sheet]
+            Union[IndexResult[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_org_sheets")
         _op["method"] = "GET"
@@ -260,7 +262,7 @@ class Users:
     def list_users(
         self, email=None, page_size=None, page=None, include_all=None, include=None,
         plan_id=None, seat_type=None
-    ) -> IndexResult[User]:
+    ) -> Union[IndexResult[User], Error]:
         """Get the list of Users in the organization.
 
         Args:
@@ -279,7 +281,7 @@ class Users:
                 by their seat type.
 
         Returns:
-            IndexResult[User]
+            Union[IndexResult[User], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_users")
         _op["method"] = "GET"
@@ -305,7 +307,7 @@ class Users:
         transfer_to=None,
         transfer_sheets=False,
         remove_from_sharing=False,
-    ) -> Result[None]:
+    ) -> Union[Result[None], Error]:
         """Remove a user from an organization.
 
         Remove a User from an organization. User is transitioned to
@@ -331,7 +333,7 @@ class Users:
                 from sharing.
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("remove_user")
         _op["method"] = "DELETE"
@@ -346,7 +348,7 @@ class Users:
 
         return response
 
-    def reactivate_user(self, user_id) -> Result[None]:
+    def reactivate_user(self, user_id) -> Union[Result[None], Error]:
         """Reactivate the user associated with the current Smartsheet plan.
 
         Restores the user's access to Smartsheet, owned items, and shared items.
@@ -361,7 +363,7 @@ class Users:
             user_id (int): User ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
 
         Raises:
             ApiError: If the user cannot be reactivated. This occurs when:
@@ -387,7 +389,7 @@ class Users:
 
         return response
 
-    def deactivate_user(self, user_id) -> Result[None]:
+    def deactivate_user(self, user_id) -> Union[Result[None], Error]:
         """Deactivate the user associated with the current Smartsheet plan.
 
         Blocks the user from using Smartsheet in any way. Deactivating a user
@@ -399,7 +401,7 @@ class Users:
             user_id (int): User ID
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
 
         Raises:
             ApiError: If the user cannot be deactivated. This occurs when:
@@ -427,7 +429,7 @@ class Users:
 
         return response
 
-    def update_user(self, user_id, user_obj) -> Result[User]:
+    def update_user(self, user_id, user_obj) -> Union[Result[User], Error]:
         """Update the specified User.
 
         Args:
@@ -436,7 +438,7 @@ class Users:
                 attributes:
 
         Returns:
-            Result[User]
+            Union[Result[User], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_user")
         _op["method"] = "PUT"
@@ -450,7 +452,7 @@ class Users:
 
         return response
 
-    def upgrade_user(self, user_id, plan_id, seat_type) -> Result[None]:
+    def upgrade_user(self, user_id, plan_id, seat_type) -> Union[Result[None], Error]:
         """Upgrades a user for a plan.
 
         Args:
@@ -459,7 +461,7 @@ class Users:
             seat_type (UpgradeSeatType): Seat type to upgrade to
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("upgrade_user")
         _op["method"] = "POST"
@@ -473,7 +475,7 @@ class Users:
 
         return response
 
-    def downgrade_user(self, user_id, plan_id, seat_type) -> Result[None]:
+    def downgrade_user(self, user_id, plan_id, seat_type) -> Union[Result[None], Error]:
         """Downgrades a user for a plan.
 
         Args:
@@ -482,7 +484,7 @@ class Users:
             seat_type (DowngradeSeatType): Seat type to downgrade to
 
         Returns:
-            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("downgrade_user")
         _op["method"] = "POST"
@@ -496,12 +498,12 @@ class Users:
 
         return response
 
-    def list_user_plans(self, user_id, last_key=None, max_items=None) -> TokenPaginatedResult[UserPlan]:
+    def list_user_plans(self, user_id, last_key=None, max_items=None) -> Union[TokenPaginatedResult[UserPlan], Error]:
         """List user's plans.
                 Args:
                     user_id (int): User ID
                 Returns:
-                    TokenPaginatedResult[UserPlan]
+                    Union[TokenPaginatedResult[UserPlan], Error]: The result of the operation, or an Error object if the request fails.
          """
         _op = fresh_operation("list_user_plans")
         _op["method"] = "GET"
@@ -516,13 +518,13 @@ class Users:
 
         return response
 
-    def remove_user_from_plan(self, user_id, plan_id) -> Result[None]:
+    def remove_user_from_plan(self, user_id, plan_id) -> Union[Result[None], Error]:
         """Remove user from plan.
                         Args:
                             user_id (int): User ID
                             plan_id (int): Plan ID
                         Returns:
-                            Result[None]
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
                  """
         _op = fresh_operation("remove_user_from_plan")
         _op["method"] = "DELETE"
@@ -535,7 +537,7 @@ class Users:
 
         return response
 
-    def add_profile_image(self, user_id, file, file_type) -> Result[User]:
+    def add_profile_image(self, user_id, file, file_type) -> Union[Result[User], Error]:
         """Uploads a profile image for the specified user.
 
         Args:
@@ -544,7 +546,7 @@ class Users:
             file_type (string): content type of image file
 
         Returns:
-            Result[User]
+            Union[Result[User], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["user_id", "file", "file_type"]):
             raise ValueError(
@@ -553,7 +555,7 @@ class Users:
 
         return self._attach_profile_image(user_id, file, file_type)
 
-    def _attach_profile_image(self, user_id, file, file_type) -> Result[User]:
+    def _attach_profile_image(self, user_id, file, file_type) -> Union[Result[User], Error]:
         """Internal function used to load image"""
 
         _data = open(file, "rb").read()

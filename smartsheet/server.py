@@ -17,10 +17,12 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 
 from .util import fresh_operation
-from .models import ServerInfo
+from .models import Error, ServerInfo
 
 
 class Server:
@@ -32,10 +34,10 @@ class Server:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def server_info(self) -> ServerInfo:
+    def server_info(self) -> Union[ServerInfo, Error]:
         """Get application constants.
         Returns:
-            ServerInfo
+            Union[ServerInfo, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("server_info")
         _op["method"] = "GET"
