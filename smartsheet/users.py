@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import Union
+from typing import Union, List
 
 import logging
 from datetime import datetime
@@ -36,7 +36,7 @@ class Users:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_alternate_email(self, user_id, list_of_alternate_emails) -> Union[Result[AlternateEmail], Error]:
+    def add_alternate_email(self, user_id, list_of_alternate_emails) -> Union[Result[Union[AlternateEmail, List[AlternateEmail]]], Error]:
         """Add one or more alternate email addresses for the specified User
 
         Args:
@@ -45,7 +45,7 @@ class Users:
                 An array of one or more AlternateEmail objects.
 
         Returns:
-            Union[Result[AlternateEmail], Error]: The result of the operation, or an Error object if the request fails.
+            Union[Result[List[AlternateEmail]], Error]: The result of the operation - either a list or a single object, or an Error object if the request fails.
         """
         _op = fresh_operation("add_alternate_email")
         _op["method"] = "POST"
