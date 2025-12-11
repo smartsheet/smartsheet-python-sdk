@@ -43,7 +43,8 @@ class Groups:
                 object(s).
 
         Returns:
-            Union[Result[Union[GroupMember, List[GroupMember]]], Error]: The result of the operation - either a list or a single object, or an Error object if the request fails.
+            Union[Result[Union[GroupMember, List[GroupMember]]], Error]: The result of the operation - either a list or
+            a single object, or an Error object if the request fails.
         """
         _op = fresh_operation("add_members")
         _op["method"] = "POST"

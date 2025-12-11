@@ -50,7 +50,8 @@ class Favorites:
                 more Favorite objects
 
         Returns:
-            Union[Result[Union[Favorite, List[Favorite]]], Error]: The result of the operation - either a list or a single object, or an Error object if the request fails.
+            Union[Result[Union[Favorite, List[Favorite]]], Error]: The result of the operation - either a list or a
+            single object, or an Error object if the request fails.
         """
         _op = fresh_operation("add_favorites")
         _op["method"] = "POST"
