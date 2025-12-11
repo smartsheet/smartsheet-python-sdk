@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [3.7.0] - 2025-12-11
 
 ### Added
+
 - Typing to all SDK service methods
 
 ## [3.6.0] - 2025-12-04
