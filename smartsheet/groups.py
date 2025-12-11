@@ -17,9 +17,12 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 
 from .util import fresh_operation
+from .models import Error, Group, GroupMember, IndexResult, Result
 
 
 class Groups:
@@ -31,7 +34,7 @@ class Groups:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_members(self, group_id, group_member_obj):
+    def add_members(self, group_id, group_member_obj) -> Union[Result[GroupMember], Error]:
         """Add one or more members to a Group.
 
         Args:
@@ -40,7 +43,7 @@ class Groups:
                 object(s).
 
         Returns:
-            Result
+            Union[Result[GroupMember], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("add_members")
         _op["method"] = "POST"
@@ -54,14 +57,14 @@ class Groups:
 
         return response
 
-    def create_group(self, group_obj):
+    def create_group(self, group_obj) -> Union[Result[Group], Error]:
         """Create a new Group
 
         Args:
             group_obj (Group): Group object.
 
         Returns:
-            Result
+            Union[Result[Group], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_group")
         _op["method"] = "POST"
@@ -75,14 +78,14 @@ class Groups:
 
         return response
 
-    def delete_group(self, group_id):
+    def delete_group(self, group_id) -> Union[Result[None], Error]:
         """Delete the specified Group.
 
         Args:
             group_id (int): Group ID
 
         Returns:
-            Result
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_group")
         _op["method"] = "DELETE"
@@ -94,14 +97,14 @@ class Groups:
 
         return response
 
-    def get_group(self, group_id):
+    def get_group(self, group_id) -> Union[Group, Error]:
         """Get the specified Group.
 
         Args:
             group_id (int): Group ID
 
         Returns:
-            Group
+            Union[Group, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_group")
         _op["method"] = "GET"
@@ -113,7 +116,7 @@ class Groups:
 
         return response
 
-    def list_groups(self, page_size=None, page=None, include_all=None):
+    def list_groups(self, page_size=None, page=None, include_all=None) -> Union[IndexResult[Group], Error]:
         """Get all Groups in an organization.
 
         Get the list of all Groups in an organization. To fetch the
@@ -127,7 +130,7 @@ class Groups:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            Union[IndexResult[Group], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_groups")
         _op["method"] = "GET"
@@ -143,7 +146,7 @@ class Groups:
 
         return response
 
-    def remove_member(self, group_id, user_id):
+    def remove_member(self, group_id, user_id) -> Union[Result[None], Error]:
         """Removes a member from the specified Group.
 
         Args:
@@ -151,7 +154,7 @@ class Groups:
             user_id (int): User ID
 
         Returns:
-            Result
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("remove_member")
         _op["method"] = "DELETE"
@@ -163,7 +166,7 @@ class Groups:
 
         return response
 
-    def update_group(self, group_id, group_obj):
+    def update_group(self, group_id, group_obj) -> Union[Result[Group], Error]:
         """Updates the specified Group.
 
         Args:
@@ -171,7 +174,7 @@ class Groups:
             group_obj (Group): Group object.
 
         Returns:
-            Result
+            Union[Result[Group], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_group")
         _op["method"] = "PUT"

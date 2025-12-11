@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Support for POST /2.0/users/{userId}/reactivate endpoint
 - Support for POST /2.0/users/{userId}/deactivate endpoint
+- Typing to all SDK service methods
 
 ## [3.5.6] - 2025-11-18
 

@@ -17,15 +17,18 @@
 
 from __future__ import absolute_import
 
+from typing import TypeVar, Generic, List, Type
+
 from ..types import Number, TypedList, importlib, json, String
 from ..util import deserialize, serialize
 
+T = TypeVar('T')
 
-class IndexResult:
+class IndexResult(Generic[T]):
 
     """Smartsheet IndexResult data model."""
 
-    def __init__(self, props=None, dynamic_data_type=None, base_obj=None):
+    def __init__(self, props=None, dynamic_data_type: Type[T] = None, base_obj=None):
         """Initialize the IndexResult model."""
         self._base = None
         if base_obj is not None:
@@ -50,7 +53,7 @@ class IndexResult:
         self.request_response = None
 
     @property
-    def data(self):
+    def data(self) -> List[T]:
         return self._data
 
     @data.setter

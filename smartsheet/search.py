@@ -17,10 +17,13 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 from datetime import datetime
 
 from .util import fresh_operation
+from .models import Error, SearchResult
 
 
 class Search:
@@ -34,7 +37,7 @@ class Search:
 
     def search(
         self, query, include=None, location=None, modified_since=None, scopes=None
-    ):
+    ) -> Union[SearchResult, Error]:
         """Search all Sheets the User can access for the specified text.
 
         Args:
@@ -59,7 +62,7 @@ class Search:
                 workspaceNames
 
         Returns:
-            SearchResult
+            Union[SearchResult, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("search")
         _op["method"] = "GET"
@@ -77,7 +80,7 @@ class Search:
 
         return response
 
-    def search_sheet(self, sheet_id, query):
+    def search_sheet(self, sheet_id, query) -> Union[SearchResult, Error]:
         """Search the specified Sheet for the specified text.
 
         Args:
@@ -86,7 +89,7 @@ class Search:
                 search.
 
         Returns:
-            SearchResult
+            Union[SearchResult, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("search_sheet")
         _op["method"] = "GET"

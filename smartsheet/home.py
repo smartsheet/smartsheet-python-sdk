@@ -17,11 +17,12 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 
 from .util import fresh_operation
-from .models.folder import Folder
-from .models.sheet import Sheet
+from .models import Error, Folder, Home as HomeModel, IndexResult, Result, Sheet
 from .util import deprecated
 
 
@@ -35,14 +36,14 @@ class Home:
         self._log = logging.getLogger(__name__)
 
     @deprecated
-    def create_folder(self, folder_obj):
+    def create_folder(self, folder_obj) -> Union[Result[Folder], Error]:
         """Creates a Folder in the user's Sheets folder (Home).
 
         Args:
             folder_obj (Folder): Folder object.
 
         Returns:
-            Result
+            Union[Result[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(folder_obj, str):
             folder_obj = Folder({"name": folder_obj})
@@ -60,7 +61,7 @@ class Home:
         return response
 
     @deprecated
-    def create_sheet(self, sheet_obj):
+    def create_sheet(self, sheet_obj) -> Union[Result[Sheet], Error]:
         """Create a Sheet from scratch in the user's Sheets folder within
         Home.
 
@@ -68,7 +69,7 @@ class Home:
             sheet_obj (Sheet): Sheet object.
 
         Returns:
-            Result
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(sheet_obj, dict):
             sheet_obj = Sheet(sheet_obj)
@@ -86,7 +87,7 @@ class Home:
         return response
 
     @deprecated
-    def create_sheet_from_template(self, sheet_obj, include=None):
+    def create_sheet_from_template(self, sheet_obj, include=None) -> Union[Result[Sheet], Error]:
         """Create a Sheet in the Sheets folder from the specified Template.
 
         The Sheet object should be limited to the following
@@ -107,7 +108,7 @@ class Home:
                 attachments, cellLinks, data, discussions, forms, rules and ruleRecipients.
 
         Returns:
-            Result
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_sheet_from_template")
         _op["method"] = "POST"
@@ -123,7 +124,7 @@ class Home:
         return response
 
     @deprecated
-    def list_all_contents(self, include=None, exclude=None):
+    def list_all_contents(self, include=None, exclude=None) -> Union[HomeModel, Error]:
         """Get a nested list of all Home objects, including Sheets,
         Workspaces, Folders, Reports and Templates.
 
@@ -151,7 +152,7 @@ class Home:
         return response
 
     @deprecated
-    def list_folders(self, page_size=None, page=None, include_all=None):
+    def list_folders(self, page_size=None, page=None, include_all=None) -> Union[IndexResult[Folder], Error]:
         """Gets a list of top-level child Folders within the user's Sheets
         folder.
 
@@ -163,7 +164,7 @@ class Home:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            Union[IndexResult[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_folders")
         _op["method"] = "GET"

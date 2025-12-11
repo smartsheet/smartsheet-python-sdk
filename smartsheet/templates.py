@@ -17,9 +17,12 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 
 from .util import fresh_operation
+from .models import Error, IndexResult, Template
 
 
 class Templates:
@@ -31,7 +34,7 @@ class Templates:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def list_public_templates(self, page_size=None, page=None, include_all=None):
+    def list_public_templates(self, page_size=None, page=None, include_all=None) -> Union[IndexResult[Template], Error]:
         """Get the list of public Templates to which the User has access.
 
         Args:
@@ -42,7 +45,7 @@ class Templates:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            Union[IndexResult[Template], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_public_templates")
         _op["method"] = "GET"
@@ -58,7 +61,7 @@ class Templates:
 
         return response
 
-    def list_user_created_templates(self, page_size=None, page=None, include_all=None):
+    def list_user_created_templates(self, page_size=None, page=None, include_all=None) -> Union[IndexResult[Template], Error]:
         """Get the list of user-created Templates to which the user has
         access.
 
@@ -70,7 +73,7 @@ class Templates:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            Union[IndexResult[Template], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_user_created_templates")
         _op["method"] = "GET"

@@ -17,11 +17,13 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 import os.path
 
 from .util import fresh_operation
-from .models.folder import Folder
+from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Sheet
 from .util import deprecated
 
 
@@ -36,7 +38,7 @@ class Folders:
 
     def copy_folder(
         self, folder_id, container_destination_obj, include=None, skip_remap=None
-    ):
+    ) -> Union[Result[Folder], Error]:
         """Creates a copy of the specified Folder.
 
         Args:
@@ -52,7 +54,7 @@ class Folders:
                 Valid list items: cellLinks, reports, sheetHyperlinks, sights
 
         Returns:
-            Result
+            Union[Result[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("copy_folder")
         _op["method"] = "POST"
@@ -68,7 +70,7 @@ class Folders:
 
         return response
 
-    def create_folder_in_folder(self, folder_id, folder_obj):
+    def create_folder_in_folder(self, folder_id, folder_obj) -> Union[Result[Folder], Error]:
         """Create a Folder in the specified Folder
 
         Args:
@@ -76,7 +78,7 @@ class Folders:
             folder_obj (Folder): Folder object.
 
         Returns:
-            Result
+            Union[Result[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(folder_obj, str):
             folder_obj = Folder({"name": folder_obj})
@@ -93,7 +95,7 @@ class Folders:
 
         return response
 
-    def create_sheet_in_folder(self, folder_id, sheet_obj):
+    def create_sheet_in_folder(self, folder_id, sheet_obj) -> Union[Result[Sheet], Error]:
         """Create a Sheet from scratch in the specified Folder.
 
         Args:
@@ -101,7 +103,7 @@ class Folders:
             sheet_obj (Sheet): Sheet object.
 
         Returns:
-            Result
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_sheet_in_folder")
         _op["method"] = "POST"
@@ -116,7 +118,7 @@ class Folders:
         return response
 
     # pylint: disable=invalid-name
-    def create_sheet_in_folder_from_template(self, folder_id, sheet_obj, include=None):
+    def create_sheet_in_folder_from_template(self, folder_id, sheet_obj, include=None) -> Union[Result[Sheet], Error]:
         """Create a Sheet in the specified Folder from the specified Template.
 
         The Sheet object should be limited to the following
@@ -138,7 +140,7 @@ class Folders:
                 data, attachments, discussions, cellLinks, forms.
 
         Returns:
-            Result
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_sheet_in_folder_from_template")
         _op["method"] = "POST"
@@ -155,14 +157,14 @@ class Folders:
 
     # pylint: enable=invalid-name
 
-    def delete_folder(self, folder_id):
+    def delete_folder(self, folder_id) -> Union[Result[None], Error]:
         """Delete the Folder (and its contents) specified in the request.
 
         Args:
             folder_id (int): Folder ID
 
         Returns:
-            Result
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_folder")
         _op["method"] = "DELETE"
@@ -175,7 +177,7 @@ class Folders:
         return response
 
     @deprecated
-    def get_folder(self, folder_id, include=None):
+    def get_folder(self, folder_id, include=None) -> Union[Folder, Error]:
         """Get the specified Folder (and list its contents).
 
         Deprecated: 3.1.0
@@ -188,7 +190,7 @@ class Folders:
                 values: ownerInfo, sheetVersion, source.
 
         Returns:
-            Folder
+            Union[Folder, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_folder")
         _op["method"] = "GET"
@@ -202,7 +204,7 @@ class Folders:
         return response
 
     @deprecated
-    def list_folders(self, folder_id, page_size=None, page=None, include_all=None):
+    def list_folders(self, folder_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Folder], Error]:
         """Get a list of top-level child Folders within the specified Folder.
 
         Deprecated: 3.1.0
@@ -217,7 +219,7 @@ class Folders:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            Union[IndexResult[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_folders")
         _op["method"] = "GET"
@@ -233,7 +235,7 @@ class Folders:
 
         return response
 
-    def move_folder(self, folder_id, container_destination_obj):
+    def move_folder(self, folder_id, container_destination_obj) -> Union[Result[Folder], Error]:
         """Moves the specified Folder to another location.
 
         Args:
@@ -242,7 +244,7 @@ class Folders:
                 (ContainerDestination): Container Destination object.
 
         Returns:
-            Result
+            Union[Result[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("move_folder")
         _op["method"] = "POST"
@@ -256,7 +258,7 @@ class Folders:
 
         return response
 
-    def update_folder(self, folder_id, folder_obj):
+    def update_folder(self, folder_id, folder_obj) -> Union[Result[Folder], Error]:
         """Update the specified Folder.
 
         Args:
@@ -264,7 +266,7 @@ class Folders:
             folder_obj (Folder): Folder object.
 
         Returns:
-            Result
+            Union[Result[Folder], Error]: The result of the operation, or an Error object if the request fails.
         """
         if isinstance(folder_obj, str):
             folder_obj = Folder({"name": folder_obj})
@@ -281,7 +283,7 @@ class Folders:
 
         return response
 
-    def get_folder_metadata(self, folder_id, include=None):
+    def get_folder_metadata(self, folder_id, include=None) -> Union[Folder, Error]:
         """Get the metadata of a folder.
 
         Args:
@@ -290,7 +292,7 @@ class Folders:
             in the response. Valid list values: source.
 
         Returns:
-            Folder
+            Union[Folder, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_folder_metadata")
         _op["method"] = "GET"
@@ -303,7 +305,14 @@ class Folders:
 
         return response
 
-    def get_folder_children(self, folder_id, children_resource_types=None, include=None, last_key=None, max_items=None):
+    def get_folder_children(
+            self,
+            folder_id,
+            children_resource_types=None,
+            include=None,
+            last_key=None,
+            max_items=None
+    ) -> Union[PaginatedChildrenResult, Error]:
         """Get the children of a folder.
 
         Args:
@@ -318,7 +327,7 @@ class Folders:
             max_items (int): The maximum number of items to return in the response.
 
         Returns:
-            PaginatedChildrenResult
+            Union[PaginatedChildrenResult, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_folder_children")
         _op["method"] = "GET"
@@ -341,7 +350,7 @@ class Folders:
         sheet_name=None,
         header_row_index=None,
         primary_column_index=None,
-    ):
+    ) -> Union[Result[Sheet], Error]:
         """Imports a sheet in the specified folder.
 
         Args:
@@ -352,7 +361,7 @@ class Folders:
             primary_column_index (int): index (0 based) of primary column
 
         Returns:
-            Result
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
@@ -375,7 +384,7 @@ class Folders:
         sheet_name=None,
         header_row_index=None,
         primary_column_index=None,
-    ):
+    ) -> Union[Result[Sheet], Error]:
         """Imports a sheet in the specified folder.
 
         Args:
@@ -386,7 +395,7 @@ class Folders:
             primary_column_index (int): index (0 based) of primary column
 
         Returns:
-            Result
+            Union[Result[Sheet], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["folder_id", "file"]):
             raise ValueError(
@@ -410,7 +419,7 @@ class Folders:
         sheet_name,
         header_row_index,
         primary_column_index,
-    ):
+    ) -> Union[Result[Sheet], Error]:
         """Internal function used to import sheet"""
 
         if sheet_name is None:

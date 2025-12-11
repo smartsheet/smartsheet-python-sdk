@@ -17,22 +17,21 @@
 
 from __future__ import absolute_import
 
-from typing import TypeVar, List
+from typing import TypeVar, List, Generic, Type
 from ..types import String, json, TypedList, importlib
 from ..util import deserialize, serialize
-from .asset_share import AssetShare
 
 T = TypeVar('T')
 
 
-class AssetSharesPaginatedResult:
+class AssetSharesPaginatedResult(Generic[T]):
     """Smartsheet AssetSharesPaginatedResult data model with generic type support.
     Use only for deserializing the response from GET /2.0/shares.
     Created because GET /2.0/shares returns items in the response body instead of data.
     As a result TokenPaginatedResult cannot be used.
     """
 
-    def __init__(self, props=None, dynamic_data_type=None, base_obj=None):
+    def __init__(self, props=None, dynamic_data_type: Type[T] = None, base_obj=None):
         """Initialize the TokenPaginatedResult model."""
         self._base = None
         if base_obj is not None:
@@ -52,7 +51,7 @@ class AssetSharesPaginatedResult:
         self.__initialized = True
 
     @property
-    def items(self) -> List[AssetShare]:
+    def items(self) -> List[T]:
         return self._items
 
     @items.setter

@@ -17,16 +17,20 @@
 
 from __future__ import absolute_import
 
+from typing import TypeVar, Generic, List, Type
+
 from ..types import Number, String, TypedList, importlib, json
 from ..util import deserialize, serialize
 from .bulk_item_failure import BulkItemFailure
 
+T = TypeVar('T')
 
-class BulkItemResult:
+
+class BulkItemResult(Generic[T]):
 
     """Smartsheet BulkItemResult data model."""
 
-    def __init__(self, props=None, dynamic_result_type=None, base_obj=None):
+    def __init__(self, props=None, dynamic_result_type: Type[T] = None, base_obj=None):
         """Initialize the BulkItemResult model."""
         self._base = None
         if base_obj is not None:
@@ -67,7 +71,7 @@ class BulkItemResult:
         self._message.value = value
 
     @property
-    def result(self):
+    def result(self) -> List[T]:
         return self._result
 
     @result.setter
@@ -97,7 +101,7 @@ class BulkItemResult:
         self._version.value = value
 
     @property
-    def data(self):
+    def data(self) -> List[T]:
         """Simplify difference between Result and IndexResult"""
         return self._result
 

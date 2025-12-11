@@ -17,15 +17,18 @@
 
 from __future__ import absolute_import
 
+from typing import TypeVar, Generic, Type
+
 from ..types import Number, String, TypedList, importlib, json, logging
 from ..util import deserialize, serialize
 
+T = TypeVar('T')
 
-class Result:
+class Result(Generic[T]):
 
     """Smartsheet Result data model."""
 
-    def __init__(self, props=None, dynamic_result_type=None, base_obj=None):
+    def __init__(self, props=None, dynamic_result_type: Type[T] = None, base_obj=None):
         """Initialize the Result model."""
         self._base = None
         if base_obj is not None:
@@ -91,7 +94,7 @@ class Result:
         self._version.value = value
 
     @property
-    def data(self):
+    def data(self) -> T:
         """Simplify difference between Result and IndexResult"""
         return self._result
 

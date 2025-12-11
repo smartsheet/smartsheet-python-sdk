@@ -17,9 +17,12 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 
 from .util import fresh_operation
+from .models import Error, Favorite, IndexResult, Result
 
 
 class Favorites:
@@ -31,7 +34,7 @@ class Favorites:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_favorites(self, favorite_obj):
+    def add_favorites(self, favorite_obj) -> Union[Result[Favorite], Error]:
         """Add one or more items to the user's list of Favorite items.
 
         Adds one or more items to the user's list of Favorite
@@ -47,7 +50,7 @@ class Favorites:
                 more Favorite objects
 
         Returns:
-            Result
+            Union[Result[Favorite], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("add_favorites")
         _op["method"] = "POST"
@@ -61,7 +64,7 @@ class Favorites:
 
         return response
 
-    def list_favorites(self, page_size=None, page=None, include_all=None):
+    def list_favorites(self, page_size=None, page=None, include_all=None) -> Union[IndexResult[Favorite], Error]:
         """Get a list of all the user's Favorite items.
 
         Args:
@@ -72,7 +75,7 @@ class Favorites:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            Union[IndexResult[Favorite], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("list_favorites")
         _op["method"] = "GET"
@@ -88,7 +91,7 @@ class Favorites:
 
         return response
 
-    def remove_favorites(self, favorite_type, object_ids):
+    def remove_favorites(self, favorite_type, object_ids) -> Union[Result[None], Error]:
         """Delete one or more of Favorite objects of the specified type.
 
         Specify a favorite type of: folder, report, sheet,
@@ -102,7 +105,7 @@ class Favorites:
                 of object IDs representing the items to work on.
 
         Returns:
-            Result
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("remove_favorites")
         _op["method"] = "DELETE"

@@ -17,15 +17,18 @@
 
 from __future__ import absolute_import
 
+from typing import TypeVar, Generic, Type
+
 from ..types import Boolean, String, TypedList, importlib, json
 from ..util import deserialize, serialize
 
+T = TypeVar('T')
 
-class EventResult:
+class EventResult(Generic[T]):
 
     """Smartsheet EventResult data model."""
 
-    def __init__(self, props=None, dynamic_data_type=None, base_obj=None):
+    def __init__(self, props=None, dynamic_data_type: Type[T] = None, base_obj=None):
         """Initialize the EventResult model."""
         self._base = None
         if base_obj is not None:
@@ -47,7 +50,7 @@ class EventResult:
         self.request_response = None
 
     @property
-    def data(self):
+    def data(self) -> T:
         return self._data
 
     @data.setter

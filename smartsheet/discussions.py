@@ -17,11 +17,14 @@
 
 from __future__ import absolute_import
 
+from typing import Union
+
 import logging
 
 import six
 
 from .util import fresh_operation
+from .models import Error, Comment, Discussion, IndexResult, Result
 
 
 class Discussions:
@@ -33,7 +36,7 @@ class Discussions:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_comment_to_discussion(self, sheet_id, discussion_id, comment_obj=None):
+    def add_comment_to_discussion(self, sheet_id, discussion_id, comment_obj=None) -> Union[Result[Comment], Error]:
         """Add a Comment to the specified Discussion
 
         Args:
@@ -42,7 +45,7 @@ class Discussions:
             comment_obj (Comment): Comment object.
 
         Returns:
-            Result
+            Union[Result[Comment], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("add_comment_to_discussion")
         _op["method"] = "POST"
@@ -65,7 +68,7 @@ class Discussions:
     # pylint: disable=invalid-name
     def add_comment_to_discussion_with_attachment(
         self, sheet_id, discussion_id, comment, _file=None
-    ):
+    ) -> Union[Result[Comment], Error]:
         """Add a Comment with an Attachment to the specified Discussion
 
         Args:
@@ -75,7 +78,7 @@ class Discussions:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Union[Result[Comment], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["sheet_id", "discussion_id", "comment"]):
             raise ValueError(
@@ -105,7 +108,7 @@ class Discussions:
 
     # pylint: enable=invalid-name
 
-    def create_discussion_on_row(self, sheet_id, row_id, discussion_obj=None):
+    def create_discussion_on_row(self, sheet_id, row_id, discussion_obj=None) -> Union[Result[Discussion], Error]:
         """Create a new Discussion on a Row.
 
 
@@ -116,7 +119,7 @@ class Discussions:
             discussion_obj (Discussion): Discussion object.
 
         Returns:
-            Result
+            Union[Result[Discussion], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_discussion_on_row")
         _op["method"] = "POST"
@@ -135,7 +138,7 @@ class Discussions:
     # pylint: disable=invalid-name
     def create_discussion_on_row_with_attachment(
         self, sheet_id, row_id, discussion, _file=None
-    ):
+    ) -> Union[Result[Discussion], Error]:
         """Create a new Discussion on a Row with an attachment.
 
         Args:
@@ -145,7 +148,7 @@ class Discussions:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Union[Result[Discussion], Error]: The result of the operation, or an Error object if the request fails.
         """
         if not all(val is not None for val in ["sheet_id", "row_id", "discussion"]):
             raise ValueError(
@@ -171,7 +174,7 @@ class Discussions:
 
     # pylint: enable=invalid-name
 
-    def create_discussion_on_sheet(self, sheet_id, discussion_obj=None):
+    def create_discussion_on_sheet(self, sheet_id, discussion_obj=None) -> Union[Result[Discussion], Error]:
         """Create a new Discussion on a Sheet.
 
         Args:
@@ -179,7 +182,7 @@ class Discussions:
             discussion_obj (Discussion): Discussion object.
 
         Returns:
-            Result
+            Union[Result[Discussion], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_discussion_on_sheet")
         _op["method"] = "POST"
@@ -196,7 +199,7 @@ class Discussions:
     # pylint: disable=invalid-name
     def create_discussion_on_sheet_with_attachment(
         self, sheet_id, discussion, _file=None
-    ):
+    ) -> Union[Result[Discussion], Error]:
         """Create a new Discussion on a Sheet with an attachment.
 
         Args:
@@ -205,7 +208,7 @@ class Discussions:
             _file (file): String or file stream object.
 
         Returns:
-            Result
+            Union[Result[Discussion], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("create_discussion_on_sheet_with_attachment")
         _op["method"] = "POST"
@@ -224,7 +227,7 @@ class Discussions:
 
     # pylint: enable=invalid-name
 
-    def delete_discussion(self, sheet_id, discussion_id):
+    def delete_discussion(self, sheet_id, discussion_id) -> Union[Result[None], Error]:
         """Delete the specified Discussion.
 
         Args:
@@ -232,7 +235,7 @@ class Discussions:
             discussion_id (int): Discussion ID
 
         Returns:
-            Result
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_discussion")
         _op["method"] = "DELETE"
@@ -244,7 +247,7 @@ class Discussions:
 
         return response
 
-    def delete_discussion_comment(self, sheet_id, comment_id):
+    def delete_discussion_comment(self, sheet_id, comment_id) -> Union[Result[None], Error]:
         """Delete the specified Sheet Comment.
 
         Delete the specified Comment from the specified Sheet.
@@ -254,7 +257,7 @@ class Discussions:
             comment_id (int): Comment ID
 
         Returns:
-            Result
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_discussion_comment")
         _op["method"] = "DELETE"
@@ -268,7 +271,7 @@ class Discussions:
 
     def get_all_discussions(
         self, sheet_id, include=None, page_size=None, page=None, include_all=None
-    ):
+    ) -> Union[IndexResult[Discussion], Error]:
         """Get a list of all Discussions on the specified Sheet.
 
         Get a list of all Discussions associated with the specified
@@ -286,7 +289,7 @@ class Discussions:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            Union[IndexResult[Discussion], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_all_discussions")
         _op["method"] = "GET"
@@ -303,7 +306,7 @@ class Discussions:
 
         return response
 
-    def get_discussion(self, sheet_id, discussion_id):
+    def get_discussion(self, sheet_id, discussion_id) -> Union[Discussion, Error]:
         """Get the specified Discussion.
 
         Args:
@@ -311,7 +314,7 @@ class Discussions:
             discussion_id (int): Discussion ID
 
         Returns:
-            Discussion
+            Union[Discussion, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_discussion")
         _op["method"] = "GET"
@@ -323,7 +326,7 @@ class Discussions:
 
         return response
 
-    def get_discussion_comment(self, sheet_id, comment_id):
+    def get_discussion_comment(self, sheet_id, comment_id) -> Union[Comment, Error]:
         """Get the specified Comment.
 
         Args:
@@ -331,7 +334,7 @@ class Discussions:
             comment_id (int): Comment ID
 
         Returns:
-            Comment
+            Union[Comment, Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_discussion_comment")
         _op["method"] = "GET"
@@ -351,7 +354,7 @@ class Discussions:
         page_size=None,
         page=None,
         include_all=None,
-    ):
+    ) -> Union[IndexResult[Discussion], Error]:
         """Get a list of all Discussions associated with the specified Row.
 
         Args:
@@ -368,7 +371,7 @@ class Discussions:
                 (i.e. do not paginate).
 
         Returns:
-            IndexResult
+            Union[IndexResult[Discussion], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("get_row_discussions")
         _op["method"] = "GET"
@@ -387,7 +390,7 @@ class Discussions:
 
         return response
 
-    def update_comment(self, sheet_id, comment_id, comment_obj):
+    def update_comment(self, sheet_id, comment_id, comment_obj) -> Union[Result[Comment], Error]:
         """Update the specified Comment.
 
         Args:
@@ -396,7 +399,7 @@ class Discussions:
             comment_obj (Comment): Comment object with the following attributes:
 
         Returns:
-            Result
+            Union[Result[Comment], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_comment")
         _op["method"] = "PUT"
