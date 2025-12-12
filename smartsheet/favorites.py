@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import Union
+from typing import Union, List
 
 import logging
 
@@ -34,7 +34,7 @@ class Favorites:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_favorites(self, favorite_obj) -> Union[Result[Favorite], Error]:
+    def add_favorites(self, favorite_obj) -> Union[Result[Union[Favorite, List[Favorite]]], Error]:
         """Add one or more items to the user's list of Favorite items.
 
         Adds one or more items to the user's list of Favorite
@@ -50,7 +50,8 @@ class Favorites:
                 more Favorite objects
 
         Returns:
-            Union[Result[Favorite], Error]: The result of the operation, or an Error object if the request fails.
+            Union[Result[Union[Favorite, List[Favorite]]], Error]: The result of the operation - either a list or a
+            single object, or an Error object if the request fails.
         """
         _op = fresh_operation("add_favorites")
         _op["method"] = "POST"

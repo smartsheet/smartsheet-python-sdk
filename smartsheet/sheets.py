@@ -20,7 +20,7 @@ from __future__ import absolute_import
 import logging
 import os.path
 from datetime import datetime
-from typing import Union
+from typing import Union, List
 
 import six
 
@@ -40,7 +40,7 @@ class Sheets:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_columns(self, sheet_id, list_of_columns) -> Union[Result[Column], Error]:
+    def add_columns(self, sheet_id, list_of_columns) -> Union[Result[Union[Column, List[Column]]], Error]:
         """Insert one or more Columns into the specified Sheet
 
         Args:
@@ -49,7 +49,7 @@ class Sheets:
                 Column objects
 
         Returns:
-            Union[Result[Column], Error]: The result of the operation, or an Error object if the request fails.
+            Union[Result[Union[Column, List[Column]]], Error]: The result of the operation - either a list or a single object, or an Error object if the request fails.
         """
 
         if isinstance(list_of_columns, (dict, Column)):
@@ -69,7 +69,7 @@ class Sheets:
 
         return response
 
-    def add_rows(self, sheet_id, list_of_rows) -> Union[Result[Row], Error]:
+    def add_rows(self, sheet_id, list_of_rows) -> Union[Result[Union[Row, List[Row]]], Error]:
         """Insert one or more Rows into the specified Sheet.
 
         If multiple rows are specified in the request, all rows
@@ -109,7 +109,7 @@ class Sheets:
                    hyperlink (optional)
 
         Returns:
-            Union[Result[Row], Error]: The result of the operation, or an Error object if the request fails.
+            Union[Result[Union[Row, List[Row]]], Error]: The result of the operation - either a list or a single object, or an Error object if the request fails.
         """
         if isinstance(list_of_rows, (dict, Row)):
             arg_value = list_of_rows
@@ -281,7 +281,7 @@ class Sheets:
 
         return response
 
-    def delete_rows(self, sheet_id, ids, ignore_rows_not_found=False) -> Union[Result[NumberObjectValue], Error]:
+    def delete_rows(self, sheet_id, ids, ignore_rows_not_found=False) -> Union[Result[List[NumberObjectValue]], Error]:
         """Deletes one or more Row(s) from the specified Sheeet.
 
         Args:
@@ -296,7 +296,7 @@ class Sheets:
                 will be altered).
 
         Returns:
-            Union[Result[NumberObjectValue], Error]: The result of the operation, or an Error object if the request fails.
+            Union[Result[List[NumberObjectValue]], Error]: The result of the operation - a list of deleted object IDs, or an Error object if the request fails.
         """
         _op = fresh_operation("delete_rows")
         _op["method"] = "DELETE"

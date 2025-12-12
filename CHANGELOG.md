@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Fixed
+
+- Update correct method types, which may return either list or a singleton object
+
 ## [3.7.0] - 2025-12-11
 
 ### Added

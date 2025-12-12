@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import Union
+from typing import Union, List
 
 import logging
 
@@ -34,7 +34,7 @@ class Groups:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def add_members(self, group_id, group_member_obj) -> Union[Result[GroupMember], Error]:
+    def add_members(self, group_id, group_member_obj) -> Union[Result[Union[GroupMember, List[GroupMember]]], Error]:
         """Add one or more members to a Group.
 
         Args:
@@ -43,7 +43,8 @@ class Groups:
                 object(s).
 
         Returns:
-            Union[Result[GroupMember], Error]: The result of the operation, or an Error object if the request fails.
+            Union[Result[Union[GroupMember, List[GroupMember]]], Error]: The result of the operation - either a list or
+            a single object, or an Error object if the request fails.
         """
         _op = fresh_operation("add_members")
         _op["method"] = "POST"
