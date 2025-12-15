@@ -74,7 +74,7 @@ class Sights:
             raise ValueError("pagination_type must be 'token' or None")
         if pagination_type == 'token' and max_items is not None and max_items <= 0:
             raise ValueError("max_items must be a positive integer")
-        
+
         _op = fresh_operation("list_sights")
         _op["method"] = "GET"
         _op["path"] = "/sights"
@@ -107,7 +107,7 @@ class Sights:
             _op["query_params"]["pageSize"] = page_size
             _op["query_params"]["page"] = page
             _op["query_params"]["includeAll"] = include_all
-        
+
         if isinstance(modified_since, datetime):
             _op["query_params"]["modifiedSince"] = modified_since.isoformat()
 
