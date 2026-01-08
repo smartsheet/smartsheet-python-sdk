@@ -76,15 +76,15 @@ __all__ = ("AsyncSmartsheet", "AsyncAbstractUserCalcBackoff")
 
 class AsyncAbstractUserCalcBackoff:
     """Abstract base class for async backoff calculation."""
-    
+
     async def calc_backoff(self, previous_attempts, total_elapsed_time, error_result):
         """Calculate backoff time for retry attempts.
-        
+
         Args:
             previous_attempts (int): Number of previous retry attempts
             total_elapsed_time (float): Total elapsed time in seconds
             error_result (ErrorResult): Error result from previous attempt
-            
+
         Returns:
             float: Backoff time in seconds (negative to stop retrying)
         """
@@ -95,7 +95,7 @@ class AsyncAbstractUserCalcBackoff:
 
 class AsyncDefaultCalcBackoff(AsyncAbstractUserCalcBackoff):
     """Default async backoff calculator."""
-    
+
     def __init__(self, max_retry_time):
         self._max_retry_time = max_retry_time
 
@@ -121,20 +121,20 @@ class AsyncDefaultCalcBackoff(AsyncAbstractUserCalcBackoff):
 
 class AsyncSmartsheet:
     """Async client for making requests to the Smartsheet API.
-    
+
     This class provides an async interface to the Smartsheet API using httpx.AsyncClient
     for non-blocking HTTP operations. It mirrors the synchronous Smartsheet client API
     but uses async/await patterns throughout.
-    
+
     The client should be used as an async context manager to ensure proper resource
     cleanup, or you must manually call aclose() when done.
-    
+
     Attributes:
         Sheets: Async Sheets API operations
         Workspaces: Async Workspaces API operations
         models: Reference to smartsheet.models module
         raise_exceptions: Whether to raise exceptions on API errors (default: False)
-    
+
     Example:
         >>> async with AsyncSmartsheet(access_token="token") as client:
         ...     result = await client.Sheets.add_rows(sheet_id, rows)
@@ -165,12 +165,12 @@ class AsyncSmartsheet:
                 "/SmartsheetPythonSDK/__version__" to the user_agent.
             proxies: Proxy configuration dict. See httpx documentation for details.
             api_base: Base URL for API requests (default: https://api.smartsheet.com/2.0)
-        
+
         Raises:
             ValueError: If access_token is not provided and not set in environment
         """
         self.raise_exceptions = False
-        
+
         if access_token:
             self._access_token = access_token
         else:
@@ -241,10 +241,10 @@ class AsyncSmartsheet:
 
     async def aclose(self):
         """Close the async HTTP session and release resources.
-        
+
         This method should be called when you're done using the client if you're
         not using it as an async context manager.
-        
+
         Example:
             >>> client = AsyncSmartsheet(access_token="token")
             >>> try:
@@ -273,7 +273,7 @@ class AsyncSmartsheet:
 
     def errors_as_exceptions(self, preference: bool = True):
         """Set preference on whether or not to raise exceptions on API errors.
-        
+
         When preference is True, exceptions will be raised. When False,
         instances of the Error data type will be returned.
 
@@ -295,7 +295,7 @@ class AsyncSmartsheet:
 
     def with_wiremock_test_case(self, test_name: str, request_id: str):
         """Configure client with x-test-name and x-request-id headers.
-        
+
         Used for wiremock test cases.
 
         Args:
@@ -359,13 +359,13 @@ class AsyncSmartsheet:
                 body = response.request.content.decode("utf8")
                 body_dumps = json.dumps(json.loads(body), sort_keys=True)
             self._log.debug('{"requestBody": %s}', body_dumps)
-        
+
         # response
         content_dumps = f'"<< {response.headers.get("Content-Type")} content type suppressed >>"'
         if response.headers.get("Content-Type") is not None and "application/json" in response.headers.get("Content-Type"):
             content = response.content.decode("utf8")
             content_dumps = json.dumps(json.loads(content), sort_keys=True)
-        
+
         if 200 <= response.status_code <= 299:
             if operation["dl_path"] is None:
                 self._log.debug(
@@ -401,7 +401,7 @@ class AsyncSmartsheet:
             Operation Result object.
         """
         await self._ensure_session()
-        
+
         try:
             res = await self._session.send(prepped_request)
             self._log_request(operation, res)
@@ -427,7 +427,7 @@ class AsyncSmartsheet:
         start_time = time.time()
         # Make a copy of the request as the access token will be redacted on response prior to logging
         pre_redact_request = prepped_request
-        
+
         while True:
             result = await self._request(prepped_request, operation)
             if isinstance(result, AsyncOperationErrorResult):
@@ -496,7 +496,7 @@ class AsyncSmartsheet:
             req.headers.update({"Api-Scenario": self._test_scenario_name})
         else:
             req.headers.pop("Api-Scenario", None)
-            
+
         if self._wiremock_test_name is not None and self._wiremock_request_id is not None:
             req.headers["X-Test-Name"] = self._wiremock_test_name
             req.headers["X-Request-ID"] = self._wiremock_request_id
@@ -530,11 +530,11 @@ class AsyncSmartsheet:
             # Cache the instance
             self._api_modules_cache[name] = instance
             return instance
-        except (ImportError, AttributeError):
+        except (ImportError, AttributeError) as e:
             self._log.error(
                 "ImportError! Could not load async api class %s", name
             )
-            raise AttributeError(f"AsyncSmartsheet has no attribute '{name}'")
+            raise AttributeError(f"AsyncSmartsheet has no attribute '{name}'") from e
 
 
 class AsyncOperationResult:

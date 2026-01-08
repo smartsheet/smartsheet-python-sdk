@@ -36,12 +36,12 @@ _TRUSTED_CERT_FILE = certifi.where()
 
 def _create_ssl_context() -> ssl.SSLContext:
     """Create SSL context with secure TLS configuration.
-    
+
     Configures SSL context to:
     - Disable SSLv2, SSLv3, and TLSv1 (insecure protocols)
     - Use system default security settings
     - Verify certificates against trusted CA bundle
-    
+
     Returns:
         ssl.SSLContext: Configured SSL context for secure connections
     """
@@ -58,35 +58,35 @@ def async_pinned_session(
     timeout: Optional[float] = None
 ) -> httpx.AsyncClient:
     """Create an async HTTP client with pinned SSL/TLS configuration.
-    
+
     This function creates an httpx.AsyncClient configured with:
     - Secure SSL/TLS settings (no SSLv2, SSLv3, or TLSv1)
     - Connection pooling for efficient resource usage
     - Automatic retry logic for transient failures
     - Certificate verification against trusted CA bundle
-    
+
     The client should be used as an async context manager to ensure
     proper resource cleanup:
-    
+
         async with async_pinned_session() as client:
             response = await client.get("https://api.smartsheet.com/...")
-    
+
     Or with explicit lifecycle management:
-    
+
         client = async_pinned_session()
         try:
             response = await client.get("https://api.smartsheet.com/...")
         finally:
             await client.aclose()
-    
+
     Args:
         pool_maxsize: Maximum number of connections to pool (default: 8)
         max_retries: Number of retry attempts for failed requests (default: 1)
         timeout: Request timeout in seconds (default: None for no timeout)
-    
+
     Returns:
         httpx.AsyncClient: Configured async HTTP client with secure settings
-    
+
     Example:
         >>> async with async_pinned_session() as client:
         ...     response = await client.get("https://api.smartsheet.com/2.0/users/me")
@@ -95,20 +95,20 @@ def async_pinned_session(
     """
     # Create SSL context with secure configuration
     ssl_context = _create_ssl_context()
-    
+
     # Configure connection limits for pooling
     limits = httpx.Limits(
         max_connections=pool_maxsize,
         max_keepalive_connections=pool_maxsize // 2
     )
-    
+
     # Configure retry transport
     transport = httpx.AsyncHTTPTransport(
         limits=limits,
         verify=ssl_context,
         retries=max_retries
     )
-    
+
     # Create async client with configuration
     client = httpx.AsyncClient(
         transport=transport,
@@ -118,17 +118,17 @@ def async_pinned_session(
             'response': [_redact_token_async]
         }
     )
-    
+
     return client
 
 
 async def _redact_token_async(response: httpx.Response) -> None:
     """Redact authorization token from request headers for security.
-    
+
     This hook is called after each response to remove sensitive authorization
     tokens from the request object, preventing them from appearing in logs
     or debug output.
-    
+
     Args:
         response: The HTTP response object containing the request
     """
