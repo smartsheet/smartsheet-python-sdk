@@ -15,7 +15,8 @@ dependencies = [
     "requests-toolbelt",
     "six>=1.9",
     "certifi",
-    "python-dateutil"
+    "python-dateutil",
+    "httpx>=0.27.0"
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -41,6 +42,7 @@ test = [
     "coverage",
     "coveralls",
     "pytest",
+    "pytest-asyncio>=0.21.0",
     "pytest-rerunfailures",
     "requests-toolbelt"
 ]
@@ -48,6 +50,7 @@ develop = [
     "coverage",
     "coveralls[yaml]",
     "pytest",
+    "pytest-asyncio>=0.21.0",
     "pytest-instafail",
     "pylint"
 ]

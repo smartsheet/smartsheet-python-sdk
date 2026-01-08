@@ -25,6 +25,7 @@ from typing import Union, Optional
 from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, Workspace
 from .util import deprecated
 from .util import fresh_operation
+from .operations.workspaces_operations import WorkspacesOperations
 
 
 class Workspaces:
@@ -367,45 +368,15 @@ class Workspaces:
             ValueError: If pagination_type is not 'token' or None, or if max_items <= 0
                 when using token pagination.
         """
-        # Parameter validation
-        if pagination_type is not None and pagination_type not in ['token']:
-            raise ValueError("pagination_type must be 'token' or None")
-        if pagination_type == 'token' and max_items is not None and max_items <= 0:
-            raise ValueError("max_items must be a positive integer")
-        _op = fresh_operation("list_workspaces")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces"
-
-        # Issue deprecation warnings for old parameters when used
-        if page_size is not None:
-            warnings.warn(
-                "page_size parameter is deprecated. Use pagination_type='token' with max_items instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-        if page is not None:
-            warnings.warn(
-                "page parameter is deprecated. Use pagination_type='token' with last_key instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-        if include_all is not None:
-            warnings.warn(
-                "include_all parameter is deprecated. Use pagination_type='token' instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-
-        if pagination_type == "token":
-            _op["query_params"]["lastKey"] = last_key
-            _op["query_params"]["maxItems"] = max_items
-            _op["query_params"]["paginationType"] = pagination_type
-        else:
-            _op["query_params"]["pageSize"] = page_size
-            _op["query_params"]["page"] = page
-            _op["query_params"]["includeAll"] = include_all
-
-        expected = ["IndexResult", "Workspace"]
+        # Build operation using shared builder
+        _op, expected = WorkspacesOperations.build_list_workspaces(
+            page_size=page_size,
+            page=page,
+            include_all=include_all,
+            last_key=last_key,
+            max_items=max_items,
+            pagination_type=pagination_type
+        )
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

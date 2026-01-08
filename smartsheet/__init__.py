@@ -32,6 +32,7 @@ except ImportError:
     __version__ = get_version()
 
 from .smartsheet import AbstractUserCalcBackoff, Smartsheet  # NOQA
+from .async_smartsheet import AsyncSmartsheet, AsyncAbstractUserCalcBackoff  # NOQA
 from .util import fresh_operation  # NOQA
 
 from . import models
