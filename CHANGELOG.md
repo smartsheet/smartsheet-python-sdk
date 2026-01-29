@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Added
+
+- Add `Cells` class to `Smartsheet` class for IDE autocomplete support. Now auto-complete like `smart.Cells.get_cell_history()` and `smart.Cells.add_image_to_cell()` will work.
+
 ## [3.7.1] - 2025-12-12
 
 ### Fixed
