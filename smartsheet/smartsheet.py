@@ -38,6 +38,7 @@ from .session import pinned_session
 from .util import is_multipart, serialize
 
 from .attachments import Attachments
+from .cells import Cells
 from .contacts import Contacts
 from .discussions import Discussions
 from .events import Events
@@ -119,6 +120,7 @@ class Smartsheet:
     """Use this to make requests to the Smartsheet API."""
 
     Attachments: Attachments
+    Cells: Cells
     Contacts: Contacts
     Discussions: Discussions
     Events: Events
