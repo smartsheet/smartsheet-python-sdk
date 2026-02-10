@@ -82,9 +82,9 @@ from .recipient import Recipient
 from .report import Report
 from .report_cell import ReportCell
 from .report_column import ReportColumn
-from .report_scope_inclusion import ReportScopeInclusion
 from .report_publish import ReportPublish
 from .report_row import ReportRow
+from .report_scope_inclusion import ReportScopeInclusion
 from .result import Result
 from .row import Row
 from .row_email import RowEmail
