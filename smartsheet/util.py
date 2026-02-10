@@ -168,7 +168,6 @@ def deserialize(obj, props):
             key_ = _camel_to_underscore(key)
             if hasattr(obj, key_):
                 setattr(obj, key_, value)
-
             else:
                 _log.debug(
                     "object '%s' is missing property '%s'", obj.__class__.__name__, key_
