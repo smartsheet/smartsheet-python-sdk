@@ -569,6 +569,14 @@ ReportColumn
    :undoc-members:
    :show-inheritance:
 
+ReportScopeInclusion
+------------
+
+.. automodule:: smartsheet.models.report
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ReportPublish
 -------------
 
