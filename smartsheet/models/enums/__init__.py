@@ -41,6 +41,7 @@ from .operator import Operator
 from .paper_type import PaperType
 from .predecessor_type import PredecessorType
 from .publish_accessible_by import PublishAccessibleBy
+from .report_asset_type import ReportAssetType
 from .schedule_type import ScheduleType
 from .share_scope import ShareScope
 from .share_type import ShareType
