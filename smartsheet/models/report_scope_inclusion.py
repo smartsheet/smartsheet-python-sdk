@@ -17,10 +17,10 @@
 
 from __future__ import absolute_import
 
+from smartsheet.models.enums.report_asset_type import ReportAssetType
+
 from ..types import EnumeratedValue, Number, json
 from ..util import deserialize, serialize
-
-from smartsheet.models.enums.report_asset_type import ReportAssetType
 
 class ReportScopeInclusion:
 
@@ -62,4 +62,3 @@ class ReportScopeInclusion:
 
     def __str__(self):
         return self.to_json()
-

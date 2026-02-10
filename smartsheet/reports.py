@@ -384,7 +384,7 @@ class Reports:
         response = self._base.request(prepped_request, expected, _op)
 
         return response
-    
+
     def add_report_scope(self, report_id, scopes) -> Union[Result[None], Error]:
         """Add one or more scopes to the report.
 
@@ -406,7 +406,7 @@ class Reports:
         response = self._base.request(prepped_request, expected, _op)
 
         return response
-    
+
     def remove_report_scope(self, report_id, scopes) -> Union[Result[None], Error]:
         """Remove one or more scopes to the report.
 
