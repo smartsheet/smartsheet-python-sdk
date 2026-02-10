@@ -398,7 +398,7 @@ class Reports:
         _op = fresh_operation("add_report_scope")
         _op["method"] = "POST"
         _op["path"] = "/reports/" + str(report_id) + "/scope"
-        _op["json"] = json.dumps([ob.to_dict() for ob in scopes])
+        _op["json"] = scopes
 
         expected = ["Result", None]
 
@@ -408,7 +408,7 @@ class Reports:
         return response
 
     def remove_report_scope(self, report_id, scopes) -> Union[Result[None], Error]:
-        """Remove one or more scopes to the report.
+        """Remove one or more scopes from the report.
 
         Args:
             report_id (int): Report ID
@@ -420,7 +420,7 @@ class Reports:
         _op = fresh_operation("remove_report_scope")
         _op["method"] = "DELETE"
         _op["path"] = "/reports/" + str(report_id) + "/scope"
-        _op["json"] = json.dumps([ob.to_dict() for ob in scopes])
+        _op["json"] = scopes
 
         expected = ["Result", None]
 

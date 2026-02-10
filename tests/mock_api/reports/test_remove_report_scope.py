@@ -54,7 +54,7 @@ def test_remove_report_scope_all_response_properties():
 
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
-    assert body == '[{"assetId": ' + str(TEST_SHEET_ID) + ', "assetType": "SHEET"}]'
+    assert body == [{"assetId": TEST_SHEET_ID, "assetType": "SHEET"}]
 
 
 
