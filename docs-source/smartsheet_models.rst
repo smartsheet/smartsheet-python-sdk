@@ -572,7 +572,7 @@ ReportColumn
 ReportScopeInclusion
 ------------
 
-.. automodule:: smartsheet.models.report
+.. automodule:: smartsheet.models.report_scope_inclusion
    :members:
    :undoc-members:
    :show-inheritance:
