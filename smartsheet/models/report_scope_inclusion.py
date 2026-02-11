@@ -45,7 +45,7 @@ class ReportScopeInclusion:
     @asset_id.setter
     def asset_id(self, value: int):
         self._asset_id.value = value
-    
+
     @property
     def asset_type(self) -> ReportAssetType:
         return self._asset_type
@@ -57,7 +57,7 @@ class ReportScopeInclusion:
     def to_dict(self) -> dict:
         return serialize(self)
 
-    def to_json(self ) -> str:
+    def to_json(self) -> str:
         return json.dumps(self.to_dict())
 
     def __str__(self) -> str:
