@@ -39,26 +39,26 @@ class ReportScopeInclusion:
             deserialize(self, props)
 
     @property
-    def asset_id(self):
+    def asset_id(self) -> Number:
         return self._asset_id.value
 
     @asset_id.setter
-    def asset_id(self, value):
+    def asset_id(self, value: Number):
         self._asset_id.value = value
 
     @property
-    def asset_type(self):
-        return self._asset_type
+    def asset_type(self) -> ReportAssetType:
+        return self._asset_type.value
 
     @asset_type.setter
-    def asset_type(self, value):
+    def asset_type(self, value: ReportAssetType):
         self._asset_type.set(value)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return serialize(self)
 
-    def to_json(self):
+    def to_json(self ) -> str:
         return json.dumps(self.to_dict())
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.to_json()

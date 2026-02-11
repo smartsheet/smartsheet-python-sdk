@@ -23,6 +23,8 @@ import logging
 import os.path
 from datetime import datetime
 
+from smartsheet.models.report_scope_inclusion import ReportScopeInclusion
+
 from .util import fresh_operation
 from .models import Error, DownloadedFile, IndexResult, Report, ReportPublish, Result, Share
 
@@ -384,7 +386,7 @@ class Reports:
 
         return response
 
-    def add_report_scope(self, report_id, scopes) -> Union[Result[None], Error]:
+    def add_report_scope(self, report_id: int, scopes: list[ReportScopeInclusion]) -> Union[Result[None], Error]:
         """Add one or more scopes to the report.
 
         Args:
@@ -406,7 +408,7 @@ class Reports:
 
         return response
 
-    def remove_report_scope(self, report_id, scopes) -> Union[Result[None], Error]:
+    def remove_report_scope(self, report_id: int, scopes: list[ReportScopeInclusion]) -> Union[Result[None], Error]:
         """Remove one or more scopes from the report.
 
         Args:
