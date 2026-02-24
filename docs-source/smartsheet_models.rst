@@ -553,6 +553,14 @@ Report
    :undoc-members:
    :show-inheritance:
 
+ReportAggregationCriterion
+--------------------------
+
+.. automodule:: smartsheet.models.report_aggregation_criterion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ReportCell
 ----------
 
@@ -569,6 +577,46 @@ ReportColumn
    :undoc-members:
    :show-inheritance:
 
+ReportColumnIdentifier
+----------------------
+
+.. automodule:: smartsheet.models.report_column_identifier
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportDefinition
+----------------
+
+.. automodule:: smartsheet.models.report_definition
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportFilterCriterion
+---------------------
+
+.. automodule:: smartsheet.models.report_filter_criterion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportFilterExpression
+----------------------
+
+.. automodule:: smartsheet.models.report_filter_expression
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportGroupingCriterion
+-----------------------
+
+.. automodule:: smartsheet.models.report_grouping_criterion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ReportPublish
 -------------
 
@@ -581,6 +629,14 @@ ReportRow
 ---------
 
 .. automodule:: smartsheet.models.report_row
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportSortingCriterion
+----------------------
+
+.. automodule:: smartsheet.models.report_sorting_criterion
    :members:
    :undoc-members:
    :show-inheritance:
