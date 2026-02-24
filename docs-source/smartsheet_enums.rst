@@ -169,6 +169,22 @@ PaperType
    :undoc-members:
    :show-inheritance:
 
+PredecessorType
+------------------------------------------------
+
+.. automodule:: smartsheet.models.enums.predecessor_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PublishAccessibleBy
+------------------------------------------------------
+
+.. automodule:: smartsheet.models.enums.publish_accessible_by
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ReportAggregationType
 -----------------------------------------------------
 
@@ -197,22 +213,6 @@ ReportSystemColumnType
 ------------------------------------------------------
 
 .. automodule:: smartsheet.models.enums.report_system_column_type
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-PredecessorType
-------------------------------------------------
-
-.. automodule:: smartsheet.models.enums.predecessor_type
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-PublishAccessibleBy
-------------------------------------------------------
-
-.. automodule:: smartsheet.models.enums.publish_accessible_by
    :members:
    :undoc-members:
    :show-inheritance:
