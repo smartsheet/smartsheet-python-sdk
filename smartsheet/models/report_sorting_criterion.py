@@ -39,7 +39,6 @@ class ReportSortingCriterion:
 
         self._column = TypedObject(ReportColumnIdentifier)
         self._sorting_direction = EnumeratedValue(SortDirection)
-        self._force_nulls_to_bottom = Boolean()
 
         if props:
             deserialize(self, props)
@@ -61,14 +60,6 @@ class ReportSortingCriterion:
     @sorting_direction.setter
     def sorting_direction(self, value: Union[SortDirection, str]) -> None:
         self._sorting_direction.set(value)
-
-    @property
-    def force_nulls_to_bottom(self) -> Optional[bool]:
-        return self._force_nulls_to_bottom.value
-
-    @force_nulls_to_bottom.setter
-    def force_nulls_to_bottom(self, value: bool) -> None:
-        self._force_nulls_to_bottom.value = value
 
     def to_dict(self):
         return serialize(self)

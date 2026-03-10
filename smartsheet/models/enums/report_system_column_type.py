@@ -18,9 +18,8 @@ from enum import Enum
 
 
 class ReportSystemColumnType(Enum):
-    AUTO_NUMBER = 1
-    MODIFIED_DATE = 2
-    MODIFIED_BY = 3
-    CREATED_DATE = 4
-    CREATED_BY = 5
-    SHEET_NAME = 6  # Valid for reports only
+    MODIFIED_DATE = 1
+    MODIFIED_BY = 2
+    CREATED_DATE = 3
+    CREATED_BY = 4
+    SHEET_NAME = 5  # Valid for reports only

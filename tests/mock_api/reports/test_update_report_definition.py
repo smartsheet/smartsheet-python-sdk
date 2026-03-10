@@ -109,7 +109,6 @@ def test_update_report_definition_request_body_with_nested_filters():
     sorting_criterion = ReportSortingCriterion({
         "column": {"title": "Date", "type": "DATE"},
         "sortingDirection": "DESCENDING",
-        "forceNullsToBottom": True
     })
 
     report_definition = ReportDefinition()
@@ -152,7 +151,6 @@ def test_update_report_definition_request_body_with_nested_filters():
     assert len(body["sortingCriteria"]) == 1
     assert body["sortingCriteria"][0]["column"]["title"] == "Date"
     assert body["sortingCriteria"][0]["sortingDirection"] == "DESCENDING"
-    assert body["sortingCriteria"][0]["forceNullsToBottom"] is True
 
 
 def test_update_report_definition_partial_update_filters_only():
