@@ -406,7 +406,8 @@ class Reports:
         """
         _op = fresh_operation("update_report_definition")
         _op["method"] = "PATCH"
-        _op["path"] = "/reports/" + str(report_id) + "/definition?updateFilters=" + str(update_filters).lower()
+        _op["path"] = "/reports/" + str(report_id) + "/definition"
+        _op["query_params"]["updateFilters"] = str(update_filters).lower()
         _op["json"] = report_definition_obj
 
         expected = ["Result", None]
