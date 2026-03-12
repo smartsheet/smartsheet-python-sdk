@@ -44,6 +44,7 @@ def test_update_report_definition_generated_url_is_correct():
     wiremock_request = get_wiremock_request(request_id)
     url = urlparse(wiremock_request["absoluteUrl"])
     assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/definition'
+    assert url.query == "updateFilters=false"
     assert wiremock_request["method"] == "PATCH"
 
 

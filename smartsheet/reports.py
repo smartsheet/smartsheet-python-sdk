@@ -384,7 +384,7 @@ class Reports:
 
         return response
 
-    def update_report_definition(self, report_id: int, report_definition_obj: ReportDefinition) -> Union[Result[None], Error]:
+    def update_report_definition(self, report_id: int, report_definition_obj: ReportDefinition, updateFilters: bool = False) -> Union[Result[None], Error]:
         """Updates a report's definition.
 
         Update a Report's definition based on the specified ID.
@@ -400,13 +400,13 @@ class Reports:
         Args:
             report_id (int): Report ID
             report_definition_obj (ReportDefinition): ReportDefinition object.
-
+            updateFilters (bool): Whether the `filters` property should be updated. Defaults to False.
         Returns:
             Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
         _op = fresh_operation("update_report_definition")
         _op["method"] = "PATCH"
-        _op["path"] = "/reports/" + str(report_id) + "/definition"
+        _op["path"] = "/reports/" + str(report_id) + "/definition?updateFilters=" + str(updateFilters).lower()
         _op["json"] = report_definition_obj
 
         expected = ["Result", None]
