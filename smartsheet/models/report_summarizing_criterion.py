@@ -25,14 +25,14 @@ from .enums import ReportAggregationType
 from .report_column_identifier import ReportColumnIdentifier
 
 
-class ReportAggregationCriterion:
-    """Smartsheet ReportAggregationCriterion data model.
+class ReportSummarizingCriterion:
+    """Smartsheet ReportSummarizingCriterion data model.
 
-    Report aggregation criterion.
+    Report summarizing criterion.
     """
 
     def __init__(self, props=None, base_obj=None):
-        """Initialize the ReportAggregationCriterion model."""
+        """Initialize the ReportSummarizingCriterion model."""
         self._base = None
         if base_obj is not None:
             self._base = base_obj

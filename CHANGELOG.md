@@ -11,12 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Support for PATCH /reports/{reportId}/definition endpoint
 - New `update_report_definition()` method in Reports class to update report definitions
-- New `ReportDefinition` model with support for filters, grouping, aggregation, and sorting criteria
+- New `ReportDefinition` model with support for filters, grouping, summarizing, and sorting criteria
 - New `ReportFilterExpression` model with recursive structure for complex filter logic
 - New `ReportFilterCriterion` model for individual filter conditions
 - New `ReportColumnIdentifier` model for identifying columns in report criteria
 - New `ReportGroupingCriterion` model for report grouping configuration
-- New `ReportAggregationCriterion` model for report aggregation configuration
+- New `ReportSummarizingCriterion` model for report summarizing configuration
 - New `ReportSortingCriterion` model for report sorting configuration
 - New `ReportAggregationType` enum (SUM, AVG, MIN, MAX, COUNT, FIRST, LAST)
 - New `ReportBooleanOperator` enum (AND, OR) for filter expressions

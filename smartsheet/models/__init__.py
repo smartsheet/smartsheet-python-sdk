@@ -80,7 +80,7 @@ from .predecessor_list import PredecessorList
 from .project_settings import ProjectSettings
 from .recipient import Recipient
 from .report import Report
-from .report_aggregation_criterion import ReportAggregationCriterion
+from .report_summarizing_criterion import ReportSummarizingCriterion
 from .report_cell import ReportCell
 from .report_column import ReportColumn
 from .report_column_identifier import ReportColumnIdentifier

@@ -391,7 +391,7 @@ class Reports:
 
         Note: This endpoint supports partial updates only on root level
         properties of the report definition, such as filters, groupingCriteria
-        and aggregationCriteria. For example, you can update the report's
+        and summarizingCriteria. For example, you can update the report's
         filters without affecting its grouping criteria. However, nested
         properties within these objects, such as a specific filter or grouping
         criterion, cannot be updated individually and require a full replacement

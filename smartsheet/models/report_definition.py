@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from ..types import TypedList, TypedObject, json
 from ..util import deserialize, serialize
-from .report_aggregation_criterion import ReportAggregationCriterion
+from .report_summarizing_criterion import ReportSummarizingCriterion
 from .report_filter_expression import ReportFilterExpression
 from .report_grouping_criterion import ReportGroupingCriterion
 from .report_sorting_criterion import ReportSortingCriterion
@@ -36,7 +36,7 @@ class ReportDefinition:
     Supports partial updates on root level properties such as:
     - filters
     - groupingCriteria
-    - aggregationCriteria
+    - summarizingCriteria
     - sortingCriteria
     """
 
@@ -48,7 +48,7 @@ class ReportDefinition:
 
         self._filters = TypedObject(ReportFilterExpression)
         self._grouping_criteria = TypedList(ReportGroupingCriterion)
-        self._aggregation_criteria = TypedList(ReportAggregationCriterion)
+        self._summarizing_criteria = TypedList(ReportSummarizingCriterion)
         self._sorting_criteria = TypedList(ReportSortingCriterion)
 
         if props:
@@ -73,12 +73,12 @@ class ReportDefinition:
         self._grouping_criteria.load(value)
 
     @property
-    def aggregation_criteria(self):
-        return self._aggregation_criteria
+    def summarizing_criteria(self):
+        return self._summarizing_criteria
 
-    @aggregation_criteria.setter
-    def aggregation_criteria(self, value):
-        self._aggregation_criteria.load(value)
+    @summarizing_criteria.setter
+    def summarizing_criteria(self, value):
+        self._summarizing_criteria.load(value)
 
     @property
     def sorting_criteria(self):

@@ -553,10 +553,10 @@ Report
    :undoc-members:
    :show-inheritance:
 
-ReportAggregationCriterion
+ReportSummarizingCriterion
 --------------------------
 
-.. automodule:: smartsheet.models.report_aggregation_criterion
+.. automodule:: smartsheet.models.report_summarizing_criterion
    :members:
    :undoc-members:
    :show-inheritance:

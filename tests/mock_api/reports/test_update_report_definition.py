@@ -7,7 +7,7 @@ from smartsheet.models import (
     ReportDefinition,
     ReportFilterExpression,
     ReportGroupingCriterion,
-    ReportAggregationCriterion,
+    ReportSummarizingCriterion,
     ReportSortingCriterion,
 )
 from tests.mock_api.mock_api_test_helper import (
@@ -101,7 +101,7 @@ def test_update_report_definition_request_body_with_nested_filters():
         "isExpanded": True
     })
 
-    aggregation_criterion = ReportAggregationCriterion({
+    summarizing_criterion = ReportSummarizingCriterion({
         "column": {"title": "Price", "type": "TEXT_NUMBER"},
         "aggregationType": "SUM",
         "isExpanded": True
@@ -115,7 +115,7 @@ def test_update_report_definition_request_body_with_nested_filters():
     report_definition = ReportDefinition()
     report_definition.filters = filter_expression
     report_definition.grouping_criteria = [grouping_criterion]
-    report_definition.aggregation_criteria = [aggregation_criterion]
+    report_definition.summarizing_criteria = [summarizing_criterion]
     report_definition.sorting_criteria = [sorting_criterion]
 
     client.Reports.update_report_definition(
@@ -142,11 +142,11 @@ def test_update_report_definition_request_body_with_nested_filters():
     assert body["groupingCriteria"][0]["sortingDirection"] == "ASCENDING"
     assert body["groupingCriteria"][0]["isExpanded"] is True
 
-    # Verify aggregation criteria
-    assert len(body["aggregationCriteria"]) == 1
-    assert body["aggregationCriteria"][0]["column"]["title"] == "Price"
-    assert body["aggregationCriteria"][0]["aggregationType"] == "SUM"
-    assert body["aggregationCriteria"][0]["isExpanded"] is True
+    # Verify summarizing criteria
+    assert len(body["summarizingCriteria"]) == 1
+    assert body["summarizingCriteria"][0]["column"]["title"] == "Price"
+    assert body["summarizingCriteria"][0]["aggregationType"] == "SUM"
+    assert body["summarizingCriteria"][0]["isExpanded"] is True
 
     # Verify sorting criteria
     assert len(body["sortingCriteria"]) == 1
@@ -298,33 +298,33 @@ def test_update_report_definition_error_5xx():
 
 
 def test_update_report_definition_multiple_aggregation_types():
-    """Test with multiple aggregation criteria using different aggregation types."""
+    """Test with multiple summarizing criteria using different aggregation types."""
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
         "/reports/update-report-definition/all-response-body-properties", request_id
     )
 
-    aggregation_criteria = [
-        ReportAggregationCriterion({
+    summarizing_criteria = [
+        ReportSummarizingCriterion({
             "column": {"title": "Price", "type": "TEXT_NUMBER"},
             "aggregationType": "SUM"
         }),
-        ReportAggregationCriterion({
+        ReportSummarizingCriterion({
             "column": {"title": "Quantity", "type": "TEXT_NUMBER"},
             "aggregationType": "AVG"
         }),
-        ReportAggregationCriterion({
+        ReportSummarizingCriterion({
             "column": {"title": "Date", "type": "DATE"},
             "aggregationType": "MIN"
         }),
-        ReportAggregationCriterion({
+        ReportSummarizingCriterion({
             "column": {"title": "Date", "type": "DATE"},
             "aggregationType": "MAX"
         }),
     ]
 
     report_definition = ReportDefinition()
-    report_definition.aggregation_criteria = aggregation_criteria
+    report_definition.summarizing_criteria = summarizing_criteria
 
     client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
@@ -335,8 +335,8 @@ def test_update_report_definition_multiple_aggregation_types():
     body = json.loads(wiremock_request["body"])
 
     # Verify all aggregation types are correctly serialized
-    assert len(body["aggregationCriteria"]) == 4
-    assert body["aggregationCriteria"][0]["aggregationType"] == "SUM"
-    assert body["aggregationCriteria"][1]["aggregationType"] == "AVG"
-    assert body["aggregationCriteria"][2]["aggregationType"] == "MIN"
-    assert body["aggregationCriteria"][3]["aggregationType"] == "MAX"
+    assert len(body["summarizingCriteria"]) == 4
+    assert body["summarizingCriteria"][0]["aggregationType"] == "SUM"
+    assert body["summarizingCriteria"][1]["aggregationType"] == "AVG"
+    assert body["summarizingCriteria"][2]["aggregationType"] == "MIN"
+    assert body["summarizingCriteria"][3]["aggregationType"] == "MAX"
