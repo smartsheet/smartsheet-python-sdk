@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from typing import Optional, Union
 
-from ..types import EnumeratedValue, TypedObject, Boolean, json
+from ..types import EnumeratedValue, TypedObject, json
 from ..util import deserialize, serialize
 from .enums import ReportAggregationType
 from .report_column_identifier import ReportColumnIdentifier
@@ -28,7 +28,7 @@ from .report_column_identifier import ReportColumnIdentifier
 class ReportSummarizingCriterion:
     """Smartsheet ReportSummarizingCriterion data model.
 
-    Report summarizing criterion.
+    Report summarizing criterion. Requires 'column' and 'aggregationType'.
     """
 
     def __init__(self, props=None, base_obj=None):
@@ -39,7 +39,6 @@ class ReportSummarizingCriterion:
 
         self._column = TypedObject(ReportColumnIdentifier)
         self._aggregation_type = EnumeratedValue(ReportAggregationType)
-        self._is_expanded = Boolean()
 
         if props:
             deserialize(self, props)
@@ -48,6 +47,7 @@ class ReportSummarizingCriterion:
 
     @property
     def column(self) -> Optional[ReportColumnIdentifier]:
+        """Column to summarize."""
         return self._column.value
 
     @column.setter
@@ -56,19 +56,12 @@ class ReportSummarizingCriterion:
 
     @property
     def aggregation_type(self) -> EnumeratedValue:
+        """Type of aggregation (SUM, AVG, MIN, MAX, COUNT, FIRST, LAST)."""
         return self._aggregation_type
 
     @aggregation_type.setter
     def aggregation_type(self, value: Union[ReportAggregationType, str]) -> None:
         self._aggregation_type.set(value)
-
-    @property
-    def is_expanded(self) -> Optional[bool]:
-        return self._is_expanded.value
-
-    @is_expanded.setter
-    def is_expanded(self, value: bool) -> None:
-        self._is_expanded.value = value
 
     def to_dict(self):
         return serialize(self)

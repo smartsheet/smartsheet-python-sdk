@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from typing import Optional, Union
 
-from ..types import EnumeratedValue, TypedObject, Boolean, json
+from ..types import EnumeratedValue, TypedObject, json
 from ..util import deserialize, serialize
 from .enums import SortDirection
 from .report_column_identifier import ReportColumnIdentifier
@@ -28,7 +28,7 @@ from .report_column_identifier import ReportColumnIdentifier
 class ReportSortingCriterion:
     """Smartsheet ReportSortingCriterion data model.
 
-    Report sorting criterion.
+    Report sorting criterion. Requires 'column' and 'sortingDirection'.
     """
 
     def __init__(self, props=None, base_obj=None):
@@ -47,6 +47,7 @@ class ReportSortingCriterion:
 
     @property
     def column(self) -> Optional[ReportColumnIdentifier]:
+        """Column to sort by."""
         return self._column.value
 
     @column.setter
@@ -55,6 +56,7 @@ class ReportSortingCriterion:
 
     @property
     def sorting_direction(self) -> EnumeratedValue:
+        """Sorting direction (ASCENDING or DESCENDING)."""
         return self._sorting_direction
 
     @sorting_direction.setter

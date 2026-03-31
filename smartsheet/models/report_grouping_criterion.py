@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from typing import Optional, Union
 
-from ..types import EnumeratedValue, String, TypedObject, Boolean, json
+from ..types import EnumeratedValue, TypedObject, Boolean, json
 from ..util import deserialize, serialize
 from .enums import SortDirection
 from .report_column_identifier import ReportColumnIdentifier
@@ -28,7 +28,7 @@ from .report_column_identifier import ReportColumnIdentifier
 class ReportGroupingCriterion:
     """Smartsheet ReportGroupingCriterion data model.
 
-    Report grouping criterion.
+    Report grouping criterion. Requires 'column' and 'sortingDirection'.
     """
 
     def __init__(self, props=None, base_obj=None):
@@ -37,7 +37,6 @@ class ReportGroupingCriterion:
         if base_obj is not None:
             self._base = base_obj
 
-        self._id = String()
         self._column = TypedObject(ReportColumnIdentifier)
         self._sorting_direction = EnumeratedValue(SortDirection)
         self._is_expanded = Boolean()
@@ -48,15 +47,8 @@ class ReportGroupingCriterion:
         self.__initialized = True
 
     @property
-    def id(self) -> Optional[str]:
-        return self._id.value
-
-    @id.setter
-    def id(self, value: str) -> None:
-        self._id.value = value
-
-    @property
     def column(self) -> Optional[ReportColumnIdentifier]:
+        """Column to group by."""
         return self._column.value
 
     @column.setter
@@ -65,6 +57,7 @@ class ReportGroupingCriterion:
 
     @property
     def sorting_direction(self) -> EnumeratedValue:
+        """Sorting direction within the group (ASCENDING or DESCENDING)."""
         return self._sorting_direction
 
     @sorting_direction.setter
@@ -73,6 +66,7 @@ class ReportGroupingCriterion:
 
     @property
     def is_expanded(self) -> Optional[bool]:
+        """Indicates whether the group is expanded in the UI (default: true)."""
         return self._is_expanded.value
 
     @is_expanded.setter

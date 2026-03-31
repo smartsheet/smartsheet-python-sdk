@@ -28,28 +28,53 @@ from .report_filter_criterion import ReportFilterCriterion
 class ReportFilterExpression:
     """Smartsheet ReportFilterExpression data model.
 
-    Report filter expression. It is a recursive object that allows at most 3 levels.
+    An expression to filter on report columns. It is a recursive object that allows
+    at most three levels.
 
-    At least one of criteria or nestedCriteria has to be provided in addition to operator.
+    It must include 'operator' and at least one of the following: 'criteria' or 'nestedCriteria'
 
-    Example:
+    Here is a two-level example:
+
         {
           "operator": "OR",
           "nestedCriteria": [
             {
               "operator": "AND",
-              "nestedCriteria": [],
               "criteria": [
                 {
                   "column": { "title": "Price", "type": "TEXT_NUMBER" },
                   "operator": "GREATER_THAN",
                   "values": ["11"]
+                },
+                {
+                  "column": { "primary": true },
+                  "operator": "CONTAINS",
+                  "values": ["PROJ-1"]
+                }
+              ]
+            },
+            {
+              "operator": "AND",
+              "criteria": [
+                {
+                  "column": { "title": "Quantity", "type": "TEXT_NUMBER" },
+                  "operator": "LESS_THAN",
+                  "values": ["12"]
+                },
+                {
+                  "column": { "title": "Sold Out", "type": "CHECKBOX" },
+                  "operator": "IS_CHECKED"
                 }
               ]
             }
-          ],
-          "criteria": []
+          ]
         }
+
+    It's equivalent to the following pseudo logic:
+
+        ("Price" > 11 AND "Primary" CONTAINS "PROJ-1")
+        OR
+        ("Quantity" < 12 AND "Sold Out" IS_CHECKED)
     """
 
     def __init__(self, props=None, base_obj=None):

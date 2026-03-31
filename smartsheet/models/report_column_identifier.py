@@ -27,20 +27,12 @@ from .enums import ColumnType, ReportSystemColumnType
 class ReportColumnIdentifier:
     """Smartsheet ReportColumnIdentifier data model.
 
-    Object used to match a sheet column for a report. One of [type, systemColumnType]
-    or [primary=true] is required.
+    Object used to match a sheet column for a report. The 'type' property is required.
 
-    systemColumnType should be specified if you want to match a system column.
-    Use primary=true to match primary columns. When matching primary columns, title
-    can be used to customize primary column name in the rendered report.
+    When matching primary columns, title can be used to customize the primary column
+    name in the rendered report.
 
-    Note: Columns in the report are matched by the combination of title and type
-    (and systemColumnType if specified).
-
-    Note: symbol is not used for matching and as a result CHECKBOX or PICKLIST
-    columns with different symbols (from different sheets) can be combined into the
-    same column in the report. You cannot combine CHECKBOX with PICKLIST into the
-    same column in the report because they are different types.
+    Note: CONTACT_LIST and MULTI_CONTACT_LIST match the same columns in reports.
     """
 
     def __init__(self, props=None, base_obj=None):
@@ -53,6 +45,7 @@ class ReportColumnIdentifier:
         self._type = EnumeratedValue(ColumnType)
         self._system_column_type = EnumeratedValue(ReportSystemColumnType)
         self._primary = Boolean()
+        self._sheet_name_column = Boolean()
 
         if props:
             deserialize(self, props)
@@ -90,6 +83,14 @@ class ReportColumnIdentifier:
     @primary.setter
     def primary(self, value: bool) -> None:
         self._primary.value = value
+
+    @property
+    def sheet_name_column(self) -> Optional[bool]:
+        return self._sheet_name_column.value
+
+    @sheet_name_column.setter
+    def sheet_name_column(self, value: bool) -> None:
+        self._sheet_name_column.value = value
 
     def to_dict(self):
         return serialize(self)
