@@ -13,6 +13,7 @@ from tests.mock_api.mock_api_test_helper import (
 
 TEST_EMAIL = "test.user@smartsheet.com"
 TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
+TEST_CONTRIBUTOR_SEAT_TYPE = seat_type.SeatType.CONTRIBUTOR
 TEST_PAGE = 1
 TEST_PAGE_SIZE = 100
 TEST_INCLUDE_ALL = False
@@ -119,6 +120,34 @@ def test_list_users_required_response_properties():
     assert response.data[0].last_login is None
     assert response.data[0].custom_welcome_screen_viewed is None
     assert response.data[0].id == TEST_ID_VALUE
+
+
+def test_list_users_contributor_seat_type_generated_url_is_correct():
+    request_id = uuid.uuid4().hex
+
+    client = get_mock_api_client(
+        "/users/list-users/required-response-body-properties", request_id
+    )
+
+    client.Users.list_users(
+        email=TEST_EMAIL,
+        seat_type=TEST_CONTRIBUTOR_SEAT_TYPE.value,
+        page=TEST_PAGE,
+        page_size=TEST_PAGE_SIZE,
+        include_all=TEST_INCLUDE_ALL
+    )
+
+    wiremock_request = get_wiremock_request(request_id)
+    url = urlparse(wiremock_request["absoluteUrl"])
+    query = parse_qs(url.query)
+    assert query == {
+        "email": [TEST_EMAIL],
+        "seatType": [TEST_CONTRIBUTOR_SEAT_TYPE.value],
+        "page": [str(TEST_PAGE)],
+        "pageSize": [str(TEST_PAGE_SIZE)],
+        "includeAll": [str(TEST_INCLUDE_ALL)]
+    }
+    assert url.path == "/2.0/users"
 
 
 def test_list_users_error_400_response():
