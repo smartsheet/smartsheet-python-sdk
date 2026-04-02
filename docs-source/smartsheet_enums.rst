@@ -193,6 +193,14 @@ ReportAggregationType
    :undoc-members:
    :show-inheritance:
 
+ReportAssetType
+------------------------------------------------------
+
+.. automodule:: smartsheet.models.enums.report_asset_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ReportBooleanOperator
 -----------------------------------------------------
 

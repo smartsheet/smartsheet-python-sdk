@@ -42,6 +42,7 @@ from .paper_type import PaperType
 from .predecessor_type import PredecessorType
 from .publish_accessible_by import PublishAccessibleBy
 from .report_aggregation_type import ReportAggregationType
+from .report_asset_type import ReportAssetType
 from .report_boolean_operator import ReportBooleanOperator
 from .report_filter_operator import ReportFilterOperator
 from .report_system_column_type import ReportSystemColumnType

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Support for PATCH /reports/{reportId}/definition endpoint
+- Support for PUT /reports/{reportId}/definition endpoint
 - New `update_report_definition()` method in Reports class to update report definitions
 - New `ReportDefinition` model with support for filters, grouping, summarizing, and sorting criteria
 - New `ReportFilterExpression` model with recursive structure for complex filter logic
@@ -24,6 +24,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - New `ReportSystemColumnType` enum with report-specific system columns including SHEET_NAME
 - Type hints for all new report models and methods
 - WireMock integration tests for report definition update endpoint including nested filter validation
+- Support for POST /2.0/reports/{reportId}/scope endpoint
+- Support for DELETE /2.0/reports/{ReportId}/scope endpoint
+- Added wiremock integration tests for POST /2.0/reports/{reportId}/scope endpoint
+- Added wiremock integration tests for DELETE /2.0/reports/{reportId}/scope endpoint
+- Support for DELETE /2.0/reports/{reportId} endpoint
 
 ## [3.7.2] - 2026-01-29
 
