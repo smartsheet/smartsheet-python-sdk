@@ -58,6 +58,26 @@ class Reports:
 
         return response
 
+    def delete_report(self, report_id) -> Union[Result[None], Error]:
+        """Deletes a report based on the specified ID
+
+        Args:
+            report_id (int): Report ID
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("delete_report")
+        _op["method"] = "DELETE"
+        _op["path"] = "/reports/" + str(report_id)
+
+        expected = ["Result", None]
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+
     def get_report(
         self, report_id, page_size=None, page=None, include=None, level=None
     ) -> Union[Report, Error]:
