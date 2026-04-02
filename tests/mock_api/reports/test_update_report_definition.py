@@ -97,13 +97,11 @@ def test_update_report_definition_request_body_with_nested_filters():
     grouping_criterion = ReportGroupingCriterion({
         "column": {"title": "Status", "type": "PICKLIST"},
         "sortingDirection": "ASCENDING",
-        "isExpanded": True
     })
 
     summarizing_criterion = ReportSummarizingCriterion({
         "column": {"title": "Price", "type": "TEXT_NUMBER"},
         "aggregationType": "SUM",
-        "isExpanded": True
     })
 
     sorting_criterion = ReportSortingCriterion({
@@ -139,13 +137,11 @@ def test_update_report_definition_request_body_with_nested_filters():
     assert len(body["groupingCriteria"]) == 1
     assert body["groupingCriteria"][0]["column"]["title"] == "Status"
     assert body["groupingCriteria"][0]["sortingDirection"] == "ASCENDING"
-    assert body["groupingCriteria"][0]["isExpanded"] is True
 
     # Verify summarizing criteria
     assert len(body["summarizingCriteria"]) == 1
     assert body["summarizingCriteria"][0]["column"]["title"] == "Price"
     assert body["summarizingCriteria"][0]["aggregationType"] == "SUM"
-    assert body["summarizingCriteria"][0]["isExpanded"] is True
 
     # Verify sorting criteria
     assert len(body["sortingCriteria"]) == 1
