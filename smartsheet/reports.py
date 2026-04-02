@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import Union
+from typing import Union, List
 
 import logging
 import os.path
@@ -437,12 +437,12 @@ class Reports:
 
         return response
 
-    def add_report_scope(self, report_id: int, scopes: list[ReportScopeInclusion]) -> Union[Result[None], Error]:
+    def add_report_scope(self, report_id: int, scopes: List[ReportScopeInclusion]) -> Union[Result[None], Error]:
         """Add one or more scopes to the report.
 
         Args:
             report_id (int): Report ID
-            scopes (list[ReportScopeInclusion]): List of scopes to add.
+            scopes (List[ReportScopeInclusion]): List of scopes to add.
 
         Returns:
             Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
@@ -459,12 +459,12 @@ class Reports:
 
         return response
 
-    def remove_report_scope(self, report_id: int, scopes: list[ReportScopeInclusion]) -> Union[Result[None], Error]:
+    def remove_report_scope(self, report_id: int, scopes: List[ReportScopeInclusion]) -> Union[Result[None], Error]:
         """Remove one or more scopes from the report.
 
         Args:
             report_id (int): Report ID
-            scopes (list[ReportScopeInclusion]): List of scopes to remove.
+            scopes (List[ReportScopeInclusion]): List of scopes to remove.
 
         Returns:
             Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
