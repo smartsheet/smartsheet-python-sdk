@@ -23,6 +23,8 @@ import logging
 import os.path
 from datetime import datetime
 
+from smartsheet.models.report_scope_inclusion import ReportScopeInclusion
+
 from .util import fresh_operation
 from .models import Error, DownloadedFile, IndexResult, Report, ReportPublish, Result, Share
 
@@ -398,6 +400,50 @@ class Reports:
         _op["json"] = report_publish_obj
 
         expected = ["Result", "ReportPublish"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def add_report_scope(self, report_id: int, scopes: list[ReportScopeInclusion]) -> Union[Result[None], Error]:
+        """Add one or more scopes to the report.
+
+        Args:
+            report_id (int): Report ID
+            scopes (list[ReportScopeInclusion]): List of scopes to add.
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("add_report_scope")
+        _op["method"] = "POST"
+        _op["path"] = "/reports/" + str(report_id) + "/scope"
+        _op["json"] = scopes
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def remove_report_scope(self, report_id: int, scopes: list[ReportScopeInclusion]) -> Union[Result[None], Error]:
+        """Remove one or more scopes from the report.
+
+        Args:
+            report_id (int): Report ID
+            scopes (list[ReportScopeInclusion]): List of scopes to remove.
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("remove_report_scope")
+        _op["method"] = "DELETE"
+        _op["path"] = "/reports/" + str(report_id) + "/scope"
+        _op["json"] = scopes
+
+        expected = ["Result", None]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
