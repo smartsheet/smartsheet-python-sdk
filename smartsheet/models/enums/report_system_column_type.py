@@ -17,9 +17,9 @@
 from enum import Enum
 
 
-class ReportSystemColumnType(Enum):
-    MODIFIED_DATE = 1
-    MODIFIED_BY = 2
-    CREATED_DATE = 3
-    CREATED_BY = 4
-    SHEET_NAME = 5  # Valid for reports only
+class ReportSystemColumnType(str, Enum):
+    AUTO_NUMBER = 'AUTO_NUMBER'
+    MODIFIED_DATE = 'MODIFIED_DATE'
+    MODIFIED_BY = 'MODIFIED_BY'
+    CREATED_DATE = 'CREATED_DATE'
+    CREATED_BY = 'CREATED_BY'

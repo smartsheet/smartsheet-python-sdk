@@ -17,11 +17,11 @@
 from enum import Enum
 
 
-class ReportAggregationType(Enum):
-    SUM = 1
-    AVG = 2
-    MIN = 3
-    MAX = 4
-    COUNT = 5
-    FIRST = 6
-    LAST = 7
+class ReportAggregationType(str, Enum):
+    SUM = 'SUM'
+    AVG = 'AVG'
+    MIN = 'MIN'
+    MAX = 'MAX'
+    COUNT = 'COUNT'
+    FIRST = 'FIRST'
+    LAST = 'LAST'

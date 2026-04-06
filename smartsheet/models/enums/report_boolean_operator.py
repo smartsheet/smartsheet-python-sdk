@@ -17,6 +17,6 @@
 from enum import Enum
 
 
-class ReportBooleanOperator(Enum):
-    AND = 1
-    OR = 2
+class ReportBooleanOperator(str, Enum):
+    AND = 'AND'
+    OR = 'OR'
