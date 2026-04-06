@@ -38,7 +38,7 @@ def test_update_report_definition_generated_url_is_correct():
 
     client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
-        report_definition_obj=report_definition,
+        report_definition=report_definition,
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -117,7 +117,7 @@ def test_update_report_definition_request_body_with_nested_filters():
 
     client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
-        report_definition_obj=report_definition,
+        report_definition=report_definition,
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -173,7 +173,7 @@ def test_update_report_definition_partial_update_filters_only():
 
     client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
-        report_definition_obj=report_definition,
+        report_definition=report_definition,
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -214,7 +214,7 @@ def test_update_report_definition_with_system_column():
 
     client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
-        report_definition_obj=report_definition,
+        report_definition=report_definition,
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -241,7 +241,7 @@ def test_update_report_definition_all_response_properties():
 
     response = client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
-        report_definition_obj=report_definition,
+        report_definition=report_definition,
     )
 
     assert response.message == TEST_SUCCESS_MESSAGE
@@ -264,7 +264,7 @@ def test_update_report_definition_error_4xx():
 
     response = client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
-        report_definition_obj=report_definition,
+        report_definition=report_definition,
     )
 
     assert isinstance(response, Error)
@@ -286,7 +286,7 @@ def test_update_report_definition_error_5xx():
 
     response = client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
-        report_definition_obj=report_definition,
+        report_definition=report_definition,
     )
 
     assert isinstance(response, Error)
@@ -323,7 +323,7 @@ def test_update_report_definition_multiple_aggregation_types():
 
     client.Reports.update_report_definition(
         report_id=TEST_REPORT_ID,
-        report_definition_obj=report_definition,
+        report_definition=report_definition,
     )
 
     wiremock_request = get_wiremock_request(request_id)
