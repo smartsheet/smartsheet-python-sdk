@@ -121,32 +121,67 @@ def test_update_report_definition_request_body_with_nested_filters():
     )
 
     wiremock_request = get_wiremock_request(request_id)
-    body = json.loads(wiremock_request["body"])
+    actual_body = json.loads(wiremock_request["body"])
 
-    # Verify filter structure with nested criteria
-    assert body["filters"]["operator"] == "OR"
-    assert len(body["filters"]["nestedCriteria"]) == 2
-    assert body["filters"]["nestedCriteria"][0]["operator"] == "AND"
-    assert len(body["filters"]["nestedCriteria"][0]["criteria"]) == 2
-    assert body["filters"]["nestedCriteria"][0]["criteria"][0]["column"]["title"] == "Price"
-    assert body["filters"]["nestedCriteria"][0]["criteria"][0]["operator"] == "GREATER_THAN"
-    assert body["filters"]["nestedCriteria"][0]["criteria"][1]["column"]["primary"] is True
-    assert body["filters"]["nestedCriteria"][0]["criteria"][1]["operator"] == "CONTAINS"
+    # Create expected request body structure matching serialization order
+    # Note: Empty lists and nested criteria are omitted from serialization
+    expected_body = {
+        "filters": {
+            "nestedCriteria": [
+                {
+                    "criteria": [
+                        {
+                            "column": {"title": "Price", "type": "TEXT_NUMBER"},
+                            "operator": "GREATER_THAN",
+                            "values": ["11"]
+                        },
+                        {
+                            "column": {"primary": True},
+                            "operator": "CONTAINS",
+                            "values": ["PROJ-1"]
+                        }
+                    ],
+                    "operator": "AND"
+                },
+                {
+                    "criteria": [
+                        {
+                            "column": {"title": "Quantity", "type": "TEXT_NUMBER"},
+                            "operator": "LESS_THAN",
+                            "values": ["12"]
+                        },
+                        {
+                            "column": {"title": "Sold Out", "type": "CHECKBOX"},
+                            "operator": "IS_CHECKED"
+                        }
+                    ],
+                    "operator": "AND"
+                }
+            ],
+            "operator": "OR"
+        },
+        "groupingCriteria": [
+            {
+                "column": {"title": "Status", "type": "PICKLIST"},
+                "sortingDirection": "ASCENDING"
+            }
+        ],
+        "sortingCriteria": [
+            {
+                "column": {"title": "Date", "type": "DATE"},
+                "sortingDirection": "DESCENDING"
+            }
+        ],
+        "summarizingCriteria": [
+            {
+                "aggregationType": "SUM",
+                "column": {"title": "Price", "type": "TEXT_NUMBER"}
+            }
+        ]
+    }
 
-    # Verify grouping criteria
-    assert len(body["groupingCriteria"]) == 1
-    assert body["groupingCriteria"][0]["column"]["title"] == "Status"
-    assert body["groupingCriteria"][0]["sortingDirection"] == "ASCENDING"
-
-    # Verify summarizing criteria
-    assert len(body["summarizingCriteria"]) == 1
-    assert body["summarizingCriteria"][0]["column"]["title"] == "Price"
-    assert body["summarizingCriteria"][0]["aggregationType"] == "SUM"
-
-    # Verify sorting criteria
-    assert len(body["sortingCriteria"]) == 1
-    assert body["sortingCriteria"][0]["column"]["title"] == "Date"
-    assert body["sortingCriteria"][0]["sortingDirection"] == "DESCENDING"
+    # Compare entire request body as dict
+    assert actual_body == expected_body
 
 
 def test_update_report_definition_partial_update_filters_only():
@@ -186,7 +221,7 @@ def test_update_report_definition_partial_update_filters_only():
 
 
 def test_update_report_definition_with_system_column():
-    """Test filter with system column type (e.g., SHEET_NAME for reports)."""
+    """Test filter with system column type and sheet name column."""
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
         "/reports/update-report-definition/all-response-body-properties", request_id
@@ -196,12 +231,12 @@ def test_update_report_definition_with_system_column():
         "operator": "AND",
         "criteria": [
             {
-                "column": {"systemColumnType": "SHEET_NAME"},
+                "column": {"type": "TEXT_NUMBER", "sheetNameColumn": True},
                 "operator": "CONTAINS",
                 "values": ["Project"]
             },
             {
-                "column": {"systemColumnType": "MODIFIED_DATE"},
+                "column": {"type": "DATETIME", "systemColumnType": "MODIFIED_DATE"},
                 "operator": "LAST_N_DAYS",
                 "values": ["7"]
             }
@@ -218,11 +253,29 @@ def test_update_report_definition_with_system_column():
     )
 
     wiremock_request = get_wiremock_request(request_id)
-    body = json.loads(wiremock_request["body"])
+    actual_body = json.loads(wiremock_request["body"])
 
-    # Verify system column types are correctly serialized
-    assert body["filters"]["criteria"][0]["column"]["systemColumnType"] == "SHEET_NAME"
-    assert body["filters"]["criteria"][1]["column"]["systemColumnType"] == "MODIFIED_DATE"
+    # Create expected request body structure
+    expected_body = {
+        "filters": {
+            "criteria": [
+                {
+                    "column": {"sheetNameColumn": True, "type": "TEXT_NUMBER"},
+                    "operator": "CONTAINS",
+                    "values": ["Project"]
+                },
+                {
+                    "column": {"systemColumnType": "MODIFIED_DATE", "type": "DATETIME"},
+                    "operator": "LAST_N_DAYS",
+                    "values": ["7"]
+                }
+            ],
+            "operator": "AND"
+        }
+    }
+
+    # Compare entire request body as dict
+    assert actual_body == expected_body
 
 
 def test_update_report_definition_all_response_properties():
@@ -327,11 +380,29 @@ def test_update_report_definition_multiple_aggregation_types():
     )
 
     wiremock_request = get_wiremock_request(request_id)
-    body = json.loads(wiremock_request["body"])
+    actual_body = json.loads(wiremock_request["body"])
 
-    # Verify all aggregation types are correctly serialized
-    assert len(body["summarizingCriteria"]) == 4
-    assert body["summarizingCriteria"][0]["aggregationType"] == "SUM"
-    assert body["summarizingCriteria"][1]["aggregationType"] == "AVG"
-    assert body["summarizingCriteria"][2]["aggregationType"] == "MIN"
-    assert body["summarizingCriteria"][3]["aggregationType"] == "MAX"
+    # Create expected request body structure
+    expected_body = {
+        "summarizingCriteria": [
+            {
+                "column": {"title": "Price", "type": "TEXT_NUMBER"},
+                "aggregationType": "SUM"
+            },
+            {
+                "column": {"title": "Quantity", "type": "TEXT_NUMBER"},
+                "aggregationType": "AVG"
+            },
+            {
+                "column": {"title": "Date", "type": "DATE"},
+                "aggregationType": "MIN"
+            },
+            {
+                "column": {"title": "Date", "type": "DATE"},
+                "aggregationType": "MAX"
+            }
+        ]
+    }
+
+    # Compare entire request body as dict
+    assert actual_body == expected_body
