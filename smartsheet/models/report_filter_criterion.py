@@ -29,6 +29,17 @@ class ReportFilterCriterion:
     """Smartsheet ReportFilterCriterion data model.
 
     Criteria object specifying custom criteria against which to match cell values.
+
+    The values property can contain:
+    - Simple values: strings, numbers, or None
+    - Object values: dicts with 'objectType' (DATE or CURRENT_USER) and 'value' properties
+
+    Example with object value:
+        {
+            "column": {"title": "Date", "type": "DATE"},
+            "operator": "EQUAL",
+            "values": [{"objectType": "DATE", "value": "2024-01-01"}]
+        }
     """
 
     def __init__(self, props=None, base_obj=None):
@@ -63,11 +74,19 @@ class ReportFilterCriterion:
         self._operator.set(value)
 
     @property
-    def values(self) -> Optional[List[str]]:
+    def values(self) -> Optional[List[Union[str, int, float, dict, None]]]:
+        """List of filter values.
+
+        Can contain:
+        - strings
+        - numbers (int or float)
+        - None (null)
+        - dicts with 'objectType' and 'value' keys for special values like dates
+        """
         return self._values
 
     @values.setter
-    def values(self, value: List[str]) -> None:
+    def values(self, value: List[Union[str, int, float, dict, None]]) -> None:
         if isinstance(value, list):
             self._values = value
 

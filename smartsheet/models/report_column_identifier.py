@@ -27,12 +27,17 @@ from .enums import ColumnType, ReportSystemColumnType
 class ReportColumnIdentifier:
     """Smartsheet ReportColumnIdentifier data model.
 
-    Object used to match a sheet column for a report. The 'type' property is required.
+    Object used to match a sheet column for a report. Either 'type' or 'primary' must be specified.
 
-    When matching primary columns, title can be used to customize the primary column
-    name in the rendered report.
+    **Column Matching Options:**
+    - **Regular columns**: Specify 'type' to match columns by type (optionally with 'title' for additional matching).
+    - **System columns**: Specify both 'type' and 'systemColumnType' to match system columns (e.g., Created By, Modified Date).
+    - **Sheet name column**: Specify 'type=TEXT_NUMBER' and 'sheetNameColumn=True' to match the special "Sheet Name" column.
+    - **Primary column**: Specify 'primary=True' to match the primary column. When matching primary columns, 'title' can be used to customize the primary column name in the rendered report.
 
-    Note: CONTACT_LIST and MULTI_CONTACT_LIST match the same columns in reports.
+    **Note:** Columns in the report are matched by the combination of 'title' and 'type' (and 'systemColumnType' or 'sheetNameColumn' if specified).
+
+    **Note:** 'symbol' is not used for matching and as a result 'CHECKBOX' or 'PICKLIST' columns with different symbols (from different sheets) can be combined into the same column in the report. You cannot combine 'CHECKBOX' with 'PICKLIST' into the same column in the report because they are different types.
     """
 
     def __init__(self, props=None, base_obj=None):
