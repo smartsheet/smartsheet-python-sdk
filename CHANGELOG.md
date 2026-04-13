@@ -9,10 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Support for POST /2.0/reports/{reportId}/columns endpoint
+- New `add_report_columns()` method in Reports class to add columns to a report
+- WireMock integration tests for POST /2.0/reports/{reportId}/columns endpoint
 - Support for POST /2.0/reports/{reportId}/scope endpoint
 - Support for DELETE /2.0/reports/{ReportId}/scope endpoint
-- Added wiremock integration tests for POST /2.0/reports/{reportId}/scope endpoint
-- Added wiremock integration tests for DELETE /2.0/reports/{reportId}/scope endpoint
+- WireMock integration tests for POST /2.0/reports/{reportId}/scope endpoint
+- WireMock integration tests for DELETE /2.0/reports/{reportId}/scope endpoint
 - Support for DELETE /2.0/reports/{reportId} endpoint
 
 ## [3.7.2] - 2026-01-29
