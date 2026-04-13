@@ -23,8 +23,6 @@ import logging
 import os.path
 from datetime import datetime
 
-from smartsheet.models.report_scope_inclusion import ReportScopeInclusion
-
 from .util import fresh_operation
 from .models import (
     Error,
@@ -33,6 +31,7 @@ from .models import (
     Report,
     ReportColumn,
     ReportPublish,
+    ReportScopeInclusion,
     Result,
     Share,
 )
