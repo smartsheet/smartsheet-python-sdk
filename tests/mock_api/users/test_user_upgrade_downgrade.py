@@ -178,6 +178,26 @@ def test_downgrade_user_contributor_seat_type():
     assert body == {"seatType": TEST_DOWNGRADE_CONTRIBUTOR_SEAT_TYPE.value}
 
 
+def test_downgrade_user_to_contributor():
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/users/downgrade-user/to-contributor", request_id
+    )
+
+    response = client.Users.downgrade_user(
+        user_id=TEST_USER_ID,
+        plan_id=TEST_PLAN_ID,
+        seat_type=TEST_DOWNGRADE_CONTRIBUTOR_SEAT_TYPE,
+    )
+
+    assert response.message == TEST_SUCCESS_MESSAGE
+    assert response.result_code == TEST_RESULT_CODE
+
+    wiremock_request = get_wiremock_request(request_id)
+    body = json.loads(wiremock_request["body"])
+    assert body == {"seatType": "CONTRIBUTOR"}
+
+
 def test_downgrade_user_error_4xx():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(

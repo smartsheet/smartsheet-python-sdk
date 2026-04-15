@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Add `CONTRIBUTOR` seat type to `SeatType`, `UpgradeSeatType`, and `DowngradeSeatType` enums
+- Add mock API tests for `CONTRIBUTOR` seat type in list users and downgrade user operations
 
 ## [3.7.2] - 2026-01-29
 
