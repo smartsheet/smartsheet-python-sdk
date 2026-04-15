@@ -150,6 +150,55 @@ def test_list_users_contributor_seat_type_generated_url_is_correct():
     assert url.path == "/2.0/users"
 
 
+def test_list_users_contributor_seat_type_filter():
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/users/list-users/contributor-seat-type-filter", request_id
+    )
+
+    response = client.Users.list_users()
+
+    assert isinstance(response, IndexResult)
+    assert len(response.data) == 1
+    assert response.data[0].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
+    assert response.data[0].seat_type_last_changed_at == parser.isoparse("2025-10-15T08:22:13.456789Z")
+    assert response.data[0].is_internal is True
+    assert response.data[0].email == "user3@example.com"
+    assert response.data[0].admin is False
+    assert response.data[0].licensed_sheet_creator is False
+    assert response.data[0].resource_viewer is False
+    assert response.data[0].group_admin is False
+    assert response.data[0].status == "ACTIVE"
+    assert response.data[0].sheet_count == 5
+    assert response.data[0].id == 125
+
+
+def test_list_users_contributor_seat_type_response():
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/users/list-users/contributor-seat-type-response", request_id
+    )
+
+    response = client.Users.list_users()
+
+    assert isinstance(response, IndexResult)
+    assert len(response.data) == 2
+    # First user is MEMBER
+    assert response.data[0].seat_type == TEST_SEAT_TYPE.value
+    assert response.data[0].email == "user1@example.com"
+    assert response.data[0].first_name == "User"
+    assert response.data[0].last_name == "One"
+    assert response.data[0].id == 123
+    # Second user is CONTRIBUTOR
+    assert response.data[1].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
+    assert response.data[1].seat_type_last_changed_at == parser.isoparse("2025-10-15T08:22:13.456789Z")
+    assert response.data[1].email == "user3@example.com"
+    assert response.data[1].first_name == "User"
+    assert response.data[1].last_name == "Three"
+    assert response.data[1].id == 125
+    assert response.data[1].sheet_count == 5
+
+
 def test_list_users_error_400_response():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
