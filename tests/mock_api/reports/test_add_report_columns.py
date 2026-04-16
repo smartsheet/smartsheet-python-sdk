@@ -36,7 +36,7 @@ def test_add_report_columns_generated_url_is_correct():
 
     client.Reports.add_report_columns(
         report_id=TEST_REPORT_ID,
-        columns=columns
+        report_columns=columns
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -68,7 +68,7 @@ def test_add_report_columns_all_response_properties():
 
     response = client.Reports.add_report_columns(
         report_id=TEST_REPORT_ID,
-        columns=columns
+        report_columns=columns
     )
 
     assert response.message == TEST_SUCCESS_MESSAGE
@@ -166,7 +166,7 @@ def test_add_report_columns_required_response_properties():
 
     response = client.Reports.add_report_columns(
         report_id=TEST_REPORT_ID,
-        columns=columns
+        report_columns=columns
     )
 
     assert response.message == TEST_SUCCESS_MESSAGE
@@ -250,7 +250,7 @@ def test_add_report_columns_request_body_serialization():
 
     client.Reports.add_report_columns(
         report_id=TEST_REPORT_ID,
-        columns=columns
+        report_columns=columns
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -290,7 +290,7 @@ def test_add_report_columns_error_4xx():
 
     response = client.Reports.add_report_columns(
         report_id=TEST_REPORT_ID,
-        columns=columns
+        report_columns=columns
     )
 
     assert isinstance(response, Error)
@@ -313,7 +313,7 @@ def test_add_report_columns_error_5xx():
 
     response = client.Reports.add_report_columns(
         report_id=TEST_REPORT_ID,
-        columns=columns
+        report_columns=columns
     )
 
     assert isinstance(response, Error)

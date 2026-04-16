@@ -105,7 +105,7 @@ class Reports:
         _op = fresh_operation("add_report_columns")
         _op["method"] = "POST"
         _op["path"] = "/reports/" + str(report_id) + "/columns"
-        _op["json"] = columns
+        _op["json"] = report_columns
 
         expected = ["Result", "ReportColumn"]
 
