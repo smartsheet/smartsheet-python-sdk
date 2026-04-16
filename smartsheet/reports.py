@@ -87,7 +87,7 @@ class Reports:
         return response
 
     def add_report_columns(
-        self, report_id: int, columns: list[ReportColumn]
+        self, report_id: int, report_columns: list[ReportColumn]
     ) -> Union[Result[list[ReportColumn]], Error]:
         """Add columns to a report.
 
