@@ -96,7 +96,7 @@ class Reports:
 
         Args:
             report_id (int): Report ID
-            columns (list[ReportColumn]): List of report columns to be added (1-400 items)
+            report_columns (list[ReportColumn]): List of report columns to be added (1-400 items)
 
         Returns:
             Union[Result[list[ReportColumn]], Error]: Result object containing the list of
