@@ -26,7 +26,7 @@ from datetime import datetime
 from smartsheet.models.report_scope_inclusion import ReportScopeInclusion
 
 from .util import fresh_operation
-from .models import Error, DownloadedFile, IndexResult, Report, ReportPublish, Result, Share
+from .models import Error, DownloadedFile, IndexResult, Report, ReportDefinition, ReportPublish, Result, Share
 
 
 class Reports:
@@ -400,6 +400,37 @@ class Reports:
         _op["json"] = report_publish_obj
 
         expected = ["Result", "ReportPublish"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def update_report_definition(self, report_id: int, report_definition: ReportDefinition) -> Union[Result[None], Error]:
+        """Updates a report's definition.
+
+        Update a Report's definition based on the specified ID.
+
+        Note: This endpoint supports partial updates only on root level
+        properties of the report definition, such as filters, groupingCriteria
+        and summarizingCriteria. For example, you can update the report's
+        filters without affecting its grouping criteria. However, nested
+        properties within these objects, such as a specific filter or grouping
+        criterion, cannot be updated individually and require a full replacement
+        of the respective section.
+
+        Args:
+            report_id (int): Report ID
+            report_definition (ReportDefinition): ReportDefinition object.
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("update_report_definition")
+        _op["method"] = "PUT"
+        _op["path"] = "/reports/" + str(report_id) + "/definition"
+        _op["json"] = report_definition
+
+        expected = ["Result", None]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
