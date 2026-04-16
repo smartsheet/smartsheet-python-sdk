@@ -73,7 +73,7 @@ def test_add_report_columns_all_response_properties():
 
     assert response.message == TEST_SUCCESS_MESSAGE
     assert response.result_code == TEST_RESULT_CODE
-    assert len(response.result) == 2
+    assert len(response.result) == 5
 
     # Convert result columns to dicts and compare
     actual_columns = [col.to_dict() for col in response.result]
@@ -86,17 +86,58 @@ def test_add_report_columns_all_response_properties():
             "type": "CHECKBOX",
             "hidden": False,
             "version": 0,
-            "width": 150
+            "width": 150,
+            "validation": False
         },
         {
             "virtualId": 12346,
-            "index": 4,
+            "index": 5,
             "title": "Sheet name",
             "type": "TEXT_NUMBER",
             "hidden": False,
             "version": 0,
             "width": 150,
-            "sheetNameColumn": True
+            "sheetNameColumn": True,
+            "validation": False
+        },
+        {
+            "virtualId": 12347,
+            "index": 6,
+            "title": "Created By",
+            "type": "CONTACT_LIST",
+            "systemColumnType": "CREATED_BY",
+            "hidden": False,
+            "version": 0,
+            "width": 150,
+            "validation": False
+        },
+        {
+            "virtualId": 12348,
+            "index": 7,
+            "title": "Primary",
+            "type": "TEXT_NUMBER",
+            "primary": True,
+            "hidden": False,
+            "version": 0,
+            "width": 200,
+            "validation": False
+        },
+        {
+            "virtualId": 12349,
+            "index": 8,
+            "title": "Row Number",
+            "type": "TEXT_NUMBER",
+            "systemColumnType": "AUTO_NUMBER",
+            "hidden": False,
+            "version": 0,
+            "width": 100,
+            "validation": False,
+            "autoNumberFormat": {
+                "fill": "000",
+                "prefix": "TASK-",
+                "startingNumber": 1,
+                "suffix": ""
+            }
         }
     ]
 
@@ -130,7 +171,7 @@ def test_add_report_columns_required_response_properties():
 
     assert response.message == TEST_SUCCESS_MESSAGE
     assert response.result_code == TEST_RESULT_CODE
-    assert len(response.result) == 2
+    assert len(response.result) == 5
 
     # Convert result columns to dicts and compare
     actual_columns = [col.to_dict() for col in response.result]
@@ -140,13 +181,46 @@ def test_add_report_columns_required_response_properties():
             "virtualId": 12345,
             "index": 4,
             "title": "Item selected",
-            "type": "CHECKBOX"
+            "type": "CHECKBOX",
+            "version": 0
         },
         {
             "virtualId": 12346,
-            "index": 4,
+            "index": 5,
             "title": "Sheet name",
-            "type": "TEXT_NUMBER"
+            "type": "TEXT_NUMBER",
+            "sheetNameColumn": True,
+            "version": 0
+        },
+        {
+            "virtualId": 12347,
+            "index": 6,
+            "title": "Created By",
+            "type": "CONTACT_LIST",
+            "systemColumnType": "CREATED_BY",
+            "version": 0
+        },
+        {
+            "virtualId": 12348,
+            "index": 7,
+            "title": "Primary",
+            "type": "TEXT_NUMBER",
+            "primary": True,
+            "version": 0
+        },
+        {
+            "virtualId": 12349,
+            "index": 8,
+            "title": "Row Number",
+            "type": "TEXT_NUMBER",
+            "systemColumnType": "AUTO_NUMBER",
+            "version": 0,
+            "autoNumberFormat": {
+                "fill": "000",
+                "prefix": "TASK-",
+                "startingNumber": 1,
+                "suffix": ""
+            }
         }
     ]
 
