@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+## [3.8.0] - 2026-04-17
+
 ### Added
 
 - Added support for the GET /2.0/favorites/{favoriteType}/{favoriteId} endpoint
