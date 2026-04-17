@@ -115,7 +115,7 @@ class Favorites:
         response = self._base.request(prepped_request, expected, _op)
 
         return response
-       
+
     def is_favorite(self, favorite_type: FavoriteType, favorite_id: int, include=None) -> Union[Favorite, Error]:
         """Check whether an item has been tagged as a favorite for the current user.
 
