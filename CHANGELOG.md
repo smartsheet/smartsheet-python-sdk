@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Added
+
+- Added support for the GET /2.0/favorites/{favoriteType}/{favoriteId} endpoint
+- Added directId and name fields to the Favorite model
+- Added FavoriteType enum
+- WireMock integration tests for contract testing for GET /2.0/favorites/{favoriteType}/{favoriteId} endpoint
+
 ## [3.7.2] - 2026-01-29
 
 ### Added
