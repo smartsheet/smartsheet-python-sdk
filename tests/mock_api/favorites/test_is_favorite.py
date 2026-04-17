@@ -4,7 +4,7 @@ from urllib.parse import urlparse, parse_qs
 
 from smartsheet.models import Error
 from smartsheet.models.enums import FavoriteType
-from tests.mock_api.favorites.common_test_constants import TEST_FAVORITE_ID, TEST_OBJECT_ID, TEST_FAVORITE_TYPE
+from tests.mock_api.favorites.common_test_constants import TEST_FAVORITE_ID, TEST_OBJECT_ID, TEST_FAVORITE_TYPE, TEST_DIRECT_ID, TEST_OBJECT_NAME
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
@@ -35,6 +35,26 @@ def test_is_favorite_all_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
         "/favorites/is-favorite/all-response-body-properties", request_id
+    )
+
+    response = client.Favorites.is_favorite(
+        favorite_type=FavoriteType.SHEET,
+        favorite_id=TEST_FAVORITE_ID,
+    )
+
+    expected_response = json.dumps({
+        "objectId": TEST_OBJECT_ID,
+        "type": TEST_FAVORITE_TYPE,
+        "directId": TEST_DIRECT_ID,
+        "name": TEST_OBJECT_NAME
+    }, sort_keys=True)
+
+    assert json.dumps(response.to_dict(), sort_keys=True) == expected_response
+
+def test_is_favorite_required_response_properties():
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/favorites/is-favorite/required-response-body-properties", request_id
     )
 
     response = client.Favorites.is_favorite(

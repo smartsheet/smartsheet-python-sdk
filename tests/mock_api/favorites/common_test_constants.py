@@ -3,3 +3,5 @@ from smartsheet.models.enums import FavoriteType
 TEST_FAVORITE_ID = 1234567890
 TEST_OBJECT_ID = 1234567890
 TEST_FAVORITE_TYPE = FavoriteType.SHEET.name.lower()
+TEST_DIRECT_ID = "pxjX72pQ9Cj8vPqHchrh7xMFqFG7RM5jJJ3MFJM1"
+TEST_OBJECT_NAME = "Test Sheet"
