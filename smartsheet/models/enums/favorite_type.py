@@ -17,7 +17,7 @@
 from enum import Enum
 
 
-class FavoriteType(Enum):
+class FavoriteType(str, Enum):
     FOLDER = "folder"
     REPORT = "report"
     SHEET = "sheet"

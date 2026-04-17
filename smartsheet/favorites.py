@@ -93,22 +93,21 @@ class Favorites:
 
         return response
 
-    def remove_favorites(self, favorite_type: Union[FavoriteType, str], object_ids: list[int]) -> Union[Result[None], Error]:
+    def remove_favorites(self, favorite_type: FavoriteType, object_ids: list[int]) -> Union[Result[None], Error]:
         """Delete one or more of Favorite objects of the specified type.
 
         Args:
-            favorite_type (Union[FavoriteType, str]): The favorite type enum value or string.
+            favorite_type FavoriteType: The favorite type enum value.
             object_ids (list[int]): a comma-separated list
                 of object IDs representing the items to work on.
 
         Returns:
             Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
         """
-        favorite_type_str = favorite_type.value if isinstance(favorite_type, FavoriteType) else str(favorite_type)
 
         _op = fresh_operation("remove_favorites")
         _op["method"] = "DELETE"
-        _op["path"] = "/favorites/" + favorite_type_str
+        _op["path"] = "/favorites/" + favorite_type
         _op["query_params"]["objectIds"] = object_ids
 
         expected = ["Result", None]
@@ -117,11 +116,11 @@ class Favorites:
 
         return response
        
-    def is_favorite(self, favorite_type: Union[FavoriteType, str], favorite_id: int, include=None) -> Union[Favorite, Error]:
+    def is_favorite(self, favorite_type: FavoriteType, favorite_id: int, include=None) -> Union[Favorite, Error]:
         """Check whether an item has been tagged as a favorite for the current user.
 
         Args:
-            favorite_type (Union[FavoriteType, str]): The favorite type enum value or string.
+            favorite_type FavoriteType: The favorite type enum value.
             favorite_id (int): ID of the favorite being accessed.
             include (str): A comma-separated list of optional elements to
                 include in the response. Valid values: "directId", "name".
@@ -130,11 +129,10 @@ class Favorites:
             Union[Favorite, Error]: The Favorite object if the item is favorited,
             or an Error object if the request fails or the item is not favorited.
         """
-        favorite_type_str = favorite_type.value if isinstance(favorite_type, FavoriteType) else str(favorite_type)
 
         _op = fresh_operation("is_favorite")
         _op["method"] = "GET"
-        _op["path"] = "/favorites/" + favorite_type_str + "/" + str(favorite_id)
+        _op["path"] = "/favorites/" + favorite_type + "/" + str(favorite_id)
         if include is not None:
             _op["query_params"]["include"] = include
 

@@ -3,7 +3,6 @@ import uuid
 from urllib.parse import urlparse, parse_qs
 
 from smartsheet.models import Error
-from smartsheet.models.enums import FavoriteType
 from tests.mock_api.favorites.common_test_constants import TEST_FAVORITE_ID, TEST_OBJECT_ID, TEST_FAVORITE_TYPE, TEST_DIRECT_ID, TEST_OBJECT_NAME
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
@@ -18,7 +17,7 @@ def test_is_favorite_generated_url_is_correct():
     )
 
     client.Favorites.is_favorite(
-        favorite_type=FavoriteType.SHEET,
+        favorite_type=TEST_FAVORITE_TYPE,
         favorite_id=TEST_FAVORITE_ID,
         include="directId,name"
     )
@@ -29,7 +28,7 @@ def test_is_favorite_generated_url_is_correct():
     assert query == {
         "include": ["directId,name"]
     }
-    assert url.path == f'/2.0/favorites/{TEST_FAVORITE_TYPE}/{TEST_FAVORITE_ID}'
+    assert url.path == f'/2.0/favorites/{TEST_FAVORITE_TYPE.value}/{TEST_FAVORITE_ID}'
 
 def test_is_favorite_all_response_properties():
     request_id = uuid.uuid4().hex
@@ -38,7 +37,7 @@ def test_is_favorite_all_response_properties():
     )
 
     response = client.Favorites.is_favorite(
-        favorite_type=FavoriteType.SHEET,
+        favorite_type=TEST_FAVORITE_TYPE,
         favorite_id=TEST_FAVORITE_ID,
     )
 
@@ -58,7 +57,7 @@ def test_is_favorite_required_response_properties():
     )
 
     response = client.Favorites.is_favorite(
-        favorite_type=FavoriteType.SHEET,
+        favorite_type=TEST_FAVORITE_TYPE,
         favorite_id=TEST_FAVORITE_ID,
     )
 
@@ -77,7 +76,7 @@ def test_is_favorite_error_4xx():
     )
 
     response = client.Favorites.is_favorite(
-        favorite_type=FavoriteType.SHEET,
+        favorite_type=TEST_FAVORITE_TYPE,
         favorite_id=TEST_FAVORITE_ID,
     )
 
@@ -91,7 +90,7 @@ def test_is_favorite_error_5xx():
     )
 
     response = client.Favorites.is_favorite(
-        favorite_type=FavoriteType.SHEET,
+        favorite_type=TEST_FAVORITE_TYPE,
         favorite_id=TEST_FAVORITE_ID,
     )
 
