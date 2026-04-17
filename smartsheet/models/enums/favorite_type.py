@@ -18,9 +18,9 @@ from enum import Enum
 
 
 class FavoriteType(Enum):
-    FOLDER = 1
-    REPORT = 2
-    SHEET = 3
-    SIGHT = 4
-    TEMPLATE = 5
-    WORKSPACE = 6
+    FOLDER = "folder"
+    REPORT = "report"
+    SHEET = "sheet"
+    SIGHT = "sight"
+    TEMPLATE = "template"
+    WORKSPACE = "workspace"

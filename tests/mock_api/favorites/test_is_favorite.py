@@ -1,3 +1,4 @@
+import json
 import uuid
 from urllib.parse import urlparse, parse_qs
 
@@ -41,9 +42,12 @@ def test_is_favorite_all_response_properties():
         favorite_id=TEST_FAVORITE_ID,
     )
 
-    assert response is not None
-    assert response.object_id == TEST_OBJECT_ID
-    assert response.type_ == TEST_FAVORITE_TYPE
+    expected_response = json.dumps({
+        "objectId": TEST_OBJECT_ID,
+        "type": TEST_FAVORITE_TYPE
+    }, sort_keys=True)
+
+    assert json.dumps(response.to_dict(), sort_keys=True) == expected_response
 
 
 def test_is_favorite_error_4xx():
