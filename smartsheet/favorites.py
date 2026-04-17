@@ -93,7 +93,7 @@ class Favorites:
 
         return response
 
-    def remove_favorites(self, favorite_type: Union[FavoriteType, str], object_ids: int) -> Union[Result[None], Error]:
+    def remove_favorites(self, favorite_type: Union[FavoriteType, str], object_ids: list[int]) -> Union[Result[None], Error]:
         """Delete one or more of Favorite objects of the specified type.
 
         Args:
