@@ -23,10 +23,19 @@ import logging
 import os.path
 from datetime import datetime
 
-from smartsheet.models.report_scope_inclusion import ReportScopeInclusion
-
 from .util import fresh_operation
-from .models import Error, DownloadedFile, IndexResult, Report, ReportDefinition, ReportPublish, Result, Share
+from .models import (
+    Error,
+    DownloadedFile,
+    IndexResult,
+    Report,
+    ReportColumn,
+    ReportDefinition,
+    ReportPublish,
+    ReportScopeInclusion,
+    Result,
+    Share,
+)
 
 
 class Reports:
@@ -77,6 +86,33 @@ class Reports:
 
         return response
 
+    def add_report_columns(
+        self, report_id: int, report_columns: list[ReportColumn]
+    ) -> Union[Result[list[ReportColumn]], Error]:
+        """Add columns to a report.
+
+        Add columns to a report specified by a report ID. Note: all indexes of the columns
+        must be equal.
+
+        Args:
+            report_id (int): Report ID
+            report_columns (list[ReportColumn]): List of report columns to be added (1-400 items)
+
+        Returns:
+            Union[Result[list[ReportColumn]], Error]: Result object containing the list of
+                ReportColumn objects that were added, or an Error object if the request fails.
+        """
+        _op = fresh_operation("add_report_columns")
+        _op["method"] = "POST"
+        _op["path"] = "/reports/" + str(report_id) + "/columns"
+        _op["json"] = report_columns
+
+        expected = ["Result", "ReportColumn"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
 
     def get_report(
         self, report_id, page_size=None, page=None, include=None, level=None
