@@ -41,14 +41,12 @@ def test_is_favorite_all_response_properties():
         favorite_id=TEST_FAVORITE_ID,
     )
 
-    expected_response = json.dumps({
+    assert response.to_dict() == {
         "objectId": TEST_OBJECT_ID,
         "type": TEST_FAVORITE_TYPE,
         "directId": TEST_DIRECT_ID,
         "name": TEST_OBJECT_NAME
-    }, sort_keys=True)
-
-    assert json.dumps(response.to_dict(), sort_keys=True) == expected_response
+    }
 
 def test_is_favorite_required_response_properties():
     request_id = uuid.uuid4().hex
@@ -61,12 +59,10 @@ def test_is_favorite_required_response_properties():
         favorite_id=TEST_FAVORITE_ID,
     )
 
-    expected_response = json.dumps({
+    assert response.to_dict() == {
         "objectId": TEST_OBJECT_ID,
         "type": TEST_FAVORITE_TYPE
-    }, sort_keys=True)
-
-    assert json.dumps(response.to_dict(), sort_keys=True) == expected_response
+    }
 
 
 def test_is_favorite_error_4xx():
