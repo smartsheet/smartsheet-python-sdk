@@ -18,10 +18,12 @@ def test_remove_report_scope_generated_url_is_correct():
         "/reports/remove-report-scope/all-response-body-properties", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     client.Reports.remove_report_scope(
         report_id=TEST_REPORT_ID,
@@ -39,10 +41,12 @@ def test_remove_report_scope_all_response_properties():
         "/reports/remove-report-scope/all-response-body-properties", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.remove_report_scope(
         report_id=TEST_REPORT_ID,
@@ -60,10 +64,12 @@ def test_remove_report_scope_request_body_serialization():
         "/reports/remove-report-scope/all-response-body-properties", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     client.Reports.remove_report_scope(
         report_id=TEST_REPORT_ID,
@@ -90,10 +96,12 @@ def test_remove_report_scope_error_4xx():
         "/errors/400-response", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.remove_report_scope(
         report_id=TEST_REPORT_ID,
@@ -109,10 +117,12 @@ def test_remove_report_scope_error_5xx():
         "/errors/500-response", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.remove_report_scope(
         report_id=TEST_REPORT_ID,

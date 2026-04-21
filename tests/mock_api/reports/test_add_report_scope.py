@@ -18,10 +18,12 @@ def test_add_report_scope_generated_url_is_correct():
         "/reports/add-report-scope/all-response-body-properties", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
@@ -39,10 +41,12 @@ def test_add_report_scope_all_response_properties():
         "/reports/add-report-scope/all-response-body-properties", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
