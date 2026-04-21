@@ -64,10 +64,12 @@ def test_add_report_scope_request_body_serialization():
         "/reports/add-report-scope/all-response-body-properties", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID, 
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
@@ -94,10 +96,12 @@ def test_add_report_scope_error_4xx():
         "/errors/400-response", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
@@ -113,10 +117,12 @@ def test_add_report_scope_error_5xx():
         "/errors/500-response", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
