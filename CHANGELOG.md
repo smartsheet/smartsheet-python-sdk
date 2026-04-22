@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+## [3.9.0] - 2026-04-22
+
+### Added
+
+- Added `object_id_str` field to Event model to support alphanumeric object identifiers in v2.0 events endpoint
+- Field is optional and maintains full backward compatibility with existing implementations
+
 ## [3.8.0] - 2026-04-17
 
 ### Added
