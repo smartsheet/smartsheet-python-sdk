@@ -21,7 +21,7 @@ from typing import Optional, Union
 
 from ..types import EnumeratedValue, String, Boolean, json
 from ..util import deserialize, serialize
-from .enums import ColumnType, ReportSystemColumnType
+from .enums import ColumnType, SystemColumnType
 
 
 class ReportColumnIdentifier:
@@ -58,7 +58,7 @@ class ReportColumnIdentifier:
 
         self._title = String()
         self._type = EnumeratedValue(ColumnType)
-        self._system_column_type = EnumeratedValue(ReportSystemColumnType)
+        self._system_column_type = EnumeratedValue(SystemColumnType)
         self._primary = Boolean()
         self._sheet_name_column = Boolean()
 
@@ -88,7 +88,7 @@ class ReportColumnIdentifier:
         return self._system_column_type
 
     @system_column_type.setter
-    def system_column_type(self, value: Union[ReportSystemColumnType, str]) -> None:
+    def system_column_type(self, value: Union[SystemColumnType, str]) -> None:
         self._system_column_type.set(value)
 
     @property

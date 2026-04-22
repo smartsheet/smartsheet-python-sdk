@@ -45,7 +45,6 @@ from .report_aggregation_type import ReportAggregationType
 from .report_asset_type import ReportAssetType
 from .report_boolean_operator import ReportBooleanOperator
 from .report_filter_operator import ReportFilterOperator
-from .report_system_column_type import ReportSystemColumnType
 from .schedule_type import ScheduleType
 from .share_scope import ShareScope
 from .share_type import ShareType

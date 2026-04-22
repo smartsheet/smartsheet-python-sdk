@@ -217,14 +217,6 @@ ReportFilterOperator
    :undoc-members:
    :show-inheritance:
 
-ReportSystemColumnType
-------------------------------------------------------
-
-.. automodule:: smartsheet.models.enums.report_system_column_type
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 ScheduleType
 ---------------------------------------------
 
