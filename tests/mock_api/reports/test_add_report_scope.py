@@ -18,10 +18,12 @@ def test_add_report_scope_generated_url_is_correct():
         "/reports/add-report-scope/all-response-body-properties", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
@@ -39,10 +41,12 @@ def test_add_report_scope_all_response_properties():
         "/reports/add-report-scope/all-response-body-properties", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
@@ -52,9 +56,37 @@ def test_add_report_scope_all_response_properties():
     assert response.message == TEST_SUCCESS_MESSAGE
     assert response.result_code == TEST_RESULT_CODE
 
+
+def test_add_report_scope_request_body_serialization():
+    """Test that request body is correctly serialized."""
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/reports/add-report-scope/all-response-body-properties", request_id
+    )
+
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID, 
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
+
+    client.Reports.add_report_scope(
+        report_id=TEST_REPORT_ID,
+        scopes=scopes
+    )
+
     wiremock_request = get_wiremock_request(request_id)
-    body = json.loads(wiremock_request["body"])
-    assert body == [{"assetId": TEST_SHEET_ID, "assetType": "SHEET"}]
+    actual_body = json.loads(wiremock_request["body"])
+
+    expected_body = [
+        {
+            "assetId": TEST_SHEET_ID,
+            "assetType": "SHEET"
+        }
+    ]
+
+    assert actual_body == expected_body
 
 
 
@@ -64,10 +96,12 @@ def test_add_report_scope_error_4xx():
         "/errors/400-response", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
@@ -83,10 +117,12 @@ def test_add_report_scope_error_5xx():
         "/errors/500-response", request_id
     )
 
-    scopes = [ReportScopeInclusion({
-        "assetId": TEST_SHEET_ID, "assetType": ReportAssetType.SHEET
-        }
-        )]
+    scopes = [
+        ReportScopeInclusion({
+            "assetId": TEST_SHEET_ID,
+            "assetType": ReportAssetType.SHEET
+        })
+    ]
 
     response = client.Reports.add_report_scope(
         report_id=TEST_REPORT_ID,
