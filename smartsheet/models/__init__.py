@@ -79,6 +79,8 @@ from .predecessor import Predecessor
 from .predecessor_list import PredecessorList
 from .project_settings import ProjectSettings
 from .recipient import Recipient
+from .create_report_request import CreateReportRequest
+from .create_report_result import CreateReportResult
 from .report import Report
 from .report_summarizing_criterion import ReportSummarizingCriterion
 from .report_cell import ReportCell
