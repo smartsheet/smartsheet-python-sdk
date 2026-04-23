@@ -50,7 +50,7 @@ def test_create_report_generated_url_is_correct():
         ],
         "scope": [
             {
-                "assetType": "SHEET",
+                "assetType": "sheet",
                 "assetId": TEST_SHEET_ID
             }
         ]
@@ -86,7 +86,7 @@ def test_create_report_all_response_properties():
         ],
         "scope": [
             {
-                "assetType": "SHEET",
+                "assetType": "sheet",
                 "assetId": TEST_SHEET_ID
             }
         ],
@@ -129,7 +129,7 @@ def test_create_report_required_response_properties():
         ],
         "scope": [
             {
-                "assetType": "SHEET",
+                "assetType": "sheet",
                 "assetId": TEST_SHEET_ID
             }
         ]
@@ -215,7 +215,7 @@ def test_create_report_request_body_serialization():
         ],
         "scope": [
             {
-                "assetType": "SHEET",
+                "assetType": "sheet",
                 "assetId": TEST_SHEET_ID
             }
         ],
@@ -247,7 +247,7 @@ def test_create_report_with_definition():
         ],
         "scope": [
             {
-                "assetType": "WORKSPACE",
+                "assetType": "workspace",
                 "assetId": 9876543210
             }
         ],
@@ -300,7 +300,7 @@ def test_create_report_error_4xx():
         ],
         "scope": [
             {
-                "assetType": "SHEET",
+                "assetType": "sheet",
                 "assetId": TEST_SHEET_ID
             }
         ]
@@ -333,7 +333,7 @@ def test_create_report_error_5xx():
         ],
         "scope": [
             {
-                "assetType": "SHEET",
+                "assetType": "sheet",
                 "assetId": TEST_SHEET_ID
             }
         ]

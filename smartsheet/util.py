@@ -123,7 +123,12 @@ def serialize(obj):
 
     elif isinstance(obj, EnumeratedValue):
         if obj.value is not None:
-            retval = obj.value.name
+            # For string enums (e.g., ReportAssetType), use .value instead of .name
+            # to get the lowercase string value
+            if isinstance(obj.value, str):
+                retval = obj.value.value
+            else:
+                retval = obj.value.name
 
     elif isinstance(obj, _list_types):
         if len(obj):
