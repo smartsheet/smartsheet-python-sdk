@@ -18,5 +18,5 @@ from enum import Enum
 
 
 class ReportAssetType(str, Enum):
-    SHEET = 'SHEET'
-    WORKSPACE = 'WORKSPACE'
+    SHEET = 'sheet'
+    WORKSPACE = 'workspace'
