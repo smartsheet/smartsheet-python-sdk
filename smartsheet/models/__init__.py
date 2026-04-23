@@ -87,6 +87,7 @@ from .report_cell import ReportCell
 from .report_column import ReportColumn
 from .report_column_identifier import ReportColumnIdentifier
 from .report_definition import ReportDefinition
+from .report_destination import ReportDestination
 from .report_filter_criterion import ReportFilterCriterion
 from .report_filter_expression import ReportFilterExpression
 from .report_grouping_criterion import ReportGroupingCriterion

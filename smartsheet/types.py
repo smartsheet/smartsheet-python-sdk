@@ -283,21 +283,10 @@ class EnumeratedValue:
 
     def set(self, value):
         if isinstance(value, six.string_types):
-            # Try to match by value first (e.g., "sheet" for ReportAssetType.SHEET)
-            matched = None
-            for member in self.__enum:
-                if member.value == value:
-                    matched = member
-                    break
-
-            # If no match by value, try by name (e.g., "SHEET" for ReportAssetType.SHEET)
-            if matched is None:
-                try:
-                    matched = self.__enum[value]
-                except KeyError:
-                    pass
-
-            self._value = matched
+            try:
+                self._value = self.__enum[value]
+            except KeyError:
+                self._value = None
         elif isinstance(value, Enum):
             self._value = value
         else:

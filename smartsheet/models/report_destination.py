@@ -17,56 +17,56 @@
 
 from __future__ import absolute_import
 
-from smartsheet.models.enums.report_asset_type import ReportAssetType
+from smartsheet.models.enums.report_destination_type import ReportDestinationType
 
 from ..types import EnumeratedValue, Number, json
 from ..util import deserialize, serialize
 
-class ReportScopeInclusion:
 
-    """Smartsheet ReportScopeInclusion data model."""
+class ReportDestination:
+    """Smartsheet ReportDestination data model."""
 
     def __init__(self, props=None, base_obj=None):
-        """Initialize the ReportScopeInclusion model."""
+        """Initialize the ReportDestination model."""
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        self._asset_type = EnumeratedValue(ReportAssetType)
-        self._asset_id = Number()
+        self._destination_id = Number()
+        self._destination_type = EnumeratedValue(ReportDestinationType)
 
         if props:
             deserialize(self, props)
 
     @property
-    def asset_id(self) -> int:
-        return self._asset_id.value
+    def destination_id(self):
+        return self._destination_id.value
 
-    @asset_id.setter
-    def asset_id(self, value: int):
-        self._asset_id.value = value
+    @destination_id.setter
+    def destination_id(self, value):
+        self._destination_id.value = value
 
     @property
-    def asset_type(self) -> ReportAssetType:
-        return self._asset_type.value
+    def destination_type(self):
+        return self._destination_type.value
 
-    @asset_type.setter
-    def asset_type(self, value):
+    @destination_type.setter
+    def destination_type(self, value):
         # Convert string to uppercase to match enum member names
         if isinstance(value, str):
-            self._asset_type.set(value.upper())
+            self._destination_type.set(value.upper())
         else:
-            self._asset_type.set(value)
+            self._destination_type.set(value)
 
-    def to_dict(self) -> dict:
+    def to_dict(self):
         result = serialize(self)
-        # Use enum .value instead of .name to get lowercase (e.g., "sheet" not "SHEET")
-        if result.get('assetType') and self._asset_type.value:
-            result['assetType'] = self._asset_type.value.value
+        # Use enum .value instead of .name to get lowercase (e.g., "folder" not "FOLDER")
+        if result.get('destinationType') and self._destination_type.value:
+            result['destinationType'] = self._destination_type.value.value
         return result
 
-    def to_json(self) -> str:
+    def to_json(self):
         return json.dumps(self.to_dict())
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.to_json()

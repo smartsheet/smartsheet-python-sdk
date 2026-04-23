@@ -3,10 +3,10 @@ import uuid
 from urllib.parse import urlparse
 
 from smartsheet.models import (
-    ContainerDestination,
     CreateReportRequest,
     Error,
     ReportColumn,
+    ReportDestination,
     ReportScopeInclusion,
 )
 from smartsheet.models.enums.report_asset_type import ReportAssetType
@@ -156,7 +156,7 @@ def test_create_report_request_body_serialization():
         "/reports/create-report/all-response-body-properties", request_id
     )
 
-    destination = ContainerDestination({
+    destination = ReportDestination({
         "destinationType": "folder",
         "destinationId": TEST_FOLDER_ID
     })

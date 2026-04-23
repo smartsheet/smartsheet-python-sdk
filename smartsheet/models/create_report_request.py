@@ -22,6 +22,11 @@ from typing import Optional
 from ..types import Boolean, String, TypedList, TypedObject, json
 from ..util import deserialize, serialize
 
+from .report_column import ReportColumn
+from .report_scope_inclusion import ReportScopeInclusion
+from .report_destination import ReportDestination
+from .report_definition import ReportDefinition
+
 
 class CreateReportRequest:
     """Smartsheet CreateReportRequest data model."""
@@ -32,18 +37,12 @@ class CreateReportRequest:
         if base_obj is not None:
             self._base = base_obj
 
-        # Avoid circular imports
-        from .report_column import ReportColumn
-        from .report_scope_inclusion import ReportScopeInclusion
-        from .container_destination import ContainerDestination
-        from .report_definition import ReportDefinition
-
         self._name = String()
         self._columns = TypedList(ReportColumn)
         self._scope = TypedList(ReportScopeInclusion)
         self._report_definition = TypedObject(ReportDefinition)
         self._is_summary_report = Boolean()
-        self._destination = TypedObject(ContainerDestination)
+        self._destination = TypedObject(ReportDestination)
 
         if props:
             deserialize(self, props)
