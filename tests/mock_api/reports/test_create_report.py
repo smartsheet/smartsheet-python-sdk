@@ -5,11 +5,9 @@ from urllib.parse import urlparse
 from smartsheet.models import (
     CreateReportRequest,
     Error,
-    ReportColumn,
-    ReportDestination,
-    ReportScopeInclusion,
 )
 from smartsheet.models.enums.report_asset_type import ReportAssetType
+from smartsheet.models.enums.report_destination_type import ReportDestinationType
 from tests.mock_api.reports.common_test_constants import (
     TEST_SUCCESS_MESSAGE,
     TEST_RESULT_CODE,
@@ -38,7 +36,7 @@ def test_create_report_generated_url_is_correct():
     request = CreateReportRequest({
         "name": TEST_REPORT_NAME,
         "destination": {
-            "destinationType": "folder",
+            "destinationType": ReportDestinationType.FOLDER,
             "destinationId": TEST_FOLDER_ID
         },
         "columns": [
@@ -50,7 +48,7 @@ def test_create_report_generated_url_is_correct():
         ],
         "scope": [
             {
-                "assetType": "sheet",
+                "assetType": ReportAssetType.SHEET,
                 "assetId": TEST_SHEET_ID
             }
         ]
@@ -74,7 +72,7 @@ def test_create_report_all_response_properties():
     request = CreateReportRequest({
         "name": TEST_REPORT_NAME,
         "destination": {
-            "destinationType": "folder",
+            "destinationType": ReportDestinationType.FOLDER,
             "destinationId": TEST_FOLDER_ID
         },
         "columns": [
@@ -86,7 +84,7 @@ def test_create_report_all_response_properties():
         ],
         "scope": [
             {
-                "assetType": "sheet",
+                "assetType": ReportAssetType.SHEET,
                 "assetId": TEST_SHEET_ID
             }
         ],
@@ -117,7 +115,7 @@ def test_create_report_required_response_properties():
     request = CreateReportRequest({
         "name": TEST_REPORT_NAME,
         "destination": {
-            "destinationType": "folder",
+            "destinationType": ReportDestinationType.FOLDER,
             "destinationId": TEST_FOLDER_ID
         },
         "columns": [
@@ -129,7 +127,7 @@ def test_create_report_required_response_properties():
         ],
         "scope": [
             {
-                "assetType": "sheet",
+                "assetType": ReportAssetType.SHEET,
                 "assetId": TEST_SHEET_ID
             }
         ]
@@ -156,38 +154,33 @@ def test_create_report_request_body_serialization():
         "/reports/create-report/all-response-body-properties", request_id
     )
 
-    destination = ReportDestination({
-        "destinationType": "folder",
-        "destinationId": TEST_FOLDER_ID
+    request = CreateReportRequest({
+        "name": TEST_REPORT_NAME,
+        "destination": {
+            "destinationType": ReportDestinationType.FOLDER,
+            "destinationId": TEST_FOLDER_ID
+        },
+        "columns": [
+            {
+                "title": "Primary Column",
+                "type": "TEXT_NUMBER",
+                "index": 0,
+                "primary": True
+            },
+            {
+                "title": "Status",
+                "type": "PICKLIST",
+                "index": 1
+            }
+        ],
+        "scope": [
+            {
+                "assetType": ReportAssetType.SHEET,
+                "assetId": TEST_SHEET_ID
+            }
+        ],
+        "isSummaryReport": False
     })
-
-    columns = [
-        ReportColumn({
-            "title": "Primary Column",
-            "type": "TEXT_NUMBER",
-            "index": 0,
-            "primary": True
-        }),
-        ReportColumn({
-            "title": "Status",
-            "type": "PICKLIST",
-            "index": 1
-        })
-    ]
-
-    scope = [
-        ReportScopeInclusion({
-            "assetType": ReportAssetType.SHEET,
-            "assetId": TEST_SHEET_ID
-        })
-    ]
-
-    request = CreateReportRequest()
-    request.name = TEST_REPORT_NAME
-    request.destination = destination
-    request.columns = columns
-    request.scope = scope
-    request.is_summary_report = False
 
     client.Reports.create_report(request)
 
@@ -235,7 +228,7 @@ def test_create_report_with_definition():
     request = CreateReportRequest({
         "name": TEST_REPORT_NAME,
         "destination": {
-            "destinationType": "workspace",
+            "destinationType": ReportDestinationType.WORKSPACE,
             "destinationId": 1234567890
         },
         "columns": [
@@ -247,7 +240,7 @@ def test_create_report_with_definition():
         ],
         "scope": [
             {
-                "assetType": "workspace",
+                "assetType": ReportAssetType.WORKSPACE,
                 "assetId": 9876543210
             }
         ],
@@ -288,7 +281,7 @@ def test_create_report_error_4xx():
     request = CreateReportRequest({
         "name": TEST_REPORT_NAME,
         "destination": {
-            "destinationType": "folder",
+            "destinationType": ReportDestinationType.FOLDER,
             "destinationId": TEST_FOLDER_ID
         },
         "columns": [
@@ -300,7 +293,7 @@ def test_create_report_error_4xx():
         ],
         "scope": [
             {
-                "assetType": "sheet",
+                "assetType": ReportAssetType.SHEET,
                 "assetId": TEST_SHEET_ID
             }
         ]
@@ -321,7 +314,7 @@ def test_create_report_error_5xx():
     request = CreateReportRequest({
         "name": TEST_REPORT_NAME,
         "destination": {
-            "destinationType": "folder",
+            "destinationType": ReportDestinationType.FOLDER,
             "destinationId": TEST_FOLDER_ID
         },
         "columns": [
@@ -333,7 +326,7 @@ def test_create_report_error_5xx():
         ],
         "scope": [
             {
-                "assetType": "sheet",
+                "assetType": ReportAssetType.SHEET,
                 "assetId": TEST_SHEET_ID
             }
         ]
