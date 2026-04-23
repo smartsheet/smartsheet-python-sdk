@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Support for POST /2.0/reports endpoint
+- WireMock integration tests for POST /2.0/reports endpoint including request body serialization validation
 - Support for POST /2.0/reports/{reportId}/columns endpoint
 - New `add_report_columns()` method in Reports class to add columns to a report
 - WireMock integration tests for POST /2.0/reports/{reportId}/columns endpoint
