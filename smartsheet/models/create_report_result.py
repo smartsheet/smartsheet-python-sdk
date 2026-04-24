@@ -19,7 +19,9 @@ from __future__ import absolute_import
 
 from typing import Optional
 
-from ..types import Boolean, Number, String, json
+from smartsheet.models.enums.access_level import AccessLevel
+
+from ..types import Boolean, EnumeratedValue, Number, String, json
 from ..util import deserialize, serialize
 
 
@@ -34,7 +36,7 @@ class CreateReportResult:
 
         self._id = Number()
         self._name = String()
-        self._access_level = String()
+        self._access_level = EnumeratedValue(AccessLevel)
         self._permalink = String()
         self._is_summary_report = Boolean()
 
@@ -60,12 +62,12 @@ class CreateReportResult:
         self._name.value = value
 
     @property
-    def access_level(self) -> Optional[str]:
+    def access_level(self):
         return self._access_level.value
 
     @access_level.setter
-    def access_level(self, value: str) -> None:
-        self._access_level.value = value
+    def access_level(self, value) -> None:
+        self._access_level.set(value)
 
     @property
     def permalink(self) -> Optional[str]:

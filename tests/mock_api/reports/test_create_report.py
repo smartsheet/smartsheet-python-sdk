@@ -6,6 +6,8 @@ from smartsheet.models import (
     CreateReportRequest,
     Error,
 )
+from smartsheet.models.enums.access_level import AccessLevel
+from smartsheet.models.enums.column_type import ColumnType
 from smartsheet.models.enums.report_asset_type import ReportAssetType
 from smartsheet.models.enums.report_destination_type import ReportDestinationType
 from tests.mock_api.reports.common_test_constants import (
@@ -42,7 +44,7 @@ def test_create_report_generated_url_is_correct():
         "columns": [
             {
                 "title": "Primary Column",
-                "type": "TEXT_NUMBER",
+                "type": ColumnType.TEXT_NUMBER,
                 "index": 0
             }
         ],
@@ -78,7 +80,7 @@ def test_create_report_all_response_properties():
         "columns": [
             {
                 "title": "Primary Column",
-                "type": "TEXT_NUMBER",
+                "type": ColumnType.TEXT_NUMBER,
                 "index": 0
             }
         ],
@@ -100,7 +102,7 @@ def test_create_report_all_response_properties():
     result = response.result[0]
     assert result.id == TEST_REPORT_ID
     assert result.name == TEST_REPORT_NAME
-    assert result.access_level == "OWNER"
+    assert result.access_level == AccessLevel.OWNER
     assert result.permalink == TEST_PERMALINK
     assert result.is_summary_report is False
 
@@ -121,7 +123,7 @@ def test_create_report_required_response_properties():
         "columns": [
             {
                 "title": "Primary Column",
-                "type": "TEXT_NUMBER",
+                "type": ColumnType.TEXT_NUMBER,
                 "index": 0
             }
         ],
@@ -142,7 +144,7 @@ def test_create_report_required_response_properties():
     result = response.result[0]
     assert result.id == TEST_REPORT_ID
     assert result.name == TEST_REPORT_NAME
-    assert result.access_level == "OWNER"
+    assert result.access_level == AccessLevel.OWNER
     assert result.permalink == TEST_PERMALINK
     assert result.is_summary_report is None
 
@@ -163,13 +165,13 @@ def test_create_report_request_body_serialization():
         "columns": [
             {
                 "title": "Primary Column",
-                "type": "TEXT_NUMBER",
+                "type": ColumnType.TEXT_NUMBER,
                 "index": 0,
                 "primary": True
             },
             {
                 "title": "Status",
-                "type": "PICKLIST",
+                "type": ColumnType.PICKLIST,
                 "index": 1
             }
         ],
@@ -234,7 +236,7 @@ def test_create_report_with_definition():
         "columns": [
             {
                 "title": "Task Name",
-                "type": "TEXT_NUMBER",
+                "type": ColumnType.TEXT_NUMBER,
                 "index": 0
             }
         ],
@@ -251,7 +253,7 @@ def test_create_report_with_definition():
                     {
                         "column": {
                             "title": "Status",
-                            "type": "PICKLIST"
+                            "type": ColumnType.PICKLIST
                         },
                         "operator": "EQUAL",
                         "values": ["Complete"]
@@ -287,7 +289,7 @@ def test_create_report_error_4xx():
         "columns": [
             {
                 "title": "Primary Column",
-                "type": "TEXT_NUMBER",
+                "type": ColumnType.TEXT_NUMBER,
                 "index": 0
             }
         ],
@@ -320,7 +322,7 @@ def test_create_report_error_5xx():
         "columns": [
             {
                 "title": "Primary Column",
-                "type": "TEXT_NUMBER",
+                "type": ColumnType.TEXT_NUMBER,
                 "index": 0
             }
         ],

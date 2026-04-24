@@ -59,11 +59,7 @@ class ReportDestination:
             self._destination_type.set(value)
 
     def to_dict(self):
-        result = serialize(self)
-        # Use enum .value instead of .name to get lowercase (e.g., "folder" not "FOLDER")
-        if result.get('destinationType') and self._destination_type.value:
-            result['destinationType'] = self._destination_type.value.value
-        return result
+        return serialize(self)
 
     def to_json(self):
         return json.dumps(self.to_dict())

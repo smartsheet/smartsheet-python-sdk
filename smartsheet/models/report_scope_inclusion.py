@@ -59,11 +59,7 @@ class ReportScopeInclusion:
             self._asset_type.set(value)
 
     def to_dict(self) -> dict:
-        result = serialize(self)
-        # Use enum .value instead of .name to get lowercase (e.g., "sheet" not "SHEET")
-        if result.get('assetType') and self._asset_type.value:
-            result['assetType'] = self._asset_type.value.value
-        return result
+        return serialize(self)
 
     def to_json(self) -> str:
         return json.dumps(self.to_dict())
