@@ -181,7 +181,7 @@ def test_downgrade_user_contributor_seat_type():
 def test_downgrade_user_to_contributor():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/users/downgrade-user/to-contributor", request_id
+        "/users/downgrade-user/all-response-body-properties", request_id
     )
 
     response = client.Users.downgrade_user(

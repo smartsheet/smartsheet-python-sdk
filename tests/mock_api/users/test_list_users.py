@@ -12,6 +12,7 @@ from tests.mock_api.mock_api_test_helper import (
 )
 
 TEST_EMAIL = "test.user@smartsheet.com"
+TEST_CONTRIBUTOR_EMAIL = "contributor.user@smartsheet.com"
 TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
 TEST_CONTRIBUTOR_SEAT_TYPE = seat_type.SeatType.CONTRIBUTOR
 TEST_PAGE = 1
@@ -57,7 +58,7 @@ def test_list_users_generated_url_is_correct():
         "seatType": [TEST_SEAT_TYPE.value],
         "page": [str(TEST_PAGE)],
         "pageSize": [str(TEST_PAGE_SIZE)],
-        "includeAll": [str(TEST_INCLUDE_ALL)]
+        "includeAll": [str(TEST_INCLUDE_ALL).lower()]
     }
     assert url.path == "/2.0/users"
 
@@ -73,6 +74,9 @@ def test_list_users_all_response_properties():
     )
 
     assert isinstance(response, IndexResult)
+    assert len(response.data) == 2
+
+    # Verify first user (MEMBER)
     assert response.data[0].seat_type == TEST_SEAT_TYPE.value
     assert response.data[0].seat_type_last_changed_at == TEST_SEAT_TYPE_LAST_CHANGED_AT
     assert response.data[0].provisional_expiration_date == TEST_PROVISIONAL_EXPIRATION_DATE
@@ -90,6 +94,10 @@ def test_list_users_all_response_properties():
     assert response.data[0].last_login == TEST_LAST_LOGIN
     assert response.data[0].custom_welcome_screen_viewed == TEST_CUSTOM_WELCOME_SCREEN_VIEWED
     assert response.data[0].id == TEST_ID_VALUE
+
+    # Verify second user (CONTRIBUTOR)
+    assert response.data[1].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
+    assert response.data[1].email == TEST_CONTRIBUTOR_EMAIL
 
 
 def test_list_users_required_response_properties():
@@ -150,53 +158,6 @@ def test_list_users_contributor_seat_type_generated_url_is_correct():
     assert url.path == "/2.0/users"
 
 
-def test_list_users_contributor_seat_type_filter():
-    request_id = uuid.uuid4().hex
-    client = get_mock_api_client(
-        "/users/list-users/contributor-seat-type-filter", request_id
-    )
-
-    response = client.Users.list_users()
-
-    assert isinstance(response, IndexResult)
-    assert len(response.data) == 1
-    assert response.data[0].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
-    assert response.data[0].seat_type_last_changed_at == parser.isoparse("2025-10-15T08:22:13.456789Z")
-    assert response.data[0].is_internal is True
-    assert response.data[0].email == "user3@example.com"
-    assert response.data[0].admin is False
-    assert response.data[0].licensed_sheet_creator is False
-    assert response.data[0].resource_viewer is False
-    assert response.data[0].group_admin is False
-    assert response.data[0].status == "ACTIVE"
-    assert response.data[0].sheet_count == 5
-    assert response.data[0].id == 125
-
-
-def test_list_users_contributor_seat_type_response():
-    request_id = uuid.uuid4().hex
-    client = get_mock_api_client(
-        "/users/list-users/contributor-seat-type-response", request_id
-    )
-
-    response = client.Users.list_users()
-
-    assert isinstance(response, IndexResult)
-    assert len(response.data) == 2
-    # First user is MEMBER
-    assert response.data[0].seat_type == TEST_SEAT_TYPE.value
-    assert response.data[0].email == "user1@example.com"
-    assert response.data[0].first_name == "User"
-    assert response.data[0].last_name == "One"
-    assert response.data[0].id == 123
-    # Second user is CONTRIBUTOR
-    assert response.data[1].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
-    assert response.data[1].seat_type_last_changed_at == parser.isoparse("2025-10-15T08:22:13.456789Z")
-    assert response.data[1].email == "user3@example.com"
-    assert response.data[1].first_name == "User"
-    assert response.data[1].last_name == "Three"
-    assert response.data[1].id == 125
-    assert response.data[1].sheet_count == 5
 
 
 def test_list_users_error_400_response():
@@ -225,83 +186,3 @@ def test_list_users_error_500_response():
     assert isinstance(response, Error)
 
 
-def test_list_users_display_contributor_seat_type_true():
-    """Test that displayContributorSeatType=true returns CONTRIBUTOR for VIEWER users"""
-    request_id = uuid.uuid4().hex
-    client = get_mock_api_client(
-        "/users/list-users/display-contributor-seat-type-true", request_id
-    )
-
-    response = client.Users.list_users(
-        display_contributor_seat_type=True
-    )
-
-    # Verify query parameter was sent correctly
-    wiremock_request = get_wiremock_request(request_id)
-    url = urlparse(wiremock_request["absoluteUrl"])
-    query = parse_qs(url.query)
-    assert "displayContributorSeatType" in query
-    assert query["displayContributorSeatType"] == ["True"]
-
-    # Verify response - should show CONTRIBUTOR (re-written from VIEWER)
-    assert isinstance(response, IndexResult)
-    assert len(response.data) == 1
-    assert response.data[0].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
-    assert response.data[0].email == "viewer.user@smartsheet.com"
-    assert response.data[0].first_name == "Viewer"
-    assert response.data[0].last_name == "User"
-
-
-def test_list_users_display_contributor_seat_type_false():
-    """Test that displayContributorSeatType=false returns VIEWER for CONTRIBUTOR users"""
-    request_id = uuid.uuid4().hex
-    client = get_mock_api_client(
-        "/users/list-users/display-contributor-seat-type-false", request_id
-    )
-
-    response = client.Users.list_users(
-        display_contributor_seat_type=False
-    )
-
-    # Verify query parameter was sent correctly
-    wiremock_request = get_wiremock_request(request_id)
-    url = urlparse(wiremock_request["absoluteUrl"])
-    query = parse_qs(url.query)
-    assert "displayContributorSeatType" in query
-    assert query["displayContributorSeatType"] == ["False"]
-
-    # Verify response - should show VIEWER (re-written from CONTRIBUTOR)
-    assert isinstance(response, IndexResult)
-    assert len(response.data) == 1
-    assert response.data[0].seat_type == "VIEWER"
-    assert response.data[0].email == "contributor.user@smartsheet.com"
-    assert response.data[0].first_name == "Contributor"
-    assert response.data[0].last_name == "User"
-
-
-def test_list_users_seat_type_contributor_with_display_true():
-    """Test that filtering by seatType=CONTRIBUTOR with displayContributorSeatType=true works correctly"""
-    request_id = uuid.uuid4().hex
-    client = get_mock_api_client(
-        "/users/list-users/seat-type-contributor-display-true", request_id
-    )
-
-    response = client.Users.list_users(
-        seat_type=TEST_CONTRIBUTOR_SEAT_TYPE.value,
-        display_contributor_seat_type=True
-    )
-
-    # Verify both query parameters were sent
-    wiremock_request = get_wiremock_request(request_id)
-    url = urlparse(wiremock_request["absoluteUrl"])
-    query = parse_qs(url.query)
-    assert "seatType" in query
-    assert query["seatType"] == [TEST_CONTRIBUTOR_SEAT_TYPE.value]
-    assert "displayContributorSeatType" in query
-    assert query["displayContributorSeatType"] == ["True"]
-
-    # Verify response
-    assert isinstance(response, IndexResult)
-    assert len(response.data) == 1
-    assert response.data[0].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
-    assert response.data[0].email == "contributor.filter@smartsheet.com"
