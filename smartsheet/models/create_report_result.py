@@ -20,6 +20,7 @@ from __future__ import absolute_import
 from typing import Optional
 
 from smartsheet.models.enums.access_level import AccessLevel
+from .report_column import ReportColumn
 
 from ..types import Boolean, EnumeratedValue, Number, String, TypedList, json
 from ..util import deserialize, serialize
@@ -33,8 +34,6 @@ class CreateReportResult:
         self._base = None
         if base_obj is not None:
             self._base = base_obj
-
-        from .report_column import ReportColumn
 
         self._id = Number()
         self._name = String()
