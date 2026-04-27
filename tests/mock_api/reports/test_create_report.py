@@ -10,10 +10,6 @@ from smartsheet.models.enums.access_level import AccessLevel
 from smartsheet.models.enums.column_type import ColumnType
 from smartsheet.models.enums.report_asset_type import ReportAssetType
 from smartsheet.models.enums.report_destination_type import ReportDestinationType
-from tests.mock_api.reports.common_test_constants import (
-    TEST_SUCCESS_MESSAGE,
-    TEST_RESULT_CODE,
-)
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
@@ -21,8 +17,8 @@ from tests.mock_api.mock_api_test_helper import (
 
 
 # Test constants
-TEST_REPORT_ID = 4583614634583940
-TEST_REPORT_NAME = "Q2 Earnings"
+TEST_REPORT_ID = 987654321
+TEST_REPORT_NAME = "Q2 Earnings Report"
 TEST_FOLDER_ID = 3734508208295812
 TEST_SHEET_ID = 4583173393803140
 TEST_PERMALINK = "https://app.smartsheet.com/reports/c8gJxw87cXpRCvCC5PPw6jFhFRrf5r8PxCrxvW21"
@@ -95,16 +91,20 @@ def test_create_report_all_response_properties():
 
     response = client.Reports.create_report(request)
 
-    assert response.message == TEST_SUCCESS_MESSAGE
-    assert response.result_code == TEST_RESULT_CODE
-    assert len(response.result) == 1
+    assert response.result.id == TEST_REPORT_ID
+    assert response.result.name == TEST_REPORT_NAME
+    assert response.result.access_level == AccessLevel.OWNER
+    assert response.result.permalink == TEST_PERMALINK
+    assert response.result.is_summary_report is False
+    assert len(response.result.columns) == 4
 
-    result = response.result[0]
-    assert result.id == TEST_REPORT_ID
-    assert result.name == TEST_REPORT_NAME
-    assert result.access_level == AccessLevel.OWNER
-    assert result.permalink == TEST_PERMALINK
-    assert result.is_summary_report is False
+    # Verify column details
+    columns = response.result.columns
+    assert columns[0].title == "Primary column"
+    assert columns[0].primary is True
+    assert columns[1].sheet_name_column is True
+    assert columns[2].system_column_type == "CREATED_DATE"
+    assert columns[3].title == "Selected item"
 
 
 def test_create_report_required_response_properties():
@@ -137,16 +137,11 @@ def test_create_report_required_response_properties():
 
     response = client.Reports.create_report(request)
 
-    assert response.message == TEST_SUCCESS_MESSAGE
-    assert response.result_code == TEST_RESULT_CODE
-    assert len(response.result) == 1
-
-    result = response.result[0]
-    assert result.id == TEST_REPORT_ID
-    assert result.name == TEST_REPORT_NAME
-    assert result.access_level == AccessLevel.OWNER
-    assert result.permalink == TEST_PERMALINK
-    assert result.is_summary_report is None
+    assert response.result.id == TEST_REPORT_ID
+    assert response.result.name == TEST_REPORT_NAME
+    assert response.result.access_level == AccessLevel.OWNER
+    assert response.result.permalink == TEST_PERMALINK
+    assert response.result.is_summary_report is None
 
 
 def test_create_report_request_body_serialization():

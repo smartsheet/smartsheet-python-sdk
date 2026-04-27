@@ -21,7 +21,7 @@ from typing import Optional
 
 from smartsheet.models.enums.access_level import AccessLevel
 
-from ..types import Boolean, EnumeratedValue, Number, String, json
+from ..types import Boolean, EnumeratedValue, Number, String, TypedList, json
 from ..util import deserialize, serialize
 
 
@@ -34,11 +34,14 @@ class CreateReportResult:
         if base_obj is not None:
             self._base = base_obj
 
+        from .report_column import ReportColumn
+
         self._id = Number()
         self._name = String()
         self._access_level = EnumeratedValue(AccessLevel)
         self._permalink = String()
         self._is_summary_report = Boolean()
+        self._columns = TypedList(ReportColumn)
 
         if props:
             deserialize(self, props)
@@ -84,6 +87,14 @@ class CreateReportResult:
     @is_summary_report.setter
     def is_summary_report(self, value: bool) -> None:
         self._is_summary_report.value = value
+
+    @property
+    def columns(self) -> TypedList:
+        return self._columns
+
+    @columns.setter
+    def columns(self, value) -> None:
+        self._columns.load(value)
 
     def to_dict(self):
         return serialize(self)
