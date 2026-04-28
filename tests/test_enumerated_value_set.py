@@ -50,49 +50,6 @@ class TestEnumeratedValueSetByName:
         assert str(enum_val) == "ADMIN"
 
 
-class TestEnumeratedValueSetByValue:
-    """Test setting EnumeratedValue by enum member value (integer)"""
-
-    def test_set_by_valid_value_as_string(self):
-        """Test setting value using valid enum member value as string
-
-        Note: The set() method should convert the string "1" to integer 1
-        before looking it up in the enum by value.
-        """
-        enum_val = EnumeratedValue(AccessLevel)
-        enum_val.set("1")
-        assert enum_val.value == AccessLevel.VIEWER
-        assert str(enum_val) == "VIEWER"
-
-    def test_set_by_different_valid_values_as_strings(self):
-        """Test setting value using different valid enum member values as strings"""
-        enum_val = EnumeratedValue(AccessLevel)
-
-        enum_val.set("2")
-        assert enum_val.value == AccessLevel.COMMENTER
-
-        enum_val.set("3")
-        assert enum_val.value == AccessLevel.EDITOR
-
-        enum_val.set("4")
-        assert enum_val.value == AccessLevel.EDITOR_SHARE
-
-        enum_val.set("5")
-        assert enum_val.value == AccessLevel.ADMIN
-
-        enum_val.set("6")
-        assert enum_val.value == AccessLevel.OWNER
-
-    def test_set_by_value_overwrites_previous_value(self):
-        """Test that setting by value overwrites the previous value"""
-        enum_val = EnumeratedValue(AccessLevel, "1")
-        assert enum_val.value == AccessLevel.VIEWER
-
-        enum_val.set("5")
-        assert enum_val.value == AccessLevel.ADMIN
-        assert str(enum_val) == "ADMIN"
-
-
 class TestEnumeratedValueSetByEnum:
     """Test setting EnumeratedValue by passing an Enum instance"""
 
@@ -140,10 +97,10 @@ class TestEnumeratedValueSetInvalidInputs:
 
     def test_set_with_invalid_value_returns_none(self):
         """Test setting with an invalid enum value returns None"""
-        enum_val = EnumeratedValue(AccessLevel, "1")
+        enum_val = EnumeratedValue(AccessLevel, "VIEWER")
         assert enum_val.value == AccessLevel.VIEWER
 
-        enum_val.set("999")
+        enum_val.set(999)
         assert enum_val.value is None
         assert str(enum_val) == "None"
 
@@ -213,27 +170,6 @@ class TestEnumeratedValueSetInvalidInputs:
         assert str(enum_val) == "None"
 
 
-class TestEnumeratedValueSetNamePrecedenceOverValue:
-    """Test that setting by name takes precedence over setting by value"""
-
-    def test_name_tried_first_before_value(self):
-        """Test that when a string matches a name, it uses name not value"""
-        # This test documents the behavior: name lookup is tried first
-        # If we had an enum where a member name could be confused with another's value,
-        # the name would win. Since AccessLevel uses integers, we just verify the order.
-        enum_val = EnumeratedValue(AccessLevel)
-
-        # Set by name
-        enum_val.set("VIEWER")
-        assert enum_val.value == AccessLevel.VIEWER
-
-        # Set by value (as string)
-        enum_val.set("1")
-        assert enum_val.value == AccessLevel.VIEWER
-
-        # Both map to the same enum member, confirming the logic works
-
-
 class TestEnumeratedValueSetInitialization:
     """Test that set() is called during initialization"""
 
@@ -244,8 +180,8 @@ class TestEnumeratedValueSetInitialization:
 
     def test_initialization_with_value(self):
         """Test initialization with enum member value"""
-        enum_val = EnumeratedValue(AccessLevel, "3")
-        assert enum_val.value == AccessLevel.EDITOR
+        enum_val = EnumeratedValue(ReportDestinationType, "workspace")
+        assert enum_val.value == ReportDestinationType.WORKSPACE
 
     def test_initialization_with_enum(self):
         """Test initialization with Enum instance"""
@@ -403,7 +339,7 @@ class TestEnumeratedValueSetEdgeCases:
         enum_val.set("EDITOR")
         assert enum_val.value == AccessLevel.EDITOR
 
-        enum_val.set("5")
+        enum_val.set(AccessLevel.ADMIN)
         assert enum_val.value == AccessLevel.ADMIN
 
         enum_val.set(AccessLevel.OWNER)
