@@ -286,7 +286,7 @@ class EnumeratedValue:
             try:
                 self._value = self.__enum[value]
             except KeyError:
-                self._value = None
+                self._value = self.__enum(value)
         elif isinstance(value, Enum):
             self._value = value
         else:

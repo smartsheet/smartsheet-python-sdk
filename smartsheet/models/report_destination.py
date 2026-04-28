@@ -52,11 +52,7 @@ class ReportDestination:
 
     @destination_type.setter
     def destination_type(self, value):
-        # Convert string to uppercase to match enum member names
-        if isinstance(value, str):
-            self._destination_type.set(value.upper())
-        else:
-            self._destination_type.set(value)
+        self._destination_type.set(value)
 
     def to_dict(self):
         return serialize(self)
