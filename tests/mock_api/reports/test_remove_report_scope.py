@@ -82,7 +82,7 @@ def test_remove_report_scope_request_body_serialization():
     expected_body = [
         {
             "assetId": TEST_SHEET_ID,
-            "assetType": "SHEET"
+            "assetType": "sheet"
         }
     ]
 

@@ -25,6 +25,8 @@ from datetime import datetime
 
 from .util import fresh_operation
 from .models import (
+    CreateReportRequest,
+    CreateReportResult,
     Error,
     DownloadedFile,
     IndexResult,
@@ -46,6 +48,36 @@ class Reports:
         """Init Reports with base Smartsheet object."""
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
+
+    def create_report(self, create_report_request: CreateReportRequest) -> Union[Result[CreateReportResult], Error]:
+        """Create a new report.
+
+        Create a new report by specifying name, destination, scope, columns and definition.
+
+        Args:
+            create_report_request (CreateReportRequest): CreateReportRequest object containing:
+                - name: Report name (required, 1-50 characters)
+                - destination: Container destination (required)
+                - columns: List of report columns (required, 1-400 items)
+                - scope: List of scopes (required, 1-100 items)
+                - report_definition: Report definition (optional)
+                - is_summary_report: True for sheet summary report, False for row report (optional, default: False)
+
+        Returns:
+            Union[Result[CreateReportResult], Error]: Result object containing the CreateReportResult,
+                or an Error object if the request fails.
+        """
+        _op = fresh_operation("create_report")
+        _op["method"] = "POST"
+        _op["path"] = "/reports"
+        _op["json"] = create_report_request
+
+        expected = ["Result", "CreateReportResult"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
 
     def delete_share(self, report_id, share_id) -> Union[Result[None], Error]:
         """Deletes the specified Share
