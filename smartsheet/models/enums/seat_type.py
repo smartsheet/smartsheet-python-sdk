@@ -17,4 +17,3 @@ class DowngradeSeatType(str, Enum):
 class UpgradeSeatType(str, Enum):
     GUEST = 'GUEST'
     MEMBER = 'MEMBER'
-    CONTRIBUTOR = 'CONTRIBUTOR'
