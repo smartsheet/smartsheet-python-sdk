@@ -37,6 +37,8 @@ class Favorite:
 
         self._object_id = Number()
         self._type_ = String(accept=self.allowed_values["_type"])
+        self._direct_id = String()
+        self._name = String()
 
         if props:
             deserialize(self, props)
@@ -70,6 +72,22 @@ class Favorite:
     @type_.setter
     def type_(self, value):
         self._type_.value = value
+
+    @property
+    def direct_id(self):
+        return self._direct_id.value
+
+    @direct_id.setter
+    def direct_id(self, value):
+        self._direct_id.value = value
+
+    @property
+    def name(self):
+        return self._name.value
+
+    @name.setter
+    def name(self, value):
+        self._name.value = value
 
     def to_dict(self):
         return serialize(self)

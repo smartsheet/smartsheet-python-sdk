@@ -22,6 +22,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - WireMock integration tests for POST /2.0/reports/{reportId}/scope endpoint
 - WireMock integration tests for DELETE /2.0/reports/{reportId}/scope endpoint
 - Support for DELETE /2.0/reports/{reportId} endpoint
+- Add `CONTRIBUTOR` seat type to `SeatType`, `UpgradeSeatType`, and `DowngradeSeatType` enums
+- Add mock API tests for `CONTRIBUTOR` seat type in list users and downgrade user operations
+- Add `displayContributorSeatType` query parameter to `list_users()` and `list_user_plans()` methods
+  - When `true`, VIEWER seat types to CONTRIBUTOR in the response
+  - When `false` or omitted, re-writes CONTRIBUTOR seat types to VIEWER in the response
+
+## [3.8.0] - 2026-04-17
+
+### Added
+
+- Added support for the GET /2.0/favorites/{favoriteType}/{favoriteId} endpoint
+- Added directId and name fields to the Favorite model
+- Added FavoriteType enum
+- WireMock integration tests for contract testing for GET /2.0/favorites/{favoriteType}/{favoriteId} endpoint
 
 ## [3.7.2] - 2026-01-29
 
