@@ -14,6 +14,8 @@ from tests.mock_api.mock_api_test_helper import (
 TEST_LAST_KEY = '12345678901234569'
 TEST_MAX_ITEMS = 100
 TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
+TEST_CONTRIBUTOR_SEAT_TYPE = seat_type.SeatType.CONTRIBUTOR
+TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE = True
 
 def test_list_user_plans_generated_url_is_correct():
     request_id = uuid.uuid4().hex
@@ -24,7 +26,8 @@ def test_list_user_plans_generated_url_is_correct():
     client.Users.list_user_plans(
         user_id=TEST_USER_ID,
         last_key=TEST_LAST_KEY,
-        max_items=TEST_MAX_ITEMS
+        max_items=TEST_MAX_ITEMS,
+        display_contributor_seat_type=TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -32,7 +35,8 @@ def test_list_user_plans_generated_url_is_correct():
     query = parse_qs(url.query)
     assert query == {
         "lastKey": [TEST_LAST_KEY],
-        "maxItems": [str(TEST_MAX_ITEMS)]
+        "maxItems": [str(TEST_MAX_ITEMS)],
+        "displayContributorSeatType": [str(TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE)]
     }
     assert url.path == f"/2.0/users/{TEST_USER_ID}/plans"
 
@@ -51,6 +55,9 @@ def test_list_user_plans_all_response_properties():
 
     assert isinstance(response, TokenPaginatedResult)
     assert response.last_key == TEST_LAST_KEY
+    assert len(response.data) == 2
+
+    # Verify first plan (MEMBER)
     assert response.data[0].plan_id == TEST_PLAN_ID
     assert response.data[0].seat_type == TEST_SEAT_TYPE.value
     assert response.data[0].seat_type_last_changed_at == parser.isoparse(
@@ -58,6 +65,14 @@ def test_list_user_plans_all_response_properties():
     assert response.data[0].provisional_expiration_date == parser.isoparse(
         "2026-12-13T12:17:52.525696Z")
     assert response.data[0].is_internal is False
+
+    # Verify second plan (CONTRIBUTOR)
+    assert response.data[1].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
+    assert response.data[1].seat_type_last_changed_at == parser.isoparse(
+        "2025-01-01T00:00:00.123456789Z")
+    assert response.data[1].provisional_expiration_date == parser.isoparse(
+        "2026-12-13T12:17:52.525696Z")
+    assert response.data[1].is_internal is False
 
 
 def test_list_user_plans_required_response_properties():
@@ -108,3 +123,5 @@ def test_list_user_plans_error_500_reponse():
     )
 
     assert isinstance(response, Error)
+
+

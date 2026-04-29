@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Added
+
+- Add `CONTRIBUTOR` seat type to `SeatType`, `UpgradeSeatType`, and `DowngradeSeatType` enums
+- Add mock API tests for `CONTRIBUTOR` seat type in list users and downgrade user operations
+- Add `displayContributorSeatType` query parameter to `list_users()` and `list_user_plans()` methods
+  - When `true`, VIEWER seat types to CONTRIBUTOR in the response
+  - When `false` or omitted, re-writes CONTRIBUTOR seat types to VIEWER in the response
+
 ## [3.8.0] - 2026-04-17
 
 ### Added
