@@ -15,6 +15,7 @@ TEST_EMAIL = "test.user@smartsheet.com"
 TEST_CONTRIBUTOR_EMAIL = "contributor.user@smartsheet.com"
 TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
 TEST_CONTRIBUTOR_SEAT_TYPE = seat_type.SeatType.CONTRIBUTOR
+TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE = True
 TEST_PAGE = 1
 TEST_PAGE_SIZE = 100
 TEST_INCLUDE_ALL = False
@@ -58,7 +59,7 @@ def test_list_users_generated_url_is_correct():
         "seatType": [TEST_SEAT_TYPE.value],
         "page": [str(TEST_PAGE)],
         "pageSize": [str(TEST_PAGE_SIZE)],
-        "includeAll": [str(TEST_INCLUDE_ALL).lower()]
+        "includeAll": [str(TEST_INCLUDE_ALL)]
     }
     assert url.path == "/2.0/users"
 
@@ -142,7 +143,8 @@ def test_list_users_contributor_seat_type_generated_url_is_correct():
         seat_type=TEST_CONTRIBUTOR_SEAT_TYPE.value,
         page=TEST_PAGE,
         page_size=TEST_PAGE_SIZE,
-        include_all=TEST_INCLUDE_ALL
+        include_all=TEST_INCLUDE_ALL,
+        display_contributor_seat_type=TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -153,7 +155,8 @@ def test_list_users_contributor_seat_type_generated_url_is_correct():
         "seatType": [TEST_CONTRIBUTOR_SEAT_TYPE.value],
         "page": [str(TEST_PAGE)],
         "pageSize": [str(TEST_PAGE_SIZE)],
-        "includeAll": [str(TEST_INCLUDE_ALL)]
+        "includeAll": [str(TEST_INCLUDE_ALL)],
+        "displayContributorSeatType": [str(TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE)]
     }
     assert url.path == "/2.0/users"
 

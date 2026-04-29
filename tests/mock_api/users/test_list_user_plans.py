@@ -15,6 +15,7 @@ TEST_LAST_KEY = '12345678901234569'
 TEST_MAX_ITEMS = 100
 TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
 TEST_CONTRIBUTOR_SEAT_TYPE = seat_type.SeatType.CONTRIBUTOR
+TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE = True
 
 def test_list_user_plans_generated_url_is_correct():
     request_id = uuid.uuid4().hex
@@ -25,7 +26,8 @@ def test_list_user_plans_generated_url_is_correct():
     client.Users.list_user_plans(
         user_id=TEST_USER_ID,
         last_key=TEST_LAST_KEY,
-        max_items=TEST_MAX_ITEMS
+        max_items=TEST_MAX_ITEMS,
+        display_contributor_seat_type=TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE
     )
 
     wiremock_request = get_wiremock_request(request_id)
@@ -33,7 +35,8 @@ def test_list_user_plans_generated_url_is_correct():
     query = parse_qs(url.query)
     assert query == {
         "lastKey": [TEST_LAST_KEY],
-        "maxItems": [str(TEST_MAX_ITEMS)]
+        "maxItems": [str(TEST_MAX_ITEMS)],
+        "displayContributorSeatType": [str(TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE)]
     }
     assert url.path == f"/2.0/users/{TEST_USER_ID}/plans"
 
