@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - When `true`, VIEWER seat types to CONTRIBUTOR in the response
   - When `false` or omitted, re-writes CONTRIBUTOR seat types to VIEWER in the response
 
+## [3.8.0] - 2026-04-17
+
+### Added
+
+- Added support for the GET /2.0/favorites/{favoriteType}/{favoriteId} endpoint
+- Added directId and name fields to the Favorite model
+- Added FavoriteType enum
+- WireMock integration tests for contract testing for GET /2.0/favorites/{favoriteType}/{favoriteId} endpoint
+
 ## [3.7.2] - 2026-01-29
 
 ### Added
