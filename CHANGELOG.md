@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Support for POST /2.0/reports endpoint
+- WireMock integration tests for POST /2.0/reports endpoint including request body serialization validation
+- Support for POST /2.0/reports/{reportId}/columns endpoint
+- New `add_report_columns()` method in Reports class to add columns to a report
+- WireMock integration tests for POST /2.0/reports/{reportId}/columns endpoint
+- Support for PUT /2.0/reports/{reportId}/definition endpoint
+- New `update_report_definition()` method in Reports class to update report definitions
+- WireMock integration tests for report definition update endpoint including nested filter validation
+- Support for POST /2.0/reports/{reportId}/scope endpoint
+- Support for DELETE /2.0/reports/{reportId}/scope endpoint
+- WireMock integration tests for POST /2.0/reports/{reportId}/scope endpoint
+- WireMock integration tests for DELETE /2.0/reports/{reportId}/scope endpoint
+- Support for DELETE /2.0/reports/{reportId} endpoint
 - Add `CONTRIBUTOR` seat type to `SeatType`, `UpgradeSeatType`, and `DowngradeSeatType` enums
 - Add mock API tests for `CONTRIBUTOR` seat type in list users and downgrade user operations
 - Add `displayContributorSeatType` query parameter to `list_users()` and `list_user_plans()` methods

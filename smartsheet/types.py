@@ -283,14 +283,25 @@ class EnumeratedValue:
 
     def set(self, value):
         if isinstance(value, six.string_types):
-            try:
-                self._value = self.__enum[value]
-            except KeyError:
-                self._value = None
+            self._value = self._try_set_from_string(value)
         elif isinstance(value, Enum):
             self._value = value
         else:
             self._value = None
+
+    def _try_set_from_string(self, value):
+        """Attempt to set enum value from string, trying name first then value."""
+        try:
+            return self.__enum[value]
+        except KeyError:
+            pass
+
+        try:
+            return self.__enum(value)
+        except ValueError:
+            pass
+
+        return None
 
     def __eq__(self, other):
         if isinstance(other, Enum) or other is None:
