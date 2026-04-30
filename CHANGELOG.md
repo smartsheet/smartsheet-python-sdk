@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+- Fix AttributeError and TypeError exception handling
+
 ## [3.8.0] - 2026-04-17
 
 ### Added
