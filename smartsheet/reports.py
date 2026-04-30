@@ -24,7 +24,20 @@ import os.path
 from datetime import datetime
 
 from .util import fresh_operation
-from .models import Error, DownloadedFile, IndexResult, Report, ReportPublish, Result, Share
+from .models import (
+    CreateReportRequest,
+    CreateReportResult,
+    Error,
+    DownloadedFile,
+    IndexResult,
+    Report,
+    ReportColumn,
+    ReportDefinition,
+    ReportPublish,
+    ReportScopeInclusion,
+    Result,
+    Share,
+)
 
 
 class Reports:
@@ -35,6 +48,36 @@ class Reports:
         """Init Reports with base Smartsheet object."""
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
+
+    def create_report(self, create_report_request: CreateReportRequest) -> Union[Result[CreateReportResult], Error]:
+        """Create a new report.
+
+        Create a new report by specifying name, destination, scope, columns and definition.
+
+        Args:
+            create_report_request (CreateReportRequest): CreateReportRequest object containing:
+                - name: Report name (required, 1-50 characters)
+                - destination: Container destination (required)
+                - columns: List of report columns (required, 1-400 items)
+                - scope: List of scopes (required, 1-100 items)
+                - report_definition: Report definition (optional)
+                - is_summary_report: True for sheet summary report, False for row report (optional, default: False)
+
+        Returns:
+            Union[Result[CreateReportResult], Error]: Result object containing the CreateReportResult,
+                or an Error object if the request fails.
+        """
+        _op = fresh_operation("create_report")
+        _op["method"] = "POST"
+        _op["path"] = "/reports"
+        _op["json"] = create_report_request
+
+        expected = ["Result", "CreateReportResult"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
 
     def delete_share(self, report_id, share_id) -> Union[Result[None], Error]:
         """Deletes the specified Share
@@ -51,6 +94,53 @@ class Reports:
         _op["path"] = "/reports/" + str(report_id) + "/shares/" + str(share_id)
 
         expected = ["Result", None]
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def delete_report(self, report_id) -> Union[Result[None], Error]:
+        """Deletes a report based on the specified ID
+
+        Args:
+            report_id (int): Report ID
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("delete_report")
+        _op["method"] = "DELETE"
+        _op["path"] = "/reports/" + str(report_id)
+
+        expected = ["Result", None]
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def add_report_columns(
+        self, report_id: int, report_columns: list[ReportColumn]
+    ) -> Union[Result[list[ReportColumn]], Error]:
+        """Add columns to a report.
+
+        Add columns to a report specified by a report ID. Note: all indexes of the columns
+        must be equal.
+
+        Args:
+            report_id (int): Report ID
+            report_columns (list[ReportColumn]): List of report columns to be added (1-400 items)
+
+        Returns:
+            Union[Result[list[ReportColumn]], Error]: Result object containing the list of
+                ReportColumn objects that were added, or an Error object if the request fails.
+        """
+        _op = fresh_operation("add_report_columns")
+        _op["method"] = "POST"
+        _op["path"] = "/reports/" + str(report_id) + "/columns"
+        _op["json"] = report_columns
+
+        expected = ["Result", "ReportColumn"]
+
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -378,6 +468,81 @@ class Reports:
         _op["json"] = report_publish_obj
 
         expected = ["Result", "ReportPublish"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def update_report_definition(self, report_id: int, report_definition: ReportDefinition) -> Union[Result[None], Error]:
+        """Updates a report's definition.
+
+        Update a Report's definition based on the specified ID.
+
+        Note: This endpoint supports partial updates only on root level
+        properties of the report definition, such as filters, groupingCriteria
+        and summarizingCriteria. For example, you can update the report's
+        filters without affecting its grouping criteria. However, nested
+        properties within these objects, such as a specific filter or grouping
+        criterion, cannot be updated individually and require a full replacement
+        of the respective section.
+
+        Args:
+            report_id (int): Report ID
+            report_definition (ReportDefinition): ReportDefinition object.
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("update_report_definition")
+        _op["method"] = "PUT"
+        _op["path"] = "/reports/" + str(report_id) + "/definition"
+        _op["json"] = report_definition
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def add_report_scope(self, report_id: int, scopes: list[ReportScopeInclusion]) -> Union[Result[None], Error]:
+        """Add one or more scopes to the report.
+
+        Args:
+            report_id (int): Report ID
+            scopes (list[ReportScopeInclusion]): List of scopes to add.
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("add_report_scope")
+        _op["method"] = "POST"
+        _op["path"] = "/reports/" + str(report_id) + "/scope"
+        _op["json"] = scopes
+
+        expected = ["Result", None]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def remove_report_scope(self, report_id: int, scopes: list[ReportScopeInclusion]) -> Union[Result[None], Error]:
+        """Remove one or more scopes from the report.
+
+        Args:
+            report_id (int): Report ID
+            scopes (list[ReportScopeInclusion]): List of scopes to remove.
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("remove_report_scope")
+        _op["method"] = "DELETE"
+        _op["path"] = "/reports/" + str(report_id) + "/scope"
+        _op["json"] = scopes
+
+        expected = ["Result", None]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

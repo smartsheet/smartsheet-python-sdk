@@ -12,6 +12,7 @@ from tests.mock_api.mock_api_test_helper import (
 
 TEST_UPGRADE_SEAT_TYPE = UpgradeSeatType.MEMBER
 TEST_DOWNGRADE_SEAT_TYPE = DowngradeSeatType.VIEWER
+TEST_DOWNGRADE_CONTRIBUTOR_SEAT_TYPE = DowngradeSeatType.CONTRIBUTOR
 
 
 def test_upgrade_user_generated_url_is_correct():
@@ -134,6 +135,26 @@ def test_downgrade_user_all_response_properties():
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
     assert body == {"seatType": TEST_DOWNGRADE_SEAT_TYPE.value}
+
+
+def test_downgrade_user_contributor_seat_type():
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/users/downgrade-user/all-response-body-properties", request_id
+    )
+
+    response = client.Users.downgrade_user(
+        user_id=TEST_USER_ID,
+        plan_id=TEST_PLAN_ID,
+        seat_type=TEST_DOWNGRADE_CONTRIBUTOR_SEAT_TYPE,
+    )
+
+    assert response.message == TEST_SUCCESS_MESSAGE
+    assert response.result_code == TEST_RESULT_CODE
+
+    wiremock_request = get_wiremock_request(request_id)
+    body = json.loads(wiremock_request["body"])
+    assert body == {"seatType": TEST_DOWNGRADE_CONTRIBUTOR_SEAT_TYPE.value}
 
 
 def test_downgrade_user_error_4xx():
