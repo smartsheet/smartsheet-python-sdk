@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - When `true`, VIEWER seat types to CONTRIBUTOR in the response
   - When `false` or omitted, re-writes CONTRIBUTOR seat types to VIEWER in the response
 
+### Fixed
+
+- Fix AttributeError and TypeError exception handling
+
 ## [3.8.0] - 2026-04-17
 
 ### Added

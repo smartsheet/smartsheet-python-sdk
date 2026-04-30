@@ -32,7 +32,7 @@ import requests
 import six
 
 from . import __api_base__, __version__, models
-from .exceptions import ApiError, HttpError, UnexpectedRequestError
+from .exceptions import HttpError, UnexpectedRequestError
 from .models import Error, ErrorResult
 from .session import pinned_session
 from .util import is_multipart, serialize
@@ -300,8 +300,10 @@ class Smartsheet:
             return native
 
         if isinstance(native, self.models.Error):
-            the_ex = getattr(sys.modules[__name__], native.result.name)
-            raise the_ex(native, str(native.result.code) + ": " + native.result.message)
+            exceptions_module = importlib.import_module(__package__ + ".exceptions")
+            the_ex = getattr(exceptions_module, native.result.name)
+            error_message = native.result.message or "Unknown error"
+            raise the_ex(native, str(native.result.code) + ": " + error_message)
         else:
             return native
 
