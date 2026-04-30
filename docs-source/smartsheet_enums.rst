@@ -185,6 +185,38 @@ PublishAccessibleBy
    :undoc-members:
    :show-inheritance:
 
+ReportAggregationType
+-----------------------------------------------------
+
+.. automodule:: smartsheet.models.enums.report_aggregation_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportAssetType
+------------------------------------------------------
+
+.. automodule:: smartsheet.models.enums.report_asset_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportBooleanOperator
+-----------------------------------------------------
+
+.. automodule:: smartsheet.models.enums.report_boolean_operator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportFilterOperator
+----------------------------------------------------
+
+.. automodule:: smartsheet.models.enums.report_filter_operator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ScheduleType
 ---------------------------------------------
 

@@ -12,7 +12,10 @@ from tests.mock_api.mock_api_test_helper import (
 )
 
 TEST_EMAIL = "test.user@smartsheet.com"
+TEST_CONTRIBUTOR_EMAIL = "contributor.user@smartsheet.com"
 TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
+TEST_CONTRIBUTOR_SEAT_TYPE = seat_type.SeatType.CONTRIBUTOR
+TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE = True
 TEST_PAGE = 1
 TEST_PAGE_SIZE = 100
 TEST_INCLUDE_ALL = False
@@ -72,6 +75,9 @@ def test_list_users_all_response_properties():
     )
 
     assert isinstance(response, IndexResult)
+    assert len(response.data) == 2
+
+    # Verify first user (MEMBER)
     assert response.data[0].seat_type == TEST_SEAT_TYPE.value
     assert response.data[0].seat_type_last_changed_at == TEST_SEAT_TYPE_LAST_CHANGED_AT
     assert response.data[0].provisional_expiration_date == TEST_PROVISIONAL_EXPIRATION_DATE
@@ -89,6 +95,10 @@ def test_list_users_all_response_properties():
     assert response.data[0].last_login == TEST_LAST_LOGIN
     assert response.data[0].custom_welcome_screen_viewed == TEST_CUSTOM_WELCOME_SCREEN_VIEWED
     assert response.data[0].id == TEST_ID_VALUE
+
+    # Verify second user (CONTRIBUTOR)
+    assert response.data[1].seat_type == TEST_CONTRIBUTOR_SEAT_TYPE.value
+    assert response.data[1].email == TEST_CONTRIBUTOR_EMAIL
 
 
 def test_list_users_required_response_properties():
@@ -121,6 +131,38 @@ def test_list_users_required_response_properties():
     assert response.data[0].id == TEST_ID_VALUE
 
 
+def test_list_users_contributor_seat_type_generated_url_is_correct():
+    request_id = uuid.uuid4().hex
+
+    client = get_mock_api_client(
+        "/users/list-users/required-response-body-properties", request_id
+    )
+
+    client.Users.list_users(
+        email=TEST_EMAIL,
+        seat_type=TEST_CONTRIBUTOR_SEAT_TYPE.value,
+        page=TEST_PAGE,
+        page_size=TEST_PAGE_SIZE,
+        include_all=TEST_INCLUDE_ALL,
+        display_contributor_seat_type=TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE
+    )
+
+    wiremock_request = get_wiremock_request(request_id)
+    url = urlparse(wiremock_request["absoluteUrl"])
+    query = parse_qs(url.query)
+    assert query == {
+        "email": [TEST_EMAIL],
+        "seatType": [TEST_CONTRIBUTOR_SEAT_TYPE.value],
+        "page": [str(TEST_PAGE)],
+        "pageSize": [str(TEST_PAGE_SIZE)],
+        "includeAll": [str(TEST_INCLUDE_ALL)],
+        "displayContributorSeatType": [str(TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE)]
+    }
+    assert url.path == "/2.0/users"
+
+
+
+
 def test_list_users_error_400_response():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
@@ -145,3 +187,5 @@ def test_list_users_error_500_response():
     )
 
     assert isinstance(response, Error)
+
+
