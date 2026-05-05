@@ -282,7 +282,7 @@ class Sheets:
         return response
 
     def delete_rows(self, sheet_id, ids, ignore_rows_not_found=False) -> Union[Result[List[NumberObjectValue]], Error]:
-        """Deletes one or more Row(s) from the specified Sheeet.
+        """Deletes one or more Row(s) from the specified Sheet.
 
         Args:
             sheet_id (int): Sheet ID
@@ -327,6 +327,47 @@ class Sheets:
         _op = fresh_operation("delete_share")
         _op["method"] = "DELETE"
         _op["path"] = "/sheets/" + str(sheet_id) + "/shares/" + str(share_id)
+
+        expected = ["Result", None]
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def set_data_classification(self, sheet_id, data_classification_obj) -> Union[Result[None], Error]:
+        """Sets the data classification on a Sheet.
+
+        Args:
+            sheet_id (int): Sheet ID
+            data_classification_obj
+                (DataClassification): DataClassification object.
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("set_data_classification")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/dataclassification"
+        _op["json"] = data_classification_obj
+
+        expected = ["Result", None]
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def delete_data_classification(self, sheet_id) -> Union[Result[None], Error]:
+        """Removes the data classification from a Sheet. Requires ADMIN or OWNER access.
+
+        Args:
+            sheet_id (int): Sheet ID
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("delete_data_classification")
+        _op["method"] = "DELETE"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/dataclassification"
 
         expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)

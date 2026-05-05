@@ -31,6 +31,7 @@ from .column_type import ColumnType
 from .criteria_target import CriteriaTarget
 from .cross_sheet_reference_status import CrossSheetReferenceStatus
 from .currency_code import CurrencyCode
+from .data_classification_type import DataClassificationType
 from .day_descriptors import DayDescriptors
 from .day_ordinal import DayOrdinal
 from .event_action import EventAction
