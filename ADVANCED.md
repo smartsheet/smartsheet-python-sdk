@@ -15,6 +15,7 @@ pip install smartsheet-python-sdk
 Contributors should use uv for development. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions.
 
 The following packages are the core runtime dependencies:
+
 - [six](https://pypi.python.org/pypi/six)
 - [requests](https://pypi.python.org/pypi/requests)
 - [requests-toolbelt](https://pypi.org/project/requests-toolbelt/)

@@ -33,12 +33,14 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ### Setting Up Your Development Environment
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/smartsheet/smartsheet-python-sdk.git
    cd smartsheet-python-sdk
    ```
 
 2. Install all development dependencies:
+
    ```bash
    uv sync --all-extras
    ```
