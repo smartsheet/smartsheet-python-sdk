@@ -11,19 +11,19 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.14'
-      - name: Install dependencies
+      - name: Install uv
         run: |
-          pip install build
+          pip install uv
       - name: Install project and lint dependencies
         run: |
-          pip install .[develop]
+          uv sync --extra develop
       - name: Run Markdown Lint
         uses: articulate/actions-markdownlint@v1
         with:
           ignore: ./LICENSE.md
       - name: Run Pylint
         run: |
-          pylint smartsheet
+          uv run pylint smartsheet
 
   test:
     needs: lint
@@ -38,13 +38,16 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Python dependencies
+      - name: Install Python dependencies (Python 3.7 only)
+        if: matrix.python-version == '3.7'
         run: |
           python -m pip install --upgrade pip
-          pip install build
-      - name: Install test dependencies
-        run: |
           pip install .[test]
+      - name: Install dependencies (Python 3.8+)
+        if: matrix.python-version != '3.7'
+        run: |
+          pip install uv
+          uv sync --extra test
       - name: Clone smartsheet/smartsheet-sdk-tests PUBLIC repository
         uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
@@ -53,10 +56,16 @@ jobs:
       - name: Setup Mock API
         run: |
           docker compose -f smartsheet-sdk-tests/docker-compose.yml up -d --wait
-      - name: Run tests
+      - name: Run tests (Python 3.7 only)
+        if: matrix.python-version == '3.7'
         run: |
           coverage run --source=smartsheet -m pytest
           coverage lcov
+      - name: Run tests (Python 3.8+)
+        if: matrix.python-version != '3.7'
+        run: |
+          uv run coverage run --source=smartsheet -m pytest
+          uv run coverage lcov
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
@@ -72,12 +81,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v4
-      - name: Install build packages
+      - name: Install uv
         run: |
-          pip install build
+          pip install uv
       - name: Build distribution
         run: |
-          python -m build
+          uv build
       - name: Archive distribution artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -90,16 +99,16 @@ jobs:
     needs: [build-packages-test]
     steps:
       - uses: actions/checkout@v4
-      - name: Install documentation tools
+      - name: Install uv
         run: |
-          pip install build
+          pip install uv
       - name: Install documentation dependencies
         run: |
-          pip install .[docs]
+          uv sync --extra docs
       - name: Generate API documentation
-        run: sphinx-apidoc -o docs-source smartsheet
+        run: uv run sphinx-apidoc -o docs-source smartsheet
       - name: Generate HTML
-        run: sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
+        run: uv run sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
