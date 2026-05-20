@@ -14,16 +14,16 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.14'
-      - name: Install build packages
+      - name: Install uv
         run: |
-          pip install build
+          pip install uv
       - name: Install documentation dependencies
         run: |
-          pip install .[docs]
+          uv sync --extra docs
       - name: Generate documentation
         run: |
-          sphinx-apidoc -o docs-source smartsheet
-          sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
+          uv run sphinx-apidoc -o docs-source smartsheet
+          uv run sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
       - name: Upload Documentation artifact
         uses: actions/upload-pages-artifact@main
         with:

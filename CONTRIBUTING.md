@@ -6,6 +6,45 @@
 
 For detailed guidance on creating effective issues that work well with both human reviewers and AI-powered Cloud Agents, see our [Issue First documentation](ISSUE-FIRST.md).
 
+## Development Setup
+
+### Prerequisites
+
+- Python 3.8+ (required for development tooling)
+- uv package manager
+
+**Important:** While the smartsheet-python-sdk supports Python 3.7+, development requires Python 3.8+ for the uv tooling. If you need to verify Python 3.7 compatibility, you can use pip in a Python 3.7 environment, but all other development should use uv with Python 3.8+.
+
+### Installing uv
+
+Install uv using one of these methods:
+
+```bash
+# Using pip
+pip install uv
+
+# Using Homebrew (macOS)
+brew install uv
+
+# Using the standalone installer
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### Setting Up Your Development Environment
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/smartsheet/smartsheet-python-sdk.git
+   cd smartsheet-python-sdk
+   ```
+
+2. Install all development dependencies:
+   ```bash
+   uv sync --all-extras
+   ```
+
+This creates a virtual environment in `.venv` and installs all dependencies from the lockfile.
+
 ## Did you find a bug?
 
 - **Send all security related bugs to our maintainer email, <sdk-python@smartsheet.com>**.
@@ -61,25 +100,58 @@ Changes that are cosmetic in nature and do not add anything substantial to the s
 - After making changes to `docs-source/`, you can build the documentation locally to verify your changes:
 
   ```bash
-  cd docs-source
-  make html
+  uv run sphinx-build -b html docs-source docs-source/_build/html
   ```
 
 - The built documentation will be in `docs-source/_build/html/`. Open `index.html` in a browser to review your changes.
 
 ## Running Tests
 
-- To run the test suite, use the following command:
+To run the test suite:
 
-  ```bash
-  python -m pytest tests/
-  ```
+```bash
+uv run pytest tests/
+```
 
-- For integration tests, you'll need to set up your Smartsheet API access token as an environment variable:
+For integration tests, you'll need to set up your Smartsheet API access token as an environment variable:
 
-  ```bash
-  export SMARTSHEET_ACCESS_TOKEN=your_token_here
-  ```
+```bash
+export SMARTSHEET_ACCESS_TOKEN=your_token_here
+uv run pytest tests/
+```
+
+To run tests with coverage:
+
+```bash
+uv run coverage run --source=smartsheet -m pytest
+uv run coverage report -m
+```
+
+## Common Development Commands
+
+The project uses uv for all development tasks. Here are the most common commands:
+
+```bash
+# Install/update dependencies
+uv sync --all-extras
+
+# Run tests
+uv run pytest
+
+# Run linting
+uv run pylint smartsheet
+
+# Build the package
+uv build
+
+# Update a specific dependency
+uv lock --upgrade-package requests
+
+# Update all dependencies
+uv lock --upgrade
+```
+
+**Note:** The project previously used a Makefile for these commands. That has been replaced by the uv commands above.
 
 ## Do you have questions about the source code or using the SDK?
 

@@ -2,26 +2,33 @@
 
 ## Manual install
 
-The following packages are required.
+### For End Users
 
-- [setuptools](https://pypi.org/project/setuptools/)
+To install the SDK without uv (standard pip installation):
+
+```bash
+pip install smartsheet-python-sdk
+```
+
+### For Contributors
+
+Contributors should use uv for development. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions.
+
+The following packages are the core runtime dependencies:
 - [six](https://pypi.python.org/pypi/six)
 - [requests](https://pypi.python.org/pypi/requests)
+- [requests-toolbelt](https://pypi.org/project/requests-toolbelt/)
+- [certifi](https://pypi.org/project/certifi/)
+- [python-dateutil](https://pypi.org/project/python-dateutil/)
 
-To install this SDK manually:
+If you want to install from source without uv:
 
-1. Clone the source code from this repo [GitHub](https://github.com/smartsheet-python-sdk)
-2. Install the required packages:
-
-   ```bash
-   pip install setuptools six requests
-   ```
-
-3. Ensure you are in the `smartsheet-python-sdk` directory
-4. Install it using setup.py:
+1. Clone the repo from [GitHub](https://github.com/smartsheet/smartsheet-python-sdk)
+2. Ensure you are in the `smartsheet-python-sdk` directory
+3. Install it:
 
    ```bash
-   python setup.py install
+   pip install -e .
    ```
 
 ## Logging
