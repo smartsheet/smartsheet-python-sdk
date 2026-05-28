@@ -29,7 +29,7 @@ For complete test examples, see [tests/mock_api/reports/](tests/mock_api/reports
 ### Running Mock API Tests
 
 | Command | Purpose |
-|---------|---------|
+| ------- | ------- |
 | `uv run pytest tests/mock_api` | Run all mock API tests |
 | `uv run pytest tests/mock_api/reports/test_create_report.py` | Run specific test suite |
 | `uv run pytest tests/mock_api/reports/test_create_report.py::test_create_report_all_response_properties -v` | Run specific test |
@@ -110,5 +110,5 @@ See [smartsheet-sdk-tests](https://github.com/smartsheet/smartsheet-sdk-tests) f
 
 **Available in `tests/mock_api/mock_api_test_helper.py`:**
 
-- **`get_mock_api_client(test_name, request_id)`** - Creates a Smartsheet client configured for WireMock server (http://localhost:8082/2.0/)
+- **`get_mock_api_client(test_name, request_id)`** - Creates a Smartsheet client configured for WireMock server (<http://localhost:8082/2.0/>)
 - **`get_wiremock_request(request_id)`** - Retrieves request from WireMock admin API using the `x-request-id` header. Returns request object with `absoluteUrl`, `body`, `headers`, `method`, etc.

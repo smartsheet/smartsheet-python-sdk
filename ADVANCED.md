@@ -40,7 +40,7 @@ API requests flow through a delegation pattern where resource methods construct 
 
 **Cross-reference:** See [Serialization and Deserialization](#serialization-and-deserialization) for JSON body handling, [Authentication Flow](#authentication-flow) for header injection, and [Retry Logic and Backoff](#retry-logic-and-backoff) for request execution with retries.
 
-```
+```text
 ┌──────────────────┐
 │ Resource Method  │  e.g., sheets.add_rows()
 └────────┬─────────┘
@@ -74,6 +74,7 @@ The SDK implements dual-mode error handling: result mode (default) returns `Erro
 **Cross-reference:** See [Retry Logic and Backoff](#retry-logic-and-backoff) for retry-eligible error codes and [Response Handling](#response-handling) for error result construction.
 
 **Implementation locations:**
+
 - Exception definitions: `smartsheet/exceptions.py:20-131`
 - Error lookup and raising: `smartsheet/smartsheet.py:625-721, 299-308`
 - Configuration method: `smartsheet/smartsheet.py:235-248`
@@ -86,7 +87,8 @@ Retry logic applies exclusively to retryable errors identified by the `should_re
 **Cross-reference:** See [Error Handling and Exceptions](#error-handling-and-exceptions) for retryable error codes, [Request Lifecycle](#request-lifecycle) for the retry loop context, and [Logging Infrastructure](#logging-infrastructure) for retry logging.
 
 **Backoff formula flow:**
-```
+
+```text
 Attempt 0: 2^0 + random(0,1) = 1-2s
 Attempt 1: 2^1 + random(0,1) = 2-3s
 Attempt 2: 2^2 + random(0,1) = 4-5s
@@ -97,9 +99,10 @@ Attempt 3: 2^3 + random(0,1) = 8-9s
 
 The SDK uses bidirectional type conversion between Python objects and JSON through `serialize()` and `deserialize()` functions. Serialization (`smartsheet/util.py:105-162`) recursively processes objects with priority-based handling: custom `.serialize()` methods, datetime to ISO 8601 with "Z" suffix, date to ISO 8601 date-only, primitives (str, int, float, bool) as-is, `EnumeratedValue` to enum name string, lists to recursively serialized arrays (returning None for empty lists), and dicts to recursively serialized objects with camelCase key conversion. The `None` value handling is nuanced: None in object properties is skipped, None in dict values is preserved, and `ExplicitNull` objects are excluded entirely. Type wrapper classes in `smartsheet/types.py` enforce type safety: `String` (with optional accept whitelist), `Number` (int/float), `Boolean` (strict bool), `Timestamp` (datetime or ISO string with auto-parsing via dateutil), `EnumeratedValue` (string or Enum with flexible lookup by name or value), `TypedList` (homogeneous collections with automatic item conversion), and `TypedObject` (nested models with dict-to-instance conversion). Deserialization (`smartsheet/util.py:165-174`) iterates dict items, converts camelCase keys to snake_case via regex, and calls `setattr()` which triggers type wrapper validation. Property introspection (`get_child_properties()`) discovers all `@property` decorated methods and generates (snake_case, camelCase) tuples for serialization. Model classes implement `to_dict()` (calls serialize) and `to_json()` (calls json.dumps on dict) for request payloads. This type system provides automatic coercion, validation, and naming convention translation while supporting recursive nested structures and polymorphic collections.
 
-**Cross-reference:** See [Model Object Construction](#model-object-construction) for deserialization in model __init__, [Request Lifecycle](#request-lifecycle) for serialization in prepare_request, and [Response Handling](#response-handling) for native() deserialization.
+**Cross-reference:** See [Model Object Construction](#model-object-construction) for deserialization in model **init**, [Request Lifecycle](#request-lifecycle) for serialization in prepare_request, and [Response Handling](#response-handling) for native() deserialization.
 
 **Name convention mapping:**
+
 - `destinationId` ↔ `destination_id`
 - `createdAt` ↔ `created_at`
 - `modifiedBy` ↔ `modified_by`
@@ -113,7 +116,7 @@ The SDK supports three pagination patterns through specialized result wrapper cl
 **Pagination comparison:**
 
 | Pattern | IndexResult | TokenPaginatedResult | EventResult |
-|---------|-------------|----------------------|-------------|
+| ------- | ----------- | -------------------- | ----------- |
 | Type | Offset-based | Cursor-based | Stream position |
 | Total count | Yes | No | No |
 | Use case | Small datasets | Large datasets | Event streams |
@@ -126,6 +129,7 @@ Model construction follows a declarative builder pattern where classes initializ
 **Cross-reference:** See [Serialization and Deserialization](#serialization-and-deserialization) for type system details, [Response Handling](#response-handling) for model instantiation from API responses, and [Request Lifecycle](#request-lifecycle) for serialization back to JSON.
 
 **Construction flow:**
+
 ```python
 # API response: {"id": 123, "name": "Sheet", "rows": [{"id": 1}]}
 sheet = Sheet(api_response, base_obj=client)
@@ -146,6 +150,7 @@ Resource modules organize API operations through classes that delegate to the ba
 **Cross-reference:** See [Client Initialization](#client-initialization) for lazy loading details, [Request Lifecycle](#request-lifecycle) for operation dictionary processing, and [Error Handling and Exceptions](#error-handling-and-exceptions) for return type Union handling.
 
 **Operation method pattern:**
+
 ```python
 def add_columns(self, sheet_id, list_of_columns):
     _op = fresh_operation("add_columns")
@@ -166,7 +171,7 @@ The Passthrough class (`smartsheet/passthrough.py`) provides raw JSON-level API 
 **Passthrough vs Typed Methods:**
 
 | Aspect | Typed Methods | Passthrough |
-|--------|---------------|-------------|
+| ------ | ------------- | ----------- |
 | Input | Model objects | Dict/JSON/JSONObject |
 | Validation | Type-checked | API-only |
 | Serialization | Recursive with conversions | Direct pass-through |
@@ -177,9 +182,10 @@ The Passthrough class (`smartsheet/passthrough.py`) provides raw JSON-level API 
 
 Logging configuration occurs during client initialization via `setup_logging()` (`smartsheet/smartsheet.py:66-84`), which checks the `LOG_CFG` environment variable for three scenarios: unset (uses Python default), file path (loads JSON config via `logging.config.dictConfig()`), or string value ("DEBUG" or "INFO" sets level). Dependency logging is always throttled by setting `requests` and `urllib3` loggers to WARNING level to reduce noise. Request logging happens in `_log_request()` (`smartsheet/smartsheet.py:310-357`), which is called after every HTTP request. INFO level logs contain structured request metadata: `{"request": {"command": "METHOD URL"}}` with minimal overhead. DEBUG level logs include request body (JSON parsed and formatted with sorted keys, multipart suppressed, other content types suppressed) and successful response body (JSON parsed/formatted for normal responses, body omitted for downloads via dl_path check). ERROR level logs contain failed response details: `{"response": {"statusCode": code, "reason": text, "content": body}}` with JSON parsing for JSON responses. Performance implications vary by level: INFO has negligible overhead (simple string concatenation), DEBUG has moderate overhead (JSON parsing and sorting on every request/response), and ERROR has low frequency impact (only on failures). Optimizations include conditional JSON parsing (only if Content-Type is application/json), multipart detection (skips body logging for multipart requests via is_multipart() utility), download path optimization (skips response body logging when operation[dl_path] is set to save memory on binary downloads), and dependency throttling (reduces framework noise). Retry attempts log at INFO level with backoff duration. Security considerations include full request/response body logging (may contain sensitive data) and multipart body suppression (prevents logging files).
 
-**Cross-reference:** See [Client Initialization](#client-initialization) for setup_logging() integration, [Request Lifecycle](#request-lifecycle) for when _log_request() is called, and [Retry Logic and Backoff](#retry-logic-and-backoff) for retry attempt logging.
+**Cross-reference:** See [Client Initialization](#client-initialization) for setup_logging() integration, [Request Lifecycle](#request-lifecycle) for when `_log_request()` is called, and [Retry Logic and Backoff](#retry-logic-and-backoff) for retry attempt logging.
 
 **Log level content:**
+
 - **INFO**: Request method + URL only
 - **DEBUG**: Request body, response body (JSON formatted with sorted keys)
 - **ERROR**: Failed response with status code, reason, body
@@ -191,7 +197,8 @@ Authentication uses bearer token authentication with no automatic refresh. Token
 **Cross-reference:** See [Client Initialization](#client-initialization) for token resolution during construction, [Request Lifecycle](#request-lifecycle) for header injection timing, and [Logging Infrastructure](#logging-infrastructure) for token redaction in logs.
 
 **Authentication architecture:**
-```
+
+```text
 Smartsheet.__init__()
   ├─ Token Resolution (parameter > env > ValueError)
   └─ prepare_request()

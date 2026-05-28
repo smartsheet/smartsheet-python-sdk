@@ -7,6 +7,7 @@ This document defines workflow agents for developing the Smartsheet Python SDK. 
 **Purpose:** Agent-specific guidance for SDK API endpoint development
 
 **Relationship to other documentation:**
+
 - **CLAUDE.md**: Provides SDK-specific development context and patterns
 - **Skills** (`.claude/skills/`): Contain detailed execution checklists
 - **Supporting docs**: TESTING.md, ADVANCED.md, CONTRIBUTING.md, ISSUE-FIRST.md
@@ -24,8 +25,8 @@ This document defines workflow agents for developing the Smartsheet Python SDK. 
 ### Workflow
 
 1. **Start from GitHub Issue** - Follow Issue First approach (see ISSUE-FIRST.md)
-2. **Obtain OpenAPI spec** - Smartsheet public API (https://developers.smartsheet.com/_spec/api/smartsheet/openapi.json) or user-provided path
-3. **Obtain WireMock mappings location** - smartsheet-sdk-tests repo (https://github.com/smartsheet/smartsheet-sdk-tests) or user-provided local path
+2. **Obtain OpenAPI spec** - Smartsheet public API (<https://developers.smartsheet.com/_spec/api/smartsheet/openapi.json>) or user-provided path
+3. **Obtain WireMock mappings location** - smartsheet-sdk-tests repo (<https://github.com/smartsheet/smartsheet-sdk-tests>) or user-provided local path
 4. **Create todos from skill checklist** - MANDATORY before any coding (use TodoWrite)
 5. **Review gold standard** - Study `tests/mock_api/reports/` before implementing
 6. **Implement resource method** - In `smartsheet/{resource}.py`
@@ -45,12 +46,14 @@ This document defines workflow agents for developing the Smartsheet Python SDK. 
 ### Key Requirements
 
 **CANNOT PROCEED without:**
+
 - OpenAPI spec obtained and verified
 - WireMock mappings location obtained
 - Todos created from skill checklist (no exceptions)
 - Gold standard reviewed (`tests/mock_api/reports/`)
 
 **MANDATORY:**
+
 - Python 3.7 compatibility (no walrus operator `:=`, no positional-only `/`, no 3.8+ TypedDict/Literal)
 - Type definitions for new endpoints
 - All 5 test types (or 4 if required_properties N/A)
@@ -73,6 +76,7 @@ This document defines workflow agents for developing the Smartsheet Python SDK. 
 ### Execution Details
 
 See `.claude/skills/implement-api-endpoint/SKILL.md` for:
+
 - Complete step-by-step checklist
 - OpenAPI spec verification requirements
 - WireMock mappings verification requirements
@@ -90,8 +94,8 @@ See `.claude/skills/implement-api-endpoint/SKILL.md` for:
 
 ### Workflow
 
-1. **Obtain OpenAPI spec** - Smartsheet public API (https://developers.smartsheet.com/_spec/api/smartsheet/openapi.json) or user-provided path
-2. **Obtain WireMock mappings location** - smartsheet-sdk-tests repo (https://github.com/smartsheet/smartsheet-sdk-tests) or user-provided local path
+1. **Obtain OpenAPI spec** - Smartsheet public API (<https://developers.smartsheet.com/_spec/api/smartsheet/openapi.json>) or user-provided path
+2. **Obtain WireMock mappings location** - smartsheet-sdk-tests repo (<https://github.com/smartsheet/smartsheet-sdk-tests>) or user-provided local path
 3. **Verify implementation matches spec exactly** - Every parameter, type, request/response schema
 4. **Verify WireMock mappings exist and match spec** - Check mapping files in repo
 5. **Open gold standard for side-by-side comparison** - `tests/mock_api/reports/`
@@ -115,12 +119,14 @@ See `.claude/skills/implement-api-endpoint/SKILL.md` for:
 ### Key Requirements
 
 **CANNOT APPROVE without (non-negotiable):**
+
 - OpenAPI spec obtained and implementation verified against it
 - WireMock mappings obtained and verified
 - Side-by-side comparison with gold standard (`tests/mock_api/reports/`)
 - Strict TESTING.md compliance verification
 
 **MUST VERIFY:**
+
 - Implementation matches spec exactly (not "roughly")
 - Tests match gold standard patterns exactly (not "similar")
 - All 5 test types exist with correct patterns
@@ -147,6 +153,7 @@ See `.claude/skills/implement-api-endpoint/SKILL.md` for:
 ### Review Anti-Patterns
 
 **These thoughts mean STOP - review is incomplete:**
+
 - "I don't need to check the spec" - Spec verification is MANDATORY
 - "I don't need to check WireMock mappings" - Mappings verification is MANDATORY
 - "I didn't compare to reports tests" - Gold standard comparison is MANDATORY
@@ -160,6 +167,7 @@ See `.claude/skills/implement-api-endpoint/SKILL.md` for:
 ### Execution Details
 
 See `.claude/skills/review-api-endpoint/SKILL.md` for:
+
 - Complete review checklist
 - OpenAPI spec verification steps
 - WireMock mappings verification steps
@@ -174,9 +182,11 @@ See `.claude/skills/review-api-endpoint/SKILL.md` for:
 **Location:** `.claude/skills/`
 
 ### implement-api-endpoint
+
 **Path:** `.claude/skills/implement-api-endpoint/SKILL.md`
 
 **Contains:**
+
 - 4-part implementation workflow (code, tests, mappings, docs)
 - OpenAPI spec verification checklist
 - WireMock mappings verification checklist
@@ -186,9 +196,11 @@ See `.claude/skills/review-api-endpoint/SKILL.md` for:
 - Gold standard references (`tests/mock_api/reports/`)
 
 ### review-api-endpoint
+
 **Path:** `.claude/skills/review-api-endpoint/SKILL.md`
 
 **Contains:**
+
 - Systematic review checklist
 - OpenAPI spec verification requirements
 - WireMock mappings verification requirements
@@ -202,34 +214,42 @@ See `.claude/skills/review-api-endpoint/SKILL.md` for:
 ## Supporting Documentation
 
 ### TESTING.md
+
 **Purpose:** Mock API test standards (MANDATORY compliance)
 
 **Key content:**
+
 - 5 required test types for every endpoint
 - Whole-object assertion patterns
 - Request body assertion requirements (POST/PUT/PATCH)
 - Gold standard reference (`tests/mock_api/reports/`)
 
 ### ADVANCED.md
+
 **Purpose:** Advanced SDK patterns and requirements
 
 **Key content:**
+
 - Resource module organization
 - Documentation requirements (when docs-source updates needed)
 - Delegation patterns
 
 ### CONTRIBUTING.md
+
 **Purpose:** General contribution guidelines
 
 **Key content:**
+
 - Documentation file mappings
 - Sphinx build instructions
 - Contribution workflow
 
 ### ISSUE-FIRST.md
+
 **Purpose:** Issue-first development methodology
 
 **Key content:**
+
 - Why issues are required before code
 - How to write quality issues for agents
 - Examples of well-written issues
@@ -239,18 +259,23 @@ See `.claude/skills/review-api-endpoint/SKILL.md` for:
 ## Quick Reference
 
 ### OpenAPI Spec Location
-https://developers.smartsheet.com/_spec/api/smartsheet/openapi.json
+
+<https://developers.smartsheet.com/_spec/api/smartsheet/openapi.json>
 
 ### WireMock Mappings Location
-https://github.com/smartsheet/smartsheet-sdk-tests
+
+<https://github.com/smartsheet/smartsheet-sdk-tests>
 
 ### Gold Standard Tests
+
 `tests/mock_api/reports/` - All tests must match these patterns exactly
 
 ### Python Compatibility
+
 Python 3.7+ (no 3.8+ features: `:=`, `/`, TypedDict, Literal)
 
 ### Test Types (All 5 Required)
+
 1. `test_{method}_generated_url_is_correct`
 2. `test_{method}_all_response_properties`
 3. `test_{method}_required_response_properties` (if applicable)
@@ -258,5 +283,6 @@ Python 3.7+ (no 3.8+ features: `:=`, `/`, TypedDict, Literal)
 5. `test_{method}_error_5xx`
 
 ### Assertion Pattern
+
 ✅ `assert response.to_dict() == {...}`  
 ❌ `assert response.id == 123; assert response.name == "test"`
