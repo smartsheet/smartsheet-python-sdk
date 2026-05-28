@@ -65,7 +65,7 @@ class CreateReportResult:
 
     @property
     def access_level(self):
-        return self._access_level.value
+        return self._access_level
 
     @access_level.setter
     def access_level(self, value) -> None:
