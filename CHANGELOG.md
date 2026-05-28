@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Added
+- SDK architecte details in [ADVANCED.md](ADVANCED.md)
+- SDK testing standards in [TESTING.md](TESTING.md)
+
+### Fixed
+- Aligned the [reports mock api tests](tests/mock_api/reports/) with the testing standards.
+- Fixed `access_level` property of [CreateReportResult](smartsheet/models/create_report_result.py) to return `EnumeratedValue` instead of the raw enum itselt.
+- Fixed `destination_type` property of [ReportDestination](smartsheet/models/report_destination.py) to return `EnumeratedValue` instead of the raw enum itselt.
+- Fixed `asset_type` property of [ReportScopeInclusion](smartsheet/models/report_scope_inclusion.py) to return `EnumeratedValue` instead of the raw enum itselt.
+- Fixed `EnumeratedValue.__str__` to return value if the underlying enum inherits from `str`.
+- Fixed `serialize` function to use `EnumeratedValue.value.value` if the underlying enum inherits from `str`.
+
 ## [3.9.0] - 2026-04-30
 
 ### Added

@@ -39,5 +39,7 @@ smartsheet/version.py
 # Sphinx auto-generated files
 docs-source/modules.rst
 docs-source/smartsheet*.rst
-# Built documentation
-docs/
+# Claude Code settings
+.claude/settings.local.json
+# Superpowers documentation
+docs/superpowers

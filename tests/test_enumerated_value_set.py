@@ -213,14 +213,14 @@ class TestEnumeratedValueSetStringBasedEnums:
         # Setting by the enum value 'sheet' (lowercase), not the name 'SHEET'
         enum_val.set("sheet")
         assert enum_val.value == ReportAssetType.SHEET
-        assert str(enum_val) == "SHEET"
+        assert str(enum_val) == "sheet"
 
     def test_set_by_string_value_workspace(self):
         """Test setting ReportAssetType by string value 'workspace' (not name 'WORKSPACE')"""
         enum_val = EnumeratedValue(ReportAssetType)
         enum_val.set("workspace")
         assert enum_val.value == ReportAssetType.WORKSPACE
-        assert str(enum_val) == "WORKSPACE"
+        assert str(enum_val) == "workspace"
 
     def test_set_by_name_vs_value_for_string_enum(self):
         """Test that name lookup is tried first, then value lookup for string enums"""
@@ -229,12 +229,12 @@ class TestEnumeratedValueSetStringBasedEnums:
         # Set by NAME (uppercase)
         enum_val.set("SHEET")
         assert enum_val.value == ReportAssetType.SHEET
-        assert str(enum_val) == "SHEET"
+        assert str(enum_val) == "sheet"
 
         # Set by VALUE (lowercase)
         enum_val.set("sheet")
         assert enum_val.value == ReportAssetType.SHEET
-        assert str(enum_val) == "SHEET"
+        assert str(enum_val) == "sheet"
 
         # Both should work and map to the same enum member
 
@@ -245,12 +245,12 @@ class TestEnumeratedValueSetStringBasedEnums:
         # Set by value 'workspace'
         enum_val.set("workspace")
         assert enum_val.value == ReportDestinationType.WORKSPACE
-        assert str(enum_val) == "WORKSPACE"
+        assert str(enum_val) == "workspace"
 
         # Set by value 'folder'
         enum_val.set("folder")
         assert enum_val.value == ReportDestinationType.FOLDER
-        assert str(enum_val) == "FOLDER"
+        assert str(enum_val) == "folder"
 
     def test_set_report_destination_by_name(self):
         """Test setting ReportDestinationType by enum member names"""
