@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - ⚠️ **BREAKING**: Removed deprecated `include_all`, `page`, `page_size`, `modified_since`, and `pagination_type` parameters from `list_sights`. These were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-includeall-and-offset-based-pagination-for-dashboards) (sunset Jun-03-2026). `list_sights` now uses token-based pagination exclusively and returns `TokenPaginatedResult[Sight]`. Use `max_items` and `last_key` instead.
+- ⚠️ **BREAKING**: Removed deprecated `include_all`, `page`, `page_size`, and `pagination_type` parameters from `list_workspaces`. These were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). `list_workspaces` now uses token-based pagination exclusively and returns `TokenPaginatedResult[Workspace]`. The response no longer exposes `page_number`, `page_size`, `total_count`, or `total_pages`. Use `max_items` and `last_key` instead. The new shape mirrors `list_sights`.
 
 ### Fixed
 

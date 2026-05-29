@@ -19,10 +19,9 @@ from __future__ import absolute_import
 
 import logging
 import os.path
-import warnings
 from typing import Union, Optional
 
-from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, Workspace
+from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, TokenPaginatedResult, Workspace
 from .util import deprecated
 from .util import fresh_operation
 
@@ -336,76 +335,31 @@ class Workspaces:
 
     def list_workspaces(
         self,
-        page_size: Optional[int] = None,
-        page: Optional[int] = None,
-        include_all: Optional[bool] = None,
         last_key: Optional[str] = None,
         max_items: Optional[int] = None,
-        pagination_type: Optional[str] = None
-    ) -> Union[IndexResult[Workspace], Error]:
+    ) -> TokenPaginatedResult[Workspace]:
         """Get the list of Workspaces the authenticated User may access.
 
         Args:
-            page_size (int, optional): [DEPRECATED] The maximum number of items to
-                return per page. Use pagination_type='token' with max_items instead.
-            page (int, optional): [DEPRECATED] Which page to return.
-                Use pagination_type='token' with last_key instead.
-            include_all (bool, optional): [DEPRECATED] If true, include all results
-                (i.e. do not paginate). Use pagination_type='token' instead.
-            last_key (str, optional): Pagination cursor for next page (token pagination only).
-            max_items (int, optional): Maximum items per page (token pagination only).
-                Must be a positive integer.
-            pagination_type (str, optional): Use 'token' for efficient cursor-based pagination.
-                Defaults to legacy offset-based pagination if not specified.
+            last_key (str, optional): Pagination cursor for next page.
+            max_items (int, optional): Maximum items per page. Must be a positive integer.
 
         Returns:
-            Union[IndexResult[Workspace], Error]: The result of the operation, or an Error object if the request fails.
-                When using legacy pagination, contains paginated results with
-                total_count, total_pages, etc.
+            TokenPaginatedResult[Workspace]: The result of the operation.
 
         Raises:
-            ValueError: If pagination_type is not 'token' or None, or if max_items <= 0
-                when using token pagination.
+            ValueError: If max_items <= 0.
         """
-        # Parameter validation
-        if pagination_type is not None and pagination_type not in ['token']:
-            raise ValueError("pagination_type must be 'token' or None")
-        if pagination_type == 'token' and max_items is not None and max_items <= 0:
+        if max_items is not None and max_items <= 0:
             raise ValueError("max_items must be a positive integer")
+
         _op = fresh_operation("list_workspaces")
         _op["method"] = "GET"
         _op["path"] = "/workspaces"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
 
-        # Issue deprecation warnings for old parameters when used
-        if page_size is not None:
-            warnings.warn(
-                "page_size parameter is deprecated. Use pagination_type='token' with max_items instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-        if page is not None:
-            warnings.warn(
-                "page parameter is deprecated. Use pagination_type='token' with last_key instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-        if include_all is not None:
-            warnings.warn(
-                "include_all parameter is deprecated. Use pagination_type='token' instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-
-        if pagination_type == "token":
-            _op["query_params"]["lastKey"] = last_key
-            _op["query_params"]["maxItems"] = max_items
-            _op["query_params"]["paginationType"] = pagination_type
-        else:
-            _op["query_params"]["pageSize"] = page_size
-            _op["query_params"]["page"] = page
-            _op["query_params"]["includeAll"] = include_all
-
-        expected = ["IndexResult", "Workspace"]
+        expected = ["TokenPaginatedResult", "Workspace"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
