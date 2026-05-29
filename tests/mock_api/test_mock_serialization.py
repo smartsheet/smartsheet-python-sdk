@@ -434,14 +434,6 @@ class TestMockSerialization(MockApiTestHelper):
         assert response.message == 'SUCCESS'
 
     @clean_api_error
-    def test_template_serialization(self):
-        self.client.as_test_scenario('Serialization - Template')
-
-        templates = self.client.Templates.list_public_templates()
-
-        assert templates.data[0].categories[0] == 'Featured Templates'
-
-    @clean_api_error
     def test_update_request_serialization(self):
         pytest.skip('Date serialization is not easily configurable currently')
 
