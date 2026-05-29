@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - SDK architecte details in [ADVANCED.md](ADVANCED.md)
 - SDK testing standards in [TESTING.md](TESTING.md)
 
+### Removed
+- ⚠️ **BREAKING**: Removed deprecated `include_all`, `page`, `page_size`, `modified_since`, and `pagination_type` parameters from `list_sights`. These were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-includeall-and-offset-based-pagination-for-dashboards) (sunset Jun-03-2026). `list_sights` now uses token-based pagination exclusively and returns `TokenPaginatedResult[Sight]`. Use `max_items` and `last_key` instead.
+
 ### Fixed
 
 - Aligned the [reports mock api tests](tests/mock_api/reports/) with the testing standards.
