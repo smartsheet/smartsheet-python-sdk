@@ -4,7 +4,7 @@ import pytest
 from smartsheet.models import (
     AlternateEmail, Attachment, Column, Comment, ContainerDestination, CrossSheetReference,
     Discussion, ExplicitNull, Favorite, FormatDetails, Group, ImageUrl, MultiRowEmail, Recipient,
-    Row, Schedule, Share, Sheet, SheetEmail, UpdateRequest, User, Workspace
+    Row, Schedule, Sheet, SheetEmail, UpdateRequest, User, Workspace
 )
 from smartsheet.models.object_value import DURATION
 
@@ -368,23 +368,6 @@ class TestMockSerialization(MockApiTestHelper):
         assert report.effective_attachment_options[0] == 'GOOGLE_DRIVE'
         assert report.columns[0].virtual_id == 2
         assert report.rows[0].cells[0].virtual_column_id == 2
-
-    @clean_api_error
-    def test_share_serialization(self):
-        pytest.skip('Skipping until mock API test is updated')
-        self.client.as_test_scenario('Serialization - Share')
-
-        share = Share({
-            'email': 'john.doe@smartsheet.com',
-            'accessLevel': 'VIEWER',
-            'subject': 'Check out this sheet',
-            'message': 'Let me know what you think. Thanks!',
-            'ccMe': True
-        })
-
-        response = self.client.Sheets.share_sheet(1, share, send_email=True)
-
-        assert response.result.id == 'abc'
 
     @clean_api_error
     def test_send_via_email_serialization(self):

@@ -104,7 +104,6 @@ from .search_result import SearchResult
 from .search_result_item import SearchResultItem
 from .sent_update_request import SentUpdateRequest
 from .server_info import ServerInfo
-from .share import Share
 from .sheet import Sheet
 from .sheet_email import SheetEmail
 from .sheet_filter import SheetFilter

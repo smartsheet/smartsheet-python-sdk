@@ -385,40 +385,6 @@ class Sheet:
     def get_version(self):
         return self._base.Sheets.get_sheet_version(self.id)
 
-    def list_shares(
-        self,
-        page_size=100,
-        page=1,
-        include_all=False,
-        include_workspace_shares=False,
-        access_api_level=0,
-    ):
-        return self._base.Sheets.list_shares(
-            self.id,
-            page_size,
-            page,
-            include_all,
-            include_workspace_shares,
-            access_api_level,
-        )
-
-    def share(self, share_obj, send_email=False):
-        return self._base.Sheets.share_sheet(self.id, share_obj, send_email)
-
-    def shares(self, page_size=100, page=1, include_all=False):
-        return self._base.Sheets.list_shares(
-            self.id, page_size=100, page=1, include_all=False
-        )
-
-    def update_share(self, share_id, share_obj):
-        return self._base.Sheets.update_share(self.id, share_id, share_obj)
-
-    def get_share(self, share_id):
-        return self._base.Sheets.get_share(self.id, share_id)
-
-    def delete_share(self, share_id):
-        return self._base.Sheets.delete_share(self.id, share_id)
-
     def update_name(self, new_name):
         return self._base.Sheets.update_sheet(self.id, Sheet({"name": new_name}))
 

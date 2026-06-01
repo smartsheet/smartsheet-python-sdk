@@ -21,7 +21,7 @@ import logging
 import os.path
 from typing import Union, Optional
 
-from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, TokenPaginatedResult, Workspace
+from .models import Error, Folder, PaginatedChildrenResult, Result, Sheet, TokenPaginatedResult, Workspace
 from .util import fresh_operation
 
 
@@ -177,26 +177,6 @@ class Workspaces:
 
         return response
 
-    def delete_share(self, workspace_id, share_id) -> Union[Result[None], Error]:
-        """Delete the Share specified.
-
-        Args:
-            workspace_id (int): Workspace ID
-            share_id (str): Share ID
-
-        Returns:
-            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("delete_share")
-        _op["method"] = "DELETE"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
-
-        expected = ["Result", None]
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
     def delete_workspace(self, workspace_id) -> Union[Result[None], Error]:
         """Delete the specified Workspace and its contents.
 
@@ -211,54 +191,6 @@ class Workspaces:
         _op["path"] = "/workspaces/" + str(workspace_id)
 
         expected = ["Result", None]
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def get_share(self, workspace_id, share_id) -> Union[Share, Error]:
-        """Get the specified Share.
-
-        Args:
-            workspace_id (int): Workspace ID
-            share_id (str): Share ID
-
-        Returns:
-            Union[Share, Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("get_share")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
-
-        expected = "Share"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def list_shares(self, workspace_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Share], Error]:
-        """Get a list of all Users and Groups to whom the specified Workspace
-        is shared, and their access level.
-
-        Args:
-            workspace_id (int): Workspace ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-
-        Returns:
-            Union[IndexResult[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("list_shares")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares"
-        _op["query_params"]["pageSize"] = page_size
-        _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
-        expected = ["IndexResult", "Share"]
-
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -291,63 +223,6 @@ class Workspaces:
         _op["query_params"]["maxItems"] = max_items
 
         expected = ["TokenPaginatedResult", "Workspace"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def share_workspace(self, workspace_id, share_obj, send_email=False) -> Union[Result[Share], Error]:
-        """Share a Workspace with the specified Users and Groups.
-
-        Args:
-            workspace_id (int): Workspace ID
-            share_obj (Share): Share object.
-            send_email (bool): Either true or false to
-                indicate whether or not to notify the user by email. Default
-                is false.
-
-        Returns:
-            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("share_workspace")
-        _op["method"] = "POST"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares"
-        _op["query_params"]["sendEmail"] = send_email
-        _op["json"] = share_obj
-
-        expected = ["Result", "Share"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def update_share(self, workspace_id, share_id, share_obj) -> Union[Result[Share], Error]:
-        """Update the access level of a User or Group for the specified
-        Workspace.
-
-        Args:
-            workspace_id (int): Workspace ID
-            share_id (str): Share ID
-            share_obj (Share): Share object.
-
-        Returns:
-            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        if not all(
-            val is not None for val in ["workspace_id", "share_id", "share_obj"]
-        ):
-            raise ValueError(
-                ("One or more required values are missing from call to " + __name__)
-            )
-
-        _op = fresh_operation("update_share")
-        _op["method"] = "PUT"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
-        _op["json"] = share_obj
-
-        expected = ["Result", "Share"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
