@@ -22,7 +22,6 @@ import os.path
 from typing import Union, Optional
 
 from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, TokenPaginatedResult, Workspace
-from .util import deprecated
 from .util import fresh_operation
 
 
@@ -232,74 +231,6 @@ class Workspaces:
         _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
 
         expected = "Share"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    @deprecated
-    def get_workspace(self, workspace_id, load_all=False, include=None) -> Union[Workspace, Error]:
-        """Get the specified Workspace and list its contents.
-
-        Deprecated: 3.1.0
-           Use `get_workspace_metadata` and `get_workspace_children` instead.
-
-        Get the specified Workspace and list its contents. By
-        default, this operation only returns top-level items in the
-        Workspace. To load all of the contents, including nested Folders,
-        include the **loadAll** parameter with a value of `true`.
-
-        Args:
-            workspace_id (int): Workspace ID
-            load_all (bool): Load all contents, including
-                nested items.
-            include (list[str]): A comma-separated list of
-                optional elements to include in the response. Valid list
-                values: ownerInfo, sheetVersion, source.
-
-        Returns:
-            Union[Workspace, Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("get_workspace")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces/" + str(workspace_id)
-        _op["query_params"]["loadAll"] = load_all
-        _op["query_params"]["include"] = include
-
-        expected = "Workspace"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    @deprecated
-    def list_folders(self, workspace_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Folder], Error]:
-        """Get a list of top-level child Folders within the specified
-        Workspace.
-
-        Deprecated: 3.1.0
-           Use `get_workspace_children` with children_resource_types=['folders'] instead.
-
-        Args:
-            workspace_id (int): Workspace ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-
-        Returns:
-            Union[IndexResult[Folder], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("list_folders")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/folders"
-        _op["query_params"]["pageSize"] = page_size
-        _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
-
-        expected = ["IndexResult", "Folder"]
-
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
