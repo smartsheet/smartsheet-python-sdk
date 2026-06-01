@@ -1,7 +1,7 @@
 import uuid
 from urllib.parse import urlparse, parse_qs
 
-from smartsheet.models import Error
+from smartsheet.models import Error, Event, EventResult
 
 from tests.mock_api.mock_api_test_helper import get_mock_api_client, get_wiremock_request
 from tests.mock_api.events.common_test_constants import (
@@ -191,6 +191,8 @@ def test_get_events_all_response_properties():
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request["body"]
 
+    assert isinstance(response, EventResult)
+    assert isinstance(response.data[0], Event)
     assert response.to_dict() == EXPECTED_ALL_RESPONSE_PROPERTIES
 
 
@@ -206,6 +208,8 @@ def test_get_events_required_response_properties():
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request["body"]
 
+    assert isinstance(response, EventResult)
+    assert isinstance(response.data[0], Event)
     assert response.to_dict() == EXPECTED_REQUIRED_RESPONSE_PROPERTIES
 
 
