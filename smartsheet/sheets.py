@@ -30,6 +30,7 @@ from .models import AutomationRule, BulkItemResult, Column, CopyOrMoveRowResult,
     SheetPublish, SheetSummary, SummaryField, UpdateRequest, Version, Error
 from .types import TypedList
 from .util import deprecated
+from .operations.sheets_operations import SheetsOperations
 
 class Sheets:
 
@@ -111,17 +112,8 @@ class Sheets:
         Returns:
             Union[Result[Union[Row, List[Row]]], Error]: The result of the operation - either a list or a single object, or an Error object if the request fails.
         """
-        if isinstance(list_of_rows, (dict, Row)):
-            arg_value = list_of_rows
-            list_of_rows = TypedList(Row)
-            list_of_rows.append(arg_value)
-
-        _op = fresh_operation("add_rows")
-        _op["method"] = "POST"
-        _op["path"] = "/sheets/" + str(sheet_id) + "/rows"
-        _op["json"] = list_of_rows
-
-        expected = ["Result", "Row"]
+        # Build operation using shared builder
+        _op, expected = SheetsOperations.build_add_rows(sheet_id, list_of_rows)
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
