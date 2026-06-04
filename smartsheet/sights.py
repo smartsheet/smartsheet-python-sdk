@@ -35,7 +35,7 @@ class Sights:
         self,
         last_key: Optional[str] = None,
         max_items: Optional[int] = None,
-    ):
+    ) -> Union[TokenPaginatedResult[Sight], Error]:
         """Get the list of all Sights the User has access to, in alphabetical
         order, by name.
 
