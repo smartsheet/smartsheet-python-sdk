@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Added `object_id_str` field to `Event` model to support alphanumeric object identifiers (AUD-902)
 - SDK architecte details in [ADVANCED.md](ADVANCED.md)
 - SDK testing standards in [TESTING.md](TESTING.md)
 
