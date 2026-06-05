@@ -21,7 +21,7 @@ from datetime import datetime
 from typing import Optional, Union
 
 from .util import fresh_operation
-from .models import Error, IndexResult, Result, Share, Sight, SightPublish
+from .models import Error, IndexResult, Result, Share, Sight, SightPublish, Workspace
 
 
 class Sights:
@@ -136,6 +136,26 @@ class Sights:
         _op["query_params"]["level"] = level
 
         expected = "Sight"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_sight_path(self, sight_id) -> Union[Workspace, Error]:
+        """Gets the hierarchical path of a Sight.
+
+        Args:
+            sight_id (int): Sight ID
+
+        Returns:
+            Union[Workspace, Error]: A Workspace object describing the Sight's
+                location, or an Error object if the request fails.
+        """
+        _op = fresh_operation("get_sight_path")
+        _op["method"] = "GET"
+        _op["path"] = "/sights/" + str(sight_id) + "/path"
+
+        expected = "Workspace"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

@@ -37,6 +37,7 @@ from .models import (
     ReportScopeInclusion,
     Result,
     Share,
+    Workspace,
 )
 
 
@@ -176,6 +177,26 @@ class Reports:
         _op["query_params"]["level"] = level
 
         expected = "Report"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_report_path(self, report_id) -> Union[Workspace, Error]:
+        """Get the hierarchical path of a report.
+
+        Args:
+            report_id (int): Report ID
+
+        Returns:
+            Union[Workspace, Error]: A Workspace object describing the report's
+                location, or an Error object if the request fails.
+        """
+        _op = fresh_operation("get_report_path")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/path"
+
+        expected = "Workspace"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
