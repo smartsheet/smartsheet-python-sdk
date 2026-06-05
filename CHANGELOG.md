@@ -161,7 +161,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-- Rename asset_shares.py to sharing.py so that Smartsheet.__getattr__ can pick it up.
+- Rename asset_shares.py to sharing.py so that `Smartsheet.__getattr__` can pick it up.
 
 ## [3.5.0] - 2025-10-24
 
