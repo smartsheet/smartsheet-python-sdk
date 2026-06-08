@@ -33,7 +33,7 @@ TEST_PATH_ROOT_FOLDER_PERMALINK = "https://app.smartsheet.com/folders/rootlevel"
 def test_get_folder_path_generated_url_is_correct():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/folders/get-folder-path/all-response-body-properties", request_id
+        "/folders/get-nested-folder-path/all-response-body-properties", request_id
     )
 
     client.Folders.get_folder_path(folder_id=TEST_FOLDER_ID)
@@ -51,7 +51,7 @@ def test_get_folder_path_generated_url_is_correct():
 def test_get_folder_path_all_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/folders/get-folder-path/all-response-body-properties", request_id
+        "/folders/get-nested-folder-path/all-response-body-properties", request_id
     )
 
     response = client.Folders.get_folder_path(folder_id=TEST_FOLDER_ID)
@@ -93,7 +93,7 @@ def test_get_folder_path_all_response_properties():
 def test_get_folder_path_root_level_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/folders/get-folder-path/root-level-response-body-properties", request_id
+        "/folders/get-root-folder-path/all-response-body-properties", request_id
     )
 
     response = client.Folders.get_folder_path(folder_id=TEST_FOLDER_ID)

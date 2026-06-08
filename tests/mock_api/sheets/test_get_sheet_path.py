@@ -35,7 +35,7 @@ TEST_PATH_ROOT_SHEET_PERMALINK = "https://app.smartsheet.com/sheets/rootlevel"
 def test_get_sheet_path_generated_url_is_correct():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/sheets/get-sheet-path/all-response-body-properties", request_id
+        "/sheets/get-nested-sheet-path/all-response-body-properties", request_id
     )
 
     client.Sheets.get_sheet_path(sheet_id=TEST_SHEET_ID)
@@ -53,7 +53,7 @@ def test_get_sheet_path_generated_url_is_correct():
 def test_get_sheet_path_all_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/sheets/get-sheet-path/all-response-body-properties", request_id
+        "/sheets/get-nested-sheet-path/all-response-body-properties", request_id
     )
 
     response = client.Sheets.get_sheet_path(sheet_id=TEST_SHEET_ID)
@@ -96,7 +96,7 @@ def test_get_sheet_path_all_response_properties():
 def test_get_sheet_path_root_level_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/sheets/get-sheet-path/root-level-response-body-properties", request_id
+        "/sheets/get-root-sheet-path/all-response-body-properties", request_id
     )
 
     response = client.Sheets.get_sheet_path(sheet_id=TEST_SHEET_ID)

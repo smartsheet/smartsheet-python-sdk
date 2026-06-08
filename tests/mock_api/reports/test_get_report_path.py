@@ -34,7 +34,7 @@ TEST_PATH_ROOT_REPORT_PERMALINK = "https://app.smartsheet.com/reports/rootlevel"
 def test_get_report_path_generated_url_is_correct():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/reports/get-report-path/all-response-body-properties", request_id
+        "/reports/get-nested-report-path/all-response-body-properties", request_id
     )
 
     client.Reports.get_report_path(report_id=TEST_REPORT_ID)
@@ -52,7 +52,7 @@ def test_get_report_path_generated_url_is_correct():
 def test_get_report_path_all_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/reports/get-report-path/all-response-body-properties", request_id
+        "/reports/get-nested-report-path/all-response-body-properties", request_id
     )
 
     response = client.Reports.get_report_path(report_id=TEST_REPORT_ID)
@@ -95,7 +95,7 @@ def test_get_report_path_all_response_properties():
 def test_get_report_path_root_level_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/reports/get-report-path/root-level-response-body-properties", request_id
+        "/reports/get-root-report-path/all-response-body-properties", request_id
     )
 
     response = client.Reports.get_report_path(report_id=TEST_REPORT_ID)

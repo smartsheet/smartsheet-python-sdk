@@ -35,7 +35,7 @@ TEST_PATH_ROOT_SIGHT_PERMALINK = "https://app.smartsheet.com/dashboards/rootleve
 def test_get_sight_path_generated_url_is_correct():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/sights/get-sight-path/all-response-body-properties", request_id
+        "/sights/get-nested-sight-path/all-response-body-properties", request_id
     )
 
     client.Sights.get_sight_path(sight_id=TEST_SIGHT_ID)
@@ -53,7 +53,7 @@ def test_get_sight_path_generated_url_is_correct():
 def test_get_sight_path_all_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/sights/get-sight-path/all-response-body-properties", request_id
+        "/sights/get-nested-sight-path/all-response-body-properties", request_id
     )
 
     response = client.Sights.get_sight_path(sight_id=TEST_SIGHT_ID)
@@ -96,7 +96,7 @@ def test_get_sight_path_all_response_properties():
 def test_get_sight_path_root_level_response_properties():
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/sights/get-sight-path/root-level-response-body-properties", request_id
+        "/sights/get-root-sight-path/all-response-body-properties", request_id
     )
 
     response = client.Sights.get_sight_path(sight_id=TEST_SIGHT_ID)
