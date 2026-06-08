@@ -19,11 +19,9 @@ from __future__ import absolute_import
 
 import logging
 import os.path
-import warnings
 from typing import Union, Optional
 
-from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Share, Sheet, Workspace
-from .util import deprecated
+from .models import Error, Folder, PaginatedChildrenResult, Result, Sheet, TokenPaginatedResult, Workspace
 from .util import fresh_operation
 
 
@@ -179,26 +177,6 @@ class Workspaces:
 
         return response
 
-    def delete_share(self, workspace_id, share_id) -> Union[Result[None], Error]:
-        """Delete the Share specified.
-
-        Args:
-            workspace_id (int): Workspace ID
-            share_id (str): Share ID
-
-        Returns:
-            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("delete_share")
-        _op["method"] = "DELETE"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
-
-        expected = ["Result", None]
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
     def delete_workspace(self, workspace_id) -> Union[Result[None], Error]:
         """Delete the specified Workspace and its contents.
 
@@ -218,251 +196,33 @@ class Workspaces:
 
         return response
 
-    def get_share(self, workspace_id, share_id) -> Union[Share, Error]:
-        """Get the specified Share.
-
-        Args:
-            workspace_id (int): Workspace ID
-            share_id (str): Share ID
-
-        Returns:
-            Union[Share, Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("get_share")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
-
-        expected = "Share"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    @deprecated
-    def get_workspace(self, workspace_id, load_all=False, include=None) -> Union[Workspace, Error]:
-        """Get the specified Workspace and list its contents.
-
-        Deprecated: 3.1.0
-           Use `get_workspace_metadata` and `get_workspace_children` instead.
-
-        Get the specified Workspace and list its contents. By
-        default, this operation only returns top-level items in the
-        Workspace. To load all of the contents, including nested Folders,
-        include the **loadAll** parameter with a value of `true`.
-
-        Args:
-            workspace_id (int): Workspace ID
-            load_all (bool): Load all contents, including
-                nested items.
-            include (list[str]): A comma-separated list of
-                optional elements to include in the response. Valid list
-                values: ownerInfo, sheetVersion, source.
-
-        Returns:
-            Union[Workspace, Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("get_workspace")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces/" + str(workspace_id)
-        _op["query_params"]["loadAll"] = load_all
-        _op["query_params"]["include"] = include
-
-        expected = "Workspace"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    @deprecated
-    def list_folders(self, workspace_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Folder], Error]:
-        """Get a list of top-level child Folders within the specified
-        Workspace.
-
-        Deprecated: 3.1.0
-           Use `get_workspace_children` with children_resource_types=['folders'] instead.
-
-        Args:
-            workspace_id (int): Workspace ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-
-        Returns:
-            Union[IndexResult[Folder], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("list_folders")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/folders"
-        _op["query_params"]["pageSize"] = page_size
-        _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
-
-        expected = ["IndexResult", "Folder"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def list_shares(self, workspace_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Share], Error]:
-        """Get a list of all Users and Groups to whom the specified Workspace
-        is shared, and their access level.
-
-        Args:
-            workspace_id (int): Workspace ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-
-        Returns:
-            Union[IndexResult[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("list_shares")
-        _op["method"] = "GET"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares"
-        _op["query_params"]["pageSize"] = page_size
-        _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
-        expected = ["IndexResult", "Share"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
     def list_workspaces(
         self,
-        page_size: Optional[int] = None,
-        page: Optional[int] = None,
-        include_all: Optional[bool] = None,
         last_key: Optional[str] = None,
         max_items: Optional[int] = None,
-        pagination_type: Optional[str] = None
-    ) -> Union[IndexResult[Workspace], Error]:
+    ) -> TokenPaginatedResult[Workspace]:
         """Get the list of Workspaces the authenticated User may access.
 
         Args:
-            page_size (int, optional): [DEPRECATED] The maximum number of items to
-                return per page. Use pagination_type='token' with max_items instead.
-            page (int, optional): [DEPRECATED] Which page to return.
-                Use pagination_type='token' with last_key instead.
-            include_all (bool, optional): [DEPRECATED] If true, include all results
-                (i.e. do not paginate). Use pagination_type='token' instead.
-            last_key (str, optional): Pagination cursor for next page (token pagination only).
-            max_items (int, optional): Maximum items per page (token pagination only).
-                Must be a positive integer.
-            pagination_type (str, optional): Use 'token' for efficient cursor-based pagination.
-                Defaults to legacy offset-based pagination if not specified.
+            last_key (str, optional): Pagination cursor for next page.
+            max_items (int, optional): Maximum items per page. Must be a positive integer.
 
         Returns:
-            Union[IndexResult[Workspace], Error]: The result of the operation, or an Error object if the request fails.
-                When using legacy pagination, contains paginated results with
-                total_count, total_pages, etc.
+            TokenPaginatedResult[Workspace]: The result of the operation.
 
         Raises:
-            ValueError: If pagination_type is not 'token' or None, or if max_items <= 0
-                when using token pagination.
+            ValueError: If max_items <= 0.
         """
-        # Parameter validation
-        if pagination_type is not None and pagination_type not in ['token']:
-            raise ValueError("pagination_type must be 'token' or None")
-        if pagination_type == 'token' and max_items is not None and max_items <= 0:
+        if max_items is not None and max_items <= 0:
             raise ValueError("max_items must be a positive integer")
+
         _op = fresh_operation("list_workspaces")
         _op["method"] = "GET"
         _op["path"] = "/workspaces"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
 
-        # Issue deprecation warnings for old parameters when used
-        if page_size is not None:
-            warnings.warn(
-                "page_size parameter is deprecated. Use pagination_type='token' with max_items instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-        if page is not None:
-            warnings.warn(
-                "page parameter is deprecated. Use pagination_type='token' with last_key instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-        if include_all is not None:
-            warnings.warn(
-                "include_all parameter is deprecated. Use pagination_type='token' instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-
-        if pagination_type == "token":
-            _op["query_params"]["lastKey"] = last_key
-            _op["query_params"]["maxItems"] = max_items
-            _op["query_params"]["paginationType"] = pagination_type
-        else:
-            _op["query_params"]["pageSize"] = page_size
-            _op["query_params"]["page"] = page
-            _op["query_params"]["includeAll"] = include_all
-
-        expected = ["IndexResult", "Workspace"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def share_workspace(self, workspace_id, share_obj, send_email=False) -> Union[Result[Share], Error]:
-        """Share a Workspace with the specified Users and Groups.
-
-        Args:
-            workspace_id (int): Workspace ID
-            share_obj (Share): Share object.
-            send_email (bool): Either true or false to
-                indicate whether or not to notify the user by email. Default
-                is false.
-
-        Returns:
-            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("share_workspace")
-        _op["method"] = "POST"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares"
-        _op["query_params"]["sendEmail"] = send_email
-        _op["json"] = share_obj
-
-        expected = ["Result", "Share"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def update_share(self, workspace_id, share_id, share_obj) -> Union[Result[Share], Error]:
-        """Update the access level of a User or Group for the specified
-        Workspace.
-
-        Args:
-            workspace_id (int): Workspace ID
-            share_id (str): Share ID
-            share_obj (Share): Share object.
-
-        Returns:
-            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        if not all(
-            val is not None for val in ["workspace_id", "share_id", "share_obj"]
-        ):
-            raise ValueError(
-                ("One or more required values are missing from call to " + __name__)
-            )
-
-        _op = fresh_operation("update_share")
-        _op["method"] = "PUT"
-        _op["path"] = "/workspaces/" + str(workspace_id) + "/shares/" + str(share_id)
-        _op["json"] = share_obj
-
-        expected = ["Result", "Share"]
+        expected = ["TokenPaginatedResult", "Workspace"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)

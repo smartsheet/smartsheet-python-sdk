@@ -54,7 +54,6 @@ from .server import Server
 from .sharing import Sharing
 from .sheets import Sheets
 from .sights import Sights
-from .templates import Templates
 from .token import Token
 from .users import Users
 from .webhooks import Webhooks
@@ -136,7 +135,6 @@ class Smartsheet:
     Sharing: Sharing
     Sheets: Sheets
     Sights: Sights
-    Templates: Templates
     Token: Token
     Users: Users
     Webhooks: Webhooks

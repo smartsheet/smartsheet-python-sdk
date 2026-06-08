@@ -16,12 +16,10 @@
 # under the License.
 
 import logging
-import warnings
-from datetime import datetime
 from typing import Optional, Union
 
 from .util import fresh_operation
-from .models import Error, IndexResult, Result, Share, Sight, SightPublish
+from .models import Error, Result, Sight, SightPublish, TokenPaginatedResult
 
 
 class Sights:
@@ -35,83 +33,32 @@ class Sights:
 
     def list_sights(
         self,
-        page_size: Optional[int] = None,
-        page: Optional[int] = None,
-        include_all: Optional[bool] = None,
         last_key: Optional[str] = None,
         max_items: Optional[int] = None,
-        pagination_type: Optional[str] = None,
-        modified_since: Optional[datetime] = None
-    ) -> Union[IndexResult[Sight], Error]:
+    ) -> Union[TokenPaginatedResult[Sight], Error]:
         """Get the list of all Sights the User has access to, in alphabetical
         order, by name.
 
         Args:
-            page_size (int, optional): [DEPRECATED] The maximum number of items to
-                return per page. Use pagination_type='token' with max_items instead.
-            page (int, optional): [DEPRECATED] Which page to return.
-                Use pagination_type='token' with last_key instead.
-            include_all (bool, optional): [DEPRECATED] If true, include all results
-                (i.e. do not paginate). Use pagination_type='token' instead.
-            last_key (str, optional): Pagination cursor for next page (token pagination only).
-            max_items (int, optional): Maximum items per page (token pagination only).
-                Must be a positive integer.
-            pagination_type (str, optional): Use 'token' for efficient cursor-based pagination.
-                Defaults to legacy offset-based pagination if not specified.
-            modified_since (datetime, optional): Return sights modified since datetime.
+            last_key (str, optional): Pagination cursor for next page.
+            max_items (int, optional): Maximum items per page. Must be a positive integer.
 
         Returns:
-            Union[IndexResult[Sight], Error]: The result of the operation, or an Error object if the request fails.
-                When using legacy pagination, contains paginated results with
-                total_count, total_pages, etc.
+            TokenPaginatedResult[Sight]: The result of the operation.
 
         Raises:
-            ValueError: If pagination_type is not 'token' or None, or if max_items <= 0
-                when using token pagination.
+            ValueError: If max_items <= 0.
         """
-        # Parameter validation
-        if pagination_type is not None and pagination_type not in ['token']:
-            raise ValueError("pagination_type must be 'token' or None")
-        if pagination_type == 'token' and max_items is not None and max_items <= 0:
+        if max_items is not None and max_items <= 0:
             raise ValueError("max_items must be a positive integer")
 
         _op = fresh_operation("list_sights")
         _op["method"] = "GET"
         _op["path"] = "/sights"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
 
-        # Issue deprecation warnings for old parameters when used
-        if page_size is not None:
-            warnings.warn(
-                "page_size parameter is deprecated. Use pagination_type='token' with max_items instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-        if page is not None:
-            warnings.warn(
-                "page parameter is deprecated. Use pagination_type='token' with last_key instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-        if include_all is not None:
-            warnings.warn(
-                "include_all parameter is deprecated. Use pagination_type='token' instead.",
-                DeprecationWarning,
-                stacklevel=2
-            )
-
-        if pagination_type == "token":
-            _op["query_params"]["lastKey"] = last_key
-            _op["query_params"]["maxItems"] = max_items
-            _op["query_params"]["paginationType"] = pagination_type
-        else:
-            _op["query_params"]["pageSize"] = page_size
-            _op["query_params"]["page"] = page
-            _op["query_params"]["includeAll"] = include_all
-
-        if isinstance(modified_since, datetime):
-            _op["query_params"]["modifiedSince"] = modified_since.isoformat()
-
-        expected = ["IndexResult", "Sight"]
+        expected = ["TokenPaginatedResult", "Sight"]
 
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
@@ -223,142 +170,6 @@ class Sights:
 
         expected = ["Result", "Sight"]
 
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def list_shares(
-        self,
-        sight_id,
-        page_size=None,
-        page=None,
-        include_all=None,
-        include_workspace_shares=False,
-    ) -> Union[IndexResult[Share], Error]:
-        """Get the list of all Users and Groups to whom the specified Sight is
-        shared, and their access level.
-
-        Args:
-            sight_id (int): Sight ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-            include_workspace_shares(bool): Include Workspace shares
-
-        Returns:
-            Union[IndexResult[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("list_shares")
-        _op["method"] = "GET"
-        _op["path"] = "/sights/" + str(sight_id) + "/shares"
-        _op["query_params"]["pageSize"] = page_size
-        _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
-        if include_workspace_shares:
-            _op["query_params"]["include"] = "workspaceShares"
-
-        expected = ["IndexResult", "Share"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def get_share(self, sight_id, share_id) -> Union[Share, Error]:
-        """Get the specified Share.
-
-        Args:
-            sight_id (int): Sight ID
-            share_id (str): Share ID
-
-        Returns:
-            Union[Share, Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("get_share")
-        _op["method"] = "GET"
-        _op["path"] = "/sights/" + str(sight_id) + "/shares/" + str(share_id)
-
-        expected = "Share"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def share_sight(self, sight_id, share_obj, send_email=False) -> Union[Result[Share], Error]:
-        """Share the specified Sight.
-
-        Share the specified Sight with the specified Users and
-        Groups.
-
-        Args:
-            sight_id (int): Sight ID
-            share_obj (Share): Share object.
-            send_email (bool): Either true or false to
-                indicate whether or not to notify the user by email. Default
-                is false.
-
-        Returns:
-            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("share_sight")
-        _op["method"] = "POST"
-        _op["path"] = "/sights/" + str(sight_id) + "/shares"
-        _op["query_params"]["sendEmail"] = send_email
-        _op["json"] = share_obj
-
-        expected = ["Result", "Share"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def update_share(self, sight_id, share_id, share_obj) -> Union[Result[Share], Error]:
-        """Update the access level of a User or Group for the specified Sight.
-
-        Args:
-            sight_id (int): Sight ID
-            share_id (str): Share ID
-            share_obj (Share): Share object.
-
-        Returns:
-            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        if not all(val is not None for val in ["sight_id", "share_id", "share_obj"]):
-            raise ValueError(
-                ("One or more required values are missing from call to " + __name__)
-            )
-
-        _op = fresh_operation("update_share")
-        _op["method"] = "PUT"
-        _op["path"] = "/sights/" + str(sight_id) + "/shares/" + str(share_id)
-        _op["json"] = share_obj
-
-        expected = ["Result", "Share"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def delete_share(self, sight_id, share_id) -> Union[Result[None], Error]:
-        """Delete the specified Share.
-
-        Args:
-            sight_id (int): Sight ID
-            share_id (str): Share ID
-
-        Returns:
-            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("delete_share")
-        _op["method"] = "DELETE"
-        _op["path"] = "/sights/" + str(sight_id) + "/shares/" + str(share_id)
-
-        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

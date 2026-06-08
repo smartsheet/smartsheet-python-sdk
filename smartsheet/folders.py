@@ -23,8 +23,7 @@ import logging
 import os.path
 
 from .util import fresh_operation
-from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Sheet
-from .util import deprecated
+from .models import Error, Folder, PaginatedChildrenResult, Result, Sheet
 
 
 class Folders:
@@ -171,65 +170,6 @@ class Folders:
         _op["path"] = "/folders/" + str(folder_id)
 
         expected = ["Result", None]
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    @deprecated
-    def get_folder(self, folder_id, include=None) -> Union[Folder, Error]:
-        """Get the specified Folder (and list its contents).
-
-        Deprecated: 3.1.0
-           Use `get_folder_metadata` and `get_folder_children` instead.
-
-        Args:
-            folder_id (int): Folder ID
-            include (list[str]): A comma-separated list of
-                optional elements to include in the response. Valid list
-                values: ownerInfo, sheetVersion, source.
-
-        Returns:
-            Union[Folder, Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("get_folder")
-        _op["method"] = "GET"
-        _op["path"] = "/folders/" + str(folder_id)
-        _op["query_params"]["include"] = include
-
-        expected = "Folder"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    @deprecated
-    def list_folders(self, folder_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Folder], Error]:
-        """Get a list of top-level child Folders within the specified Folder.
-
-        Deprecated: 3.1.0
-           Use `get_folder_children` with children_resource_types=['folders'] instead.
-
-        Args:
-            folder_id (int): Folder ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-
-        Returns:
-            Union[IndexResult[Folder], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("list_folders")
-        _op["method"] = "GET"
-        _op["path"] = "/folders/" + str(folder_id) + "/folders"
-        _op["query_params"]["pageSize"] = page_size
-        _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
-
-        expected = ["IndexResult", "Folder"]
-
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
