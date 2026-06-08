@@ -9,17 +9,25 @@ from tests.mock_api.common_test_constants import (
     TEST_WORKSPACE_PERMALINK,
     TEST_PATH_FOLDER_ID,
     TEST_PATH_FOLDER_NAME,
-    TEST_PATH_SHEET_ID,
-    TEST_PATH_SHEET_NAME,
-    TEST_PATH_SHEET_ACCESS_LEVEL,
+    TEST_PATH_FOLDER_PERMALINK,
+    TEST_PATH_SUBFOLDER_ID,
+    TEST_PATH_SUBFOLDER_NAME,
+    TEST_PATH_SUBFOLDER_PERMALINK,
 )
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
 )
 
-
 TEST_FOLDER_ID = 1234567890
+
+TEST_PATH_SUB_SUBFOLDER_ID = 3456789012345678
+TEST_PATH_SUB_SUBFOLDER_NAME = "Project Plans Sub-Subfolder"
+TEST_PATH_SUB_SUBFOLDER_PERMALINK = "https://app.smartsheet.com/folders/3456789012345678"
+
+TEST_PATH_ROOT_FOLDER_ID = 5678901234567890
+TEST_PATH_ROOT_FOLDER_NAME = "Root Level Folder"
+TEST_PATH_ROOT_FOLDER_PERMALINK = "https://app.smartsheet.com/folders/rootlevel"
 
 
 def test_get_folder_path_generated_url_is_correct():
@@ -53,21 +61,61 @@ def test_get_folder_path_all_response_properties():
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request.get("body")
 
-    assert response.id == TEST_WORKSPACE_ID
-    assert response.name == TEST_WORKSPACE_NAME
-    assert response.permalink == TEST_WORKSPACE_PERMALINK
-    assert response.access_level == TEST_WORKSPACE_ACCESS_LEVEL
+    assert response.to_dict() == {
+        "id": TEST_WORKSPACE_ID,
+        "name": TEST_WORKSPACE_NAME,
+        "permalink": TEST_WORKSPACE_PERMALINK,
+        "accessLevel": TEST_WORKSPACE_ACCESS_LEVEL,
+        "folders": [
+            {
+                "id": TEST_PATH_FOLDER_ID,
+                "name": TEST_PATH_FOLDER_NAME,
+                "permalink": TEST_PATH_FOLDER_PERMALINK,
+                "folders": [
+                    {
+                        "id": TEST_PATH_SUBFOLDER_ID,
+                        "name": TEST_PATH_SUBFOLDER_NAME,
+                        "permalink": TEST_PATH_SUBFOLDER_PERMALINK,
+                        "folders": [
+                            {
+                                "id": TEST_PATH_SUB_SUBFOLDER_ID,
+                                "name": TEST_PATH_SUB_SUBFOLDER_NAME,
+                                "permalink": TEST_PATH_SUB_SUBFOLDER_PERMALINK,
+                            }
+                        ],
+                    }
+                ],
+            }
+        ],
+    }
 
-    assert len(response.folders) == 1
-    folder = response.folders[0]
-    assert folder.id == TEST_PATH_FOLDER_ID
-    assert folder.name == TEST_PATH_FOLDER_NAME
 
-    assert len(folder.sheets) == 1
-    sheet = folder.sheets[0]
-    assert sheet.id == TEST_PATH_SHEET_ID
-    assert sheet.name == TEST_PATH_SHEET_NAME
-    assert sheet.access_level == TEST_PATH_SHEET_ACCESS_LEVEL
+def test_get_folder_path_root_level_response_properties():
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/folders/get-folder-path/root-level-response-body-properties", request_id
+    )
+
+    response = client.Folders.get_folder_path(folder_id=TEST_FOLDER_ID)
+
+    assert isinstance(response, Workspace)
+
+    wiremock_request = get_wiremock_request(request_id)
+    assert not wiremock_request.get("body")
+
+    assert response.to_dict() == {
+        "id": TEST_WORKSPACE_ID,
+        "name": TEST_WORKSPACE_NAME,
+        "permalink": TEST_WORKSPACE_PERMALINK,
+        "accessLevel": TEST_WORKSPACE_ACCESS_LEVEL,
+        "folders": [
+            {
+                "id": TEST_PATH_ROOT_FOLDER_ID,
+                "name": TEST_PATH_ROOT_FOLDER_NAME,
+                "permalink": TEST_PATH_ROOT_FOLDER_PERMALINK,
+            }
+        ],
+    }
 
 
 def test_get_folder_path_error_4xx():
