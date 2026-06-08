@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+## [4.0.0] - 2026-06-08
+
 ### Added
 
 - Added `object_id_str` field to `Event` model to support alphanumeric object identifiers (AUD-902)
