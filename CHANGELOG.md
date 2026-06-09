@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+## [4.0.1] - 2026-06-09
+
+### Fixed
+
+- Packaging bug after migrating to uv. [#144](https://github.com/smartsheet/smartsheet-python-sdk/issues/144)
+
 ## [4.0.0] - 2026-06-08
 
 ### Added
