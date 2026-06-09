@@ -43,3 +43,4 @@ docs-source/smartsheet*.rst
 .claude/settings.local.json
 # Superpowers documentation
 docs/superpowers
+.DS_Store
