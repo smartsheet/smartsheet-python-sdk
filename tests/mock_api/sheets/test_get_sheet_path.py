@@ -21,18 +21,17 @@ from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
 )
-
-TEST_SHEET_ID = 1234567890
-
-TEST_PATH_SHEET_ID = 3456789012345678
-TEST_PATH_SHEET_NAME = "Project Plan"
-TEST_PATH_SHEET_ACCESS_LEVEL = "ADMIN"
-TEST_PATH_SHEET_PERMALINK = "https://app.smartsheet.com/sheets/3456789012345678"
-
-TEST_PATH_ROOT_SHEET_ID = 5678901234567890
-TEST_PATH_ROOT_SHEET_NAME = "Root Level Sheet"
-TEST_PATH_ROOT_SHEET_ACCESS_LEVEL = "ADMIN"
-TEST_PATH_ROOT_SHEET_PERMALINK = "https://app.smartsheet.com/sheets/rootlevel"
+from tests.mock_api.sheets.common_test_constants import (
+    TEST_SHEET_ID,
+    TEST_PATH_SHEET_ID,
+    TEST_PATH_SHEET_NAME,
+    TEST_PATH_SHEET_ACCESS_LEVEL,
+    TEST_PATH_SHEET_PERMALINK,
+    TEST_PATH_ROOT_SHEET_ID,
+    TEST_PATH_ROOT_SHEET_NAME,
+    TEST_PATH_ROOT_SHEET_ACCESS_LEVEL,
+    TEST_PATH_ROOT_SHEET_PERMALINK,
+)
 
 
 def test_get_sheet_path_generated_url_is_correct():

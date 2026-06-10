@@ -19,16 +19,15 @@ from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
 )
-
-TEST_FOLDER_ID = 1234567890
-
-TEST_PATH_SUB_SUBFOLDER_ID = 3456789012345678
-TEST_PATH_SUB_SUBFOLDER_NAME = "Project Plans Sub-Subfolder"
-TEST_PATH_SUB_SUBFOLDER_PERMALINK = "https://app.smartsheet.com/folders/3456789012345678"
-
-TEST_PATH_ROOT_FOLDER_ID = 5678901234567890
-TEST_PATH_ROOT_FOLDER_NAME = "Root Level Folder"
-TEST_PATH_ROOT_FOLDER_PERMALINK = "https://app.smartsheet.com/folders/rootlevel"
+from tests.mock_api.folders.common_test_constants import (
+    TEST_FOLDER_ID,
+    TEST_PATH_SUB_SUBFOLDER_ID,
+    TEST_PATH_SUB_SUBFOLDER_NAME,
+    TEST_PATH_SUB_SUBFOLDER_PERMALINK,
+    TEST_PATH_ROOT_FOLDER_ID,
+    TEST_PATH_ROOT_FOLDER_NAME,
+    TEST_PATH_ROOT_FOLDER_PERMALINK,
+)
 
 
 def test_get_folder_path_generated_url_is_correct():

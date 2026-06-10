@@ -61,8 +61,13 @@ class FolderPathNode(PathNode):
         return last
 
     def get_folder_path(self):
-        """Return a Unix-style path string of folder names from this node to the target folder."""
+        """Return a Unix-style path string of folder names from this node to the target folder.
+
+        Unlike get_sheet_path/get_report_path/get_sight_path, this method returns the
+        deepest folder's name even when the root node has no name (e.g. a workspace root),
+        because the target IS a folder rather than an asset nested inside one. An empty
+        FolderPathNode (no id, no name, no children) returns an empty string.
+        """
         nodes = list(self._walk_to_leaf())
-        if not nodes:
-            return None
-        return "/".join(n.name for n in nodes if n.name)
+        names = [n.name for n in nodes if n.name]
+        return "/".join(names)

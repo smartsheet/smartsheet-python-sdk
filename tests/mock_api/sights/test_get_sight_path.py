@@ -21,18 +21,17 @@ from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
 )
-
-TEST_SIGHT_ID = 1234567890
-
-TEST_PATH_SIGHT_ID = 3456789012345678
-TEST_PATH_SIGHT_NAME = "Project Dashboard"
-TEST_PATH_SIGHT_ACCESS_LEVEL = "ADMIN"
-TEST_PATH_SIGHT_PERMALINK = "https://app.smartsheet.com/dashboards/3456789012345678"
-
-TEST_PATH_ROOT_SIGHT_ID = 5678901234567890
-TEST_PATH_ROOT_SIGHT_NAME = "Root Level Dashboard"
-TEST_PATH_ROOT_SIGHT_ACCESS_LEVEL = "ADMIN"
-TEST_PATH_ROOT_SIGHT_PERMALINK = "https://app.smartsheet.com/dashboards/rootlevel"
+from tests.mock_api.sights.common_test_constants import (
+    TEST_SIGHT_ID,
+    TEST_PATH_SIGHT_ID,
+    TEST_PATH_SIGHT_NAME,
+    TEST_PATH_SIGHT_ACCESS_LEVEL,
+    TEST_PATH_SIGHT_PERMALINK,
+    TEST_PATH_ROOT_SIGHT_ID,
+    TEST_PATH_ROOT_SIGHT_NAME,
+    TEST_PATH_ROOT_SIGHT_ACCESS_LEVEL,
+    TEST_PATH_ROOT_SIGHT_PERMALINK,
+)
 
 
 def test_get_sight_path_generated_url_is_correct():
