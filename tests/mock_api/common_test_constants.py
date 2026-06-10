@@ -1,7 +1,7 @@
 TEST_WORKSPACE_ID = 4509918431602564
 TEST_WORKSPACE_NAME = "Sample Workspace"
 TEST_WORKSPACE_PERMALINK = (
-    "https://api.smartsheet.com/workspaces/cpG82pf5v8FPrgFfJrFcrM56xCHVGhmV4P4xcQ71"
+    "https://app.smartsheet.com/workspaces/mock_workspace_id"
 )
 TEST_WORKSPACE_ACCESS_LEVEL = "OWNER"
 
