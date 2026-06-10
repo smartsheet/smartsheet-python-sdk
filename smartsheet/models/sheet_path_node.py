@@ -53,32 +53,21 @@ class SheetPathNode(PathNode):
     def sheets(self, value):
         self._sheets.load(value)
 
-    def _walk_to_leaf(self):
-        """Yield each node from self down to the node containing the target sheet."""
-        node = self
-        while True:
-            yield node
-            if node._sheets:
-                break
-            if node._folders:
-                node = node._folders[0]
-            else:
-                break
-
     def get_sheet(self):
         """Return the target PathLeaf sheet, or None if not reachable."""
-        for node in self._walk_to_leaf():
-            if node._sheets:
-                return node._sheets[0]
+        if self.sheets:
+            return self.sheets[0]
+        if self.folders:
+            return self.folders[0].get_sheet()
         return None
 
     def get_sheet_path(self):
         """Return a Unix-style path string from this node to the target sheet."""
-        nodes = list(self._walk_to_leaf())
-        if not nodes:
-            return None
-        parts = [n.name for n in nodes if n.name]
-        leaf = nodes[-1]
-        if leaf._sheets and leaf._sheets[0].name:
-            parts[-1] = leaf._sheets[0].name
-        return "/".join(parts) if parts else None
+        if self.sheets:
+            return self.sheets[0].name or None
+        if self.folders:
+            child_path = self.folders[0].get_sheet_path()
+            if child_path is None:
+                return None
+            return f"{self.name}/{child_path}" if self.name else child_path
+        return None

@@ -43,22 +43,11 @@ class FolderPathNode(PathNode):
     def folders(self, value):
         self._folders.load(value)
 
-    def _walk_to_leaf(self):
-        """Yield each node from self down to the deepest folder (the target folder)."""
-        node = self
-        while True:
-            yield node
-            if node._folders:
-                node = node._folders[0]
-            else:
-                break
-
     def get_folder(self):
-        """Return the deepest FolderPathNode reachable from this node, or None if empty."""
-        last = None
-        for node in self._walk_to_leaf():
-            last = node
-        return last
+        """Return the deepest FolderPathNode reachable from this node."""
+        if self.folders:
+            return self.folders[0].get_folder()
+        return self
 
     def get_folder_path(self):
         """Return a Unix-style path string of folder names from this node to the target folder.
@@ -68,6 +57,7 @@ class FolderPathNode(PathNode):
         because the target IS a folder rather than an asset nested inside one. An empty
         FolderPathNode (no id, no name, no children) returns an empty string.
         """
-        nodes = list(self._walk_to_leaf())
-        names = [n.name for n in nodes if n.name]
-        return "/".join(names)
+        if self.folders:
+            child_path = self.folders[0].get_folder_path()
+            return f"{self.name}/{child_path}" if self.name and child_path else self.name or child_path or ""
+        return self.name or ""
