@@ -1,7 +1,8 @@
 import uuid
 from urllib.parse import urlparse, parse_qs
 
-from smartsheet.models import Error, Workspace
+from smartsheet.models import Error
+from smartsheet.models.sheet_path_node import SheetPathNode
 from tests.mock_api.common_test_constants import (
     TEST_WORKSPACE_ACCESS_LEVEL,
     TEST_WORKSPACE_ID,
@@ -58,7 +59,7 @@ def test_get_sheet_path_all_response_properties():
 
     response = client.Sheets.get_sheet_path(sheet_id=TEST_SHEET_ID)
 
-    assert isinstance(response, Workspace)
+    assert isinstance(response, SheetPathNode)
 
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request.get("body")
@@ -101,7 +102,7 @@ def test_get_sheet_path_root_level_response_properties():
 
     response = client.Sheets.get_sheet_path(sheet_id=TEST_SHEET_ID)
 
-    assert isinstance(response, Workspace)
+    assert isinstance(response, SheetPathNode)
 
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request.get("body")

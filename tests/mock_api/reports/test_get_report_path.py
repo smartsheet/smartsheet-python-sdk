@@ -1,7 +1,8 @@
 import uuid
 from urllib.parse import urlparse, parse_qs
 
-from smartsheet.models import Error, Workspace
+from smartsheet.models import Error
+from smartsheet.models.report_path_node import ReportPathNode
 from tests.mock_api.common_test_constants import (
     TEST_WORKSPACE_ACCESS_LEVEL,
     TEST_WORKSPACE_ID,
@@ -57,7 +58,7 @@ def test_get_report_path_all_response_properties():
 
     response = client.Reports.get_report_path(report_id=TEST_REPORT_ID)
 
-    assert isinstance(response, Workspace)
+    assert isinstance(response, ReportPathNode)
 
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request.get("body")
@@ -100,7 +101,7 @@ def test_get_report_path_root_level_response_properties():
 
     response = client.Reports.get_report_path(report_id=TEST_REPORT_ID)
 
-    assert isinstance(response, Workspace)
+    assert isinstance(response, ReportPathNode)
 
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request.get("body")

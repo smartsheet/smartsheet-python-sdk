@@ -27,7 +27,7 @@ import six
 from .util import fresh_operation
 from .models import AutomationRule, BulkItemResult, Column, CopyOrMoveRowResult, CrossSheetReference, DownloadedFile, \
     IndexResult, NumberObjectValue, Result, Row, SearchResult, SentUpdateRequest, Share, Sheet, SheetFilter, \
-    SheetPublish, SheetSummary, SummaryField, UpdateRequest, Version, Workspace, Error
+    SheetPathNode, SheetPublish, SheetSummary, SummaryField, UpdateRequest, Version, Error
 from .types import TypedList
 from .util import deprecated
 
@@ -571,21 +571,21 @@ class Sheets:
 
         return response
 
-    def get_sheet_path(self, sheet_id) -> Union[Workspace, Error]:
+    def get_sheet_path(self, sheet_id) -> Union[SheetPathNode, Error]:
         """Get the hierarchical path of a sheet.
 
         Args:
             sheet_id (int): Sheet ID
 
         Returns:
-            Union[Workspace, Error]: A Workspace object describing the sheet's
+            Union[SheetPathNode, Error]: A SheetPathNode object describing the sheet's
                 location, or an Error object if the request fails.
         """
         _op = fresh_operation("get_sheet_path")
         _op["method"] = "GET"
         _op["path"] = "/sheets/" + str(sheet_id) + "/path"
 
-        expected = "Workspace"
+        expected = "SheetPathNode"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

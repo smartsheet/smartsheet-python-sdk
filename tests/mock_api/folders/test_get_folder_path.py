@@ -1,7 +1,8 @@
 import uuid
 from urllib.parse import urlparse, parse_qs
 
-from smartsheet.models import Error, Workspace
+from smartsheet.models import Error
+from smartsheet.models.folder_path_node import FolderPathNode
 from tests.mock_api.common_test_constants import (
     TEST_WORKSPACE_ACCESS_LEVEL,
     TEST_WORKSPACE_ID,
@@ -56,7 +57,7 @@ def test_get_folder_path_all_response_properties():
 
     response = client.Folders.get_folder_path(folder_id=TEST_FOLDER_ID)
 
-    assert isinstance(response, Workspace)
+    assert isinstance(response, FolderPathNode)
 
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request.get("body")
@@ -98,7 +99,7 @@ def test_get_folder_path_root_level_response_properties():
 
     response = client.Folders.get_folder_path(folder_id=TEST_FOLDER_ID)
 
-    assert isinstance(response, Workspace)
+    assert isinstance(response, FolderPathNode)
 
     wiremock_request = get_wiremock_request(request_id)
     assert not wiremock_request.get("body")
