@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+## [4.0.2] - 2026-06-10
+
+### Fixed
+
+- Deprecation related corrections
+
+### Added
+
+- Hardcode `paginationType=token` for `list_workspaces`.
+
 ## [4.0.1] - 2026-06-09
 
 ### Fixed
@@ -26,7 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - ⚠️ **BREAKING**: Removed deprecated `include_all` parameter from `list_webhooks`. This was [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Use offset-based pagination via `page` and `page_size` (server-capped at 10,000).
 - ⚠️ **BREAKING**: Removed deprecated `include_all`, `page`, `page_size`, `modified_since`, and `pagination_type` parameters from `list_sights`. These were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-includeall-and-offset-based-pagination-for-dashboards) (sunset Jun-03-2026). `list_sights` now uses token-based pagination exclusively and returns `TokenPaginatedResult[Sight]`. Use `max_items` and `last_key` instead.
 - ⚠️ **BREAKING**: Removed deprecated `include_all`, `page`, `page_size`, and `pagination_type` parameters from `list_workspaces`. These were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). `list_workspaces` now uses token-based pagination exclusively and returns `TokenPaginatedResult[Workspace]`. The response no longer exposes `page_number`, `page_size`, `total_count`, or `total_pages`. Use `max_items` and `last_key` instead. The new shape mirrors `list_sights`.
-- ⚠️ **BREAKING**: Removed `list_public_templates` and `list_user_created_templates` from the `Templates` class. The `Templates` class and `Smartsheet.Templates` accessor have been removed entirely. The underlying `GET /templates` and `GET /templates/public` endpoints were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Migrate to `get_workspace_children` / `get_folder_children` with `children_resource_types` including `TEMPLATES` to list templates within a specific workspace or folder.
+- ⚠️ **BREAKING**: Removed `list_public_templates` and `list_user_created_templates` from the `Templates` class. The `Templates` class and `Smartsheet.Templates` accessor have been removed entirely. The underlying `GET /templates` and `GET /templates/public` endpoints were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Migrate to `get_workspace_children` / `get_folder_children` with `children_resource_types` set to `['sheets', 'templates']` (both values are required — omitting `sheets` will exclude templates from the response) to list templates within a specific workspace or folder.
 - ⚠️ **BREAKING**: Removed `get_folder` and `list_folders` from the `Folders` class, and `get_workspace` and `list_folders` from the `Workspaces` class. The underlying `GET /folders/{folderId}`, `GET /folders/{folderId}/folders`, `GET /workspaces/{workspaceId}`, and `GET /workspaces/{workspaceId}/folders` endpoints were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Migrate to `get_folder_metadata` + `get_folder_children` and `get_workspace_metadata` + `get_workspace_children`. Use `children_resource_types` to filter the children response (e.g., `folders` to replicate the old list-folders behavior).
 - ⚠️ **BREAKING**: Removed the deprecated share methods (`share_sheet`/`share_report`/`share_sight`/`share_workspace`, `list_shares`, `get_share`, `update_share`, `delete_share`) from the `Sheets`, `Reports`, `Sights`, and `Workspaces` classes. The underlying asset-specific sharing endpoints were [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04) (sunset Jun-03-2026). Migrate to `client.Sharing` (`list_asset_shares`, `get_asset_share`, `share_asset`, `update_asset_share`, `delete_asset_share`), passing `asset_type` and `asset_id`. Note updates now use `PATCH` instead of `PUT`.
 
