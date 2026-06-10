@@ -14,6 +14,8 @@ from tests.mock_api.common_test_constants import (
     TEST_PATH_SUBFOLDER_ID,
     TEST_PATH_SUBFOLDER_NAME,
     TEST_PATH_SUBFOLDER_PERMALINK,
+    TEST_PATH_LEAF_CREATED_AT,
+    TEST_PATH_LEAF_MODIFIED_AT,
 )
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
@@ -84,6 +86,8 @@ def test_get_report_path_all_response_properties():
                                 "name": TEST_PATH_REPORT_NAME,
                                 "permalink": TEST_PATH_REPORT_PERMALINK,
                                 "accessLevel": TEST_PATH_REPORT_ACCESS_LEVEL,
+                                "createdAt": TEST_PATH_LEAF_CREATED_AT,
+                                "modifiedAt": TEST_PATH_LEAF_MODIFIED_AT,
                             }
                         ],
                     }
@@ -117,6 +121,8 @@ def test_get_report_path_root_level_response_properties():
                 "name": TEST_PATH_ROOT_REPORT_NAME,
                 "permalink": TEST_PATH_ROOT_REPORT_PERMALINK,
                 "accessLevel": TEST_PATH_ROOT_REPORT_ACCESS_LEVEL,
+                "createdAt": TEST_PATH_LEAF_CREATED_AT,
+                "modifiedAt": TEST_PATH_LEAF_MODIFIED_AT,
             }
         ],
     }

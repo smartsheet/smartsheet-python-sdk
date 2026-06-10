@@ -15,7 +15,7 @@ def test_add_report_scope_generated_url_is_correct():
     """Test that the URL is correctly generated for POST /reports/{id}/scope."""
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
-        "/reports/add-report-scope/-body-properties", request_id
+        "/reports/add-report-scope/all-response-body-properties", request_id
     )
 
     scopes = [
