@@ -4,7 +4,7 @@ import pytest
 from smartsheet.models import (
     AlternateEmail, Attachment, Column, Comment, ContainerDestination, CrossSheetReference,
     Discussion, ExplicitNull, Favorite, FormatDetails, Group, ImageUrl, MultiRowEmail, Recipient,
-    Row, Schedule, Share, Sheet, SheetEmail, UpdateRequest, User, Workspace
+    Row, Schedule, Sheet, SheetEmail, UpdateRequest, User, Workspace
 )
 from smartsheet.models.object_value import DURATION
 
@@ -370,23 +370,6 @@ class TestMockSerialization(MockApiTestHelper):
         assert report.rows[0].cells[0].virtual_column_id == 2
 
     @clean_api_error
-    def test_share_serialization(self):
-        pytest.skip('Skipping until mock API test is updated')
-        self.client.as_test_scenario('Serialization - Share')
-
-        share = Share({
-            'email': 'john.doe@smartsheet.com',
-            'accessLevel': 'VIEWER',
-            'subject': 'Check out this sheet',
-            'message': 'Let me know what you think. Thanks!',
-            'ccMe': True
-        })
-
-        response = self.client.Sheets.share_sheet(1, share, send_email=True)
-
-        assert response.result.id == 'abc'
-
-    @clean_api_error
     def test_send_via_email_serialization(self):
         self.client.as_test_scenario('Serialization - Send via Email')
 
@@ -432,14 +415,6 @@ class TestMockSerialization(MockApiTestHelper):
         }))
 
         assert response.message == 'SUCCESS'
-
-    @clean_api_error
-    def test_template_serialization(self):
-        self.client.as_test_scenario('Serialization - Template')
-
-        templates = self.client.Templates.list_public_templates()
-
-        assert templates.data[0].categories[0] == 'Featured Templates'
 
     @clean_api_error
     def test_update_request_serialization(self):

@@ -8,6 +8,12 @@ source = "vcs"
 [tool.hatch.build.hooks.vcs]
 version-file = "smartsheet/version.py"
 
+[tool.hatch.build.targets.wheel]
+packages = ["smartsheet"]
+
+[tool.hatch.build.targets.sdist]
+include = ["smartsheet"]
+
 [project]
 name = "smartsheet-python-sdk"
 description = "Library that uses Python to connect to Smartsheet services (using API 2.0)."

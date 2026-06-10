@@ -31,26 +31,29 @@ class Webhooks:
         self._base = smartsheet_obj
         self._log = logging.getLogger(__name__)
 
-    def list_webhooks(self, page_size=None, page=None, include_all=None) -> Union[IndexResult[Webhook], Error]:
-        """Get the list of all Webhooks the User has access to, in alphabetical
-        order, by name.
+    def list_webhooks(self, page_size=None, page=None) -> Union[IndexResult[Webhook], Error]:
+        """Get the list of all Webhooks the User has access to.
 
         Args:
-            page_size (int): The maximum number of items to
-                return per page.
+            page_size (int): The maximum number of items to return per page.
+                Server-side maximum is 10,000.
             page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
 
         Returns:
-            Union[IndexResult[Webhook], Error]: The result of the operation, or an Error object if the request fails.
+            Union[IndexResult[Webhook], Error]: The result of the operation, or an
+                Error object if the request fails.
+
+        Note:
+            As of the Jun-03-2026 sunset date, ``total_count`` and ``total_pages``
+            on the response are returned as ``-1`` by the server. Webhooks are now
+            sorted by creation date (most recent first), no longer by name.
+            See https://developers.smartsheet.com/api/smartsheet/changelog#2025-08-04
         """
         _op = fresh_operation("list_webhooks")
         _op["method"] = "GET"
         _op["path"] = "/webhooks"
         _op["query_params"]["pageSize"] = page_size
         _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
 
         expected = ["IndexResult", "Webhook"]
 
