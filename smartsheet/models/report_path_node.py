@@ -53,24 +53,20 @@ class ReportPathNode(PathNode):
     def reports(self, value):
         self._reports.load(value)
 
-    def get_report(self):
+    def get_leaf_report(self):
         """Return the target PathLeaf report, or None if not reachable."""
         if self.reports:
             return self.reports[0]
         if self.folders:
-            return self.folders[0].get_report()
+            return self.folders[0].get_leaf_report()
         return None
 
-    def get_report_path(self):
-        """Return a Unix-style path string from this node to the target report."""
+    def get_leaf_report_path(self):
+        """Return a Unix-style path string from this node to the target report.
+            Example: '/Workspace/Folder/Report'
+        """
         if self.reports:
-            leaf_name = self.reports[0].name
-            if leaf_name is None:
-                return None
-            return f"{self.name}/{leaf_name}" if self.name else leaf_name
+            return f"/{self.name}/{self.reports[0].name}"
         if self.folders:
-            child_path = self.folders[0].get_report_path()
-            if child_path is None:
-                return None
-            return f"{self.name}/{child_path}" if self.name else child_path
+            return f"/{self.name}{self.folders[0].get_leaf_report_path()}"
         return None

@@ -161,7 +161,7 @@ class Reports:
 
         return response
 
-    def get_report_path(self, report_id) -> Union[ReportPathNode, Error]:
+    def get_report_path(self, report_id: int) -> Union[ReportPathNode, Error]:
         """Get the hierarchical path of a report.
 
         Args:

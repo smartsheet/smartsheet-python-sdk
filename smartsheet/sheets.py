@@ -523,7 +523,7 @@ class Sheets:
 
         return response
 
-    def get_sheet_path(self, sheet_id) -> Union[SheetPathNode, Error]:
+    def get_sheet_path(self, sheet_id: int) -> Union[SheetPathNode, Error]:
         """Get the hierarchical path of a sheet.
 
         Args:

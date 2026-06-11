@@ -53,24 +53,20 @@ class SheetPathNode(PathNode):
     def sheets(self, value):
         self._sheets.load(value)
 
-    def get_sheet(self):
+    def get_leaf_sheet(self):
         """Return the target PathLeaf sheet, or None if not reachable."""
         if self.sheets:
             return self.sheets[0]
         if self.folders:
-            return self.folders[0].get_sheet()
+            return self.folders[0].get_leaf_sheet()
         return None
 
-    def get_sheet_path(self):
-        """Return a Unix-style path string from this node to the target sheet."""
+    def get_leaf_sheet_path(self):
+        """Return a Unix-style path string from this node to the target sheet.
+            Example: '/Workspace/Folder/Sheet'
+        """
         if self.sheets:
-            leaf_name = self.sheets[0].name
-            if leaf_name is None:
-                return None
-            return f"{self.name}/{leaf_name}" if self.name else leaf_name
+            return f"/{self.name}/{self.sheets[0].name}"
         if self.folders:
-            child_path = self.folders[0].get_sheet_path()
-            if child_path is None:
-                return None
-            return f"{self.name}/{child_path}" if self.name else child_path
+            return f"/{self.name}{self.folders[0].get_leaf_sheet_path()}"
         return None

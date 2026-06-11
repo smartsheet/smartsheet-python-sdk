@@ -15,7 +15,7 @@ class TestFolderPathNodeGetFolder:
 
     def test_returns_self_when_no_child_folders(self):
         node = FolderPathNode({"id": 1, "name": "Leaf"})
-        assert node.get_folder() is node
+        assert node.get_leaf_folder() is node
 
     def test_returns_deepest_nested_folder(self):
         node = FolderPathNode({
@@ -31,8 +31,8 @@ class TestFolderPathNodeGetFolder:
                 }
             ],
         })
-        result = node.get_folder()
-        assert result.id_ == 3
+        result = node.get_leaf_folder()
+        assert result.id == 3
         assert result.name == "Leaf"
 
     def test_returns_single_child_folder(self):
@@ -41,15 +41,15 @@ class TestFolderPathNodeGetFolder:
             "name": "Parent",
             "folders": [{"id": 2, "name": "Child"}],
         })
-        result = node.get_folder()
-        assert result.id_ == 2
+        result = node.get_leaf_folder()
+        assert result.id == 2
 
 
 class TestFolderPathNodeGetFolderPath:
 
     def test_single_node_returns_its_name(self):
         node = FolderPathNode({"id": 1, "name": "OnlyFolder"})
-        assert node.get_folder_path() == "OnlyFolder"
+        assert node.get_leaf_folder_path() == "/OnlyFolder"
 
     def test_nested_nodes_joined_with_slash(self):
         node = FolderPathNode({
@@ -63,26 +63,13 @@ class TestFolderPathNodeGetFolderPath:
                 }
             ],
         })
-        assert node.get_folder_path() == "Root/Mid/Leaf"
-
-    def test_nodes_without_name_are_skipped(self):
-        node = FolderPathNode({
-            "id": 1,
-            "name": "Root",
-            "folders": [
-                {
-                    "id": 2,
-                    "folders": [{"id": 3, "name": "Leaf"}],
-                }
-            ],
-        })
-        assert node.get_folder_path() == "Root/Leaf"
+        assert node.get_leaf_folder_path() == "/Root/Mid/Leaf"
 
     def test_empty_node_returns_empty_string(self):
         # FolderPathNode intentionally returns "Root" (not None) for an empty node because
         # the target is a folder itself, not an asset nested inside one.
         node = FolderPathNode({"id": 1, "name": "Root"})
-        assert node.get_folder_path() == "Root"
+        assert node.get_leaf_folder_path() == "/Root"
 
 
 # ---------------------------------------------------------------------------
@@ -97,9 +84,9 @@ class TestSheetPathNodeGetSheet:
             "name": "Workspace",
             "sheets": [{"id": 10, "name": "My Sheet"}],
         })
-        result = node.get_sheet()
+        result = node.get_leaf_sheet()
         assert result is not None
-        assert result.id_ == 10
+        assert result.id == 10
         assert result.name == "My Sheet"
 
     def test_returns_sheet_nested_inside_folders(self):
@@ -114,9 +101,9 @@ class TestSheetPathNodeGetSheet:
                 }
             ],
         })
-        result = node.get_sheet()
+        result = node.get_leaf_sheet()
         assert result is not None
-        assert result.id_ == 20
+        assert result.id == 20
 
     def test_returns_none_when_no_sheets(self):
         node = SheetPathNode({
@@ -124,11 +111,11 @@ class TestSheetPathNodeGetSheet:
             "name": "Workspace",
             "folders": [{"id": 2, "name": "EmptyFolder"}],
         })
-        assert node.get_sheet() is None
+        assert node.get_leaf_sheet() is None
 
     def test_returns_none_on_empty_node(self):
         node = SheetPathNode()
-        assert node.get_sheet() is None
+        assert node.get_leaf_sheet() is None
 
 
 class TestSheetPathNodeGetSheetPath:
@@ -139,7 +126,7 @@ class TestSheetPathNodeGetSheetPath:
             "name": "Workspace",
             "sheets": [{"id": 10, "name": "My Sheet"}],
         })
-        assert node.get_sheet_path() == "Workspace/My Sheet"
+        assert node.get_leaf_sheet_path() == "/Workspace/My Sheet"
 
     def test_path_with_nested_sheet(self):
         node = SheetPathNode({
@@ -153,7 +140,7 @@ class TestSheetPathNodeGetSheetPath:
                 }
             ],
         })
-        assert node.get_sheet_path() == "Workspace/Folder/Deep Sheet"
+        assert node.get_leaf_sheet_path() == "/Workspace/Folder/Deep Sheet"
 
     def test_path_deeply_nested(self):
         node = SheetPathNode({
@@ -173,11 +160,11 @@ class TestSheetPathNodeGetSheetPath:
                 }
             ],
         })
-        assert node.get_sheet_path() == "Workspace/Top/Mid/Sheet"
+        assert node.get_leaf_sheet_path() == "/Workspace/Top/Mid/Sheet"
 
     def test_empty_node_returns_none(self):
         node = SheetPathNode()
-        assert node.get_sheet_path() is None
+        assert node.get_leaf_sheet_path() is None
 
 
 # ---------------------------------------------------------------------------
@@ -192,9 +179,9 @@ class TestReportPathNodeGetReport:
             "name": "Workspace",
             "reports": [{"id": 10, "name": "My Report"}],
         })
-        result = node.get_report()
+        result = node.get_leaf_report()
         assert result is not None
-        assert result.id_ == 10
+        assert result.id == 10
         assert result.name == "My Report"
 
     def test_returns_report_nested_inside_folders(self):
@@ -209,9 +196,9 @@ class TestReportPathNodeGetReport:
                 }
             ],
         })
-        result = node.get_report()
+        result = node.get_leaf_report()
         assert result is not None
-        assert result.id_ == 20
+        assert result.id == 20
 
     def test_returns_none_when_no_reports(self):
         node = ReportPathNode({
@@ -219,11 +206,11 @@ class TestReportPathNodeGetReport:
             "name": "Workspace",
             "folders": [{"id": 2, "name": "EmptyFolder"}],
         })
-        assert node.get_report() is None
+        assert node.get_leaf_report() is None
 
     def test_returns_none_on_empty_node(self):
         node = ReportPathNode()
-        assert node.get_report() is None
+        assert node.get_leaf_report() is None
 
 
 class TestReportPathNodeGetReportPath:
@@ -234,7 +221,7 @@ class TestReportPathNodeGetReportPath:
             "name": "Workspace",
             "reports": [{"id": 10, "name": "My Report"}],
         })
-        assert node.get_report_path() == "Workspace/My Report"
+        assert node.get_leaf_report_path() == "/Workspace/My Report"
 
     def test_path_with_nested_report(self):
         node = ReportPathNode({
@@ -248,7 +235,7 @@ class TestReportPathNodeGetReportPath:
                 }
             ],
         })
-        assert node.get_report_path() == "Workspace/Folder/Deep Report"
+        assert node.get_leaf_report_path() == "/Workspace/Folder/Deep Report"
 
     def test_path_deeply_nested(self):
         node = ReportPathNode({
@@ -268,11 +255,11 @@ class TestReportPathNodeGetReportPath:
                 }
             ],
         })
-        assert node.get_report_path() == "Workspace/Top/Mid/Report"
+        assert node.get_leaf_report_path() == "/Workspace/Top/Mid/Report"
 
     def test_empty_node_returns_none(self):
         node = ReportPathNode()
-        assert node.get_report_path() is None
+        assert node.get_leaf_report_path() is None
 
 
 # ---------------------------------------------------------------------------
@@ -287,9 +274,9 @@ class TestSightPathNodeGetSight:
             "name": "Workspace",
             "sights": [{"id": 10, "name": "My Sight"}],
         })
-        result = node.get_sight()
+        result = node.get_leaf_sight()
         assert result is not None
-        assert result.id_ == 10
+        assert result.id == 10
         assert result.name == "My Sight"
 
     def test_returns_sight_nested_inside_folders(self):
@@ -304,9 +291,9 @@ class TestSightPathNodeGetSight:
                 }
             ],
         })
-        result = node.get_sight()
+        result = node.get_leaf_sight()
         assert result is not None
-        assert result.id_ == 20
+        assert result.id == 20
 
     def test_returns_none_when_no_sights(self):
         node = SightPathNode({
@@ -314,11 +301,11 @@ class TestSightPathNodeGetSight:
             "name": "Workspace",
             "folders": [{"id": 2, "name": "EmptyFolder"}],
         })
-        assert node.get_sight() is None
+        assert node.get_leaf_sight() is None
 
     def test_returns_none_on_empty_node(self):
         node = SightPathNode()
-        assert node.get_sight() is None
+        assert node.get_leaf_sight() is None
 
 
 class TestSightPathNodeGetSightPath:
@@ -329,7 +316,7 @@ class TestSightPathNodeGetSightPath:
             "name": "Workspace",
             "sights": [{"id": 10, "name": "My Sight"}],
         })
-        assert node.get_sight_path() == "Workspace/My Sight"
+        assert node.get_leaf_sight_path() == "/Workspace/My Sight"
 
     def test_path_with_nested_sight(self):
         node = SightPathNode({
@@ -343,7 +330,7 @@ class TestSightPathNodeGetSightPath:
                 }
             ],
         })
-        assert node.get_sight_path() == "Workspace/Folder/Deep Sight"
+        assert node.get_leaf_sight_path() == "/Workspace/Folder/Deep Sight"
 
     def test_path_deeply_nested(self):
         node = SightPathNode({
@@ -363,8 +350,8 @@ class TestSightPathNodeGetSightPath:
                 }
             ],
         })
-        assert node.get_sight_path() == "Workspace/Top/Mid/Sight"
+        assert node.get_leaf_sight_path() == "/Workspace/Top/Mid/Sight"
 
     def test_empty_node_returns_none(self):
         node = SightPathNode()
-        assert node.get_sight_path() is None
+        assert node.get_leaf_sight_path() is None

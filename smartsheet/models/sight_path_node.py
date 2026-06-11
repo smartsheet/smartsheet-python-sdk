@@ -53,24 +53,20 @@ class SightPathNode(PathNode):
     def sights(self, value):
         self._sights.load(value)
 
-    def get_sight(self):
+    def get_leaf_sight(self):
         """Return the target PathLeaf sight, or None if not reachable."""
         if self.sights:
             return self.sights[0]
         if self.folders:
-            return self.folders[0].get_sight()
+            return self.folders[0].get_leaf_sight()
         return None
 
-    def get_sight_path(self):
-        """Return a Unix-style path string from this node to the target sight."""
+    def get_leaf_sight_path(self):
+        """Return a Unix-style path string from this node to the target sight.
+            Example: '/Workspace/Folder/Sight'
+        """
         if self.sights:
-            leaf_name = self.sights[0].name
-            if leaf_name is None:
-                return None
-            return f"{self.name}/{leaf_name}" if self.name else leaf_name
+            return f"/{self.name}/{self.sights[0].name}"
         if self.folders:
-            child_path = self.folders[0].get_sight_path()
-            if child_path is None:
-                return None
-            return f"{self.name}/{child_path}" if self.name else child_path
+            return f"/{self.name}{self.folders[0].get_leaf_sight_path()}"
         return None

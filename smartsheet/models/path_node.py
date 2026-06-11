@@ -23,7 +23,6 @@ from .enums import AccessLevel
 
 
 class PathNode:
-
     """Base node in a Smartsheet path response (workspace root or intermediate folder)."""
 
     def __init__(self, props=None, base_obj=None):
@@ -33,7 +32,7 @@ class PathNode:
             self._base = base_obj
 
         self._access_level = EnumeratedValue(AccessLevel)
-        self._id_ = Number()
+        self._id = Number()
         self._name = String()
         self._permalink = String()
 
@@ -42,18 +41,6 @@ class PathNode:
 
         self.request_response = None
         self.__initialized = True
-
-    def __getattr__(self, key):
-        if key == "id":
-            return self.id_
-        else:
-            raise AttributeError(key)
-
-    def __setattr__(self, key, value):
-        if key == "id":
-            self.id_ = value
-        else:
-            super().__setattr__(key, value)
 
     @property
     def access_level(self):
@@ -64,12 +51,12 @@ class PathNode:
         self._access_level.set(value)
 
     @property
-    def id_(self):
-        return self._id_.value
+    def id(self):
+        return self._id.value
 
-    @id_.setter
-    def id_(self, value):
-        self._id_.value = value
+    @id.setter
+    def id(self, value):
+        self._id.value = value
 
     @property
     def name(self):

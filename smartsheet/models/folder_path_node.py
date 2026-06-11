@@ -43,13 +43,13 @@ class FolderPathNode(PathNode):
     def folders(self, value):
         self._folders.load(value)
 
-    def get_folder(self):
+    def get_leaf_folder(self):
         """Return the deepest FolderPathNode reachable from this node."""
         if self.folders:
-            return self.folders[0].get_folder()
+            return self.folders[0].get_leaf_folder()
         return self
 
-    def get_folder_path(self):
+    def get_leaf_folder_path(self):
         """Return a Unix-style path string of folder names from this node to the target folder.
 
         Unlike get_sheet_path/get_report_path/get_sight_path, this method returns the
@@ -58,6 +58,6 @@ class FolderPathNode(PathNode):
         FolderPathNode (no id, no name, no children) returns an empty string.
         """
         if self.folders:
-            child_path = self.folders[0].get_folder_path()
-            return f"{self.name}/{child_path}" if self.name and child_path else self.name or child_path or ""
-        return self.name or ""
+            return f"/{self.name}{self.folders[0].get_leaf_folder_path()}"
+        else:
+            return f"/{self.name}"

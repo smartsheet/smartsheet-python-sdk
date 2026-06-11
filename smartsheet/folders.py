@@ -245,7 +245,7 @@ class Folders:
 
         return response
 
-    def get_folder_path(self, folder_id) -> Union[FolderPathNode, Error]:
+    def get_folder_path(self, folder_id: int) -> Union[FolderPathNode, Error]:
         """Get the hierarchical path of a folder.
 
         Args:

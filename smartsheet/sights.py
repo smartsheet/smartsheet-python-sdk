@@ -88,7 +88,7 @@ class Sights:
 
         return response
 
-    def get_sight_path(self, sight_id) -> Union[SightPathNode, Error]:
+    def get_sight_path(self, sight_id: int) -> Union[SightPathNode, Error]:
         """Get the hierarchical path of a sight.
 
         Args:
