@@ -64,7 +64,10 @@ class ReportPathNode(PathNode):
     def get_report_path(self):
         """Return a Unix-style path string from this node to the target report."""
         if self.reports:
-            return self.reports[0].name or None
+            leaf_name = self.reports[0].name
+            if leaf_name is None:
+                return None
+            return f"{self.name}/{leaf_name}" if self.name else leaf_name
         if self.folders:
             child_path = self.folders[0].get_report_path()
             if child_path is None:

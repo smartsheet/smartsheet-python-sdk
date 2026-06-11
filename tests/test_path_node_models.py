@@ -139,7 +139,7 @@ class TestSheetPathNodeGetSheetPath:
             "name": "Workspace",
             "sheets": [{"id": 10, "name": "My Sheet"}],
         })
-        assert node.get_sheet_path() == "My Sheet"
+        assert node.get_sheet_path() == "Workspace/My Sheet"
 
     def test_path_with_nested_sheet(self):
         node = SheetPathNode({
@@ -153,7 +153,7 @@ class TestSheetPathNodeGetSheetPath:
                 }
             ],
         })
-        assert node.get_sheet_path() == "Workspace/Deep Sheet"
+        assert node.get_sheet_path() == "Workspace/Folder/Deep Sheet"
 
     def test_path_deeply_nested(self):
         node = SheetPathNode({
@@ -173,7 +173,7 @@ class TestSheetPathNodeGetSheetPath:
                 }
             ],
         })
-        assert node.get_sheet_path() == "Workspace/Top/Sheet"
+        assert node.get_sheet_path() == "Workspace/Top/Mid/Sheet"
 
     def test_empty_node_returns_none(self):
         node = SheetPathNode()
@@ -234,7 +234,7 @@ class TestReportPathNodeGetReportPath:
             "name": "Workspace",
             "reports": [{"id": 10, "name": "My Report"}],
         })
-        assert node.get_report_path() == "My Report"
+        assert node.get_report_path() == "Workspace/My Report"
 
     def test_path_with_nested_report(self):
         node = ReportPathNode({
@@ -248,7 +248,7 @@ class TestReportPathNodeGetReportPath:
                 }
             ],
         })
-        assert node.get_report_path() == "Workspace/Deep Report"
+        assert node.get_report_path() == "Workspace/Folder/Deep Report"
 
     def test_path_deeply_nested(self):
         node = ReportPathNode({
@@ -268,7 +268,7 @@ class TestReportPathNodeGetReportPath:
                 }
             ],
         })
-        assert node.get_report_path() == "Workspace/Top/Report"
+        assert node.get_report_path() == "Workspace/Top/Mid/Report"
 
     def test_empty_node_returns_none(self):
         node = ReportPathNode()
@@ -329,7 +329,7 @@ class TestSightPathNodeGetSightPath:
             "name": "Workspace",
             "sights": [{"id": 10, "name": "My Sight"}],
         })
-        assert node.get_sight_path() == "My Sight"
+        assert node.get_sight_path() == "Workspace/My Sight"
 
     def test_path_with_nested_sight(self):
         node = SightPathNode({
@@ -343,7 +343,7 @@ class TestSightPathNodeGetSightPath:
                 }
             ],
         })
-        assert node.get_sight_path() == "Workspace/Deep Sight"
+        assert node.get_sight_path() == "Workspace/Folder/Deep Sight"
 
     def test_path_deeply_nested(self):
         node = SightPathNode({
@@ -363,7 +363,7 @@ class TestSightPathNodeGetSightPath:
                 }
             ],
         })
-        assert node.get_sight_path() == "Workspace/Top/Sight"
+        assert node.get_sight_path() == "Workspace/Top/Mid/Sight"
 
     def test_empty_node_returns_none(self):
         node = SightPathNode()

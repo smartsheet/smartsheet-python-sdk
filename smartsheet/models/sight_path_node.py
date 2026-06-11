@@ -64,7 +64,10 @@ class SightPathNode(PathNode):
     def get_sight_path(self):
         """Return a Unix-style path string from this node to the target sight."""
         if self.sights:
-            return self.sights[0].name or None
+            leaf_name = self.sights[0].name
+            if leaf_name is None:
+                return None
+            return f"{self.name}/{leaf_name}" if self.name else leaf_name
         if self.folders:
             child_path = self.folders[0].get_sight_path()
             if child_path is None:
