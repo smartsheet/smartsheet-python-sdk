@@ -337,6 +337,14 @@ Folder
    :undoc-members:
    :show-inheritance:
 
+FolderPathNode
+--------------
+
+.. automodule:: smartsheet.models.folder_path_node
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 FontFamily
 ----------
 
@@ -493,6 +501,22 @@ PaginatedChildrenResult
 -----------------------
 
 .. automodule:: smartsheet.models.paginated_children_result
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PathLeaf
+--------
+
+.. automodule:: smartsheet.models.path_leaf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PathNode
+--------
+
+.. automodule:: smartsheet.models.path_node
    :members:
    :undoc-members:
    :show-inheritance:
@@ -657,6 +681,14 @@ ReportWidgetContent
    :undoc-members:
    :show-inheritance:
 
+ReportPathNode
+--------------
+
+.. automodule:: smartsheet.models.report_path_node
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Result
 ------
 
@@ -817,6 +849,14 @@ SheetUserSettings
    :undoc-members:
    :show-inheritance:
 
+SheetPathNode
+-------------
+
+.. automodule:: smartsheet.models.sheet_path_node
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ShortcutDataItem
 ----------------
 
@@ -845,6 +885,14 @@ SightPublish
 ------------
 
 .. automodule:: smartsheet.models.sight_publish
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SightPathNode
+-------------
+
+.. automodule:: smartsheet.models.sight_path_node
    :members:
    :undoc-members:
    :show-inheritance:

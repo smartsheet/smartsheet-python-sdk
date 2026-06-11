@@ -21,17 +21,17 @@ from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
     get_wiremock_request,
 )
-from tests.mock_api.reports.common_test_constants import TEST_REPORT_ID
-
-TEST_PATH_REPORT_ID = 3456789012345678
-TEST_PATH_REPORT_NAME = "Project Report"
-TEST_PATH_REPORT_ACCESS_LEVEL = "ADMIN"
-TEST_PATH_REPORT_PERMALINK = "https://app.smartsheet.com/reports/3456789012345678"
-
-TEST_PATH_ROOT_REPORT_ID = 5678901234567890
-TEST_PATH_ROOT_REPORT_NAME = "Root Level Report"
-TEST_PATH_ROOT_REPORT_ACCESS_LEVEL = "ADMIN"
-TEST_PATH_ROOT_REPORT_PERMALINK = "https://app.smartsheet.com/reports/rootlevel"
+from tests.mock_api.reports.common_test_constants import (
+    TEST_REPORT_ID,
+    TEST_PATH_REPORT_ID,
+    TEST_PATH_REPORT_NAME,
+    TEST_PATH_REPORT_ACCESS_LEVEL,
+    TEST_PATH_REPORT_PERMALINK,
+    TEST_PATH_ROOT_REPORT_ID,
+    TEST_PATH_ROOT_REPORT_NAME,
+    TEST_PATH_ROOT_REPORT_ACCESS_LEVEL,
+    TEST_PATH_ROOT_REPORT_PERMALINK,
+)
 
 
 def test_get_report_path_generated_url_is_correct():
