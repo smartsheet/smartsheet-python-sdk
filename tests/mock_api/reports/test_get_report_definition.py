@@ -65,6 +65,38 @@ def test_get_report_definition_all_response_properties():
                     },
                     "operator": "NOT_EQUAL",
                     "values": ["Complete"]
+                },
+                {
+                    "column": {
+                        "title": "Amount",
+                        "type": "TEXT_NUMBER"
+                    },
+                    "operator": "GREATER_THAN",
+                    "values": [42]
+                },
+                {
+                    "column": {
+                        "type": "DATETIME",
+                        "systemColumnType": "MODIFIED_DATE"
+                    },
+                    "operator": "LESS_THAN",
+                    "values": [{"objectType": "DATE", "value": "2025-01-14"}]
+                },
+                {
+                    "column": {
+                        "title": "Assigned To",
+                        "type": "CONTACT_LIST"
+                    },
+                    "operator": "EQUAL",
+                    "values": [{"objectType": "CURRENT_USER"}]
+                },
+                {
+                    "column": {
+                        "title": "Notes",
+                        "type": "TEXT_NUMBER"
+                    },
+                    "operator": "EQUAL",
+                    "values": [None]
                 }
             ]
         },
