@@ -657,6 +657,14 @@ ReportWidgetContent
    :undoc-members:
    :show-inheritance:
 
+UpdateReportColumnRequest
+-------------------------
+
+.. automodule:: smartsheet.models.update_report_column_request
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Result
 ------
 
