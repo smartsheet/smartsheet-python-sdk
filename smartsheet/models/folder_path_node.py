@@ -56,8 +56,12 @@ class FolderPathNode(PathNode):
         deepest folder's name even when the root node has no name (e.g. a workspace root),
         because the target IS a folder rather than an asset nested inside one. An empty
         FolderPathNode (no id, no name, no children) returns an empty string.
+
+        Example: '/Workspace/Folder/TargetFolder'
         """
+
+        if not self.name:
+            return None
         if self.folders:
             return f"/{self.name}{self.folders[0].get_leaf_folder_path()}"
-        else:
-            return f"/{self.name}"
+        return f"/{self.name}"

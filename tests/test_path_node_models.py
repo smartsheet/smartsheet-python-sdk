@@ -65,11 +65,9 @@ class TestFolderPathNodeGetFolderPath:
         })
         assert node.get_leaf_folder_path() == "/Root/Mid/Leaf"
 
-    def test_empty_node_returns_empty_string(self):
-        # FolderPathNode intentionally returns "Root" (not None) for an empty node because
-        # the target is a folder itself, not an asset nested inside one.
-        node = FolderPathNode({"id": 1, "name": "Root"})
-        assert node.get_leaf_folder_path() == "/Root"
+    def test_empty_node_returns_none(self):
+        node = FolderPathNode()
+        assert node.get_leaf_folder_path() is None
 
 
 # ---------------------------------------------------------------------------
