@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Added `get_sheet_path`, `get_report_path`, `get_sight_path`, and `get_folder_path` methods for retrieving the hierarchical folder/workspace path of an asset. Returns typed path node models (`SheetPathNode`, `ReportPathNode`, `SightPathNode`, `FolderPathNode`) with helper methods `get_<asset>()` and `get_<asset>_path()` for convenient traversal.
+- Added support for GET /2.0/sheets/{sheetId}/path endpoint (`get_sheet_path`)
+- Added support for GET /2.0/reports/{reportId}/path endpoint (`get_report_path`)
+- Added support for GET /2.0/sights/{sightId}/path endpoint (`get_sight_path`)
+- Added support for GET /2.0/folders/{folderId}/path endpoint (`get_folder_path`)
+- Added helper methods `get_leaf_<asset>()` and `get_leaf_<asset>_path()` to the responses of the path endpoints for convenient traversal
 
 ## [4.0.2] - 2026-06-10
 
