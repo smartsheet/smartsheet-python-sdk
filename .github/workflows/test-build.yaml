@@ -43,10 +43,10 @@ jobs:
           pip install uv
           uv sync --extra test
       - name: Clone smartsheet/smartsheet-sdk-tests PUBLIC repository
-        uses: GuillaumeFalourd/clone-github-repo-action@v2
+        uses: actions/checkout@v6
         with:
-          owner: 'smartsheet'
-          repository: 'smartsheet-sdk-tests'
+          repository: smartsheet/smartsheet-sdk-tests
+          path: smartsheet-sdk-tests
       - name: Setup Mock API
         run: |
           docker compose -f smartsheet-sdk-tests/docker-compose.yml up -d --wait
