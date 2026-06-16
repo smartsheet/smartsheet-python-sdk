@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python 3.14
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: '3.14'
       - name: Install uv
@@ -25,7 +25,7 @@ jobs:
           uv run sphinx-apidoc -o docs-source smartsheet
           uv run sphinx-build -b html -d docs-source/_build/doctrees docs-source/. docs-source/_build/html
       - name: Upload Documentation artifact
-        uses: actions/upload-pages-artifact@main
+        uses: actions/upload-pages-artifact@v5
         with:
           path: docs-source/_build/html
   
@@ -43,4 +43,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
