@@ -131,6 +131,12 @@ from .webhook_subscope import WebhookSubscope
 from .widget import Widget
 from .widget_content import WidgetContent
 from .workspace import Workspace
+from .path_node import PathNode
+from .path_leaf import PathLeaf
+from .folder_path_node import FolderPathNode
+from .sheet_path_node import SheetPathNode
+from .report_path_node import ReportPathNode
+from .sight_path_node import SightPathNode
 from .user_plan import UserPlan
 from .asset_shares_paginated_result import AssetSharesPaginatedResult
 from .asset_share import AssetShare
