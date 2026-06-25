@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Fixed
+
+- Added missing `SHARED` value to `PublishAccessibleBy` enum.
+
 ### Added
 
 - Added support for GET /2.0/sheets/{sheetId}/path endpoint (`get_sheet_path`)
