@@ -344,6 +344,21 @@ dictionary use camelCase/JSON names, e.g. `sheetName` not `sheet_name`). Informa
 
 provided can be found on the [Events Description](https://smartsheet.redoc.ly/tag/eventsDescription) page of the API Documentation.
 
+Each event identifies the object it affected. Use the `object_id_str` property, which holds the object
+identifier as a string and supports both numeric and non-numeric identifiers. The older `object_id`
+property is deprecated and kept only for backward compatibility: when the identifier is numeric it
+contains the number, and when the identifier is non-numeric it contains `-1` while the real value is
+available in `object_id_str`. New code should read `object_id_str`.
+
+```python
+for event in events_list.data:
+    # Preferred: works for all identifier types
+    print(event.object_id_str)
+
+    # Deprecated: numeric only; returns -1 for non-numeric identifiers
+    # print(event.object_id)
+```
+
 ```python
 # this example is looking specifically for new sheet events
 def print_new_sheet_events_in_list(events_list):
