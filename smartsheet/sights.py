@@ -19,7 +19,7 @@ import logging
 from typing import Optional, Union
 
 from .util import fresh_operation
-from .models import Error, Result, Sight, SightPublish, TokenPaginatedResult
+from .models import Error, Result, Sight, SightPathNode, SightPublish, TokenPaginatedResult
 
 
 class Sights:
@@ -83,6 +83,26 @@ class Sights:
         _op["query_params"]["level"] = level
 
         expected = "Sight"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_sight_path(self, sight_id: int) -> Union[SightPathNode, Error]:
+        """Get the hierarchical path of a sight.
+
+        Args:
+            sight_id (int): Sight ID
+
+        Returns:
+            Union[SightPathNode, Error]: A SightPathNode object describing the Sight's
+                location, or an Error object if the request fails.
+        """
+        _op = fresh_operation("get_sight_path")
+        _op["method"] = "GET"
+        _op["path"] = "/sights/" + str(sight_id) + "/path"
+
+        expected = "SightPathNode"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+## [4.1.0] - 2026-06-26
+
+### Fixed
+
+- Added missing `SHARED` value to `PublishAccessibleBy` enum.
+
+### Added
+
+- Added support for GET /2.0/sheets/{sheetId}/path endpoint (`get_sheet_path`)
+- Added support for GET /2.0/reports/{reportId}/path endpoint (`get_report_path`)
+- Added support for GET /2.0/sights/{sightId}/path endpoint (`get_sight_path`)
+- Added support for GET /2.0/folders/{folderId}/path endpoint (`get_folder_path`)
+- Added helper methods `get_leaf_<asset>()` and `get_leaf_<asset>_path()` to the responses of the path endpoints for convenient traversal
+
 ## [4.0.2] - 2026-06-10
 
 ### Fixed

@@ -20,3 +20,4 @@ from enum import Enum
 class PublishAccessibleBy(Enum):
     ALL = 1
     ORG = 2
+    SHARED = 3
