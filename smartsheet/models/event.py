@@ -106,6 +106,13 @@ class Event:
 
     @property
     def object_id(self):
+        """Deprecated: use ``object_id_str`` instead.
+
+        .. deprecated::
+            ``object_id`` is numeric only and returns -1 for non-numeric object
+            identifiers. It is not scheduled for removal, but new code should read
+            ``object_id_str``, which represents all identifier values.
+        """
         return self._object_id
 
     @object_id.setter

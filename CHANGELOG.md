@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Deprecated
+
+- Deprecated `Event.object_id`; use `Event.object_id_str` instead. `object_id` is numeric only and returns -1 for non-numeric identifiers. It is not scheduled for removal.
+
 ## [4.1.0] - 2026-06-26
 
 ### Fixed
