@@ -282,11 +282,13 @@ See `.claude/skills/review-api-endpoint/SKILL.md` for:
 ### When to Use
 
 Use the Release Agent when:
+
 - User asks to cut a release or publish a new version
 - Accumulated changes on `mainline` need to be shipped
 - A hotfix needs to be released urgently
 
 Do NOT use for:
+
 - Implementing features or fixing bugs (merge those first)
 - CI or tooling changes without a version change
 

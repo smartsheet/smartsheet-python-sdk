@@ -49,7 +49,7 @@ The `## [x.x.x] - Unreleased` placeholder header is never removed — it stays a
 
 #### PR title convention
 
-```
+```text
 Prepare for release vX.X.X
 ```
 
@@ -86,7 +86,7 @@ Go to [Workflow runs](https://github.com/smartsheet/smartsheet-python-sdk/action
 
 ### 6. Verify on PyPI
 
-```
+```text
 https://pypi.org/project/smartsheet-python-sdk/4.2.0/
 ```
 
@@ -102,7 +102,7 @@ The new version should be available immediately after the workflow succeeds.
 
 Publishing is fully automated once the GitHub Release is published:
 
-```
+```text
 GitHub Release (published) → publish-distribution.yaml → uv build → uv publish → PyPI
                            → publish-documentation.yaml → Sphinx → GitHub Pages
 ```
@@ -111,11 +111,11 @@ The workflow uses a `PYPI_API_TOKEN` GitHub Actions secret — no local credenti
 
 ## Troubleshooting
 
-**CI fails on the PR**
+### CI fails on the PR
 
 Check the `test-build.yaml` run. Common causes: lint failure (`pylint`), test failure on a specific Python version, or a docs build error.
 
-**Publish workflow fails after the release is published**
+### Publish workflow fails after the release is published
 
 The tag and GitHub Release already exist — do not delete them. Instead:
 
