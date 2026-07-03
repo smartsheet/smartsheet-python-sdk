@@ -468,7 +468,7 @@ class Reports:
         _op["path"] = "/reports/" + str(report_id) + "/columns"
         _op["query_params"]["lastKey"] = last_key
         _op["query_params"]["maxItems"] = max_items
-        _op["query_params"]["maxItems"] = level
+        _op["query_params"]["level"] = level
 
         expected = ["TokenPaginatedResult", "ReportColumn"]
 

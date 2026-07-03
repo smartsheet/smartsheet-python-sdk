@@ -41,9 +41,11 @@ def test_get_report_column_with_level_generated_url_is_correct():
     url = urlparse(wiremock_request["absoluteUrl"])
 
     query = parse_qs(url.query)
-    assert not query
+    assert query == {
+        "level": "3"
+    }
 
-    assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/columns/{TEST_COLUMN_VIRTUAL_ID}?level=3'
+    assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/columns/{TEST_COLUMN_VIRTUAL_ID}'
     assert wiremock_request["method"] == "GET"
 
 

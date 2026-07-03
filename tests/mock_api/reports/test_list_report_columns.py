@@ -28,22 +28,26 @@ def test_list_report_columns_generated_url_is_correct():
     assert wiremock_request["method"] == "GET"
 
 
-def test_list_report_columns_with_level_generated_url_is_correct():
+def test_list_report_columns_with_params_generated_url_is_correct():
     """Test that the URL is correctly generated for GET /reports/{id}/columns."""
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
         "/reports/list-report-columns/all-response-body-properties", request_id
     )
 
-    client.Reports.list_report_columns(report_id=TEST_REPORT_ID, level=3)
+    client.Reports.list_report_columns(report_id=TEST_REPORT_ID, last_key="token", max_items=10, level=3)
 
     wiremock_request = get_wiremock_request(request_id)
     url = urlparse(wiremock_request["absoluteUrl"])
 
     query = parse_qs(url.query)
-    assert not query
+    assert query == {
+        "lastKey": "token",
+        "maxItems": "10",
+        "level": "3"
+    }
 
-    assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/columns?level=3'
+    assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/columns'
     assert wiremock_request["method"] == "GET"
 
 
