@@ -42,9 +42,9 @@ def test_list_report_columns_with_params_generated_url_is_correct():
 
     query = parse_qs(url.query)
     assert query == {
-        "lastKey": "token",
-        "maxItems": "10",
-        "level": "3"
+        "lastKey": ["token"],
+        "maxItems": ["10"],
+        "level": ["3"]
     }
 
     assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/columns'

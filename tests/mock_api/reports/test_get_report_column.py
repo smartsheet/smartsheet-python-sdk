@@ -42,7 +42,7 @@ def test_get_report_column_with_level_generated_url_is_correct():
 
     query = parse_qs(url.query)
     assert query == {
-        "level": "3"
+        "level": ["3"]
     }
 
     assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/columns/{TEST_COLUMN_VIRTUAL_ID}'
