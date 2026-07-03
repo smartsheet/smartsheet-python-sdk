@@ -28,6 +28,25 @@ def test_list_report_columns_generated_url_is_correct():
     assert wiremock_request["method"] == "GET"
 
 
+def test_list_report_columns_with_level_generated_url_is_correct():
+    """Test that the URL is correctly generated for GET /reports/{id}/columns."""
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/reports/list-report-columns/all-response-body-properties", request_id
+    )
+
+    client.Reports.list_report_columns(report_id=TEST_REPORT_ID, level=3)
+
+    wiremock_request = get_wiremock_request(request_id)
+    url = urlparse(wiremock_request["absoluteUrl"])
+
+    query = parse_qs(url.query)
+    assert not query
+
+    assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/columns?level=3'
+    assert wiremock_request["method"] == "GET"
+
+
 def test_list_report_columns_all_response_properties():
     """Test that all response properties are correctly deserialized."""
     request_id = uuid.uuid4().hex
