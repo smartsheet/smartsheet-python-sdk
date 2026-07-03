@@ -447,7 +447,7 @@ class Reports:
         return response
 
     def list_report_columns(
-        self, report_id: int, last_key: Optional[str] = None, max_items: Optional[int] = None
+        self, report_id: int, last_key: Optional[str] = None, max_items: Optional[int] = None, level: Optional[int] = None
     ) -> Union[TokenPaginatedResult[ReportColumn], Error]:
         """List the columns for the specified report.
 
@@ -457,6 +457,7 @@ class Reports:
                 page of results. If not specified, the first page is returned.
             max_items (int, optional): The maximum number of items to return per
                 page. The default and minimum are 100.
+            level (int, optional): Compatibility level
 
         Returns:
             Union[TokenPaginatedResult[ReportColumn], Error]: Paginated list of
@@ -467,6 +468,7 @@ class Reports:
         _op["path"] = "/reports/" + str(report_id) + "/columns"
         _op["query_params"]["lastKey"] = last_key
         _op["query_params"]["maxItems"] = max_items
+        _op["query_params"]["level"] = level
 
         expected = ["TokenPaginatedResult", "ReportColumn"]
 
@@ -475,12 +477,13 @@ class Reports:
 
         return response
 
-    def get_report_column(self, report_id: int, column_virtual_id: int) -> Union[ReportColumn, Error]:
+    def get_report_column(self, report_id: int, column_virtual_id: int, level: Optional[int] = None) -> Union[ReportColumn, Error]:
         """Get the specified column in the report.
 
         Args:
             report_id (int): Report ID
             column_virtual_id (int): Virtual ID of the report column.
+            level (int, optional): Compatibility level
 
         Returns:
             Union[ReportColumn, Error]: The report column object, or an Error
@@ -489,6 +492,7 @@ class Reports:
         _op = fresh_operation("get_report_column")
         _op["method"] = "GET"
         _op["path"] = "/reports/" + str(report_id) + "/columns/" + str(column_virtual_id)
+        _op["query_params"]["level"] = level
 
         expected = "ReportColumn"
         prepped_request = self._base.prepare_request(_op)
