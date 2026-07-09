@@ -26,7 +26,7 @@ from .comment import Comment
 from .contact_object_value import ContactObjectValue
 from .cross_sheet_reference import CrossSheetReference
 from .discussion import Discussion
-from .enums import AccessLevel, AttachmentType, ResourceType
+from .enums import AccessLevel, AttachmentType, ChildrenResourceType
 from .project_settings import ProjectSettings
 from .row import Row
 from .sheet_filter import SheetFilter
@@ -74,7 +74,7 @@ class Sheet:
         self._project_settings = TypedObject(ProjectSettings)
         self._read_only = Boolean()
         self._resource_management_enabled = Boolean()
-        self._resource_type = EnumeratedValue(ResourceType)
+        self._resource_type = EnumeratedValue(ChildrenResourceType)
         self._rows = TypedList(Row)
         self._show_parent_rows_for_filters = Boolean()
         self._source = TypedObject(Source)

@@ -20,7 +20,7 @@ from __future__ import absolute_import
 from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
                      TypedList, json, six)
 from ..util import deserialize, serialize
-from .enums import AccessLevel, GlobalTemplate, ResourceType
+from .enums import AccessLevel, GlobalTemplate, ChildrenResourceType
 
 
 class Template:
@@ -48,7 +48,7 @@ class Template:
         self._modified_at = Timestamp()
         self._name = String()
         self._permalink = String()
-        self._resource_type = EnumeratedValue(ResourceType)
+        self._resource_type = EnumeratedValue(ChildrenResourceType)
         self._tags = TypedList(six.string_types)
         self._type = String(accept=self.allowed_values["type"])
 

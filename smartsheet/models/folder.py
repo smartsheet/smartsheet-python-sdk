@@ -19,7 +19,7 @@ from __future__ import absolute_import
 
 from ..types import Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject, json
 from ..util import deserialize, serialize
-from .enums import ResourceType
+from .enums import ChildrenResourceType
 from .report import Report
 from .sheet import Sheet
 from .sight import Sight
@@ -45,7 +45,7 @@ class Folder:
         self._name = String()
         self._permalink = String()
         self._reports = TypedList(Report)
-        self._resource_type = EnumeratedValue(ResourceType)
+        self._resource_type = EnumeratedValue(ChildrenResourceType)
         self._sheets = TypedList(Sheet)
         self._sights = TypedList(Sight)
         self._source = TypedObject(Source)

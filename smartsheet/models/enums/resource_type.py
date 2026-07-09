@@ -17,9 +17,9 @@
 from enum import Enum
 
 
-class ResourceType(Enum):
-    SHEET = 1
-    REPORT = 2
-    SIGHT = 3
-    TEMPLATE = 4
-    FOLDER = 5
+class ChildrenResourceType(str, Enum):
+    SHEET = 'sheet'
+    REPORT = 'report'
+    SIGHT = 'sight'
+    TEMPLATE = 'template'
+    FOLDER = 'folder'

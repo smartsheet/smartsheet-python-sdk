@@ -296,12 +296,6 @@ class EnumeratedValue:
         except KeyError:
             pass
 
-        if value.islower():
-            try:
-                return self.__enum[value.upper()]
-            except (KeyError, AttributeError):
-                pass
-
         try:
             return self.__enum(value)
         except ValueError:
