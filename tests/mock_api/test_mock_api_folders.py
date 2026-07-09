@@ -51,6 +51,7 @@ class TestMockApiFolders(MockApiTestHelper):
         assert isinstance(subfolder, Folder)
         assert subfolder.id == 987
         assert subfolder.name == "Subfolder"
+        assert subfolder.resource_type == "FOLDER"
 
         # Verify second child (sheet)
         sheet = response.data[1]
@@ -58,6 +59,7 @@ class TestMockApiFolders(MockApiTestHelper):
         assert sheet.id == 234
         assert sheet.name == "Task List"
         assert sheet.access_level == "EDITOR"
+        assert sheet.resource_type == "SHEET"
 
         # Verify third child (sight)
         sight = response.data[2]
@@ -65,6 +67,7 @@ class TestMockApiFolders(MockApiTestHelper):
         assert sight.id == 567
         assert sight.name == "Project Dashboard"
         assert sight.access_level == "EDITOR"
+        assert sight.resource_type == "SIGHT"
 
         # Verify fourth child (report)
         report = response.data[3]
@@ -72,6 +75,7 @@ class TestMockApiFolders(MockApiTestHelper):
         assert report.id == 890
         assert report.name == "Status Report"
         assert report.access_level == "VIEWER"
+        assert report.resource_type == "REPORT"
 
     @clean_api_error
     def test_get_folder_children_filter_sights_and_reports(self):

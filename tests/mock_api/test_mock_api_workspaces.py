@@ -57,6 +57,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert folder.id == 456
         assert folder.name == "Project Folder"
         assert folder.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
+        assert folder.resource_type == "FOLDER"
 
         # Verify second child (sheet) - exact values from scenario
         sheet = response.data[1]
@@ -65,6 +66,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert sheet.name == "Budget Sheet"
         assert sheet.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
         assert sheet.access_level == "EDITOR"
+        assert sheet.resource_type == "SHEET"
 
         # Verify third child (sight) - exact values from scenario
         sight = response.data[2]
@@ -73,6 +75,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert sight.name == "Dashboard Overview"
         assert sight.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
         assert sight.access_level == "VIEWER"
+        assert sight.resource_type == "SIGHT"
 
         # Verify fourth child (report) - exact values from scenario
         report = response.data[3]
@@ -81,6 +84,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert report.name == "Monthly Report"
         assert report.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
         assert report.access_level == "ADMIN"
+        assert report.resource_type == "REPORT"
 
 
     @clean_api_error

@@ -17,8 +17,9 @@
 
 from __future__ import absolute_import
 
-from ..types import TypedList, TypedObject, json
+from ..types import EnumeratedValue, TypedList, TypedObject, json
 from ..util import deserialize, serialize
+from .enums import ResourceType
 from .report_column import ReportColumn
 from .report_row import ReportRow
 from .scope import Scope
@@ -37,6 +38,7 @@ class Report(Sheet):
             self._base = base_obj
 
         self._columns = TypedList(ReportColumn)
+        self._resource_type = EnumeratedValue(ResourceType)
         self._rows = TypedList(ReportRow)
         self._scope = TypedObject(Scope)
         self._source_sheets = TypedList(Sheet)
@@ -55,6 +57,14 @@ class Report(Sheet):
     @columns.setter
     def columns(self, value):
         self._columns.load(value)
+
+    @property
+    def resource_type(self):
+        return self._resource_type
+
+    @resource_type.setter
+    def resource_type(self, value):
+        self._resource_type.set(value)
 
     @property
     def rows(self):

@@ -17,8 +17,9 @@
 
 from __future__ import absolute_import
 
-from ..types import Boolean, Number, String, Timestamp, TypedList, TypedObject, json
+from ..types import Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject, json
 from ..util import deserialize, serialize
+from .enums import ResourceType
 from .report import Report
 from .sheet import Sheet
 from .sight import Sight
@@ -44,6 +45,7 @@ class Folder:
         self._name = String()
         self._permalink = String()
         self._reports = TypedList(Report)
+        self._resource_type = EnumeratedValue(ResourceType)
         self._sheets = TypedList(Sheet)
         self._sights = TypedList(Sight)
         self._source = TypedObject(Source)
@@ -131,6 +133,14 @@ class Folder:
     @reports.setter
     def reports(self, value):
         self._reports.load(value)
+
+    @property
+    def resource_type(self):
+        return self._resource_type
+
+    @resource_type.setter
+    def resource_type(self, value):
+        self._resource_type.set(value)
 
     @property
     def sheets(self):

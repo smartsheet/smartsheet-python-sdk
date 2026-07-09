@@ -20,7 +20,7 @@ from __future__ import absolute_import
 from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
                      TypedList, TypedObject, json)
 from ..util import deserialize, serialize
-from .enums import AccessLevel
+from .enums import AccessLevel, ResourceType
 from .source import Source
 from .widget import Widget
 
@@ -46,6 +46,7 @@ class Sight:
         self._modified_at = Timestamp()
         self._name = String()
         self._permalink = String()
+        self._resource_type = EnumeratedValue(ResourceType)
         self._source = TypedObject(Source)
         self._widgets = TypedList(Widget)
         self._workspace = TypedObject(Workspace)
@@ -140,6 +141,14 @@ class Sight:
     @permalink.setter
     def permalink(self, value):
         self._permalink.value = value
+
+    @property
+    def resource_type(self):
+        return self._resource_type
+
+    @resource_type.setter
+    def resource_type(self, value):
+        self._resource_type.set(value)
 
     @property
     def source(self):
