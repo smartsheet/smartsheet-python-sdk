@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Added
+
+- Support for GET /2.0/reports/{reportId}/definition (Get Report Definition) via `Reports.get_report_definition`
+- Support for GET /2.0/reports/{reportId}/columns (List Report Columns) via `Reports.list_report_columns`
+- Support for GET /2.0/reports/{reportId}/columns/{columnVirtualId} (Get Report Column) via `Reports.get_report_column`
+- Support for PUT /2.0/reports/{reportId}/columns/{columnVirtualId} (Update Report Column) via `Reports.update_report_column`
+- Support for DELETE /2.0/reports/{reportId}/columns/{columnVirtualId} (Delete Report Column) via `Reports.delete_report_column`
+- Support for GET /2.0/reports/{reportId}/scope (List Report Scope) via `Reports.list_report_scope`
+
 ### Deprecated
 
 - Deprecated `Event.object_id`; use `Event.object_id_str` instead. `object_id` is numeric only and returns -1 for non-numeric identifiers. It is not scheduled for removal.
