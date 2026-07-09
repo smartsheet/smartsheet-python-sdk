@@ -16,9 +16,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support for DELETE /2.0/reports/{reportId}/columns/{columnVirtualId} (Delete Report Column) via `Reports.delete_report_column`
 - Support for GET /2.0/reports/{reportId}/scope (List Report Scope) via `Reports.list_report_scope`
 
+### Deprecated
+
+- Deprecated `Event.object_id`; use `Event.object_id_str` instead. `object_id` is numeric only and returns -1 for non-numeric identifiers. It is not scheduled for removal.
+
+## [4.1.0] - 2026-06-26
+
 ### Fixed
 
-- `serialize` now correctly handles `None` values by returning `None` instead of an empty dict.
+- Added missing `SHARED` value to `PublishAccessibleBy` enum.
+
+### Added
+
+- Added support for GET /2.0/sheets/{sheetId}/path endpoint (`get_sheet_path`)
+- Added support for GET /2.0/reports/{reportId}/path endpoint (`get_report_path`)
+- Added support for GET /2.0/sights/{sightId}/path endpoint (`get_sight_path`)
+- Added support for GET /2.0/folders/{folderId}/path endpoint (`get_folder_path`)
+- Added helper methods `get_leaf_<asset>()` and `get_leaf_<asset>_path()` to the responses of the path endpoints for convenient traversal
 
 ## [4.0.2] - 2026-06-10
 

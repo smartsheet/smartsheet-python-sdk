@@ -23,7 +23,7 @@ import logging
 import os.path
 
 from .util import fresh_operation
-from .models import Error, Folder, PaginatedChildrenResult, Result, Sheet
+from .models import Error, Folder, FolderPathNode, PaginatedChildrenResult, Result, Sheet
 
 
 class Folders:
@@ -240,6 +240,26 @@ class Folders:
         _op["query_params"]["include"] = include
 
         expected = "Folder"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_folder_path(self, folder_id: int) -> Union[FolderPathNode, Error]:
+        """Get the hierarchical path of a folder.
+
+        Args:
+            folder_id (int): Folder ID
+
+        Returns:
+            Union[FolderPathNode, Error]: A FolderPathNode object describing the folder's
+                location, or an Error object if the request fails.
+        """
+        _op = fresh_operation("get_folder_path")
+        _op["method"] = "GET"
+        _op["path"] = "/folders/" + str(folder_id) + "/path"
+
+        expected = "FolderPathNode"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
