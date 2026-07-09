@@ -104,15 +104,15 @@ class TestEnumeratedValueSetInvalidInputs:
         assert enum_val.value is None
         assert str(enum_val) == "None"
 
-    def test_set_with_lowercase_name_returns_none(self):
-        """Test setting with lowercase name (not matching exact case) returns None"""
+    def test_set_with_lowercase_name_succeeds(self):
+        """Test setting with lowercase name is converted to uppercase and succeeds"""
         enum_val = EnumeratedValue(AccessLevel, "VIEWER")
         assert enum_val.value == AccessLevel.VIEWER
 
-        # Python enum names are case-sensitive
+        # Lowercase names are now automatically converted to uppercase
         enum_val.set("viewer")
-        assert enum_val.value is None
-        assert str(enum_val) == "None"
+        assert enum_val.value == AccessLevel.VIEWER
+        assert str(enum_val) == "VIEWER"
 
     def test_set_with_partial_name_returns_none(self):
         """Test setting with partial enum name returns None"""
