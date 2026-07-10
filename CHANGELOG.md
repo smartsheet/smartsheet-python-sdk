@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - Fixed `EnumeratedValue` comparison to properly handle string-based enums by comparing enum values instead of names
+
 ## [4.2.0] - 2026-07-09
 
 ### Added
