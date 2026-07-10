@@ -95,6 +95,7 @@ from .report_publish import ReportPublish
 from .report_row import ReportRow
 from .report_sorting_criterion import ReportSortingCriterion
 from .report_scope_inclusion import ReportScopeInclusion
+from .update_report_column_request import UpdateReportColumnRequest
 from .result import Result
 from .row import Row
 from .row_email import RowEmail

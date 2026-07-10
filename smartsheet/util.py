@@ -147,6 +147,9 @@ def serialize(obj):
                 if not hasattr(serialized_value, "is_explicit_null"):
                     retval[key] = serialized_value
 
+    elif obj is None:
+        return None
+
     else:
         retval = {}
         prop_list = get_child_properties(obj)

@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import Union
+from typing import Optional, Union
 
 import logging
 import os.path
@@ -37,6 +37,8 @@ from .models import (
     ReportScopeInclusion,
     ReportPathNode,
     Result,
+    TokenPaginatedResult,
+    UpdateReportColumnRequest,
 )
 
 
@@ -431,6 +433,164 @@ class Reports:
 
         expected = ["Result", None]
 
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def list_report_scope(
+        self, report_id: int, last_key: Optional[str] = None, max_items: Optional[int] = None
+    ) -> Union[TokenPaginatedResult[ReportScopeInclusion], Error]:
+        """List the scope (source sheets and workspaces) for the specified report.
+
+        Args:
+            report_id (int): Report ID
+            last_key (str, optional): Pagination cursor returned from the previous
+                page of results. If not specified, the first page is returned.
+            max_items (int, optional): The maximum number of items to return per
+                page. The default and minimum are 100.
+
+        Returns:
+            Union[TokenPaginatedResult[ReportScopeInclusion], Error]: Paginated list
+                of report scope objects, or an Error object if the request fails.
+        """
+        _op = fresh_operation("list_report_scope")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/scope"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
+
+        expected = ["TokenPaginatedResult", "ReportScopeInclusion"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def list_report_columns(
+        self, report_id: int, last_key: Optional[str] = None, max_items: Optional[int] = None, level: Optional[int] = None
+    ) -> Union[TokenPaginatedResult[ReportColumn], Error]:
+        """List the columns for the specified report.
+
+        Args:
+            report_id (int): Report ID
+            last_key (str, optional): Pagination cursor returned from the previous
+                page of results. If not specified, the first page is returned.
+            max_items (int, optional): The maximum number of items to return per
+                page. The default and minimum are 100.
+            level (int, optional): Compatibility level
+
+        Returns:
+            Union[TokenPaginatedResult[ReportColumn], Error]: Paginated list of
+                report column objects, or an Error object if the request fails.
+        """
+        _op = fresh_operation("list_report_columns")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/columns"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
+        _op["query_params"]["level"] = level
+
+        expected = ["TokenPaginatedResult", "ReportColumn"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_report_column(self, report_id: int, column_virtual_id: int, level: Optional[int] = None) -> Union[ReportColumn, Error]:
+        """Get the specified column in the report.
+
+        Args:
+            report_id (int): Report ID
+            column_virtual_id (int): Virtual ID of the report column.
+            level (int, optional): Compatibility level
+
+        Returns:
+            Union[ReportColumn, Error]: The report column object, or an Error
+                object if the request fails.
+        """
+        _op = fresh_operation("get_report_column")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/columns/" + str(column_virtual_id)
+        _op["query_params"]["level"] = level
+
+        expected = "ReportColumn"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def update_report_column(
+        self, report_id: int, column_virtual_id: int, report_column: UpdateReportColumnRequest
+    ) -> Union[Result[ReportColumn], Error]:
+        """Update the specified column in the report.
+
+        Note: title can only be updated for primary, sheet name and system type
+        columns. Modifying a column's index moves that column to the new index
+        and shifts the columns between the new and old index.
+
+        Args:
+            report_id (int): Report ID
+            column_virtual_id (int): Virtual ID of the report column.
+            report_column (UpdateReportColumnRequest): UpdateReportColumnRequest
+                object containing the fields to update (title, index, hidden, width).
+
+        Returns:
+            Union[Result[ReportColumn], Error]: Result object containing the updated
+                ReportColumn object, or an Error object if the request fails.
+        """
+        _op = fresh_operation("update_report_column")
+        _op["method"] = "PUT"
+        _op["path"] = "/reports/" + str(report_id) + "/columns/" + str(column_virtual_id)
+        _op["json"] = report_column
+
+        expected = ["Result", "ReportColumn"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def delete_report_column(self, report_id: int, column_virtual_id: int) -> Union[Result[None], Error]:
+        """Delete the specified column from the report.
+
+        Args:
+            report_id (int): Report ID
+            column_virtual_id (int): Virtual ID of the report column.
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error
+                object if the request fails.
+        """
+        _op = fresh_operation("delete_report_column")
+        _op["method"] = "DELETE"
+        _op["path"] = "/reports/" + str(report_id) + "/columns/" + str(column_virtual_id)
+
+        expected = ["Result", None]
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_report_definition(self, report_id: int) -> Union[ReportDefinition, Error]:
+        """Get the definition for the specified report.
+
+        Get the definition (filters, grouping, summarizing, and sorting criteria)
+        for the specified report.
+
+        Args:
+            report_id (int): Report ID
+
+        Returns:
+            Union[ReportDefinition, Error]: The report definition object, or an
+                Error object if the request fails.
+        """
+        _op = fresh_operation("get_report_definition")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/definition"
+
+        expected = "ReportDefinition"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
