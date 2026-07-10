@@ -73,6 +73,14 @@ CellLinkStatus
    :undoc-members:
    :show-inheritance:
 
+ChildrenResourceType
+-------------------------------------------------------
+
+.. automodule:: smartsheet.models.enums.resource_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ColumnType
 -------------------------------------------
 

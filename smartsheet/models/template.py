@@ -17,10 +17,10 @@
 
 from __future__ import absolute_import
 
-from ..types import (Boolean, EnumeratedValue, Number, String, TypedList, json,
-                     six)
+from ..types import (Boolean, EnumeratedValue, Number, String, Timestamp,
+                     TypedList, json, six)
 from ..util import deserialize, serialize
-from .enums import AccessLevel, GlobalTemplate
+from .enums import AccessLevel, GlobalTemplate, ChildrenResourceType
 
 
 class Template:
@@ -38,13 +38,17 @@ class Template:
         self._access_level = EnumeratedValue(AccessLevel)
         self._blank = Boolean()
         self._categories = TypedList(six.string_types)
+        self._created_at = Timestamp()
         self._description = String()
         self._global_template = EnumeratedValue(GlobalTemplate)
         self._id_ = Number()
         self._image = String()
         self._large_image = String()
         self._locale = String()
+        self._modified_at = Timestamp()
         self._name = String()
+        self._permalink = String()
+        self._resource_type = EnumeratedValue(ChildrenResourceType)
         self._tags = TypedList(six.string_types)
         self._type = String(accept=self.allowed_values["type"])
 
@@ -88,6 +92,14 @@ class Template:
     @categories.setter
     def categories(self, value):
         self._categories.load(value)
+
+    @property
+    def created_at(self):
+        return self._created_at.value
+
+    @created_at.setter
+    def created_at(self, value):
+        self._created_at.value = value
 
     @property
     def description(self):
@@ -138,12 +150,36 @@ class Template:
         self._locale.value = value
 
     @property
+    def modified_at(self):
+        return self._modified_at.value
+
+    @modified_at.setter
+    def modified_at(self, value):
+        self._modified_at.value = value
+
+    @property
     def name(self):
         return self._name.value
 
     @name.setter
     def name(self, value):
         self._name.value = value
+
+    @property
+    def permalink(self):
+        return self._permalink.value
+
+    @permalink.setter
+    def permalink(self, value):
+        self._permalink.value = value
+
+    @property
+    def resource_type(self):
+        return self._resource_type
+
+    @resource_type.setter
+    def resource_type(self, value):
+        self._resource_type.set(value)
 
     @property
     def tags(self):

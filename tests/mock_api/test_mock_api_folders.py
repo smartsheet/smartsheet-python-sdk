@@ -2,6 +2,7 @@
 
 import pytest
 from smartsheet.models import Folder, PaginatedChildrenResult, Sheet, Sight, Report
+from smartsheet.models.enums.resource_type import ChildrenResourceType
 from smartsheet.exceptions import ApiError
 from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
@@ -51,6 +52,7 @@ class TestMockApiFolders(MockApiTestHelper):
         assert isinstance(subfolder, Folder)
         assert subfolder.id == 987
         assert subfolder.name == "Subfolder"
+        assert subfolder.resource_type == ChildrenResourceType.FOLDER
 
         # Verify second child (sheet)
         sheet = response.data[1]
@@ -58,6 +60,7 @@ class TestMockApiFolders(MockApiTestHelper):
         assert sheet.id == 234
         assert sheet.name == "Task List"
         assert sheet.access_level == "EDITOR"
+        assert sheet.resource_type == ChildrenResourceType.SHEET
 
         # Verify third child (sight)
         sight = response.data[2]
@@ -65,6 +68,7 @@ class TestMockApiFolders(MockApiTestHelper):
         assert sight.id == 567
         assert sight.name == "Project Dashboard"
         assert sight.access_level == "EDITOR"
+        assert sight.resource_type == ChildrenResourceType.SIGHT
 
         # Verify fourth child (report)
         report = response.data[3]
@@ -72,6 +76,7 @@ class TestMockApiFolders(MockApiTestHelper):
         assert report.id == 890
         assert report.name == "Status Report"
         assert report.access_level == "VIEWER"
+        assert report.resource_type == ChildrenResourceType.REPORT
 
     @clean_api_error
     def test_get_folder_children_filter_sights_and_reports(self):

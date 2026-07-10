@@ -2,6 +2,7 @@
 
 import pytest
 from smartsheet.models import Workspace, PaginatedChildrenResult, Folder, Sheet, Sight, Report
+from smartsheet.models.enums.resource_type import ChildrenResourceType
 from smartsheet.exceptions import ApiError
 from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
@@ -57,6 +58,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert folder.id == 456
         assert folder.name == "Project Folder"
         assert folder.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
+        assert folder.resource_type == ChildrenResourceType.FOLDER
 
         # Verify second child (sheet) - exact values from scenario
         sheet = response.data[1]
@@ -65,6 +67,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert sheet.name == "Budget Sheet"
         assert sheet.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
         assert sheet.access_level == "EDITOR"
+        assert sheet.resource_type == ChildrenResourceType.SHEET
 
         # Verify third child (sight) - exact values from scenario
         sight = response.data[2]
@@ -73,6 +76,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert sight.name == "Dashboard Overview"
         assert sight.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
         assert sight.access_level == "VIEWER"
+        assert sight.resource_type == ChildrenResourceType.SIGHT
 
         # Verify fourth child (report) - exact values from scenario
         report = response.data[3]
@@ -81,6 +85,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert report.name == "Monthly Report"
         assert report.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
         assert report.access_level == "ADMIN"
+        assert report.resource_type == ChildrenResourceType.REPORT
 
 
     @clean_api_error

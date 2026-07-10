@@ -47,6 +47,7 @@ from .report_asset_type import ReportAssetType
 from .report_boolean_operator import ReportBooleanOperator
 from .report_destination_type import ReportDestinationType
 from .report_filter_operator import ReportFilterOperator
+from .resource_type import ChildrenResourceType
 from .schedule_type import ScheduleType
 from .share_scope import ShareScope
 from .share_type import ShareType
