@@ -24,9 +24,10 @@ from .folder import Folder
 from .sheet import Sheet
 from .sight import Sight
 from .report import Report
+from .template import Template
 
 # Type alias for children that can be any of these types
-ChildType = Union[Folder, Sheet, Sight, Report]
+ChildType = Union[Folder, Sheet, Sight, Report, Template]
 
 
 class PaginatedChildrenResult(TokenPaginatedResult[ChildType]):
@@ -64,6 +65,8 @@ class PaginatedChildrenResult(TokenPaginatedResult[ChildType]):
             self._data.append(Sight(item, self._base))
         elif resource_type == 'report':
             self._data.append(Report(item, self._base))
+        elif resource_type == 'template':
+            self._data.append(Template(item, self._base))
         else:
             # If no resource type or unknown type, append as-is
             self._data.append(item)

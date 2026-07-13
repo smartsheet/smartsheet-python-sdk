@@ -1,7 +1,7 @@
 # pylint: disable=C0103,W0232
 
 import pytest
-from smartsheet.models import Folder, PaginatedChildrenResult, Sheet, Sight, Report
+from smartsheet.models import Folder, PaginatedChildrenResult, Sheet, Sight, Report, Template
 from smartsheet.exceptions import ApiError
 from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
@@ -44,7 +44,7 @@ class TestMockApiFolders(MockApiTestHelper):
         response = self.client.Folders.get_folder_children(456)
 
         assert isinstance(response, PaginatedChildrenResult)
-        assert len(response.data) == 4
+        assert len(response.data) == 5
 
         # Verify first child (subfolder)
         subfolder = response.data[0]
@@ -72,6 +72,13 @@ class TestMockApiFolders(MockApiTestHelper):
         assert report.id == 890
         assert report.name == "Status Report"
         assert report.access_level == "VIEWER"
+
+        # Verify fifth child (template)
+        template = response.data[4]
+        assert isinstance(template, Template)
+        assert template.id == 990
+        assert template.name == "Project Template"
+        assert template.access_level == "VIEWER"
 
     @clean_api_error
     def test_get_folder_children_filter_sights_and_reports(self):
