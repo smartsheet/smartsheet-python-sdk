@@ -27,7 +27,7 @@ from .report import Report
 from .template import Template
 
 # Type alias for children that can be any of these types
-ChildType = Union[Folder, Sheet, Sight, Report]
+ChildType = Union[Folder, Sheet, Sight, Report, Template]
 
 
 class PaginatedChildrenResult(TokenPaginatedResult[ChildType]):
