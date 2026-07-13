@@ -1,7 +1,7 @@
 # pylint: disable=C0103,W0232
 
 import pytest
-from smartsheet.models import Workspace, PaginatedChildrenResult, Folder, Sheet, Sight, Report
+from smartsheet.models import Workspace, PaginatedChildrenResult, Folder, Sheet, Sight, Report, Template
 from smartsheet.exceptions import ApiError
 from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
@@ -49,7 +49,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         response = self.client.Workspaces.get_workspace_children(123)
 
         assert isinstance(response, PaginatedChildrenResult)
-        assert len(response.data) == 4
+        assert len(response.data) == 5
 
         # Verify first child (folder) - exact values from scenario
         folder = response.data[0]
@@ -81,6 +81,13 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert report.name == "Monthly Report"
         assert report.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
         assert report.access_level == "ADMIN"
+
+        # Verify fifth child (template) - exact values from scenario
+        template = response.data[4]
+        assert isinstance(template, Template)
+        assert template.id == 995
+        assert template.name == "Budget Template"
+        assert template.access_level == "ADMIN"
 
 
     @clean_api_error
