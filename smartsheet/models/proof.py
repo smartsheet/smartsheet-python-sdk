@@ -132,7 +132,7 @@ class Proof:
     @last_updated_at.setter
     def last_updated_at(self, value):
         self._last_updated_at.value = value
-    
+
     @property
     def last_updated_by(self):
         return self._last_updated_by.value
@@ -140,7 +140,6 @@ class Proof:
     @last_updated_by.setter
     def last_updated_by(self, value):
         self._last_updated_by.value = value
-   
     @property
     def is_completed(self):
         return self._is_completed.value
