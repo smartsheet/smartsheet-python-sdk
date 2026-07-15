@@ -561,6 +561,14 @@ ProjectSettings
    :undoc-members:
    :show-inheritance:
 
+Proof
+-----
+
+.. automodule:: smartsheet.models.proof
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Recipient
 ---------
 

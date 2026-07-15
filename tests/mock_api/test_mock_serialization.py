@@ -3,9 +3,10 @@
 import pytest
 from smartsheet.models import (
     AlternateEmail, Attachment, Column, Comment, ContainerDestination, CrossSheetReference,
-    Discussion, ExplicitNull, Favorite, FormatDetails, Group, ImageUrl, MultiRowEmail, Recipient,
-    Row, Schedule, Sheet, SheetEmail, UpdateRequest, User, Workspace
+    Discussion, ExplicitNull, Favorite, FormatDetails, Group, ImageUrl, MultiRowEmail, Proof,
+    Recipient, Row, Schedule, Sheet, SheetEmail, UpdateRequest, User, Workspace
 )
+from smartsheet.models.enums import ProofType
 from smartsheet.models.object_value import DURATION
 
 from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
@@ -532,3 +533,19 @@ class TestMockSerialization(MockApiTestHelper):
         }))
 
         assert response.result.name == 'Some Cross Sheet Reference'
+
+    @clean_api_error
+    def test_proof_serialization(self):
+        self.client.as_test_scenario('Serialization - Proof')
+
+        row = self.client.Sheets.get_row(1, 2, include=['proofs'])
+
+        assert row.proof.id == 100
+        assert row.proof.original_id == 100
+        assert row.proof.name == 'Sample Proof Document'
+        assert row.proof.type.value == ProofType.IMAGE
+        assert row.proof.document_type == 'NONE'
+        assert row.proof.proof_request_url == 'https://app.smartsheet.com/b/proofs/sheets/test123/proofs/proof456'
+        assert row.proof.version == 1
+        assert row.proof.last_updated_by.email == 'john.doe@smartsheet.com'
+        assert row.proof.is_completed is False

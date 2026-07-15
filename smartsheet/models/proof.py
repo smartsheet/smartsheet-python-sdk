@@ -17,8 +17,11 @@
 
 from __future__ import absolute_import
 
-from ..types import Boolean, Number, String, Timestamp, TypedObject, json
+from ..types import Boolean, EnumeratedValue, Number, String, Timestamp, TypedList, TypedObject, json
 from ..util import deserialize, serialize
+from .attachment import Attachment
+from .discussion import Discussion
+from .enums import ProofType
 from .user import User
 
 
@@ -35,13 +38,15 @@ class Proof:
         self._id_ = Number()
         self._original_id = Number()
         self._name = String()
-        self._type_ = String()
+        self._type_ = EnumeratedValue(ProofType)
         self._document_type = String()
         self._proof_request_url = String()
         self._version = Number()
         self._last_updated_at = Timestamp()
         self._last_updated_by = TypedObject(User)
         self._is_completed = Boolean()
+        self._attachments = TypedList(Attachment)
+        self._discussions = TypedList(Discussion)
 
         if props:
             deserialize(self, props)
@@ -90,11 +95,11 @@ class Proof:
 
     @property
     def type_(self):
-        return self._type_.value
+        return self._type_
 
     @type_.setter
     def type_(self, value):
-        self._type_.value = value
+        self._type_.set(value)
 
     @property
     def document_type(self):
@@ -127,7 +132,7 @@ class Proof:
     @last_updated_at.setter
     def last_updated_at(self, value):
         self._last_updated_at.value = value
-
+    
     @property
     def last_updated_by(self):
         return self._last_updated_by.value
@@ -135,7 +140,7 @@ class Proof:
     @last_updated_by.setter
     def last_updated_by(self, value):
         self._last_updated_by.value = value
-
+   
     @property
     def is_completed(self):
         return self._is_completed.value
@@ -143,6 +148,22 @@ class Proof:
     @is_completed.setter
     def is_completed(self, value):
         self._is_completed.value = value
+
+    @property
+    def attachments(self):
+        return self._attachments
+
+    @attachments.setter
+    def attachments(self, value):
+        self._attachments.load(value)
+
+    @property
+    def discussions(self):
+        return self._discussions
+
+    @discussions.setter
+    def discussions(self, value):
+        self._discussions.load(value)
 
     def to_dict(self):
         return serialize(self)

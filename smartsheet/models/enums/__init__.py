@@ -41,6 +41,7 @@ from .global_template import GlobalTemplate
 from .operator import Operator
 from .paper_type import PaperType
 from .predecessor_type import PredecessorType
+from .proof_type import ProofType
 from .publish_accessible_by import PublishAccessibleBy
 from .report_aggregation_type import ReportAggregationType
 from .report_asset_type import ReportAssetType
