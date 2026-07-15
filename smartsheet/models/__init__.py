@@ -78,6 +78,7 @@ from .token_paginated_result import TokenPaginatedResult
 from .predecessor import Predecessor
 from .predecessor_list import PredecessorList
 from .project_settings import ProjectSettings
+from .proof import Proof
 from .recipient import Recipient
 from .create_report_request import CreateReportRequest
 from .create_report_result import CreateReportResult

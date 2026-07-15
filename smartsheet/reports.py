@@ -143,7 +143,7 @@ class Reports:
             page (int): Which page to return.
             include (list[str]): A comma-separated list of
                 optional elements to include in the response. Valid list values:
-                attachments, discussions, format, objectValue, scope, source, sourceSheets.
+                attachments, discussions, proofs, format, objectValue, scope, source, sourceSheets.
             level (int): compatibility level
 
         Returns:
