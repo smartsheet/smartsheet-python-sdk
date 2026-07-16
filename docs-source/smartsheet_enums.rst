@@ -177,6 +177,14 @@ PredecessorType
    :undoc-members:
    :show-inheritance:
 
+ProofType
+------------------------------------------
+
+.. automodule:: smartsheet.models.enums.proof_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 PublishAccessibleBy
 ------------------------------------------------------
 
