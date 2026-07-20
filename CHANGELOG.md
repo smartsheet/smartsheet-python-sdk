@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+## [4.3.0] - 2026-07-20
+
 ### Added
 
 - Add case for a template resource_type in append_data method in PaginatedChildrenResult model
