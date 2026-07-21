@@ -476,7 +476,7 @@ class Sheets:
             include (list[str]): A comma-separated list of
                 optional elements to include in the response. Valid list
                 values: attachments, columnType, crossSheetReferences, discussions, filters,
-                filterDefinitions, format, objectValue, ownerInfo, rowPermalink,
+                filterDefinitions, format, objectValue, ownerInfo, proofs, rowPermalink,
                 rowWriterInfo (deprecated - use writerInfo), source, summary, writerInfo.
             exclude (str): Response will not include cells
                 that have never contained any data.
