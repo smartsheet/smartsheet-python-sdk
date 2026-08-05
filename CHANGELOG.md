@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Added
+
+- Support for the `include` query parameter on GET /2.0/users/{userId}/plans (List User Plans) via `Users.list_user_plans`. The only accepted value is `planNames`.
+- Add a `plan_name` field to the `UserPlan` model, populated when `include=planNames` is requested.
+
 ## [4.3.0] - 2026-07-20
 
 ### Added
