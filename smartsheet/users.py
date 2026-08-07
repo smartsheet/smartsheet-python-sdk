@@ -514,7 +514,7 @@ class Users:
                         If true, VIEWER seat types are re-written to CONTRIBUTOR.
                         If false or omitted, CONTRIBUTOR seat types are re-written to VIEWER.
                     include(list[str]): optional include parameter, only currently
-                        accepted value is 'planNames'. When present, each returned
+                        accepted value is 'planName'. When present, each returned
                         plan carries the name of its owning organization in
                         plan_name.
                 Returns:

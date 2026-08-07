@@ -16,7 +16,7 @@ TEST_MAX_ITEMS = 100
 TEST_SEAT_TYPE = seat_type.SeatType.MEMBER
 TEST_CONTRIBUTOR_SEAT_TYPE = seat_type.SeatType.CONTRIBUTOR
 TEST_DISPLAY_CONTRIBUTOR_SEAT_TYPE = True
-TEST_INCLUDE = ['planNames']
+TEST_INCLUDE = ['planName']
 TEST_PLAN_NAME = 'Acme Corporation'
 
 def test_list_user_plans_generated_url_is_correct():
