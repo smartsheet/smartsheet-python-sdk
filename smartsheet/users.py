@@ -503,7 +503,9 @@ class Users:
 
         return response
 
-    def list_user_plans(self, user_id, last_key=None, max_items=None, display_contributor_seat_type=None, include=None) -> Union[TokenPaginatedResult[UserPlan], Error]:
+    def list_user_plans(
+        self, user_id, last_key=None, max_items=None, display_contributor_seat_type=None, include=None
+    ) -> Union[TokenPaginatedResult[UserPlan], Error]:
         """List user's plans.
                 Args:
                     user_id (int): User ID
