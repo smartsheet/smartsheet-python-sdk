@@ -44,6 +44,7 @@ from .discussions import Discussions
 from .events import Events
 from .favorites import Favorites
 from .folders import Folders
+from .governance import Governance
 from .groups import Groups
 from .home import Home
 from .images import Images
@@ -125,6 +126,7 @@ class Smartsheet:
     Events: Events
     Favorites: Favorites
     Folders: Folders
+    Governance: Governance
     Groups: Groups
     Home: Home
     Images: Images
