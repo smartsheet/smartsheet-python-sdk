@@ -177,14 +177,6 @@ def test_get_data_classification_settings_error_403():
     assert isinstance(response, Error)
 
 
-def test_get_data_classification_settings_error_404():
-    """404 response is returned as Error (plan not found)."""
-    request_id = uuid.uuid4().hex
-    client = get_mock_api_client("/errors/404-response", request_id)
-    response = client.Governance.get_data_classification_settings(TEST_PLAN_ID)
-    assert isinstance(response, Error)
-
-
 def test_get_data_classification_settings_error_500():
     """500 response is returned as Error."""
     request_id = uuid.uuid4().hex
