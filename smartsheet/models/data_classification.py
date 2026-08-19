@@ -17,9 +17,8 @@
 
 from __future__ import absolute_import
 
-from ..types import EnumeratedValue, json
+from ..types import String, json
 from ..util import deserialize, serialize
-from .enums import DataClassificationType
 
 
 class DataClassification:
@@ -32,7 +31,7 @@ class DataClassification:
         if base_obj is not None:
             self._base = base_obj
 
-        self._data_classification = EnumeratedValue(DataClassificationType)
+        self._data_classification = String()
 
         if props:
             deserialize(self, props)
@@ -41,11 +40,11 @@ class DataClassification:
 
     @property
     def data_classification(self):
-        return self._data_classification
+        return self._data_classification.value
 
     @data_classification.setter
     def data_classification(self, value):
-        self._data_classification.set(value)
+        self._data_classification.value = value
 
     def to_dict(self):
         return serialize(self)

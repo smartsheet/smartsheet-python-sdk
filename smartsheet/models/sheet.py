@@ -26,7 +26,7 @@ from .comment import Comment
 from .contact_object_value import ContactObjectValue
 from .cross_sheet_reference import CrossSheetReference
 from .discussion import Discussion
-from .enums import AccessLevel, AttachmentType, DataClassificationType
+from .enums import AccessLevel, AttachmentType
 from .project_settings import ProjectSettings
 from .row import Row
 from .sheet_filter import SheetFilter
@@ -57,7 +57,7 @@ class Sheet:
         self._contact_references = TypedList(ContactObjectValue)
         self._created_at = Timestamp()
         self._cross_sheet_references = TypedList(CrossSheetReference)
-        self._data_classification = EnumeratedValue(DataClassificationType)
+        self._data_classification = String()
         self._dependencies_enabled = Boolean()
         self._discussions = TypedList(Discussion)
         self._effective_attachment_options = EnumeratedList(AttachmentType)
@@ -154,11 +154,11 @@ class Sheet:
 
     @property
     def data_classification(self):
-        return self._data_classification
+        return self._data_classification.value
 
     @data_classification.setter
     def data_classification(self, value):
-        self._data_classification.set(value)
+        self._data_classification.value = value
 
     @property
     def dependencies_enabled(self):
