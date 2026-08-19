@@ -312,7 +312,11 @@ class EnumeratedValue:
 
     def __str__(self):
         if self._value is not None:
-            return self._value.name
+            # Use .value for string enums (e.g., ReportDestinationType), .name for others (e.g., ColumnType)
+            if isinstance(self._value.value, str):
+                return self._value.value
+            else:
+                return self._value.name
         else:
             return str(None)
 

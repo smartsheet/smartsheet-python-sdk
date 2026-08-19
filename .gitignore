@@ -33,3 +33,14 @@ smartsheet/version.py
 
 # ignore ugly batch files
 *.bat
+
+# ignore uv virtual environment
+.venv
+# Sphinx auto-generated files
+docs-source/modules.rst
+docs-source/smartsheet*.rst
+# Claude Code settings
+.claude/settings.local.json
+# Superpowers documentation
+docs/superpowers
+.DS_Store

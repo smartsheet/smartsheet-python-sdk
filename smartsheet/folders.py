@@ -23,8 +23,7 @@ import logging
 import os.path
 
 from .util import fresh_operation
-from .models import Error, Folder, IndexResult, PaginatedChildrenResult, Result, Sheet
-from .util import deprecated
+from .models import Error, Folder, FolderPathNode, PaginatedChildrenResult, Result, Sheet
 
 
 class Folders:
@@ -176,65 +175,6 @@ class Folders:
 
         return response
 
-    @deprecated
-    def get_folder(self, folder_id, include=None) -> Union[Folder, Error]:
-        """Get the specified Folder (and list its contents).
-
-        Deprecated: 3.1.0
-           Use `get_folder_metadata` and `get_folder_children` instead.
-
-        Args:
-            folder_id (int): Folder ID
-            include (list[str]): A comma-separated list of
-                optional elements to include in the response. Valid list
-                values: ownerInfo, sheetVersion, source.
-
-        Returns:
-            Union[Folder, Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("get_folder")
-        _op["method"] = "GET"
-        _op["path"] = "/folders/" + str(folder_id)
-        _op["query_params"]["include"] = include
-
-        expected = "Folder"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    @deprecated
-    def list_folders(self, folder_id, page_size=None, page=None, include_all=None) -> Union[IndexResult[Folder], Error]:
-        """Get a list of top-level child Folders within the specified Folder.
-
-        Deprecated: 3.1.0
-           Use `get_folder_children` with children_resource_types=['folders'] instead.
-
-        Args:
-            folder_id (int): Folder ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-
-        Returns:
-            Union[IndexResult[Folder], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("list_folders")
-        _op["method"] = "GET"
-        _op["path"] = "/folders/" + str(folder_id) + "/folders"
-        _op["query_params"]["pageSize"] = page_size
-        _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
-
-        expected = ["IndexResult", "Folder"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
     def move_folder(self, folder_id, container_destination_obj) -> Union[Result[Folder], Error]:
         """Moves the specified Folder to another location.
 
@@ -305,6 +245,26 @@ class Folders:
 
         return response
 
+    def get_folder_path(self, folder_id: int) -> Union[FolderPathNode, Error]:
+        """Get the hierarchical path of a folder.
+
+        Args:
+            folder_id (int): Folder ID
+
+        Returns:
+            Union[FolderPathNode, Error]: A FolderPathNode object describing the folder's
+                location, or an Error object if the request fails.
+        """
+        _op = fresh_operation("get_folder_path")
+        _op["method"] = "GET"
+        _op["path"] = "/folders/" + str(folder_id) + "/path"
+
+        expected = "FolderPathNode"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
     def get_folder_children(
             self,
             folder_id,
@@ -319,7 +279,7 @@ class Folders:
             folder_id (int): Folder ID
             children_resource_types (list[str]): The types of the children resources.
                 If not provided, returns children of all types.
-                Valid list values: sheets, reports, sights, folders.
+                Valid list values: sheets, reports, sights, folders, templates.
             include (list[str]): A list of optional elements to include in the
                 response. Valid list values: source, ownerInfo.
             last_key (str): The token from a previous request that will allow this one

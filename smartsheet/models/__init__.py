@@ -79,6 +79,7 @@ from .token_paginated_result import TokenPaginatedResult
 from .predecessor import Predecessor
 from .predecessor_list import PredecessorList
 from .project_settings import ProjectSettings
+from .proof import Proof
 from .recipient import Recipient
 from .create_report_request import CreateReportRequest
 from .create_report_result import CreateReportResult
@@ -96,6 +97,7 @@ from .report_publish import ReportPublish
 from .report_row import ReportRow
 from .report_sorting_criterion import ReportSortingCriterion
 from .report_scope_inclusion import ReportScopeInclusion
+from .update_report_column_request import UpdateReportColumnRequest
 from .result import Result
 from .row import Row
 from .row_email import RowEmail
@@ -105,7 +107,6 @@ from .search_result import SearchResult
 from .search_result_item import SearchResultItem
 from .sent_update_request import SentUpdateRequest
 from .server_info import ServerInfo
-from .share import Share
 from .sheet import Sheet
 from .sheet_email import SheetEmail
 from .sheet_filter import SheetFilter
@@ -133,6 +134,12 @@ from .webhook_subscope import WebhookSubscope
 from .widget import Widget
 from .widget_content import WidgetContent
 from .workspace import Workspace
+from .path_node import PathNode
+from .path_leaf import PathLeaf
+from .folder_path_node import FolderPathNode
+from .sheet_path_node import SheetPathNode
+from .report_path_node import ReportPathNode
+from .sight_path_node import SightPathNode
 from .user_plan import UserPlan
 from .asset_shares_paginated_result import AssetSharesPaginatedResult
 from .asset_share import AssetShare

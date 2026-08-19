@@ -3,9 +3,10 @@
 import pytest
 from smartsheet.models import (
     AlternateEmail, Attachment, Column, Comment, ContainerDestination, CrossSheetReference,
-    Discussion, ExplicitNull, Favorite, FormatDetails, Group, ImageUrl, MultiRowEmail, Recipient,
-    Row, Schedule, Share, Sheet, SheetEmail, UpdateRequest, User, Workspace
+    Discussion, ExplicitNull, Favorite, FormatDetails, Group, ImageUrl, MultiRowEmail, Proof,
+    Recipient, Row, Schedule, Sheet, SheetEmail, UpdateRequest, User, Workspace
 )
+from smartsheet.models.enums import ProofType
 from smartsheet.models.object_value import DURATION
 
 from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
@@ -370,23 +371,6 @@ class TestMockSerialization(MockApiTestHelper):
         assert report.rows[0].cells[0].virtual_column_id == 2
 
     @clean_api_error
-    def test_share_serialization(self):
-        pytest.skip('Skipping until mock API test is updated')
-        self.client.as_test_scenario('Serialization - Share')
-
-        share = Share({
-            'email': 'john.doe@smartsheet.com',
-            'accessLevel': 'VIEWER',
-            'subject': 'Check out this sheet',
-            'message': 'Let me know what you think. Thanks!',
-            'ccMe': True
-        })
-
-        response = self.client.Sheets.share_sheet(1, share, send_email=True)
-
-        assert response.result.id == 'abc'
-
-    @clean_api_error
     def test_send_via_email_serialization(self):
         self.client.as_test_scenario('Serialization - Send via Email')
 
@@ -432,14 +416,6 @@ class TestMockSerialization(MockApiTestHelper):
         }))
 
         assert response.message == 'SUCCESS'
-
-    @clean_api_error
-    def test_template_serialization(self):
-        self.client.as_test_scenario('Serialization - Template')
-
-        templates = self.client.Templates.list_public_templates()
-
-        assert templates.data[0].categories[0] == 'Featured Templates'
 
     @clean_api_error
     def test_update_request_serialization(self):
@@ -557,3 +533,19 @@ class TestMockSerialization(MockApiTestHelper):
         }))
 
         assert response.result.name == 'Some Cross Sheet Reference'
+
+    @clean_api_error
+    def test_proof_serialization(self):
+        self.client.as_test_scenario('Serialization - Proof')
+
+        row = self.client.Sheets.get_row(1, 2, include=['proofs'])
+
+        assert row.proof.id == 100
+        assert row.proof.original_id == 100
+        assert row.proof.name == 'Sample Proof Document'
+        assert row.proof.type.value == ProofType.IMAGE
+        assert row.proof.document_type == 'NONE'
+        assert row.proof.proof_request_url == 'https://app.smartsheet.com/b/proofs/sheets/test123/proofs/proof456'
+        assert row.proof.version == 1
+        assert row.proof.last_updated_by.email == 'john.doe@smartsheet.com'
+        assert row.proof.is_completed is False

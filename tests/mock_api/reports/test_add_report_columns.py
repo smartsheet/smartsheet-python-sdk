@@ -1,8 +1,9 @@
 import json
 import uuid
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
-from smartsheet.models import Error, ReportColumn
+from smartsheet.models import Error, ReportColumn, Result
+from smartsheet.models.enums import ColumnType
 from tests.mock_api.reports.common_test_constants import (
     TEST_REPORT_ID,
     TEST_SUCCESS_MESSAGE,
@@ -24,12 +25,12 @@ def test_add_report_columns_generated_url_is_correct():
     columns = [
         ReportColumn({
             "title": "Item selected",
-            "type": "CHECKBOX",
+            "type": ColumnType.CHECKBOX,
             "index": 4
         }),
         ReportColumn({
             "title": "Sheet name",
-            "type": "TEXT_NUMBER",
+            "type": ColumnType.TEXT_NUMBER,
             "index": 4
         })
     ]
@@ -41,6 +42,10 @@ def test_add_report_columns_generated_url_is_correct():
 
     wiremock_request = get_wiremock_request(request_id)
     url = urlparse(wiremock_request["absoluteUrl"])
+
+    query = parse_qs(url.query)
+    assert not query
+
     assert url.path == f'/2.0/reports/{TEST_REPORT_ID}/columns'
     assert wiremock_request["method"] == "POST"
 
@@ -55,12 +60,12 @@ def test_add_report_columns_all_response_properties():
     columns = [
         ReportColumn({
             "title": "Item selected",
-            "type": "CHECKBOX",
+            "type": ColumnType.CHECKBOX,
             "index": 4
         }),
         ReportColumn({
             "title": "Sheet name",
-            "type": "TEXT_NUMBER",
+            "type": ColumnType.TEXT_NUMBER,
             "index": 4,
             "sheetNameColumn": True
         })
@@ -71,13 +76,29 @@ def test_add_report_columns_all_response_properties():
         report_columns=columns
     )
 
-    assert response.message == TEST_SUCCESS_MESSAGE
-    assert response.result_code == TEST_RESULT_CODE
-    assert len(response.result) == 5
+    # Type safety checks
+    assert isinstance(response, Result)
+    assert isinstance(response.result[0], ReportColumn)
 
-    # Convert result columns to dicts and compare
-    actual_columns = [col.to_dict() for col in response.result]
+    # Request body assertion
+    wiremock_request = get_wiremock_request(request_id)
+    actual_body = json.loads(wiremock_request["body"])
+    expected_body = [
+        {
+            "title": "Item selected",
+            "type": "CHECKBOX",
+            "index": 4
+        },
+        {
+            "title": "Sheet name",
+            "type": "TEXT_NUMBER",
+            "index": 4,
+            "sheetNameColumn": True
+        }
+    ]
+    assert actual_body == expected_body
 
+    # Response body assertion
     expected_columns = [
         {
             "virtualId": 12345,
@@ -140,8 +161,13 @@ def test_add_report_columns_all_response_properties():
             }
         }
     ]
-
-    assert actual_columns == expected_columns
+    # Verify complete response as whole object
+    assert response.to_dict() == {
+        "message": TEST_SUCCESS_MESSAGE,
+        "resultCode": TEST_RESULT_CODE,
+        "result": expected_columns,
+        "data": expected_columns,
+    }
 
 
 def test_add_report_columns_required_response_properties():
@@ -154,12 +180,12 @@ def test_add_report_columns_required_response_properties():
     columns = [
         ReportColumn({
             "title": "Item selected",
-            "type": "CHECKBOX",
+            "type": ColumnType.CHECKBOX,
             "index": 4
         }),
         ReportColumn({
             "title": "Sheet name",
-            "type": "TEXT_NUMBER",
+            "type": ColumnType.TEXT_NUMBER,
             "index": 4
         })
     ]
@@ -169,13 +195,28 @@ def test_add_report_columns_required_response_properties():
         report_columns=columns
     )
 
-    assert response.message == TEST_SUCCESS_MESSAGE
-    assert response.result_code == TEST_RESULT_CODE
-    assert len(response.result) == 5
+    # Type safety checks
+    assert isinstance(response, Result)
+    assert isinstance(response.result[0], ReportColumn)
 
-    # Convert result columns to dicts and compare
-    actual_columns = [col.to_dict() for col in response.result]
+    # Request body assertion
+    wiremock_request = get_wiremock_request(request_id)
+    actual_body = json.loads(wiremock_request["body"])
+    expected_body = [
+        {
+            "title": "Item selected",
+            "type": "CHECKBOX",
+            "index": 4
+        },
+        {
+            "title": "Sheet name",
+            "type": "TEXT_NUMBER",
+            "index": 4
+        }
+    ]
+    assert actual_body == expected_body
 
+    # Response body assertion
     expected_columns = [
         {
             "virtualId": 12345,
@@ -223,54 +264,13 @@ def test_add_report_columns_required_response_properties():
             }
         }
     ]
-
-    assert actual_columns == expected_columns
-
-
-def test_add_report_columns_request_body_serialization():
-    """Test that request body is correctly serialized."""
-    request_id = uuid.uuid4().hex
-    client = get_mock_api_client(
-        "/reports/add-report-columns/all-response-body-properties", request_id
-    )
-
-    columns = [
-        ReportColumn({
-            "title": "Item selected",
-            "type": "CHECKBOX",
-            "index": 4
-        }),
-        ReportColumn({
-            "title": "Sheet name",
-            "type": "TEXT_NUMBER",
-            "index": 4,
-            "sheetNameColumn": True
-        })
-    ]
-
-    client.Reports.add_report_columns(
-        report_id=TEST_REPORT_ID,
-        report_columns=columns
-    )
-
-    wiremock_request = get_wiremock_request(request_id)
-    actual_body = json.loads(wiremock_request["body"])
-
-    expected_body = [
-        {
-            "title": "Item selected",
-            "type": "CHECKBOX",
-            "index": 4
-        },
-        {
-            "title": "Sheet name",
-            "type": "TEXT_NUMBER",
-            "index": 4,
-            "sheetNameColumn": True
-        }
-    ]
-
-    assert actual_body == expected_body
+    # Verify complete response as whole object
+    assert response.to_dict() == {
+        "message": TEST_SUCCESS_MESSAGE,
+        "resultCode": TEST_RESULT_CODE,
+        "result": expected_columns,
+        "data": expected_columns
+    }
 
 
 def test_add_report_columns_error_4xx():
@@ -283,7 +283,7 @@ def test_add_report_columns_error_4xx():
     columns = [
         ReportColumn({
             "title": "Test Column",
-            "type": "TEXT_NUMBER",
+            "type": ColumnType.TEXT_NUMBER,
             "index": 0
         })
     ]
@@ -306,7 +306,7 @@ def test_add_report_columns_error_5xx():
     columns = [
         ReportColumn({
             "title": "Test Column",
-            "type": "TEXT_NUMBER",
+            "type": ColumnType.TEXT_NUMBER,
             "index": 0
         })
     ]

@@ -4,12 +4,13 @@ import smartsheet
 from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
 
-class TestMockApiSheets(MockApiTestHelper):
+class TestMockApiSights(MockApiTestHelper):
     @clean_api_error
     def test_list_sights(self):
         self.client.as_test_scenario('List Sights')
         response = self.client.Sights.list_sights()
         assert isinstance(response.data, list)
+        assert response.last_key == 'abcDefGhIjKlMnOpQrStUvWxYz'
 
     @clean_api_error
     def test_get_sight(self):

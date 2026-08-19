@@ -1,7 +1,7 @@
 # pylint: disable=C0103,W0232
 
 import pytest
-from smartsheet.models import Workspace, PaginatedChildrenResult, Folder, Sheet, Sight, Report
+from smartsheet.models import Workspace, PaginatedChildrenResult, Folder, Sheet, Sight, Report, Template
 from smartsheet.exceptions import ApiError
 from tests.mock_api.mock_api_test_helper import MockApiTestHelper, clean_api_error
 
@@ -49,7 +49,7 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         response = self.client.Workspaces.get_workspace_children(123)
 
         assert isinstance(response, PaginatedChildrenResult)
-        assert len(response.data) == 4
+        assert len(response.data) == 5
 
         # Verify first child (folder) - exact values from scenario
         folder = response.data[0]
@@ -81,6 +81,13 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert report.name == "Monthly Report"
         assert report.permalink == "https://app.smartsheet.com/b/home?lx=*****************"
         assert report.access_level == "ADMIN"
+
+        # Verify fifth child (template) - exact values from scenario
+        template = response.data[4]
+        assert isinstance(template, Template)
+        assert template.id == 995
+        assert template.name == "Budget Template"
+        assert template.access_level == "ADMIN"
 
 
     @clean_api_error
@@ -193,49 +200,49 @@ class TestMockApiWorkspaces(MockApiTestHelper):
         assert response.last_key == "xvmnw4mnx8v9wriot20574xvnjoqt4iuhnow490"
 
     @clean_api_error
-    def test_list_workspaces_with_token_pagination_firstPage(self):
+    def test_list_workspaces_with_token_pagination_first_page(self):
         self.client.as_test_scenario('List Workspaces - First Page with Pagination')
 
-        response = self.client.Workspaces.list_workspaces(pagination_type='token', max_items=100)
-        workspaces = response.result
-        assert hasattr(response, 'result')
-        assert hasattr(response, 'data')
-        assert hasattr(response, 'last_key')
+        response = self.client.Workspaces.list_workspaces(max_items=100)
+
+        assert len(response.data) == 2
+        assert isinstance(response.data[0], Workspace)
+        assert isinstance(response.data[1], Workspace)
+        assert response.data[0].id == 1001
+        assert response.data[0].name == "Marketing Workspace"
+        assert response.data[1].id == 1002
+        assert response.data[1].name == "Sales Workspace"
+        assert response.last_key == "eyJsYXN0SWQiOjEwMDJ9"
 
     @clean_api_error
-    def test_list_workspaces_with_last_key_MiddlePage(self):
+    def test_list_workspaces_with_last_key_middle_page(self):
         self.client.as_test_scenario('List Workspaces - Middle Page with Pagination')
 
         response = self.client.Workspaces.list_workspaces(
-            pagination_type='token',
             last_key='eyJsYXN0SWQiOjEwMDJ9',
             max_items=100
         )
-        workspaces = response.result
-        assert hasattr(response, 'result')
-        assert hasattr(response, 'data')
-        assert hasattr(response, 'last_key')
 
+        assert len(response.data) == 2
+        assert isinstance(response.data[0], Workspace)
+        assert isinstance(response.data[1], Workspace)
+        assert response.data[0].id == 1003
+        assert response.data[0].name == "Engineering Workspace"
+        assert response.data[1].id == 1004
+        assert response.data[1].name == "HR Workspace"
+        assert response.last_key == "eyJsYXN0SWQiOjEwMDR9"
 
     @clean_api_error
-    def test_list_workspaces_with_last_key_LastPage(self):
+    def test_list_workspaces_with_last_key_last_page(self):
         self.client.as_test_scenario('List Workspaces - Final Page with Pagination')
 
         response = self.client.Workspaces.list_workspaces(
-            pagination_type='token',
             last_key='eyJsYXN0SWQiOjEwMDR9',
             max_items=100
         )
-        workspaces = response.result
-        assert hasattr(response, 'result')
-        assert hasattr(response, 'data')
-        assert not hasattr(response, 'last_key') or response.last_key is None
 
-    @clean_api_error
-    def test_list_workspaces_traditional_pagination(self):
-        self.client.as_test_scenario('List Workspaces - No Pagination Parameters')
-
-        response = self.client.Workspaces.list_workspaces()
-
-        workspaces = response.result
-        assert response.total_count >= 0
+        assert len(response.data) == 1
+        assert isinstance(response.data[0], Workspace)
+        assert response.data[0].id == 1005
+        assert response.data[0].name == "Compliance Workspace"
+        assert response.last_key is None

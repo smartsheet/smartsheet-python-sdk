@@ -48,7 +48,7 @@ class ReportDestination:
 
     @property
     def destination_type(self):
-        return self._destination_type.value
+        return self._destination_type
 
     @destination_type.setter
     def destination_type(self, value):

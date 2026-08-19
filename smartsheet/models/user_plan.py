@@ -17,6 +17,7 @@ class UserPlan:
             self._base = base_obj
 
         self._plan_id = Number()
+        self._plan_name = String()
         self._seat_type = EnumeratedValue(SeatType)
         self._seat_type_last_changed_at = Timestamp()
         self._is_internal = Boolean()
@@ -34,6 +35,14 @@ class UserPlan:
     @plan_id.setter
     def plan_id(self, value):
         self._plan_id.value = value
+
+    @property
+    def plan_name(self):
+        return self._plan_name.value
+
+    @plan_name.setter
+    def plan_name(self, value):
+        self._plan_name.value = value
 
     @property
     def seat_type(self):

@@ -38,6 +38,7 @@ class Event:
         self._event_id = String()
         self._event_timestamp = None
         self._object_id = None
+        self._object_id_str = String()
         self._object_type = EnumeratedValue(EventObjectType)
         self._request_user_id = Number()
         self._source = EnumeratedValue(EventSource)
@@ -105,11 +106,26 @@ class Event:
 
     @property
     def object_id(self):
+        """Deprecated: use ``object_id_str`` instead.
+
+        .. deprecated::
+            ``object_id`` is numeric only and returns -1 for non-numeric object
+            identifiers. It is not scheduled for removal, but new code should read
+            ``object_id_str``, which represents all identifier values.
+        """
         return self._object_id
 
     @object_id.setter
     def object_id(self, value):
         self._object_id = value
+
+    @property
+    def object_id_str(self):
+        return self._object_id_str.value
+
+    @object_id_str.setter
+    def object_id_str(self, value):
+        self._object_id_str.value = value
 
     @property
     def object_type(self):

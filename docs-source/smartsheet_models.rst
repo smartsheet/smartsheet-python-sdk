@@ -337,6 +337,14 @@ Folder
    :undoc-members:
    :show-inheritance:
 
+FolderPathNode
+--------------
+
+.. automodule:: smartsheet.models.folder_path_node
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 FontFamily
 ----------
 
@@ -497,6 +505,22 @@ PaginatedChildrenResult
    :undoc-members:
    :show-inheritance:
 
+PathLeaf
+--------
+
+.. automodule:: smartsheet.models.path_leaf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PathNode
+--------
+
+.. automodule:: smartsheet.models.path_node
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Predecessor
 -----------
 
@@ -533,6 +557,14 @@ ProjectSettings
 ---------------
 
 .. automodule:: smartsheet.models.project_settings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Proof
+-----
+
+.. automodule:: smartsheet.models.proof
    :members:
    :undoc-members:
    :show-inheritance:
@@ -653,6 +685,22 @@ ReportWidgetContent
 -------------------
 
 .. automodule:: smartsheet.models.report_widget_content
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ReportPathNode
+--------------
+
+.. automodule:: smartsheet.models.report_path_node
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UpdateReportColumnRequest
+-------------------------
+
+.. automodule:: smartsheet.models.update_report_column_request
    :members:
    :undoc-members:
    :show-inheritance:
@@ -817,6 +865,14 @@ SheetUserSettings
    :undoc-members:
    :show-inheritance:
 
+SheetPathNode
+-------------
+
+.. automodule:: smartsheet.models.sheet_path_node
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ShortcutDataItem
 ----------------
 
@@ -845,6 +901,14 @@ SightPublish
 ------------
 
 .. automodule:: smartsheet.models.sight_publish
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SightPathNode
+-------------
+
+.. automodule:: smartsheet.models.sight_path_node
    :members:
    :undoc-members:
    :show-inheritance:

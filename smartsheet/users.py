@@ -503,7 +503,9 @@ class Users:
 
         return response
 
-    def list_user_plans(self, user_id, last_key=None, max_items=None, display_contributor_seat_type=None) -> Union[TokenPaginatedResult[UserPlan], Error]:
+    def list_user_plans(
+        self, user_id, last_key=None, max_items=None, display_contributor_seat_type=None, include=None
+    ) -> Union[TokenPaginatedResult[UserPlan], Error]:
         """List user's plans.
                 Args:
                     user_id (int): User ID
@@ -513,6 +515,10 @@ class Users:
                         whether the api returns VIEWER or CONTRIBUTOR seat types.
                         If true, VIEWER seat types are re-written to CONTRIBUTOR.
                         If false or omitted, CONTRIBUTOR seat types are re-written to VIEWER.
+                    include(list[str]): optional include parameter, only currently
+                        accepted value is 'planName'. When present, each returned
+                        plan carries the name of its owning organization in
+                        plan_name.
                 Returns:
                     Union[TokenPaginatedResult[UserPlan], Error]: The result of the operation, or an Error object if the request fails.
          """
@@ -522,6 +528,7 @@ class Users:
         _op["query_params"]["lastKey"] = last_key
         _op["query_params"]["maxItems"] = max_items
         _op["query_params"]["displayContributorSeatType"] = display_contributor_seat_type
+        _op["query_params"]["include"] = include
 
         expected = ["TokenPaginatedResult", "UserPlan"]
 

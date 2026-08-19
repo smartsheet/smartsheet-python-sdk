@@ -27,6 +27,7 @@ from .cell import Cell
 from .column import Column
 from .discussion import Discussion
 from .enums import AccessLevel
+from .proof import Proof
 from .user import User
 
 
@@ -62,6 +63,7 @@ class Row:
         self._outdent = Number()
         self._parent_id = Number()
         self._permalink = String()
+        self._proof = TypedObject(Proof)
         self._row_number = Number()
         self._sheet_id = Number()
         self._sibling_id = Number()
@@ -267,6 +269,14 @@ class Row:
     @permalink.setter
     def permalink(self, value):
         self._permalink.value = value
+
+    @property
+    def proof(self):
+        return self._proof.value
+
+    @proof.setter
+    def proof(self, value):
+        self._proof.value = value
 
     @property
     def row_number(self):

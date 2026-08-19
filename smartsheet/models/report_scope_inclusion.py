@@ -48,7 +48,7 @@ class ReportScopeInclusion:
 
     @property
     def asset_type(self) -> ReportAssetType:
-        return self._asset_type.value
+        return self._asset_type
 
     @asset_type.setter
     def asset_type(self, value):

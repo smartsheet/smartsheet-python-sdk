@@ -17,7 +17,7 @@
 
 from __future__ import absolute_import
 
-from typing import Union
+from typing import Optional, Union
 
 import logging
 import os.path
@@ -35,8 +35,10 @@ from .models import (
     ReportDefinition,
     ReportPublish,
     ReportScopeInclusion,
+    ReportPathNode,
     Result,
-    Share,
+    TokenPaginatedResult,
+    UpdateReportColumnRequest,
 )
 
 
@@ -74,26 +76,6 @@ class Reports:
 
         expected = ["Result", "CreateReportResult"]
 
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def delete_share(self, report_id, share_id) -> Union[Result[None], Error]:
-        """Deletes the specified Share
-
-        Args:
-            report_id (int): Report ID
-            share_id (str): Share ID
-
-        Returns:
-            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("delete_share")
-        _op["method"] = "DELETE"
-        _op["path"] = "/reports/" + str(report_id) + "/shares/" + str(share_id)
-
-        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -161,7 +143,7 @@ class Reports:
             page (int): Which page to return.
             include (list[str]): A comma-separated list of
                 optional elements to include in the response. Valid list values:
-                attachments, discussions, format, objectValue, scope, source, sourceSheets.
+                attachments, discussions, proofs, format, objectValue, scope, source, sourceSheets.
             level (int): compatibility level
 
         Returns:
@@ -176,6 +158,26 @@ class Reports:
         _op["query_params"]["level"] = level
 
         expected = "Report"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_report_path(self, report_id: int) -> Union[ReportPathNode, Error]:
+        """Get the hierarchical path of a report.
+
+        Args:
+            report_id (int): Report ID
+
+        Returns:
+            Union[ReportPathNode, Error]: A ReportPathNode object describing the report's
+                location, or an Error object if the request fails.
+        """
+        _op = fresh_operation("get_report_path")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/path"
+
+        expected = "ReportPathNode"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -243,26 +245,6 @@ class Reports:
         response.save_to_file()
         return response
 
-    def get_share(self, report_id, share_id) -> Union[Share, Error]:
-        """Get the specified Share.
-
-        Args:
-            report_id (int): Report ID
-            share_id (str): Share ID
-
-        Returns:
-            Union[Share, Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("get_share")
-        _op["method"] = "GET"
-        _op["path"] = "/reports/" + str(report_id) + "/shares/" + str(share_id)
-
-        expected = "Share"
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
     def list_reports(
         self, page_size=None, page=None, include_all=None, modified_since=None
     ) -> Union[IndexResult[Report], Error]:
@@ -298,45 +280,6 @@ class Reports:
 
         return response
 
-    def list_shares(
-        self,
-        report_id,
-        page_size=None,
-        page=None,
-        include_all=None,
-        include_workspace_shares=False,
-    ) -> Union[IndexResult[Share], Error]:
-        """Get a list of all Users and Groups to whom the specified Report is
-        shared, and their access level.
-
-        Args:
-            report_id (int): Report ID
-            page_size (int): The maximum number of items to
-                return per page.
-            page (int): Which page to return.
-            include_all (bool): If true, include all results
-                (i.e. do not paginate).
-            include_workspace_shares(bool): include Workspace shares
-
-        Returns:
-            Union[IndexResult[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("list_shares")
-        _op["method"] = "GET"
-        _op["path"] = "/reports/" + str(report_id) + "/shares"
-        _op["query_params"]["pageSize"] = page_size
-        _op["query_params"]["page"] = page
-        _op["query_params"]["includeAll"] = include_all
-        if include_workspace_shares:
-            _op["query_params"]["include"] = "workspaceShares"
-
-        expected = ["IndexResult", "Share"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
     def send_report(self, report_id, sheet_email_obj) -> Union[Result[None], Error]:
         """Send the specified Report as a PDF attachment via email to the
         designated recipients.
@@ -354,60 +297,6 @@ class Reports:
         _op["json"] = sheet_email_obj
 
         expected = ["Result", None]
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def share_report(self, report_id, share_obj, send_email=False) -> Union[Result[Share], Error]:
-        """Shares a Report with the specified Users and Groups.
-
-        Args:
-            report_id (int): Report ID
-            share_obj (Share): Share object.
-            send_email (bool): Either true or false to
-                indicate whether or not to notify the user by email. Default
-                is false.
-
-        Returns:
-            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        _op = fresh_operation("share_report")
-        _op["method"] = "POST"
-        _op["path"] = "/reports/" + str(report_id) + "/shares"
-        _op["query_params"]["sendEmail"] = send_email
-        _op["json"] = share_obj
-
-        expected = ["Result", "Share"]
-
-        prepped_request = self._base.prepare_request(_op)
-        response = self._base.request(prepped_request, expected, _op)
-
-        return response
-
-    def update_share(self, report_id, share_id, share_obj) -> Union[Result[Share], Error]:
-        """Update the access level of a User or Group for the specified Report
-
-        Args:
-            report_id (int): Report ID
-            share_id (str): Share ID
-            share_obj (Share): Share object.
-
-        Returns:
-            Union[Result[Share], Error]: The result of the operation, or an Error object if the request fails.
-        """
-        if not all(val is not None for val in ["report_id", "share_id", "share_obj"]):
-            raise ValueError(
-                ("One or more required values are missing from call to " + __name__)
-            )
-
-        _op = fresh_operation("update_share")
-        _op["method"] = "PUT"
-        _op["path"] = "/reports/" + str(report_id) + "/shares/" + str(share_id)
-        _op["json"] = share_obj
-
-        expected = ["Result", "Share"]
-
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
@@ -544,6 +433,164 @@ class Reports:
 
         expected = ["Result", None]
 
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def list_report_scope(
+        self, report_id: int, last_key: Optional[str] = None, max_items: Optional[int] = None
+    ) -> Union[TokenPaginatedResult[ReportScopeInclusion], Error]:
+        """List the scope (source sheets and workspaces) for the specified report.
+
+        Args:
+            report_id (int): Report ID
+            last_key (str, optional): Pagination cursor returned from the previous
+                page of results. If not specified, the first page is returned.
+            max_items (int, optional): The maximum number of items to return per
+                page. The default and minimum are 100.
+
+        Returns:
+            Union[TokenPaginatedResult[ReportScopeInclusion], Error]: Paginated list
+                of report scope objects, or an Error object if the request fails.
+        """
+        _op = fresh_operation("list_report_scope")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/scope"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
+
+        expected = ["TokenPaginatedResult", "ReportScopeInclusion"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def list_report_columns(
+        self, report_id: int, last_key: Optional[str] = None, max_items: Optional[int] = None, level: Optional[int] = None
+    ) -> Union[TokenPaginatedResult[ReportColumn], Error]:
+        """List the columns for the specified report.
+
+        Args:
+            report_id (int): Report ID
+            last_key (str, optional): Pagination cursor returned from the previous
+                page of results. If not specified, the first page is returned.
+            max_items (int, optional): The maximum number of items to return per
+                page. The default and minimum are 100.
+            level (int, optional): Compatibility level
+
+        Returns:
+            Union[TokenPaginatedResult[ReportColumn], Error]: Paginated list of
+                report column objects, or an Error object if the request fails.
+        """
+        _op = fresh_operation("list_report_columns")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/columns"
+        _op["query_params"]["lastKey"] = last_key
+        _op["query_params"]["maxItems"] = max_items
+        _op["query_params"]["level"] = level
+
+        expected = ["TokenPaginatedResult", "ReportColumn"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_report_column(self, report_id: int, column_virtual_id: int, level: Optional[int] = None) -> Union[ReportColumn, Error]:
+        """Get the specified column in the report.
+
+        Args:
+            report_id (int): Report ID
+            column_virtual_id (int): Virtual ID of the report column.
+            level (int, optional): Compatibility level
+
+        Returns:
+            Union[ReportColumn, Error]: The report column object, or an Error
+                object if the request fails.
+        """
+        _op = fresh_operation("get_report_column")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/columns/" + str(column_virtual_id)
+        _op["query_params"]["level"] = level
+
+        expected = "ReportColumn"
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def update_report_column(
+        self, report_id: int, column_virtual_id: int, report_column: UpdateReportColumnRequest
+    ) -> Union[Result[ReportColumn], Error]:
+        """Update the specified column in the report.
+
+        Note: title can only be updated for primary, sheet name and system type
+        columns. Modifying a column's index moves that column to the new index
+        and shifts the columns between the new and old index.
+
+        Args:
+            report_id (int): Report ID
+            column_virtual_id (int): Virtual ID of the report column.
+            report_column (UpdateReportColumnRequest): UpdateReportColumnRequest
+                object containing the fields to update (title, index, hidden, width).
+
+        Returns:
+            Union[Result[ReportColumn], Error]: Result object containing the updated
+                ReportColumn object, or an Error object if the request fails.
+        """
+        _op = fresh_operation("update_report_column")
+        _op["method"] = "PUT"
+        _op["path"] = "/reports/" + str(report_id) + "/columns/" + str(column_virtual_id)
+        _op["json"] = report_column
+
+        expected = ["Result", "ReportColumn"]
+
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def delete_report_column(self, report_id: int, column_virtual_id: int) -> Union[Result[None], Error]:
+        """Delete the specified column from the report.
+
+        Args:
+            report_id (int): Report ID
+            column_virtual_id (int): Virtual ID of the report column.
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error
+                object if the request fails.
+        """
+        _op = fresh_operation("delete_report_column")
+        _op["method"] = "DELETE"
+        _op["path"] = "/reports/" + str(report_id) + "/columns/" + str(column_virtual_id)
+
+        expected = ["Result", None]
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def get_report_definition(self, report_id: int) -> Union[ReportDefinition, Error]:
+        """Get the definition for the specified report.
+
+        Get the definition (filters, grouping, summarizing, and sorting criteria)
+        for the specified report.
+
+        Args:
+            report_id (int): Report ID
+
+        Returns:
+            Union[ReportDefinition, Error]: The report definition object, or an
+                Error object if the request fails.
+        """
+        _op = fresh_operation("get_report_definition")
+        _op["method"] = "GET"
+        _op["path"] = "/reports/" + str(report_id) + "/definition"
+
+        expected = "ReportDefinition"
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 
