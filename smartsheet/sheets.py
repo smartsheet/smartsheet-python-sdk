@@ -25,9 +25,10 @@ from typing import Union, List
 import six
 
 from .util import fresh_operation
-from .models import AutomationRule, BulkItemResult, Column, CopyOrMoveRowResult, CrossSheetReference, DownloadedFile, \
-    IndexResult, NumberObjectValue, Result, Row, SearchResult, SentUpdateRequest, Sheet, SheetFilter, \
-    SheetPathNode, SheetPublish, SheetSummary, SummaryField, UpdateRequest, Version, Error
+from .models import AutomationRule, BulkItemResult, Column, CopyOrMoveRowResult, CrossSheetReference, \
+    DataClassification, DownloadedFile, IndexResult, NumberObjectValue, Result, Row, SearchResult, \
+    SentUpdateRequest, Sheet, SheetFilter, SheetPathNode, SheetPublish, SheetSummary, SummaryField, \
+    UpdateRequest, Version, Error
 from .types import TypedList
 from .util import deprecated
 
@@ -310,7 +311,7 @@ class Sheets:
 
         return response
 
-    def set_data_classification(self, sheet_id, data_classification_obj) -> Union[Result[None], Error]:
+    def set_data_classification(self, sheet_id: int, data_classification_obj: DataClassification) -> Union[Result[None], Error]:
         """Sets the data classification on a Sheet.
 
         Args:
@@ -332,7 +333,7 @@ class Sheets:
 
         return response
 
-    def delete_data_classification(self, sheet_id) -> Union[Result[None], Error]:
+    def delete_data_classification(self, sheet_id: int) -> Union[Result[None], Error]:
         """Removes the data classification from a Sheet. Requires ADMIN or OWNER access.
 
         Args:
