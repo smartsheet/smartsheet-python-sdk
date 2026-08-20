@@ -1,7 +1,7 @@
 import uuid
 from urllib.parse import urlparse
 
-from smartsheet.models import Error
+from smartsheet.models import Error, Result
 from tests.mock_api.sheets.common_test_constants import TEST_SHEET_ID, TEST_SUCCESS_MESSAGE, TEST_RESULT_CODE
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
@@ -34,8 +34,19 @@ def test_delete_data_classification_all_response_properties():
         sheet_id=TEST_SHEET_ID,
     )
 
-    assert response.message == TEST_SUCCESS_MESSAGE
-    assert response.result_code == TEST_RESULT_CODE
+    # Type safety check
+    assert isinstance(response, Result)
+
+    # Request body assertion (DELETE has no body)
+    wiremock_request = get_wiremock_request(request_id)
+    request_body = wiremock_request.get("body")
+    assert not request_body
+
+    # Response body assertion
+    assert response.to_dict() == {
+        "message": TEST_SUCCESS_MESSAGE,
+        "resultCode": TEST_RESULT_CODE
+    }
 
 
 def test_delete_data_classification_error_4xx():

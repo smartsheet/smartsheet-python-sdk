@@ -2,7 +2,7 @@ import json
 import uuid
 from urllib.parse import urlparse
 
-from smartsheet.models import Error
+from smartsheet.models import Error, Result
 from smartsheet.models.data_classification import DataClassification
 from tests.mock_api.sheets.common_test_constants import TEST_SHEET_ID, TEST_SUCCESS_MESSAGE, TEST_RESULT_CODE
 from tests.mock_api.mock_api_test_helper import (
@@ -42,12 +42,19 @@ def test_set_data_classification_all_response_properties():
         data_classification_obj=data_classification_obj,
     )
 
-    assert response.message == TEST_SUCCESS_MESSAGE
-    assert response.result_code == TEST_RESULT_CODE
+    # Type safety check
+    assert isinstance(response, Result)
 
+    # Request body assertion
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
     assert body == {"dataClassification": "CONFIDENTIAL"}
+
+    # Response body assertion
+    assert response.to_dict() == {
+        "message": TEST_SUCCESS_MESSAGE,
+        "resultCode": TEST_RESULT_CODE
+    }
 
 
 def test_set_data_classification_custom_label():
@@ -66,12 +73,19 @@ def test_set_data_classification_custom_label():
         data_classification_obj=data_classification_obj,
     )
 
-    assert response.message == TEST_SUCCESS_MESSAGE
-    assert response.result_code == TEST_RESULT_CODE
+    # Type safety check
+    assert isinstance(response, Result)
 
+    # Request body assertion
     wiremock_request = get_wiremock_request(request_id)
     body = json.loads(wiremock_request["body"])
     assert body == {"dataClassification": "Top Secret"}
+
+    # Response body assertion
+    assert response.to_dict() == {
+        "message": TEST_SUCCESS_MESSAGE,
+        "resultCode": TEST_RESULT_CODE
+    }
 
 
 def test_set_data_classification_error_4xx():
