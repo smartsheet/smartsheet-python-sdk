@@ -1,5 +1,5 @@
 import uuid
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 from smartsheet.models import Error, Result
 from tests.mock_api.sheets.common_test_constants import TEST_SHEET_ID, TEST_SUCCESS_MESSAGE, TEST_RESULT_CODE
@@ -21,7 +21,12 @@ def test_delete_data_classification_generated_url_is_correct():
 
     wiremock_request = get_wiremock_request(request_id)
     url = urlparse(wiremock_request["absoluteUrl"])
+
+    query = parse_qs(url.query)
+    assert not query
+
     assert url.path == f'/2.0/sheets/{TEST_SHEET_ID}/dataclassification'
+    assert wiremock_request["method"] == "DELETE"
 
 
 def test_delete_data_classification_all_response_properties():

@@ -1,6 +1,6 @@
 import json
 import uuid
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 from smartsheet.models import Error, Result
 from smartsheet.models.data_classification import DataClassification
@@ -26,7 +26,12 @@ def test_set_data_classification_generated_url_is_correct():
 
     wiremock_request = get_wiremock_request(request_id)
     url = urlparse(wiremock_request["absoluteUrl"])
+
+    query = parse_qs(url.query)
+    assert not query
+
     assert url.path == f'/2.0/sheets/{TEST_SHEET_ID}/dataclassification'
+    assert wiremock_request["method"] == "PUT"
 
 
 def test_set_data_classification_all_response_properties():
