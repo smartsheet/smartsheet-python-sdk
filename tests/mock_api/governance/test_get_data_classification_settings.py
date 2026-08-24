@@ -162,11 +162,22 @@ def test_get_data_classification_settings_approval_needed_mode():
 
 
 def test_get_data_classification_settings_error_400():
-    """400 response is returned as Error."""
+    """400 response is returned as Error with complete error details."""
     request_id = uuid.uuid4().hex
     client = get_mock_api_client("/errors/400-response", request_id)
     response = client.Governance.get_data_classification_settings(TEST_PLAN_ID)
     assert isinstance(response, Error)
+    assert response.to_dict() == {
+        "result": {
+            "code": 1008,
+            "errorCode": 1008,
+            "message": "Malformed Request",
+            "name": "ApiError",
+            "recommendation": "Do not retry without fixing the problem. ",
+            "shouldRetry": False,
+            "statusCode": 400,
+        }
+    }
 
 
 def test_get_data_classification_settings_error_403():
@@ -175,11 +186,34 @@ def test_get_data_classification_settings_error_403():
     client = get_mock_api_client("/errors/403-response", request_id)
     response = client.Governance.get_data_classification_settings(TEST_PLAN_ID)
     assert isinstance(response, Error)
+    assert response.to_dict() == {
+        "result": {
+            "code": 1004,
+            "errorCode": 1004,
+            "message": "You are not authorized to perform this action.",
+            "name": "ApiError",
+            "recommendation": "Do not retry without fixing the problem. ",
+            "refId": "exlxshtxlpl8",
+            "shouldRetry": False,
+            "statusCode": 403,
+        }
+    }
 
 
 def test_get_data_classification_settings_error_500():
-    """500 response is returned as Error."""
+    """500 response is returned as Error with complete error details."""
     request_id = uuid.uuid4().hex
     client = get_mock_api_client("/errors/500-response", request_id)
     response = client.Governance.get_data_classification_settings(TEST_PLAN_ID)
     assert isinstance(response, Error)
+    assert response.to_dict() == {
+        "result": {
+            "code": 4000,
+            "errorCode": 4000,
+            "message": "Internal Server Error",
+            "name": "ApiError",
+            "recommendation": "Do not retry without fixing the problem. ",
+            "shouldRetry": False,
+            "statusCode": 500,
+        }
+    }
