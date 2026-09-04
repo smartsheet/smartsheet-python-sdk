@@ -17,7 +17,7 @@ def test_get_data_classification_settings_url():
         "/governance/get-data-classification-settings/all-response-body-properties", request_id
     )
 
-    client.Governance.get_data_classification_settings(TEST_PLAN_ID)
+    client.Governance.get_data_classification_settings(plan_id=TEST_PLAN_ID)
 
     wiremock_request = get_wiremock_request(request_id)
     url = urlparse(wiremock_request["absoluteUrl"])
@@ -159,6 +159,38 @@ def test_get_data_classification_settings_approval_needed_mode():
             ],
         },
     }
+
+
+def test_get_data_classification_settings_asset_type_and_id_url():
+    """assetType + assetId are sent as query params when planId is omitted."""
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/governance/get-data-classification-settings/all-response-body-properties", request_id
+    )
+
+    client.Governance.get_data_classification_settings(asset_type="sheet", asset_id=112398785741)
+
+    wiremock_request = get_wiremock_request(request_id)
+    url = urlparse(wiremock_request["absoluteUrl"])
+
+    assert url.path == "/2.0/governance/data-classification/settings"
+    assert wiremock_request["method"] == "GET"
+    query = parse_qs(url.query)
+    assert query == {"assetType": ["sheet"], "assetId": ["112398785741"]}
+
+
+def test_get_data_classification_settings_via_asset_returns_settings():
+    """Supplying assetType + assetId returns classification settings."""
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/governance/get-data-classification-settings/all-response-body-properties", request_id
+    )
+
+    response = client.Governance.get_data_classification_settings(
+        asset_type="sheet", asset_id=112398785741
+    )
+
+    assert isinstance(response, DataClassificationSettings)
 
 
 def test_get_data_classification_settings_error_400():
