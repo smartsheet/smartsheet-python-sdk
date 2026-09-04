@@ -232,6 +232,26 @@ def test_get_data_classification_settings_error_403():
     }
 
 
+def test_get_data_classification_settings_error_404():
+    """404 response is returned as Error (plan not found)."""
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client("/errors/404-response", request_id)
+    response = client.Governance.get_data_classification_settings(TEST_PLAN_ID)
+    assert isinstance(response, Error)
+    assert response.to_dict() == {
+        "result": {
+            "code": 1006,
+            "errorCode": 1006,
+            "message": "Not Found",
+            "name": "ApiError",
+            "recommendation": "Do not retry without fixing the problem. ",
+            "refId": "exlxshtxlpl8",
+            "shouldRetry": False,
+            "statusCode": 404,
+        }
+    }
+
+
 def test_get_data_classification_settings_error_500():
     """500 response is returned as Error with complete error details."""
     request_id = uuid.uuid4().hex
