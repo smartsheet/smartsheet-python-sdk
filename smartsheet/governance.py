@@ -6,7 +6,7 @@ import logging
 from .util import fresh_operation
 
 
-class Governance(object):
+class Governance:
     """Class for Governance-related operations."""
 
     def __init__(self, smartsheet_obj):
