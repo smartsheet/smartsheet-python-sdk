@@ -40,8 +40,8 @@ def test_get_data_classification_settings_all_response_body_properties():
     assert not get_wiremock_request(request_id)["body"]
 
     assert response.to_dict() == {
-        "orgId": 1244212,
-        "planId": 41878788,
+        "orgId": 1556806293055364,
+        "planId": 1148023251199876,
         "isDisabled": False,
         "guidelinesUrl": "https://wiki.example.com/classification-guide",
         "allowManualChange": True,
@@ -50,7 +50,7 @@ def test_get_data_classification_settings_all_response_body_properties():
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "name": "Confidential",
                 "description": "Highly sensitive information",
-                "color": "#FFE0E3",
+                "color": "#ffe0e3",
                 "sensitivityOrder": 1,
                 "isDefault": False,
             },
@@ -58,7 +58,7 @@ def test_get_data_classification_settings_all_response_body_properties():
                 "id": "4aa85f64-5717-4562-b3fc-2c963f66afa7",
                 "name": "Internal",
                 "description": "For internal use only",
-                "color": "#E0F0FF",
+                "color": "#b9f4c3",
                 "sensitivityOrder": 2,
                 "isDefault": True,
             },
@@ -71,7 +71,7 @@ def test_get_data_classification_settings_all_response_body_properties():
                 {
                     "labelId": "4aa85f64-5717-4562-b3fc-2c963f66afa7",
                     "approvers": [
-                        {"type": "USERS", "ids": [7001]},
+                        {"type": "USERS", "ids": [5448085317937028]},
                         {"type": "WORKSPACE_ADMINS"},
                     ],
                 }
@@ -91,14 +91,14 @@ def test_get_data_classification_settings_required_response_body_properties():
 
     assert isinstance(response, DataClassificationSettings)
     assert response.to_dict() == {
-        "orgId": 1244212,
-        "planId": 41878788,
+        "orgId": 1556806293055364,
+        "planId": 1148023251199876,
         "isDisabled": False,
         "labels": [
             {
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "name": "Confidential",
-                "color": "#FFE0E3",
+                "color": "#ffe0e3",
                 "sensitivityOrder": 1,
                 "isDefault": False,
             }
@@ -119,8 +119,8 @@ def test_get_data_classification_settings_disabled_plan():
     assert isinstance(response, DataClassificationSettings)
     # serialize() omits empty TypedList, so "labels" is absent from to_dict() when the list is empty.
     assert response.to_dict() == {
-        "orgId": 1244212,
-        "planId": 41878788,
+        "orgId": 1556806293055364,
+        "planId": 1148023251199876,
         "isDisabled": True,
         "downgradeApprovalSettings": {"mode": "NONE"},
     }
@@ -138,15 +138,15 @@ def test_get_data_classification_settings_approval_needed_mode():
 
     assert isinstance(response, DataClassificationSettings)
     assert response.to_dict() == {
-        "orgId": 1244212,
-        "planId": 41878788,
+        "orgId": 1556806293055364,
+        "planId": 1148023251199876,
         "isDisabled": False,
         "allowManualChange": True,
         "labels": [
             {
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "name": "Confidential",
-                "color": "#FFE0E3",
+                "color": "#ffe0e3",
                 "sensitivityOrder": 1,
                 "isDefault": False,
             }
@@ -154,8 +154,8 @@ def test_get_data_classification_settings_approval_needed_mode():
         "downgradeApprovalSettings": {
             "mode": "APPROVAL_NEEDED",
             "approvers": [
-                {"type": "GROUPS", "ids": [5001, 5002]},
-                {"type": "USERS", "ids": [7001]},
+                {"type": "GROUPS", "ids": [5129226945881988, 2877427132196740]},
+                {"type": "USERS", "ids": [5448085317937028]},
             ],
         },
     }
@@ -177,6 +177,38 @@ def test_get_data_classification_settings_asset_type_and_id_url():
     assert wiremock_request["method"] == "GET"
     query = parse_qs(url.query)
     assert query == {"assetType": ["sheet"], "assetId": ["112398785741"]}
+
+
+def test_get_data_classification_settings_asset_type_report_url():
+    """report assetType is sent as a query param."""
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/governance/get-data-classification-settings/all-response-body-properties", request_id
+    )
+
+    client.Governance.get_data_classification_settings(asset_type="report", asset_id=112398785741)
+
+    wiremock_request = get_wiremock_request(request_id)
+    url = urlparse(wiremock_request["absoluteUrl"])
+
+    assert url.path == "/2.0/governance/data-classification/settings"
+    assert parse_qs(url.query) == {"assetType": ["report"], "assetId": ["112398785741"]}
+
+
+def test_get_data_classification_settings_asset_type_sight_url():
+    """sight assetType is sent as a query param."""
+    request_id = uuid.uuid4().hex
+    client = get_mock_api_client(
+        "/governance/get-data-classification-settings/all-response-body-properties", request_id
+    )
+
+    client.Governance.get_data_classification_settings(asset_type="sight", asset_id=112398785741)
+
+    wiremock_request = get_wiremock_request(request_id)
+    url = urlparse(wiremock_request["absoluteUrl"])
+
+    assert url.path == "/2.0/governance/data-classification/settings"
+    assert parse_qs(url.query) == {"assetType": ["sight"], "assetId": ["112398785741"]}
 
 
 def test_get_data_classification_settings_via_asset_returns_settings():
