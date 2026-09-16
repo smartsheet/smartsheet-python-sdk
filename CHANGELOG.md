@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `InsufficientScopeError` for error code 4008, returned when the access token lacks scopes the operation requires. It is not retried, and its message names the missing scopes.
 - Support for PUT /sheets/{sheetId}/dataclassification endpoint (Set Data Classification)
 - Added `data_classification` field to Sheet model
+- Added `Governance.get_data_classification_settings` to retrieve data classification settings for a plan. Accepts either `plan_id` or `asset_type` + `asset_id` as query parameters.
+- Added `DataClassificationSettings`, `ClassificationLabel`, `DowngradeApprovalSettings`, `ClassificationLabelApproverEntry`, and `LabelApproverEntry` models.
 
 ## [4.4.0] - 2026-08-12
 
