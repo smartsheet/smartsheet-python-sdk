@@ -3,6 +3,7 @@ from __future__ import absolute_import
 
 import logging
 
+from .models.enums.asset_type import AssetType
 from .util import fresh_operation
 
 
@@ -21,7 +22,7 @@ class Governance:
 
         Args:
             plan_id (int): The masked ID of the plan. Provide this or asset_type + asset_id.
-            asset_type (str): The type of the asset to resolve the plan from.
+            asset_type (AssetType): The type of the asset to resolve the plan from.
                 Accepted values: 'sheet', 'report', 'sight' (dashboard).
                 Required together with asset_id when plan_id is not provided.
             asset_id (int): The masked ID of the asset to resolve the plan from.

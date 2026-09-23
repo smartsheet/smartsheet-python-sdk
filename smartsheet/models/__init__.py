@@ -21,6 +21,7 @@ from __future__ import absolute_import
 from .access_token import AccessToken
 from .account import Account
 from .alternate_email import AlternateEmail
+from .approver_entry import ApproverEntry
 from .attachment import Attachment
 from .auto_number_format import AutoNumberFormat
 from .automation_action import AutomationAction
@@ -32,6 +33,7 @@ from .cell import Cell
 from .cell_data_item import CellDataItem
 from .cell_history import CellHistory
 from .cell_link import CellLink
+from .classification_label import ClassificationLabel
 from .column import Column
 from .comment import Comment
 from .contact import Contact
@@ -43,15 +45,10 @@ from .copy_or_move_row_result import CopyOrMoveRowResult
 from .criteria import Criteria
 from .cross_sheet_reference import CrossSheetReference
 from .currency import Currency
-from .data_classification_settings import (
-    ApproverEntry,
-    ClassificationLabel,
-    DataClassificationSettings,
-    DowngradeApprovalSettings,
-    LabelApproverEntry,
-)
+from .data_classification_settings import DataClassificationSettings
 from .date_object_value import DateObjectValue
 from .discussion import Discussion
+from .downgrade_approval_settings import DowngradeApprovalSettings
 from .downloaded_file import DownloadedFile
 from .duration import Duration
 from .email import Email
@@ -74,6 +71,7 @@ from .image_url import ImageUrl
 from .image_url_map import ImageUrlMap
 from .index_result import IndexResult
 from .json_object import JSONObject
+from .label_approver_entry import LabelApproverEntry
 from .multi_contact_object_value import MultiContactObjectValue
 from .multi_picklist_object_value import MultiPicklistObjectValue
 from .multi_row_email import MultiRowEmail
