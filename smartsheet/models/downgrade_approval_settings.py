@@ -1,9 +1,10 @@
 # pylint: disable=C0111,R0902,R0904,W0212,W0221
 from __future__ import absolute_import
 
-from ..types import String, TypedList, json
+from ..types import EnumeratedValue, TypedList, json
 from ..util import deserialize, serialize
 from .approver_entry import ApproverEntry
+from .enums import DowngradeApprovalMode
 from .label_approver_entry import LabelApproverEntry
 
 
@@ -17,7 +18,7 @@ class DowngradeApprovalSettings:
         if base_obj is not None:
             self._base = base_obj
 
-        self._mode = String()
+        self._mode = EnumeratedValue(DowngradeApprovalMode)
         self._approvers = TypedList(ApproverEntry)
         self._label_approvers = TypedList(LabelApproverEntry)
 
@@ -28,11 +29,11 @@ class DowngradeApprovalSettings:
 
     @property
     def mode(self):
-        return self._mode.value
+        return self._mode
 
     @mode.setter
     def mode(self, value):
-        self._mode.value = value
+        self._mode.set(value)
 
     @property
     def approvers(self):

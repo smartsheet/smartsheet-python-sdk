@@ -1,8 +1,9 @@
 # pylint: disable=C0111,R0902,R0904,W0212,W0221
 from __future__ import absolute_import
 
-from ..types import String, TypedList, json
+from ..types import EnumeratedValue, TypedList, json
 from ..util import deserialize, serialize
+from .enums import ApproverType
 
 
 class ApproverEntry:
@@ -15,7 +16,7 @@ class ApproverEntry:
         if base_obj is not None:
             self._base = base_obj
 
-        self._type = String()
+        self._type = EnumeratedValue(ApproverType)
         self._ids = TypedList(int)
 
         if props:
@@ -25,11 +26,11 @@ class ApproverEntry:
 
     @property
     def type(self):
-        return self._type.value
+        return self._type
 
     @type.setter
     def type(self, value):
-        self._type.value = value
+        self._type.set(value)
 
     @property
     def ids(self):
