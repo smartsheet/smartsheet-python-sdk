@@ -11,4 +11,8 @@ def test_get_sheet_returns_data_classification_field():
     sheet = client.Sheets.get_sheet(sheet_id=TEST_SHEET_ID)
 
     assert isinstance(sheet, Sheet)
-    assert sheet.data_classification == "Confidential"
+    assert sheet.to_dict() == {
+        "id": 8244643726616452,
+        "name": "Test Sheet",
+        "dataClassification": "Confidential",
+    }
