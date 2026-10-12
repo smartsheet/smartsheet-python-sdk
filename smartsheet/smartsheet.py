@@ -620,6 +620,12 @@ class OperationResult:
         return obj
 
 
+_JSON_DECODE_ERRORS = (json.JSONDecodeError,)
+if hasattr(requests.exceptions, "JSONDecodeError"):
+    # Added in requests 2.27.0; not guaranteed by this package's requirements.
+    _JSON_DECODE_ERRORS += (requests.exceptions.JSONDecodeError,)
+
+
 class OperationErrorResult:
     """The error result of a call to an operation."""
 
@@ -683,8 +689,7 @@ class OperationErrorResult:
         error_payload = {}
         try:
             error_payload = self.resp.json()
-        except json.JSONDecodeError:
-            # Do not fail if the response is not JSON
+        except _JSON_DECODE_ERRORS:
             pass
         error_code = error_payload.get("errorCode", 0)
         try:
