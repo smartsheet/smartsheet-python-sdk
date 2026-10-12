@@ -275,6 +275,16 @@ class Folders:
     ) -> Union[PaginatedChildrenResult, Error]:
         """Get the children of a folder.
 
+        This function largely mirrors the REST API operation, except that the data
+        items in the ``PaginatedChildrenResult`` it returns are deserialized into
+        ``Folder``, ``Sheet``, ``Report``, ``Sight``, or ``Template`` objects. The
+        ``children_resource_types`` parameter filters on the resource (item) types
+        returned.
+
+        HTTP Method: ``GET``
+
+        REST API path: ``/2.0/folders/{folderId}/children``
+
         Args:
             folder_id (int): Folder ID
             children_resource_types (list[str]): The types of the children resources.
@@ -287,7 +297,10 @@ class Folders:
             max_items (int): The maximum number of items to return in the response.
 
         Returns:
-            Union[PaginatedChildrenResult, Error]: The result of the operation, or an Error object if the request fails.
+            Union[PaginatedChildrenResult, Error]: On success, ``result.data`` is a list of
+            deserialized child resource instances — ``Sheet``, ``Folder``, ``Report``,
+            ``Sight``, or ``Template`` — each determined by the item's ``resourceType``
+            field. Returns an Error object if the request fails.
         """
         _op = fresh_operation("get_folder_children")
         _op["method"] = "GET"
