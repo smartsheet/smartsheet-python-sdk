@@ -25,6 +25,14 @@ AlternateEmail
    :undoc-members:
    :show-inheritance:
 
+ApproverEntry
+---------------------------------
+
+.. automodule:: smartsheet.models.approver_entry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 AssetShare
 -------------------------------------
 
@@ -145,6 +153,14 @@ ChartWidgetContent
    :undoc-members:
    :show-inheritance:
 
+ClassificationLabel
+---------------------------------------
+
+.. automodule:: smartsheet.models.classification_label
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Column
 -------------------------------
 
@@ -233,6 +249,14 @@ Currency
    :undoc-members:
    :show-inheritance:
 
+DataClassificationSettings
+----------------------------------------------
+
+.. automodule:: smartsheet.models.data_classification_settings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 DateObjectValue
 --------------------------------------------
 
@@ -253,6 +277,14 @@ Discussion
 ----------
 
 .. automodule:: smartsheet.models.discussion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DowngradeApprovalSettings
+---------------------------------------------
+
+.. automodule:: smartsheet.models.downgrade_approval_settings
    :members:
    :undoc-members:
    :show-inheritance:
@@ -445,6 +477,14 @@ JsonObject
 ----------
 
 .. automodule:: smartsheet.models.json_object
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LabelApproverEntry
+--------------------------------------
+
+.. automodule:: smartsheet.models.label_approver_entry
    :members:
    :undoc-members:
    :show-inheritance:

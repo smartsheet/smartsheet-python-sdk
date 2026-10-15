@@ -9,6 +9,14 @@ AccessLevel
    :undoc-members:
    :show-inheritance:
 
+ApproverType
+--------------------------------
+
+.. automodule:: smartsheet.models.enums.approver_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 AssetType
 ------------------------------------------
 
@@ -117,6 +125,14 @@ DayOrdinal
 -------------------------------------------
 
 .. automodule:: smartsheet.models.enums.day_ordinal
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DowngradeApprovalMode
+-----------------------------------------
+
+.. automodule:: smartsheet.models.enums.downgrade_approval_mode
    :members:
    :undoc-members:
    :show-inheritance:

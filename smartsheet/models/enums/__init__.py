@@ -19,6 +19,7 @@ from __future__ import absolute_import
 
 # import enums into enum package
 from .access_level import AccessLevel
+from .approver_type import ApproverType
 from .asset_type import AssetType
 from .attachment_parent_type import AttachmentParentType
 from .attachment_sub_type import AttachmentSubType
@@ -33,6 +34,7 @@ from .cross_sheet_reference_status import CrossSheetReferenceStatus
 from .currency_code import CurrencyCode
 from .day_descriptors import DayDescriptors
 from .day_ordinal import DayOrdinal
+from .downgrade_approval_mode import DowngradeApprovalMode
 from .event_action import EventAction
 from .event_object_type import EventObjectType
 from .event_source import EventSource
