@@ -128,3 +128,16 @@ class UnexpectedErrorShouldRetryError(ApiError):
 
     def __repr__(self):
         return f"UnexpectedErrorShouldRetryError({self.message!r})"
+
+
+class InsufficientScopeError(ApiError):
+    """The access token provided does not contain the required scopes."""
+
+    def __init__(self, error, message):
+        super().__init__(error, message, False)
+        self.error = error
+        self.message = message
+        self.should_retry = False
+
+    def __repr__(self):
+        return f"InsufficientScopeError({self.message!r})"
