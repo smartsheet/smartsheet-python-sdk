@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Added
+
+- Add `InsufficientScopeError` for error code 4008, returned when the access token lacks scopes the operation requires. It is not retried, and its message names the missing scopes.
+
 ## [4.4.0] - 2026-08-12
 
 ### Added
