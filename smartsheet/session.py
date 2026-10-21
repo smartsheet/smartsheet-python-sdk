@@ -31,10 +31,8 @@ _TRUSTED_CERT_FILE = certifi.where()
 
 class _SSLAdapter(HTTPAdapter):
     def create_ssl_context(self):
-        ctx = ssl.create_default_context()
-        ctx.options |= ssl.OP_NO_SSLv2
-        ctx.options |= ssl.OP_NO_SSLv3
-        ctx.options |= ssl.OP_NO_TLSv1
+        ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2
         return ctx
 
     def init_poolmanager(self, connections, maxsize, block=False):
