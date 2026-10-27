@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Add `InsufficientScopeError` for error code 4008, returned when the access token lacks scopes the operation requires. It is not retried, and its message names the missing scopes.
 - Support for PUT /sheets/{sheetId}/dataclassification endpoint (Set Data Classification)
 - Added `data_classification` field to Sheet model
 

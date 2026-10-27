@@ -657,6 +657,14 @@ class OperationErrorResult:
             "recommendation": "Retry using exponential backoff.",
             "should_retry": True,
         },
+        4008: {
+            "name": "InsufficientScopeError",
+            "recommendation": (
+                "Do not retry. Re-authorize the access token with the "
+                "scopes named in the error message."
+            ),
+            "should_retry": False,
+        },
     }
 
     def __init__(self, op_result, resp):
