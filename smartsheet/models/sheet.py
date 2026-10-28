@@ -57,6 +57,7 @@ class Sheet:
         self._contact_references = TypedList(ContactObjectValue)
         self._created_at = Timestamp()
         self._cross_sheet_references = TypedList(CrossSheetReference)
+        self._data_classification = String()
         self._dependencies_enabled = Boolean()
         self._discussions = TypedList(Discussion)
         self._effective_attachment_options = EnumeratedList(AttachmentType)
@@ -150,6 +151,14 @@ class Sheet:
     @cross_sheet_references.setter
     def cross_sheet_references(self, value):
         self._cross_sheet_references.load(value)
+
+    @property
+    def data_classification(self):
+        return self._data_classification.value
+
+    @data_classification.setter
+    def data_classification(self, value):
+        self._data_classification.value = value
 
     @property
     def dependencies_enabled(self):
