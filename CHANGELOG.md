@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
-- ⚠️ **BREAKING**: Removed `VIEWER` from `SeatType` and `DowngradeSeatType`, and removed the `display_contributor_seat_type` parameter from `list_users` and `list_user_plans`. The `VIEWER` seat type was [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-viewer-seat-type-in-favor-of-contributor-new) in favor of `CONTRIBUTOR` (sunset Nov-15-2026). Use `CONTRIBUTOR` instead of `VIEWER` and drop the `display_contributor_seat_type` argument.
+- ⚠️ **BREAKING**: Removed `VIEWER` from `SeatType` and `DowngradeSeatType`, and removed the `display_contributor_seat_type` parameter from `list_users` and `list_user_plans`. `include` on `list_user_plans` moves to 4th position. The `VIEWER` seat type was [deprecated by the Smartsheet API](https://developers.smartsheet.com/api/smartsheet/changelog#deprecated-viewer-seat-type-in-favor-of-contributor-new) in favor of `CONTRIBUTOR` (sunset Nov-15-2026). Use `CONTRIBUTOR` instead of `VIEWER` and drop the `display_contributor_seat_type` argument.
 
 ## [4.4.0] - 2026-08-12
 
