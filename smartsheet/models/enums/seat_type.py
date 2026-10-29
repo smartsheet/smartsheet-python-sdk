@@ -1,7 +1,6 @@
 from enum import Enum
 
 class SeatType(str, Enum):
-    VIEWER = 'VIEWER'
     GUEST = 'GUEST'
     MEMBER = 'MEMBER'
     PROVISIONAL_MEMBER = 'PROVISIONAL_MEMBER'
@@ -9,7 +8,6 @@ class SeatType(str, Enum):
 
 
 class DowngradeSeatType(str, Enum):
-    VIEWER = 'VIEWER'
     GUEST = 'GUEST'
     CONTRIBUTOR = 'CONTRIBUTOR'
 
