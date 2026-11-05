@@ -25,15 +25,21 @@ class Governance:
     ) -> Union[DataClassificationSettings, Error]:
         """Get the data classification settings for a plan.
 
-        Requires either plan_id, or both asset_type and asset_id.
+        Provide either plan_id, or both asset_type and asset_id:
+
+        - To get the settings for a plan, send plan_id.
+        - When your request relates to a specific sheet, report, or dashboard,
+          send asset_type and asset_id.
 
         Args:
-            plan_id (int): The ID of the plan. Provide this or asset_type + asset_id.
-            asset_type (AssetType): The type of the asset to resolve the plan from.
-                Accepted values: AssetType.SHEET, AssetType.REPORT, AssetType.SIGHT (dashboard).
-                Required together with asset_id when plan_id is not provided.
-            asset_id (int): The ID of the asset to resolve the plan from.
-                Required together with asset_type when plan_id is not provided.
+            plan_id (int): The ID of the plan whose classification settings to return.
+                Required unless asset_type and asset_id are provided. If all three
+                are provided, asset_type and asset_id take precedence.
+            asset_type (AssetType): The type of the asset: AssetType.SHEET,
+                AssetType.REPORT, or AssetType.SIGHT (dashboard). Must be provided
+                together with asset_id.
+            asset_id (int): The ID of the sheet, report, or dashboard. Must be provided
+                together with asset_type.
 
         Returns:
             Union[DataClassificationSettings, Error]: The data classification settings,
