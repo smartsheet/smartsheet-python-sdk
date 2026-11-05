@@ -3,8 +3,8 @@ from __future__ import absolute_import
 
 from ..types import Boolean, Number, String, TypedList, TypedObject, json
 from ..util import deserialize, serialize
-from .classification_label import ClassificationLabel
-from .downgrade_approval_settings import DowngradeApprovalSettings
+from .data_classification_label import DataClassificationLabel
+from .data_classification_downgrade_approval_settings import DataClassificationDowngradeApprovalSettings
 
 
 class DataClassificationSettings:
@@ -22,8 +22,8 @@ class DataClassificationSettings:
         self._is_disabled = Boolean()
         self._guidelines_url = String()
         self._allow_manual_change = Boolean()
-        self._labels = TypedList(ClassificationLabel)
-        self._downgrade_approval_settings = TypedObject(DowngradeApprovalSettings)
+        self._labels = TypedList(DataClassificationLabel)
+        self._downgrade_approval_settings = TypedObject(DataClassificationDowngradeApprovalSettings)
 
         if props:
             deserialize(self, props)

@@ -3,21 +3,21 @@ from __future__ import absolute_import
 
 from ..types import String, TypedList, json
 from ..util import deserialize, serialize
-from .approver_entry import ApproverEntry
+from .data_classification_approver_entry import DataClassificationApproverEntry
 
 
-class LabelApproverEntry:
+class DataClassificationLabelApproverEntry:
 
-    """Smartsheet LabelApproverEntry data model."""
+    """Smartsheet DataClassificationLabelApproverEntry data model."""
 
     def __init__(self, props=None, base_obj=None):
-        """Initialize the LabelApproverEntry model."""
+        """Initialize the DataClassificationLabelApproverEntry model."""
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
         self._label_id = String()
-        self._approvers = TypedList(ApproverEntry)
+        self._approvers = TypedList(DataClassificationApproverEntry)
 
         if props:
             deserialize(self, props)

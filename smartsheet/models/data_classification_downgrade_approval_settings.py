@@ -3,24 +3,24 @@ from __future__ import absolute_import
 
 from ..types import EnumeratedValue, TypedList, json
 from ..util import deserialize, serialize
-from .approver_entry import ApproverEntry
-from .enums import DowngradeApprovalMode
-from .label_approver_entry import LabelApproverEntry
+from .data_classification_approver_entry import DataClassificationApproverEntry
+from .enums import DataClassificationDowngradeApprovalMode
+from .data_classification_label_approver_entry import DataClassificationLabelApproverEntry
 
 
-class DowngradeApprovalSettings:
+class DataClassificationDowngradeApprovalSettings:
 
-    """Smartsheet DowngradeApprovalSettings data model."""
+    """Smartsheet DataClassificationDowngradeApprovalSettings data model."""
 
     def __init__(self, props=None, base_obj=None):
-        """Initialize the DowngradeApprovalSettings model."""
+        """Initialize the DataClassificationDowngradeApprovalSettings model."""
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        self._mode = EnumeratedValue(DowngradeApprovalMode)
-        self._approvers = TypedList(ApproverEntry)
-        self._label_approvers = TypedList(LabelApproverEntry)
+        self._mode = EnumeratedValue(DataClassificationDowngradeApprovalMode)
+        self._approvers = TypedList(DataClassificationApproverEntry)
+        self._label_approvers = TypedList(DataClassificationLabelApproverEntry)
 
         if props:
             deserialize(self, props)

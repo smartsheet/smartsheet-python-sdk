@@ -2,7 +2,7 @@ import uuid
 from urllib.parse import urlparse, parse_qs
 
 from smartsheet.models import DataClassificationSettings, Error
-from smartsheet.models.enums import ApproverType, AssetType, DowngradeApprovalMode
+from smartsheet.models.enums import DataClassificationApproverType, AssetType, DataClassificationDowngradeApprovalMode
 from tests.mock_api.governance.common_test_constants import TEST_ASSET_ID, TEST_PLAN_ID
 from tests.mock_api.mock_api_test_helper import (
     get_mock_api_client,
@@ -40,13 +40,13 @@ EXPECTED_ALL_RESPONSE_PROPERTIES = {
     # CUSTOM mode: only labelApprovers is populated, no top-level approvers.
     # WORKSPACE_ADMINS ids serialise as absent (empty TypedList is omitted by serialize()).
     "downgradeApprovalSettings": {
-        "mode": DowngradeApprovalMode.CUSTOM.value,
+        "mode": DataClassificationDowngradeApprovalMode.CUSTOM.value,
         "labelApprovers": [
             {
                 "labelId": TEST_LABEL_ID_2,
                 "approvers": [
-                    {"type": ApproverType.USERS.value, "ids": [5448085317937028]},
-                    {"type": ApproverType.WORKSPACE_ADMINS.value},
+                    {"type": DataClassificationApproverType.USERS.value, "ids": [5448085317937028]},
+                    {"type": DataClassificationApproverType.WORKSPACE_ADMINS.value},
                 ],
             }
         ],
@@ -66,7 +66,7 @@ EXPECTED_REQUIRED_RESPONSE_PROPERTIES = {
             "isDefault": False,
         }
     ],
-    "downgradeApprovalSettings": {"mode": DowngradeApprovalMode.NONE.value},
+    "downgradeApprovalSettings": {"mode": DataClassificationDowngradeApprovalMode.NONE.value},
 }
 
 
@@ -160,7 +160,7 @@ def test_get_data_classification_settings_disabled_plan():
         "orgId": TEST_ORG_ID,
         "planId": TEST_PLAN_ID,
         "isDisabled": True,
-        "downgradeApprovalSettings": {"mode": DowngradeApprovalMode.NONE.value},
+        "downgradeApprovalSettings": {"mode": DataClassificationDowngradeApprovalMode.NONE.value},
     }
 
 
@@ -194,10 +194,10 @@ def test_get_data_classification_settings_approval_needed_mode():
             }
         ],
         "downgradeApprovalSettings": {
-            "mode": DowngradeApprovalMode.APPROVAL_NEEDED.value,
+            "mode": DataClassificationDowngradeApprovalMode.APPROVAL_NEEDED.value,
             "approvers": [
-                {"type": ApproverType.GROUPS.value, "ids": [5129226945881988, 2877427132196740]},
-                {"type": ApproverType.USERS.value, "ids": [5448085317937028]},
+                {"type": DataClassificationApproverType.GROUPS.value, "ids": [5129226945881988, 2877427132196740]},
+                {"type": DataClassificationApproverType.USERS.value, "ids": [5448085317937028]},
             ],
         },
     }

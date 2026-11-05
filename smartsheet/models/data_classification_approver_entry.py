@@ -3,20 +3,20 @@ from __future__ import absolute_import
 
 from ..types import EnumeratedValue, TypedList, json
 from ..util import deserialize, serialize
-from .enums import ApproverType
+from .enums import DataClassificationApproverType
 
 
-class ApproverEntry:
+class DataClassificationApproverEntry:
 
-    """Smartsheet ApproverEntry data model."""
+    """Smartsheet DataClassificationApproverEntry data model."""
 
     def __init__(self, props=None, base_obj=None):
-        """Initialize the ApproverEntry model."""
+        """Initialize the DataClassificationApproverEntry model."""
         self._base = None
         if base_obj is not None:
             self._base = base_obj
 
-        self._type = EnumeratedValue(ApproverType)
+        self._type = EnumeratedValue(DataClassificationApproverType)
         self._ids = TypedList(int)
 
         if props:
