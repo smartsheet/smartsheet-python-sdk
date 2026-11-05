@@ -43,6 +43,11 @@ from .copy_or_move_row_result import CopyOrMoveRowResult
 from .criteria import Criteria
 from .cross_sheet_reference import CrossSheetReference
 from .currency import Currency
+from .data_classification_approver_entry import DataClassificationApproverEntry
+from .data_classification_downgrade_approval_settings import DataClassificationDowngradeApprovalSettings
+from .data_classification_label import DataClassificationLabel
+from .data_classification_label_approver_entry import DataClassificationLabelApproverEntry
+from .data_classification_settings import DataClassificationSettings
 from .date_object_value import DateObjectValue
 from .discussion import Discussion
 from .downloaded_file import DownloadedFile

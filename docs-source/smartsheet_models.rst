@@ -233,6 +233,46 @@ Currency
    :undoc-members:
    :show-inheritance:
 
+DataClassificationApproverEntry
+---------------------------------
+
+.. automodule:: smartsheet.models.data_classification_approver_entry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DataClassificationDowngradeApprovalSettings
+---------------------------------------------
+
+.. automodule:: smartsheet.models.data_classification_downgrade_approval_settings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DataClassificationLabel
+---------------------------------------
+
+.. automodule:: smartsheet.models.data_classification_label
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DataClassificationLabelApproverEntry
+--------------------------------------
+
+.. automodule:: smartsheet.models.data_classification_label_approver_entry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DataClassificationSettings
+----------------------------------------------
+
+.. automodule:: smartsheet.models.data_classification_settings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 DateObjectValue
 --------------------------------------------
 
