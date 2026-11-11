@@ -110,7 +110,7 @@ def serialize(obj):
         retval = obj.serialize()
 
     elif isinstance(obj, datetime):
-        retval = obj.isoformat() + "Z"
+        retval = obj.isoformat() + ("Z" if obj.utcoffset() is None else "")
 
     elif isinstance(obj, date):
         retval = obj.isoformat()

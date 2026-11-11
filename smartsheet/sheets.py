@@ -25,9 +25,10 @@ from typing import Union, List
 import six
 
 from .util import fresh_operation
-from .models import AutomationRule, BulkItemResult, Column, CopyOrMoveRowResult, CrossSheetReference, DownloadedFile, \
-    IndexResult, NumberObjectValue, Result, Row, SearchResult, SentUpdateRequest, Sheet, SheetFilter, \
-    SheetPathNode, SheetPublish, SheetSummary, SummaryField, UpdateRequest, Version, Error
+from .models import AutomationRule, BulkItemResult, Column, CopyOrMoveRowResult, CrossSheetReference, \
+    DownloadedFile, IndexResult, NumberObjectValue, Result, Row, SearchResult, \
+    SentUpdateRequest, Sheet, SheetDataClassification, SheetFilter, SheetPathNode, SheetPublish, SheetSummary, \
+    SummaryField, UpdateRequest, Version, Error
 from .types import TypedList
 from .util import deprecated
 
@@ -282,7 +283,7 @@ class Sheets:
         return response
 
     def delete_rows(self, sheet_id, ids, ignore_rows_not_found=False) -> Union[Result[List[NumberObjectValue]], Error]:
-        """Deletes one or more Row(s) from the specified Sheeet.
+        """Deletes one or more Row(s) from the specified Sheet.
 
         Args:
             sheet_id (int): Sheet ID
@@ -305,6 +306,28 @@ class Sheets:
         _op["query_params"]["ignoreRowsNotFound"] = ignore_rows_not_found
 
         expected = ["Result", "NumberObjectValue"]
+        prepped_request = self._base.prepare_request(_op)
+        response = self._base.request(prepped_request, expected, _op)
+
+        return response
+
+    def set_data_classification(self, sheet_id: int, data_classification_obj: SheetDataClassification) -> Union[Result[None], Error]:
+        """Sets the data classification on a Sheet.
+
+        Args:
+            sheet_id (int): Sheet ID
+            data_classification_obj
+                (SheetDataClassification): SheetDataClassification object.
+
+        Returns:
+            Union[Result[None], Error]: The result of the operation, or an Error object if the request fails.
+        """
+        _op = fresh_operation("set_data_classification")
+        _op["method"] = "PUT"
+        _op["path"] = "/sheets/" + str(sheet_id) + "/dataclassification"
+        _op["json"] = data_classification_obj
+
+        expected = ["Result", None]
         prepped_request = self._base.prepare_request(_op)
         response = self._base.request(prepped_request, expected, _op)
 

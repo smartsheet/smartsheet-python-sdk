@@ -107,6 +107,7 @@ from .search_result_item import SearchResultItem
 from .sent_update_request import SentUpdateRequest
 from .server_info import ServerInfo
 from .sheet import Sheet
+from .sheet_data_classification import SheetDataClassification
 from .sheet_email import SheetEmail
 from .sheet_filter import SheetFilter
 from .sheet_filter_details import SheetFilterDetails

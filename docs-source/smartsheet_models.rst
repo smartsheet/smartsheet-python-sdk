@@ -809,6 +809,14 @@ Sheet
    :undoc-members:
    :show-inheritance:
 
+SheetDataClassification
+-----------------------
+
+.. automodule:: smartsheet.models.sheet_data_classification
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 SheetEmail
 ----------
 

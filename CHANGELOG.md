@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Add `InsufficientScopeError` for error code 4008, returned when the access token lacks scopes the operation requires. It is not retried, and its message names the missing scopes.
+- Support for PUT /sheets/{sheetId}/dataclassification endpoint (Set Data Classification)
+- Added `data_classification` field to Sheet model
+
+### Fixed
+
+- Serialize timezone-aware datetimes with their own UTC offset instead of appending a second `Z` (for example `2026-11-05T08:00:00+00:00Z`), which the API rejected with error 1008. Naive datetimes still get a `Z` suffix.
 
 ### Removed
 
