@@ -48,6 +48,13 @@ classifiers = [
     "Topic :: Office/Business :: Financial :: Spreadsheet"
 ]
 
+[project.urls]
+Homepage = "https://github.com/smartsheet/smartsheet-python-sdk"
+Documentation = "https://smartsheet.github.io/smartsheet-python-sdk/"
+Source = "https://github.com/smartsheet/smartsheet-python-sdk"
+Issues = "https://github.com/smartsheet/smartsheet-python-sdk/issues"
+Changelog = "https://github.com/smartsheet/smartsheet-python-sdk/blob/mainline/CHANGELOG.md"
+
 [project.optional-dependencies]
 test = [
     "coverage",
