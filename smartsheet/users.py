@@ -261,7 +261,7 @@ class Users:
 
     def list_users(
         self, email=None, page_size=None, page=None, include_all=None, include=None,
-        plan_id=None, seat_type=None, display_contributor_seat_type=None
+        plan_id=None, seat_type=None
     ) -> Union[IndexResult[User], Error]:
         """Get the list of Users in the organization.
 
@@ -279,10 +279,6 @@ class Users:
                 in the selected plan.
             seat_type(SeatType): optional seat_type parameter, filters users
                 by their seat type.
-            display_contributor_seat_type(bool): optional parameter that controls
-                whether the api returns VIEWER or CONTRIBUTOR seat types.
-                If true, VIEWER seat types are re-written to CONTRIBUTOR.
-                If false or omitted, CONTRIBUTOR seat types are re-written to VIEWER.
 
         Returns:
             Union[IndexResult[User], Error]: The result of the operation, or an Error object if the request fails.
@@ -297,7 +293,6 @@ class Users:
         _op["query_params"]["includeAll"] = include_all
         _op["query_params"]["planId"] = plan_id
         _op["query_params"]["seatType"] = seat_type
-        _op["query_params"]["displayContributorSeatType"] = display_contributor_seat_type
 
         expected = ["IndexResult", "User"]
 
@@ -504,17 +499,13 @@ class Users:
         return response
 
     def list_user_plans(
-        self, user_id, last_key=None, max_items=None, display_contributor_seat_type=None, include=None
+        self, user_id, last_key=None, max_items=None, include=None
     ) -> Union[TokenPaginatedResult[UserPlan], Error]:
         """List user's plans.
                 Args:
                     user_id (int): User ID
                     last_key (str): Pagination cursor for the next page of results
                     max_items (int): Maximum number of items to return per page
-                    display_contributor_seat_type(bool): optional parameter that controls
-                        whether the api returns VIEWER or CONTRIBUTOR seat types.
-                        If true, VIEWER seat types are re-written to CONTRIBUTOR.
-                        If false or omitted, CONTRIBUTOR seat types are re-written to VIEWER.
                     include(list[str]): optional include parameter, only currently
                         accepted value is 'planName'. When present, each returned
                         plan carries the name of its owning organization in
@@ -527,7 +518,6 @@ class Users:
         _op["path"] = f"/users/{user_id}/plans"
         _op["query_params"]["lastKey"] = last_key
         _op["query_params"]["maxItems"] = max_items
-        _op["query_params"]["displayContributorSeatType"] = display_contributor_seat_type
         _op["query_params"]["include"] = include
 
         expected = ["TokenPaginatedResult", "UserPlan"]
