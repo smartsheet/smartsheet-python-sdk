@@ -66,7 +66,6 @@ EXPECTED_REQUIRED_RESPONSE_PROPERTIES = {
             "isDefault": False,
         }
     ],
-    "downgradeApprovalSettings": {"mode": DataClassificationDowngradeApprovalMode.NONE.value},
 }
 
 
@@ -125,7 +124,7 @@ def test_get_data_classification_settings_all_response_properties():
 
 
 def test_get_data_classification_settings_required_response_properties():
-    """Test that only the required response properties are deserialized (NONE downgrade mode)."""
+    """Test that only the required response properties are deserialized."""
     request_id = uuid.uuid4().hex
     client = get_mock_api_client(
         "/governance/get-data-classification-settings/required-response-body-properties", request_id
