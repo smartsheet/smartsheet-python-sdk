@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [x.x.x] - Unreleased
 
+### Added
+
+- Project URLs (homepage, documentation, source, issues, changelog) in the package metadata, so they show on PyPI.
+
 ## [5.0.0] - 2026-11-16
 
 ### Added
