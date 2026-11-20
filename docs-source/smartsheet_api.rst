@@ -57,6 +57,14 @@ Folders
    :undoc-members:
    :show-inheritance:
 
+Governance
+------------------------
+
+.. automodule:: smartsheet.governance
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Groups
 ------------------------
 

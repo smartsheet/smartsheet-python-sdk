@@ -105,6 +105,22 @@ CurrencyCode
    :undoc-members:
    :show-inheritance:
 
+DataClassificationApproverType
+--------------------------------
+
+.. automodule:: smartsheet.models.enums.data_classification_approver_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DataClassificationDowngradeApprovalMode
+-----------------------------------------
+
+.. automodule:: smartsheet.models.enums.data_classification_downgrade_approval_mode
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 DayDescriptors
 -----------------------------------------------
 

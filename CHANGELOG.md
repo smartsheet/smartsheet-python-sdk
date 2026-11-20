@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Project URLs (homepage, documentation, source, issues, changelog) in the package metadata, so they show on PyPI.
+- Added `Governance.get_data_classification_settings` to retrieve data classification settings for a plan. Accepts either `plan_id` or `asset_type` + `asset_id` as query parameters.
+- Added `DataClassificationSettings`, `DataClassificationLabel`, `DataClassificationDowngradeApprovalSettings`, `DataClassificationApproverEntry`, and `DataClassificationLabelApproverEntry` models.
+- Added `DataClassificationDowngradeApprovalMode` and `DataClassificationApproverType` enums.
 
 ## [5.0.0] - 2026-11-16
 
